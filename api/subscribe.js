@@ -57,15 +57,15 @@ export default async function handler(req, res) {
             : 'Subscription confirmed — GCC Green Future Sustainability Briefing';
         const html = zh
             ? `<p>您好，</p>
-               <p>感谢您订阅德国工商总会香港（GCC）可持续发展工作组的<strong>绿色采购简报</strong>。</p>
+               <p>感谢您订阅德国工商总会香港（GCC）可持续发展委员会的<strong>绿色采购简报</strong>。</p>
                <p>您将收到与香港采购办公室及其中国制造商相关的欧盟法规动态：CBAM、EUDR、包装法规、电池法规等。</p>
                <p>如需退订，回复本邮件即可。</p>
-               <p>GCC可持续发展工作组<br>gcc-sustainability@hongkong.ahk.de</p>`
+               <p>GCC可持续发展委员会<br>gcc-sustainability@hongkong.ahk.de</p>`
             : `<p>Hello,</p>
-               <p>Thank you for subscribing to the <strong>Green Sourcing Briefing</strong> by the GCC Sustainability Working Group (German Chamber of Commerce, Hong Kong).</p>
+               <p>Thank you for subscribing to the <strong>Green Sourcing Briefing</strong> by the GCC Sustainability Committee (German Chamber of Commerce, Hong Kong).</p>
                <p>You will receive updates on EU regulations relevant to Hong Kong sourcing offices and their manufacturers in China: CBAM, EUDR, packaging rules, the Batteries Regulation and more.</p>
                <p>To unsubscribe, simply reply to this email.</p>
-               <p>GCC Sustainability Working Group<br>gcc-sustainability@hongkong.ahk.de</p>`;
+               <p>GCC Sustainability Committee<br>gcc-sustainability@hongkong.ahk.de</p>`;
 
         const emailRes = await fetch('https://api.resend.com/emails', {
             method: 'POST',

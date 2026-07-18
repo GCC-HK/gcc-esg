@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GREEN FUTURE – Empowering Sustainable Compliance</title>
-    <meta name="description" content="EU sustainability compliance for the Hong Kong sourcing community: check which regulations apply to your products, estimate CBAM costs, and follow weekly regulatory updates. By the GCC Sustainability Working Group.">
+    <meta name="description" content="EU sustainability compliance for the Hong Kong sourcing community: check which regulations apply to your products, estimate CBAM costs, and follow weekly regulatory updates. By the GCC Sustainability Committee.">
     <meta property="og:title" content="GREEN FUTURE – GCC Sustainability Compliance">
     <meta property="og:description" content="Which EU sustainability rules apply to your products? Free compliance check, CBAM cost estimator and weekly briefing for sourcing offices and manufacturers.">
     <meta property="og:type" content="website">
@@ -12,21 +12,22 @@
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%231a5c38'/%3E%3Cpath d='M50 18 L58 42 L82 50 L58 58 L50 82 L42 58 L18 50 L42 42 Z' fill='%234caf50'/%3E%3Ccircle cx='50' cy='50' r='7' fill='%23fff'/%3E%3C/svg%3E">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700;8..60,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <!-- 1. Navigation -->
     <nav class="nav" id="nav">
         <div class="nav-container">
-            <a href="#hero" class="nav-logo">GREEN FUTURE</a>
+            <a href="#hero" class="nav-logo">
+                <img src="assets/img/ahk-gcc-logo.png" alt="AHK – German Chamber of Commerce Hong Kong">
+                <span>GREEN FUTURE</span>
+            </a>
             <ul class="nav-links" id="navLinks">
-                <li><a href="#compass"><span class="lang-en">Green Sourcing Compass</span><span class="lang-zh">绿色采购指南针</span></a></li>
+                <li><a href="#compass"><span class="lang-en">Compass</span><span class="lang-zh">指南针</span></a></li>
+                <li><a href="#cbam"><span class="lang-en">CBAM</span><span class="lang-zh">碳边境</span></a></li>
                 <li><a href="#briefing"><span class="lang-en">Briefing</span><span class="lang-zh">每周简报</span></a></li>
-                <li><a href="#benefits"><span class="lang-en">Benefits</span><span class="lang-zh">优势</span></a></li>
-                <li><a href="#risks-incentives"><span class="lang-en">Risks &amp; Incentives</span><span class="lang-zh">风险与机遇</span></a></li>
-                <li><a href="#actions"><span class="lang-en">Actions</span><span class="lang-zh">行动方案</span></a></li>
-                <li><a href="#case-studies"><span class="lang-en">Case Studies</span><span class="lang-zh">案例分析</span></a></li>
+                <li><a href="#about"><span class="lang-en">About Us</span><span class="lang-zh">关于我们</span></a></li>
                 <li><a href="#faq"><span class="lang-en">FAQ</span><span class="lang-zh">常见问题</span></a></li>
                 <li><a href="#footer"><span class="lang-en">Contact</span><span class="lang-zh">联系我们</span></a></li>
             </ul>
@@ -47,12 +48,18 @@
     <!-- 2. Hero Section -->
     <section class="hero" id="hero">
         <div class="container">
-            <div class="hero-content">
-                <h1><span class="lang-en">Stay Compliant. Stay in the Market.</span><span class="lang-zh">立即查清哪些欧盟法规适用于您的产品</span></h1>
-                <p class="hero-subhead"><span class="lang-en">Navigating the path to a sustainable future through active compliance and innovation.</span><span class="lang-zh">在买家联系您之前，了解您需要达到哪些标准</span></p>
-                <div class="hero-ctas">
-                    <a href="#" class="btn btn-primary"><span class="lang-en">Download Brochure</span><span class="lang-zh">下载合规手册</span></a>
-                    <a href="#footer" class="btn btn-secondary"><span class="lang-en">Contact Us</span><span class="lang-zh">联系我们</span></a>
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <h1><span class="lang-en">Stay Compliant. Stay in the Market.</span><span class="lang-zh">立即查清哪些欧盟法规适用于您的产品</span></h1>
+                    <div class="hero-subline-bar"></div>
+                    <p class="hero-subhead"><span class="lang-en">Navigating the path to a sustainable future through active compliance and innovation.</span><span class="lang-zh">在买家联系您之前，了解您需要达到哪些标准</span></p>
+                    <div class="hero-ctas">
+                        <a href="#" class="btn btn-primary"><span class="lang-en">Download Brochure</span><span class="lang-zh">下载合规手册</span></a>
+                        <a href="#footer" class="btn btn-secondary"><span class="lang-en">Contact Us</span><span class="lang-zh">联系我们</span></a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="assets/img/hero-eu-flags.jpg" alt="European Union flags in front of the European Parliament">
                 </div>
             </div>
         </div>
@@ -111,7 +118,7 @@
                     <span class="start-arrow">&rarr;</span>
                 </a>
             </div>
-            <p class="start-help"><span class="lang-en">Still not sure? <a href="mailto:gcc-sustainability@hongkong.ahk.de">Write to the Working Group</a> &mdash; we answer in English, Chinese and German.</span><span class="lang-zh">仍不确定？<a href="mailto:gcc-sustainability@hongkong.ahk.de">写信给工作组</a>——我们提供英文、中文和德文解答。</span></p>
+            <p class="start-help"><span class="lang-en">Still not sure? <a href="mailto:gcc-sustainability@hongkong.ahk.de">Write to the Committee</a> &mdash; we answer in English, Chinese and German.</span><span class="lang-zh">仍不确定？<a href="mailto:gcc-sustainability@hongkong.ahk.de">写信给委员会</a>——我们提供英文、中文和德文解答。</span></p>
         </div>
     </section>
 
@@ -531,8 +538,8 @@
         <div class="container">
             <div class="atlas-china-esg">
                 <h3><span class="lang-en">Your Home Market: China ESG</span><span class="lang-zh">您的本土市场：中国ESG要求</span></h3>
-                <p><span class="lang-en">Since 30 April 2026, major listed companies in China (SSE 180, STAR 50, SZSE 100 and ChiNext index constituents, plus dual-listed companies) must publish annual sustainability reports, with national CSDS standards rolling out to 2030. If you are listed on the Shanghai, Shenzhen or Beijing exchanges, you have parallel obligations at home. The GCC Sustainability Working Group can help you navigate both EU and China ESG requirements.</span><span class="lang-zh">自2026年4月30日起，中国主要上市公司（上证180、科创50、深证100及创业板指数成分股，以及境内外同时上市的公司）须发布年度可持续发展报告，全国性CSDS准则将于2030年前逐步推行。若您在沪、深、北交所上市，您同时面临两个市场的合规义务。德国商会可持续发展工作组可协助您同时满足欧盟及中国ESG要求。</span></p>
-                <a href="mailto:gcc-sustainability@hongkong.ahk.de" class="china-esg-link"><span class="lang-en">Contact the Working Group &rarr;</span><span class="lang-zh">联系工作组了解更多 &rarr;</span></a>
+                <p><span class="lang-en">Since 30 April 2026, major listed companies in China (SSE 180, STAR 50, SZSE 100 and ChiNext index constituents, plus dual-listed companies) must publish annual sustainability reports, with national CSDS standards rolling out to 2030. If you are listed on the Shanghai, Shenzhen or Beijing exchanges, you have parallel obligations at home. The GCC Sustainability Committee can help you navigate both EU and China ESG requirements.</span><span class="lang-zh">自2026年4月30日起，中国主要上市公司（上证180、科创50、深证100及创业板指数成分股，以及境内外同时上市的公司）须发布年度可持续发展报告，全国性CSDS准则将于2030年前逐步推行。若您在沪、深、北交所上市，您同时面临两个市场的合规义务。德国商会可持续发展委员会可协助您同时满足欧盟及中国ESG要求。</span></p>
+                <a href="mailto:gcc-sustainability@hongkong.ahk.de" class="china-esg-link"><span class="lang-en">Contact the Committee &rarr;</span><span class="lang-zh">联系委员会了解更多 &rarr;</span></a>
             </div>
         </div>
     </section>
@@ -590,6 +597,36 @@
         </div>
     </section>
 
+    <!-- About the Committee -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="atlas-label"><span class="lang-en">ABOUT US</span><span class="lang-zh">关于我们</span></div>
+            <h2 class="section-title"><span class="lang-en">The GCC Sustainability Committee</span><span class="lang-zh">德国商会可持续发展委员会</span></h2>
+            <p class="section-subtitle"><span class="lang-en">The official sustainability body of the German Chamber of Commerce, Hong Kong</span><span class="lang-zh">香港德国商会官方可持续发展机构</span></p>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p><span class="lang-en">We are the official <strong>Sustainability Committee of the German Chamber of Commerce, Hong Kong</strong> &mdash; sourcing offices of major German and European retail organizations and their partners. As new sustainability regulations reshape trade between Europe and Asia, we understand the challenges suppliers face and support your journey towards compliance and growth.</span><span class="lang-zh">我们是<strong>香港德国商会官方可持续发展委员会</strong>——由主要德国及欧洲零售企业的采购办公室及其合作伙伴组成。随着新的可持续发展法规重塑欧亚贸易，我们深知供应商面临的挑战，并支持您走向合规与增长。</span></p>
+                    <p><span class="lang-en">We provide practical guidance: this platform's free tools, weekly regulatory briefings, workshops and trainings, and a direct line to compliance experts &mdash; in English, Chinese and German.</span><span class="lang-zh">我们提供切实可行的指导：本平台的免费工具、每周法规简报、研讨会和培训，以及直接对接合规专家的渠道——提供英文、中文和德文服务。</span></p>
+                    <a href="mailto:gcc-sustainability@hongkong.ahk.de?subject=Sustainability Committee Membership" class="btn btn-primary"><span class="lang-en">Join the Committee</span><span class="lang-zh">加入委员会</span></a>
+                </div>
+                <figure class="about-photo">
+                    <img src="assets/img/committee-team.jpg" alt="Members of the GCC Sustainability Committee in Hong Kong">
+                    <figcaption><span class="lang-en">Members of the Sustainability Committee at the German Chamber of Commerce, Hong Kong</span><span class="lang-zh">香港德国商会可持续发展委员会成员</span></figcaption>
+                </figure>
+            </div>
+            <div class="about-members">
+                <h3><span class="lang-en">Committee Member Organizations</span><span class="lang-zh">委员会成员机构</span></h3>
+                <div class="member-logos">
+                    <div class="member-logo"><img src="assets/logos/impala.png" alt="IMPALA"></div>
+                    <div class="member-logo"><img src="assets/logos/teal-goal.png" alt="Teal Goal Ltd"></div>
+                    <div class="member-logo"><img src="assets/logos/simba-dickie.png" alt="Simba Dickie Group"></div>
+                    <div class="member-logo"><img src="assets/logos/abo-energy.png" alt="ABO Energy"></div>
+                    <div class="member-logo"><img src="assets/logos/tgi.png" alt="TGI Technology Limited"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- 10. FAQ -->
     <section class="faq" id="faq">
         <div class="container">
@@ -602,7 +639,7 @@
                         <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
                     </button>
                     <div class="faq-answer">
-                        <p><span class="lang-en">Various EU and national funding programs support companies in their sustainability transition. These include grants for green technology adoption, subsidized consulting services, tax incentives for sustainable investments, and access to green finance instruments. The GCC Sustainability Working Group can help identify relevant programs for your business.</span><span class="lang-zh">欧盟和各国政府提供多种资金支持计划，包括绿色技术采纳补贴、咨询服务补助、可持续投资税收优惠，以及绿色金融工具。德国商会可持续发展工作组可协助您识别适用的支持项目。</span></p>
+                        <p><span class="lang-en">Various EU and national funding programs support companies in their sustainability transition. These include grants for green technology adoption, subsidized consulting services, tax incentives for sustainable investments, and access to green finance instruments. The GCC Sustainability Committee can help identify relevant programs for your business.</span><span class="lang-zh">欧盟和各国政府提供多种资金支持计划，包括绿色技术采纳补贴、咨询服务补助、可持续投资税收优惠，以及绿色金融工具。德国商会可持续发展委员会可协助您识别适用的支持项目。</span></p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -629,7 +666,7 @@
                         <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
                     </button>
                     <div class="faq-answer">
-                        <p><span class="lang-en">Official regulatory texts are available on EUR-Lex (the official EU law database). For practical guidance, the European Commission publishes implementation guides and FAQs. The GCC Sustainability Working Group also provides tailored briefings and can connect you with regulatory experts.</span><span class="lang-zh">官方法规文本可在EUR-Lex（欧盟官方法律数据库）上查阅。欧盟委员会发布实施指南和FAQ供参考。德国商会可持续发展工作组也提供定制简报，并可为您对接监管专家。</span></p>
+                        <p><span class="lang-en">Official regulatory texts are available on EUR-Lex (the official EU law database). For practical guidance, the European Commission publishes implementation guides and FAQs. The GCC Sustainability Committee also provides tailored briefings and can connect you with regulatory experts.</span><span class="lang-zh">官方法规文本可在EUR-Lex（欧盟官方法律数据库）上查阅。欧盟委员会发布实施指南和FAQ供参考。德国商会可持续发展委员会也提供定制简报，并可为您对接监管专家。</span></p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -650,10 +687,10 @@
         <div class="container">
             <div class="atlas-trust" id="atlasTrust">
                 <h3><span class="lang-en">How the Green Sourcing Compass Knows What It Knows</span><span class="lang-zh">关于本工具的数据来源</span></h3>
-                <p><span class="lang-en">Curated by the <strong>GCC Sustainability Working Group</strong>. Regulation data is reviewed quarterly and sourced directly from EUR-Lex, the official EU law database.</span><span class="lang-zh">本工具由<strong>德国工商总会香港可持续发展工作组</strong>策划整理。所有法规条目均链接至EUR-Lex官方来源，每季度更新一次。</span></p>
+                <p><span class="lang-en">Curated by the <strong>GCC Sustainability Committee</strong>. Regulation data is reviewed quarterly and sourced directly from EUR-Lex, the official EU law database.</span><span class="lang-zh">本工具由<strong>香港德国商会可持续发展委员会</strong>策划整理。所有法规条目均链接至EUR-Lex官方来源，每季度更新一次。</span></p>
             </div>
             <div class="atlas-disclaimer" id="atlasDisclaimer">
-                <p><span class="lang-en"><strong>Disclaimer:</strong> The Green Sourcing Compass is informational. It surfaces the regulations most likely to apply so you start in the right place, not the final word on conformity. For binding compliance assessment, work with your testing lab, certification institute, or the GCC Sustainability Working Group.</span><span class="lang-zh"><strong>免责声明：</strong>本工具仅供参考。它帮助您缩小适用法规的范围，不构成最终合规认定。如需具体合规评估，请咨询您的检测机构或德国商会可持续发展工作组。</span></p>
+                <p><span class="lang-en"><strong>Disclaimer:</strong> The Green Sourcing Compass is informational. It surfaces the regulations most likely to apply so you start in the right place, not the final word on conformity. For binding compliance assessment, work with your testing lab, certification institute, or the GCC Sustainability Committee.</span><span class="lang-zh"><strong>免责声明：</strong>本工具仅供参考。它帮助您缩小适用法规的范围，不构成最终合规认定。如需具体合规评估，请咨询您的检测机构或德国商会可持续发展委员会。</span></p>
             </div>
         </div>
     </section>
@@ -681,16 +718,16 @@
                     <a href="mailto:gcc-sustainability@hongkong.ahk.de" class="btn btn-accent btn-sm"><span class="lang-en">Get in Touch</span><span class="lang-zh">联系我们</span></a>
                 </div>
                 <div class="cta-card cta-join">
-                    <h4><span class="lang-en">Join the Working Group</span><span class="lang-zh">加入工作组</span></h4>
+                    <h4><span class="lang-en">Join the Committee</span><span class="lang-zh">加入委员会</span></h4>
                     <p><span class="lang-en">Collaborate with leading companies shaping sustainable trade practices.</span><span class="lang-zh">与引领可持续贸易实践的领先企业合作。</span></p>
-                    <a href="mailto:gcc-sustainability@hongkong.ahk.de?subject=Working Group Membership" class="btn btn-outline btn-sm"><span class="lang-en">Learn More</span><span class="lang-zh">了解更多</span></a>
+                    <a href="mailto:gcc-sustainability@hongkong.ahk.de?subject=Sustainability Committee Membership" class="btn btn-outline btn-sm"><span class="lang-en">Learn More</span><span class="lang-zh">了解更多</span></a>
                 </div>
             </div>
 
             <div class="footer-grid">
                 <div class="footer-info">
                     <h3>GREEN FUTURE</h3>
-                    <p>GCC Sustainability Working Group</p>
+                    <p>GCC Sustainability Committee</p>
                     <p class="footer-contact">
                         <a href="mailto:gcc-sustainability@hongkong.ahk.de">gcc-sustainability@hongkong.ahk.de</a>
                     </p>
@@ -711,16 +748,17 @@
                 </div>
             </div>
             <div class="footer-partners">
-                <p><span class="lang-en">Our Partners</span><span class="lang-zh">合作伙伴</span></p>
+                <p><span class="lang-en">Committee Members</span><span class="lang-zh">委员会成员</span></p>
                 <div class="partner-logos">
-                    <div class="partner-placeholder">OBI</div>
-                    <div class="partner-placeholder">METRO SOURCING</div>
-                    <div class="partner-placeholder">SIMBA DICKIE</div>
-                    <div class="partner-placeholder">otto international</div>
+                    <div class="partner-logo-chip"><img src="assets/logos/impala.png" alt="IMPALA"></div>
+                    <div class="partner-logo-chip"><img src="assets/logos/teal-goal.png" alt="Teal Goal Ltd"></div>
+                    <div class="partner-logo-chip"><img src="assets/logos/simba-dickie.png" alt="Simba Dickie Group"></div>
+                    <div class="partner-logo-chip"><img src="assets/logos/abo-energy.png" alt="ABO Energy"></div>
+                    <div class="partner-logo-chip"><img src="assets/logos/tgi.png" alt="TGI Technology Limited"></div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 GCC Sustainability Working Group. All rights reserved.</p>
+                <p>&copy; 2026 GCC Sustainability Committee. All rights reserved.</p>
             </div>
         </div>
     </footer>

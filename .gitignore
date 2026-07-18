@@ -5,3 +5,6 @@ node_modules/
 *.log
 .vscode/
 .idea/
+
+# Source materials (member logos, licensed stock, CI manual) — never commit
+input/
