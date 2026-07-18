@@ -3068,3 +3068,21 @@ a.radar-item-link:hover .radar-arrow { opacity: 1; }
 .briefing-lead-img img { height: 100%; max-height: none; }
 
 .about-photo img { aspect-ratio: 16 / 9; object-fit: cover; }
+
+/* ===== RECENCY BADGES ===== */
+.reg-badges {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.badge-recency-new {
+    background: rgba(40, 173, 132, 0.15);
+    color: #157a5b;
+}
+
+.badge-recency-upd {
+    background: rgba(222, 135, 3, 0.14);
+    color: #a86503;
+}

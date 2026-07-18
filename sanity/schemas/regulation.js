@@ -20,6 +20,18 @@ export default {
             validation: R => R.required()
         },
         { name: 'inForce', title: 'In force from (display text)', type: 'string' },
+        {
+            name: 'badge', title: 'Recency badge', type: 'string',
+            description: 'NEW = adopted in the last ~2 years; UPDATED = substantially amended recently',
+            options: { list: ['new', 'updated'] }
+        },
+        { name: 'newSince', title: 'Adoption/last-amendment date (drives sorting)', type: 'date' },
+        {
+            name: 'markets', title: 'Applies to markets', type: 'array',
+            description: 'Leave empty for EU+Germany (default)',
+            of: [{ type: 'string' }],
+            options: { list: ['eu', 'germany', 'uk', 'us'] }
+        },
         { name: 'complianceDeadline', title: 'Compliance deadline (display text)', type: 'string' },
         { name: 'lastReviewed', title: 'Last reviewed', type: 'date', validation: R => R.required() },
         { name: 'eurlex', title: 'EUR-Lex URL', type: 'url' },

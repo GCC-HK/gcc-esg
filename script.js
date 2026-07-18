@@ -636,7 +636,7 @@ atlasSubmit.addEventListener('click', () => {
                     <div>
                         <div class="reg-result-title">${reg.name} <span class="reg-result-ref">${reg.ref}</span></div>
                     </div>
-                    <span class="badge ${badgeClass}"><span class="lang-en">${reg.statusLabel}</span><span class="lang-zh">${statusZh}</span></span>
+                    <span class="reg-badges">${reg.badge === 'new' ? '<span class="badge badge-recency badge-recency-new"><span class="lang-en">NEW</span><span class="lang-zh">新规</span></span>' : ''}${reg.badge === 'updated' ? '<span class="badge badge-recency badge-recency-upd"><span class="lang-en">UPDATED</span><span class="lang-zh">已更新</span></span>' : ''}<span class="badge ${badgeClass}"><span class="lang-en">${reg.statusLabel}</span><span class="lang-zh">${statusZh}</span></span></span>
                 </div>
                 <p class="reg-result-reason"><span class="lang-en">${reasonEn}</span><span class="lang-zh">${reasonZh}</span></p>
                 <div class="reg-result-sections">
@@ -664,7 +664,8 @@ atlasSubmit.addEventListener('click', () => {
     ];
 
     atlasCards.innerHTML = compassGroups.map(g => {
-        const regs = applicable.filter(r => g.statuses.includes(r.status));
+        const regs = applicable.filter(r => g.statuses.includes(r.status))
+            .sort((a, b) => String(b.newSince || '').localeCompare(String(a.newSince || '')));
         if (!regs.length) return '';
         return `
             <div class="compass-group">
@@ -1321,10 +1322,12 @@ function regFromSanity(d) {
             ? new Date(d.lastReviewed).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })
             : '',
         eurlex: d.eurlex,
+        badge: d.badge,
+        newSince: d.newSince,
         sections: (d.sections || []).map(s => ({ title: s.title, text: s.textEn, textZh: s.textZh })),
         applies: (cat, markets, role, size) => {
-            const euMarket = markets.includes('eu') || markets.includes('germany');
-            if (!euMarket) return false;
+            const regMarkets = (d.markets && d.markets.length) ? d.markets : ['eu', 'germany'];
+            if (!markets.some(m => regMarkets.includes(m))) return false;
             if (d.categories && d.categories.length && !d.categories.includes(cat)) return false;
             if (d.roles && d.roles.length && !d.roles.includes(role)) return false;
             if (d.sizes && d.sizes.length && !d.sizes.includes(size)) return false;
