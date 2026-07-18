@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" fill="none">
+  <!-- CO2 cloud -->
+  <g>
+    <ellipse cx="123" cy="34" rx="24" ry="14" fill="#CCD7E6"/>
+    <ellipse cx="107" cy="40" rx="16" ry="11" fill="#CCD7E6"/>
+    <text x="123" y="39" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#003366" text-anchor="middle">CO&#8322;</text>
+  </g>
+  <!-- calculator body -->
+  <rect x="30" y="26" width="76" height="110" rx="10" fill="#FFFFFF" stroke="#003366" stroke-width="5"/>
+  <rect x="42" y="38" width="52" height="26" rx="4" fill="#CCD7E6"/>
+  <text x="88" y="57" font-family="Arial, sans-serif" font-size="17" font-weight="bold" fill="#003366" text-anchor="end">&#8364;75.28</text>
+  <!-- buttons -->
+  <g fill="#E4EAF2">
+    <rect x="42" y="72" width="14" height="12" rx="3"/>
+    <rect x="61" y="72" width="14" height="12" rx="3"/>
+    <rect x="42" y="90" width="14" height="12" rx="3"/>
+    <rect x="61" y="90" width="14" height="12" rx="3"/>
+    <rect x="42" y="108" width="14" height="12" rx="3"/>
+    <rect x="61" y="108" width="14" height="12" rx="3"/>
+  </g>
+  <rect x="80" y="72" width="14" height="12" rx="3" fill="#DE8703"/>
+  <rect x="80" y="90" width="14" height="30" rx="3" fill="#28AD84"/>
+  <!-- leaf -->
+  <path d="M118 96 C 140 96, 148 78, 150 68 C 128 68, 118 78, 118 96 Z" fill="#4CAF50"/>
+  <path d="M120 94 C 130 84, 138 78, 146 71" stroke="#1A5C38" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M118 96 C 116 108, 116 118, 118 128" stroke="#1A5C38" stroke-width="3" stroke-linecap="round"/>
+</svg>

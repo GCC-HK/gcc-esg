@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" fill="none">
+  <circle cx="80" cy="80" r="72" fill="#EAF3EE"/>
+  <circle cx="80" cy="80" r="60" fill="#FFFFFF" stroke="#1A5C38" stroke-width="4"/>
+  <circle cx="80" cy="80" r="42" fill="none" stroke="#CFE3D6" stroke-width="2"/>
+  <circle cx="80" cy="80" r="24" fill="none" stroke="#CFE3D6" stroke-width="2"/>
+  <!-- sweep -->
+  <path d="M80 80 L80 22 A58 58 0 0 1 129 50 Z" fill="#28AD84" opacity="0.25"/>
+  <line x1="80" y1="80" x2="129" y2="50" stroke="#1A5C38" stroke-width="3" stroke-linecap="round"/>
+  <!-- blips -->
+  <circle cx="65" cy="58" r="6" fill="#C34343"/>
+  <circle cx="103" cy="95" r="6" fill="#DE8703"/>
+  <circle cx="56" cy="103" r="6" fill="#28AD84"/>
+  <circle cx="80" cy="80" r="5" fill="#1A5C38"/>
+  <!-- calendar flag -->
+  <g>
+    <rect x="112" y="108" width="34" height="30" rx="5" fill="#FFFFFF" stroke="#C34343" stroke-width="3.5"/>
+    <rect x="112" y="108" width="34" height="10" rx="5" fill="#C34343"/>
+    <text x="129" y="132" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#C34343" text-anchor="middle">31</text>
+  </g>
+</svg>

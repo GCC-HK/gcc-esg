@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" fill="none">
+  <circle cx="80" cy="80" r="74" fill="#EAF3EE"/>
+  <circle cx="80" cy="80" r="64" fill="#FFFFFF" stroke="#1A5C38" stroke-width="5"/>
+  <circle cx="80" cy="80" r="54" fill="none" stroke="#CFE3D6" stroke-width="2"/>
+  <!-- degree ticks -->
+  <g stroke="#1A5C38" stroke-width="3" stroke-linecap="round">
+    <line x1="80" y1="20" x2="80" y2="30"/>
+    <line x1="80" y1="130" x2="80" y2="140"/>
+    <line x1="20" y1="80" x2="30" y2="80"/>
+    <line x1="130" y1="80" x2="140" y2="80"/>
+  </g>
+  <g stroke="#8FBFA3" stroke-width="2" stroke-linecap="round">
+    <line x1="122.4" y1="37.6" x2="115.4" y2="44.6"/>
+    <line x1="37.6" y1="37.6" x2="44.6" y2="44.6"/>
+    <line x1="122.4" y1="122.4" x2="115.4" y2="115.4"/>
+    <line x1="37.6" y1="122.4" x2="44.6" y2="115.4"/>
+  </g>
+  <!-- rose -->
+  <polygon points="80,34 87,73 80,80 73,73" fill="#28AD84"/>
+  <polygon points="80,126 87,87 80,80 73,87" fill="#CFE3D6"/>
+  <polygon points="34,80 73,73 80,80 73,87" fill="#CFE3D6"/>
+  <polygon points="126,80 87,73 80,80 87,87" fill="#28AD84"/>
+  <!-- needle -->
+  <polygon points="108,52 88,74 80,80 86,68" fill="#C34343"/>
+  <polygon points="52,108 72,86 80,80 74,92" fill="#003366"/>
+  <circle cx="80" cy="80" r="9" fill="#1A5C38"/>
+  <circle cx="80" cy="80" r="4" fill="#FFFFFF"/>
+</svg>

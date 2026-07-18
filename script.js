@@ -1370,6 +1370,16 @@ function renderBriefing(posts) {
         return `<span class="briefing-kicker"><span class="lang-en">${pillar.en}</span><span class="lang-zh">${pillar.zh}</span></span>`;
     };
 
+    const sourceLinks = p => {
+        if (!Array.isArray(p.sources) || !p.sources.length) return '';
+        const links = p.sources.map(u => {
+            let host = u;
+            try { host = new URL(u).hostname.replace(/^www\./, ''); } catch (e) { /* keep raw */ }
+            return `<a href="${u}" target="_blank" rel="noopener">${host} &nearr;</a>`;
+        }).join(' &middot; ');
+        return `<p class="briefing-sources"><span class="lang-en">Source:</span><span class="lang-zh">来源：</span> ${links}</p>`;
+    };
+
     // Newspaper dateline from the lead story's publish date
     const dateline = document.getElementById('briefingDateline');
     if (dateline && posts[0].publishedAt) {
@@ -1389,6 +1399,7 @@ function renderBriefing(posts) {
             ${row('What happened', '发生了什么', lead.whatHappenedEn, lead.whatHappenedZh)}
             ${row('Why it matters', '为何重要', lead.whyItMattersEn, lead.whyItMattersZh)}
             ${row('What to do', '应对措施', lead.supplierActionEn, lead.supplierActionZh)}
+            ${sourceLinks(lead)}
         </article>`;
 
     const restHtml = rest.map(p => `
@@ -1397,6 +1408,7 @@ function renderBriefing(posts) {
             <h4><span class="lang-en">${p.titleEn}</span><span class="lang-zh">${p.titleZh || p.titleEn}</span></h4>
             <p class="briefing-item-text"><span class="lang-en">${p.whatHappenedEn || ''}</span><span class="lang-zh">${p.whatHappenedZh || p.whatHappenedEn || ''}</span></p>
             ${p.supplierActionEn ? `<p class="briefing-item-action"><strong><span class="lang-en">What to do:</span><span class="lang-zh">应对措施：</span></strong> <span class="lang-en">${p.supplierActionEn}</span><span class="lang-zh">${p.supplierActionZh || p.supplierActionEn}</span></p>` : ''}
+            ${sourceLinks(p)}
         </article>`).join('');
 
     list.innerHTML = `
