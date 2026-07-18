@@ -152,7 +152,9 @@
 
         var headers = {};
         var token = authToken();
+        var demo = localStorage.getItem('gcc-demo-tier');
         if (token) headers['Authorization'] = 'Bearer ' + token;
+        else if (demo === 'registered' || demo === 'member') headers['x-demo-tier'] = demo;
 
         fetch('/api/content?type=article&slug=' + encodeURIComponent(slug), { headers: headers })
             .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })

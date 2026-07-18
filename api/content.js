@@ -30,7 +30,14 @@ async function viewerTier(req) {
     const url = process.env.SUPABASE_URL;
     const anonKey = process.env.SUPABASE_ANON_KEY;
     const auth = req.headers.authorization;
-    if (!url || !anonKey || !auth) return 'public';
+    // DEMO MODE: while Supabase is not configured, honour a preview-tier header
+    // so stakeholders can review the member area. Automatically disabled the
+    // moment real auth (SUPABASE_URL) is configured.
+    if (!url || !anonKey) {
+        const demo = req.headers['x-demo-tier'];
+        return demo === 'member' || demo === 'registered' ? demo : 'public';
+    }
+    if (!auth) return 'public';
     try {
         const r = await fetch(`${url}/auth/v1/user`, {
             headers: { apikey: anonKey, Authorization: auth }

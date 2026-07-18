@@ -1244,10 +1244,16 @@ function authToken() {
     return null;
 }
 
+function demoTier() {
+    const t = localStorage.getItem('gcc-demo-tier');
+    return t === 'member' || t === 'registered' ? t : null;
+}
+
 async function loadContent(type) {
     const headers = {};
     const token = authToken();
     if (token) headers['Authorization'] = `Bearer ${token}`;
+    else if (demoTier()) headers['x-demo-tier'] = demoTier();
     const r = await fetch(`/api/content?type=${type}`, { headers });
     if (!r.ok) throw new Error(`content ${type}: ${r.status}`);
     return r.json();
@@ -1255,7 +1261,7 @@ async function loadContent(type) {
 
 // Nav sign-in state
 const navSignin = document.getElementById('navSignin');
-if (navSignin && authToken()) {
+if (navSignin && (authToken() || demoTier())) {
     navSignin.innerHTML = '<span class="lang-en">Account</span><span class="lang-zh">账户</span>';
     applyLangWhenReady();
 }

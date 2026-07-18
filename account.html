@@ -111,10 +111,46 @@
         var card = document.getElementById('acctCard');
         var t = function (en, zh) { return '<span class="lang-en">' + en + '</span><span class="lang-zh">' + zh + '</span>'; };
 
+        // Preview mode: active only while real sign-in (Supabase) is not yet
+        // configured — lets reviewers experience all three access tiers.
         function showNotConfigured() {
-            card.innerHTML = '<h1>' + t('Member Area', '会员专区') + '</h1>' +
-                '<p class="acct-sub">' + t('Sign-in opens soon. In the meantime, contact the Committee at gcc-sustainability@hongkong.ahk.de.', '登录功能即将开放。如有需要，请联系委员会：gcc-sustainability@hongkong.ahk.de。') + '</p>';
+            var demo = localStorage.getItem('gcc-demo-tier');
+            if (demo === 'registered' || demo === 'member') {
+                var isMember = demo === 'member';
+                card.innerHTML = '<h1>' + t('Preview Account', '预览账户') + '</h1>' +
+                    '<div style="text-align:center"><span class="acct-tier ' + (isMember ? 'acct-tier-member' : 'acct-tier-registered') + '">' +
+                    (isMember ? t('Committee Member (preview)', '委员会成员（预览）') : t('Registered (preview)', '已注册（预览）')) + '</span></div>' +
+                    '<p class="acct-sub">' + t('You are previewing the site as a ' + (isMember ? 'Committee member' : 'registered reader') + '. Locked articles are now open at this level.', '您正在以' + (isMember ? '委员会成员' : '注册读者') + '身份预览网站。相应级别的文章现已解锁。') + '</p>' +
+                    '<div class="acct-actions">' +
+                    '<a class="btn btn-atlas" href="index.html#briefing">' + t('Read the briefing', '阅读简报') + '</a>' +
+                    '<button class="btn btn-outline" id="demoSwitch">' + (isMember ? t('Switch to Registered view', '切换为注册读者视图') : t('Switch to Member view', '切换为会员视图')) + '</button>' +
+                    '<button class="btn btn-outline" id="demoOut">' + t('Exit preview (public view)', '退出预览（公开视图）') + '</button>' +
+                    '</div>';
+                applyLang();
+                document.getElementById('demoSwitch').addEventListener('click', function () {
+                    localStorage.setItem('gcc-demo-tier', isMember ? 'registered' : 'member');
+                    location.reload();
+                });
+                document.getElementById('demoOut').addEventListener('click', function () {
+                    localStorage.removeItem('gcc-demo-tier');
+                    location.reload();
+                });
+                return;
+            }
+            card.innerHTML = '<h1>' + t('Member Area Preview', '会员专区预览') + '</h1>' +
+                '<p class="acct-sub">' + t('Email sign-in launches with the public release. For this preview, choose a view to experience the member area:', '邮箱登录将随正式上线开放。在此预览版中，请选择一个视图体验会员专区：') + '</p>' +
+                '<div class="acct-actions">' +
+                '<button class="btn btn-atlas" id="demoReg">' + t('Preview as Registered (free tier)', '以注册读者身份预览（免费）') + '</button>' +
+                '<button class="btn btn-atlas" id="demoMem" style="background:var(--ahk-blue)">' + t('Preview as Committee Member', '以委员会成员身份预览') + '</button>' +
+                '</div>' +
+                '<p class="acct-note">' + t('In the live version, readers register free by email (no password) and the Committee grants member access to member companies.', '正式版中，读者通过邮箱免费注册（无需密码），委员会向成员企业授予会员权限。') + '</p>';
             applyLang();
+            var go = function (tier) {
+                localStorage.setItem('gcc-demo-tier', tier);
+                location.href = 'index.html#briefing';
+            };
+            document.getElementById('demoReg').addEventListener('click', function () { go('registered'); });
+            document.getElementById('demoMem').addEventListener('click', function () { go('member'); });
         }
 
         function showSignIn(client, msg) {
