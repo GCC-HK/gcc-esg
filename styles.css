@@ -2806,3 +2806,17 @@ ul {
     .briefing-lead { padding-right: 0; }
     .briefing-secondary { border-left: none; border-top: 3px double var(--gray-300); padding-left: 0; column-count: 1; }
 }
+
+/* ===== HERO EYEBROW ===== */
+.hero-eyebrow {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    padding: 6px 14px;
+    margin-bottom: 18px;
+}
