@@ -644,7 +644,10 @@ atlasSubmit.addEventListener('click', () => {
                         <span><span class="lang-en">Compliance deadline:</span><span class="lang-zh">合规截止日期:</span> ${reg.complianceDeadline}</span>
                         <span><span class="lang-en">Last reviewed:</span><span class="lang-zh">最近更新:</span> ${reg.lastReviewed}</span>
                     </div>
-                    <a href="${reg.eurlex}" target="_blank" rel="noopener" class="reg-result-link"><span class="lang-en">Read the official text &rarr;</span><span class="lang-zh">查阅官方原文 &rarr;</span></a>
+                    <span class="reg-result-links">
+                        <a href="regulation.html?id=${reg.id}" class="reg-result-link"><span class="lang-en">Learn more &rarr;</span><span class="lang-zh">了解更多 &rarr;</span></a>
+                        <a href="${reg.eurlex}" target="_blank" rel="noopener" class="reg-result-link"><span class="lang-en">Official text &rarr;</span><span class="lang-zh">官方原文 &rarr;</span></a>
+                    </span>
                 </div>
             </article>
         `;
@@ -1314,15 +1317,17 @@ function renderRadar(deadlines) {
             const affects = d.affects
                 ? `<div class="radar-affects"><span class="lang-en">${d.affects}</span><span class="lang-zh">${d.affectsZh || d.affects}</span></div>`
                 : '';
-            return `
-                <div class="radar-item">
+            const inner = `
                     <div class="radar-days-chip"><strong>${d.days}</strong><span class="lang-en">days</span><span class="lang-zh">天</span></div>
                     <div class="radar-body">
                         <div class="radar-label"><span class="lang-en">${d.labelEn}</span><span class="lang-zh">${d.labelZh || d.labelEn}</span></div>
                         <div class="radar-meta">${dateStr}${expected}</div>
                         ${affects}
                     </div>
-                </div>`;
+                    ${d.regId ? '<span class="radar-arrow">&rarr;</span>' : ''}`;
+            return d.regId
+                ? `<a class="radar-item radar-item-link" href="regulation.html?id=${d.regId}">${inner}</a>`
+                : `<div class="radar-item">${inner}</div>`;
         }).join('');
         return `
             <div class="radar-col radar-col-${g.key}">

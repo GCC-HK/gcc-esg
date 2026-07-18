@@ -9,6 +9,7 @@ export default {
         { name: 'labelZh', title: 'Label (中文)', type: 'string' },
         { name: 'date', title: 'Deadline date', type: 'date', validation: R => R.required() },
         { name: 'regulation', title: 'Regulation', type: 'reference', to: [{ type: 'regulation' }] },
+        { name: 'regId', title: 'Regulation ID (slug, links radar item to detail page)', type: 'string' },
         {
             name: 'affects', title: 'Who is affected (short, EN)', type: 'string',
             description: 'e.g. "All importers of packaged goods"'
