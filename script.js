@@ -15,6 +15,7 @@ function setLanguage(lang) {
     // Update toggle buttons
     document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.lang === lang);
+        btn.setAttribute('aria-pressed', String(btn.dataset.lang === lang));
     });
 
     // Update select options text
@@ -619,10 +620,13 @@ atlasSubmit.addEventListener('click', () => {
 
         const sectionsHTML = reg.sections.map(s => {
             const titleZh = sectionHeadersZh[s.title] || s.title;
+            const body = s.textZh
+                ? `<p><span class="lang-en">${s.text}</span><span class="lang-zh">${s.textZh}</span></p>`
+                : `<p>${s.text}</p>`;
             return `
             <div class="reg-section">
                 <div class="reg-section-title"><span class="lang-en">${s.title}</span><span class="lang-zh">${titleZh}</span></div>
-                <p>${s.text}</p>
+                ${body}
             </div>`;
         }).join('');
 
@@ -935,6 +939,25 @@ function formatEuro(n) {
 
 function fmtNum(n, d) {
     return n.toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d });
+}
+
+// Early de-minimis hint: answer the exemption question before the full form
+const cbamVolumeInput = document.getElementById('cbamVolume');
+if (cbamVolumeInput) {
+    const hint = document.createElement('div');
+    hint.className = 'cbam-volume-hint';
+    hint.style.display = 'none';
+    cbamVolumeInput.insertAdjacentElement('afterend', hint);
+    cbamVolumeInput.addEventListener('input', function() {
+        const v = parseFloat(this.value);
+        if (!isNaN(v) && v > 0 && v < 50) {
+            hint.innerHTML = '<span class="lang-en">Below 50 t/year: you are likely exempt from CBAM (Reg. (EU) 2025/2083) — unless your company\'s combined CBAM-goods imports exceed 50 t.</span><span class="lang-zh">低于每年50公吨：您很可能获得CBAM豁免（法规 (EU) 2025/2083）——除非贵公司全部CBAM产品进口合计超过50公吨。</span>';
+            hint.style.display = '';
+            applyLang(hint);
+        } else {
+            hint.style.display = 'none';
+        }
+    });
 }
 
 document.getElementById('cbamCalculate').addEventListener('click', function() {
@@ -1298,7 +1321,7 @@ function regFromSanity(d) {
             ? new Date(d.lastReviewed).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })
             : '',
         eurlex: d.eurlex,
-        sections: (d.sections || []).map(s => ({ title: s.title, text: s.textEn })),
+        sections: (d.sections || []).map(s => ({ title: s.title, text: s.textEn, textZh: s.textZh })),
         applies: (cat, markets, role, size) => {
             const euMarket = markets.includes('eu') || markets.includes('germany');
             if (!euMarket) return false;
@@ -1330,14 +1353,14 @@ function renderRadar(deadlines) {
 
     const groups = [
         { key: 'soon', en: 'NEXT 6 MONTHS', zh: '未来6个月', descEn: 'Act now — these dates are imminent.', descZh: '立即行动——期限迫近。' },
-        { key: 'near', en: '6–18 MONTHS', zh: '6至18个月', descEn: 'Plan and budget for these this year.', descZh: '请于今年内规划和预算。' },
+        { key: 'near', en: '6–14 MONTHS', zh: '6至14个月', descEn: 'Plan and budget for these this year.', descZh: '请于今年内规划和预算。' },
         { key: 'far', en: 'ON THE HORIZON', zh: '中长期', descEn: 'Monitor and prepare early.', descZh: '持续关注，提前准备。' }
     ];
 
     const byGroup = { soon: [], near: [], far: [] };
     upcoming.forEach(d => {
         const days = Math.max(0, Math.ceil((new Date(d.date) - today) / 86400000));
-        const key = days <= 180 ? 'soon' : days <= 550 ? 'near' : 'far';
+        const key = days <= 180 ? 'soon' : days <= 420 ? 'near' : 'far';
         byGroup[key].push({ ...d, days });
     });
 
@@ -1425,7 +1448,7 @@ function renderBriefing(posts) {
         applyLang(dateline);
     }
 
-    const titleLink = (p, tag) => `<${tag}><a class="briefing-title-link" href="article.html?slug=${p.slug || ''}"><span class="lang-en">${p.titleEn}</span><span class="lang-zh">${p.titleZh || p.titleEn}</span></a></${tag}>`;
+    const titleLink = (p, tag) => `<${tag}><a class="briefing-title-link" href="/article?slug=${p.slug || ''}"><span class="lang-en">${p.titleEn}</span><span class="lang-zh">${p.titleZh || p.titleEn}</span></a></${tag}>`;
 
     const lockCta = p => {
         const premium = p.accessLevel === 'premium';
@@ -1437,12 +1460,12 @@ function renderBriefing(posts) {
             ${label} &rarr;</a>`;
     };
 
-    const readMore = p => `<p class="briefing-readmore"><a href="article.html?slug=${p.slug || ''}"><span class="lang-en">Full article &rarr;</span><span class="lang-zh">阅读全文 &rarr;</span></a></p>`;
+    const readMore = p => `<p class="briefing-readmore"><a href="/article?slug=${p.slug || ''}"><span class="lang-en">Full article &rarr;</span><span class="lang-zh">阅读全文 &rarr;</span></a></p>`;
 
     const [lead, ...rest] = posts;
 
     const leadImg = lead.imageUrl
-        ? `<a href="article.html?slug=${lead.slug || ''}" class="briefing-lead-img"><img src="${lead.imageUrl}" alt="" loading="lazy"></a>`
+        ? `<a href="/article?slug=${lead.slug || ''}" class="briefing-lead-img"><img src="${lead.imageUrl}" alt="" loading="lazy"></a>`
         : '';
 
     const leadHtml = lead.locked ? `
@@ -1465,7 +1488,7 @@ function renderBriefing(posts) {
         </article>`;
 
     const restHtml = rest.map(p => {
-        const thumb = p.imageUrl ? `<a href="article.html?slug=${p.slug || ''}" class="briefing-thumb"><img src="${p.imageUrl}" alt="" loading="lazy"></a>` : '';
+        const thumb = p.imageUrl ? `<a href="/article?slug=${p.slug || ''}" class="briefing-thumb"><img src="${p.imageUrl}" alt="" loading="lazy"></a>` : '';
         if (p.locked) {
             return `
         <article class="briefing-item briefing-locked" id="briefing-${p.slug || ''}">
@@ -1507,6 +1530,15 @@ function renderBriefing(posts) {
         track.innerHTML = half + half; // duplicated for a seamless loop
         applyLang(track);
         ticker.style.display = '';
+        const badge = ticker.querySelector('.ticker-badge');
+        if (badge) {
+            badge.setAttribute('role', 'button');
+            badge.setAttribute('tabindex', '0');
+            badge.setAttribute('aria-label', 'Pause or resume news ticker');
+            const toggle = () => ticker.classList.toggle('ticker-paused');
+            badge.addEventListener('click', toggle);
+            badge.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+        }
         track.addEventListener('click', (e) => {
             const a = e.target.closest('a.ticker-item');
             if (!a) return;

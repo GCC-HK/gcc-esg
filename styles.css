@@ -3032,3 +3032,39 @@ a.radar-item-link:hover .radar-arrow { opacity: 1; }
 @media (max-width: 768px) {
     .nav-signin { display: none; }
 }
+
+/* ===== REVIEW FIXES ===== */
+.nav-signin-mobile { display: none; }
+
+@media (max-width: 768px) {
+    .nav-signin-mobile { display: block; }
+    .nav-signin-mobile a { color: var(--primary); font-weight: 700; }
+}
+
+:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.ticker-paused .ticker-track { animation-play-state: paused; }
+
+.ticker-badge { cursor: pointer; }
+
+.cbam-volume-hint {
+    margin-top: 8px;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    font-weight: 600;
+    color: var(--primary);
+    background: rgba(40, 173, 132, 0.1);
+    border-radius: 8px;
+    padding: 8px 12px;
+}
+
+.hero-image img { aspect-ratio: 3 / 2; }
+
+.briefing-lead-img { aspect-ratio: 2.2 / 1; overflow: hidden; border-radius: 8px; }
+
+.briefing-lead-img img { height: 100%; max-height: none; }
+
+.about-photo img { aspect-ratio: 16 / 9; object-fit: cover; }

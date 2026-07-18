@@ -118,6 +118,25 @@ const server = http.createServer(async (req, res) => {
         return json(res, 200, { ok: true, confirmation: false });
     }
 
+    if (url.pathname === '/article') {
+        let html = fs.readFileSync(path.join(ROOT, 'article.html'), 'utf8');
+        const slug = url.searchParams.get('slug');
+        try {
+            if (slug) {
+                const post = await sanityQuery('*[_type=="newsPost" && slug.current==$slug][0]{titleEn,whatHappenedEn,imageUrl}', { slug });
+                if (post) {
+                    const esc = x => String(x || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+                    const title = esc(post.titleEn);
+                    const desc = esc((post.whatHappenedEn || '').slice(0, 180));
+                    html = html.replace(/<title>[^<]*<\/title>/, `<title>${title} – GREEN FUTURE</title>`);
+                    html = html.replace('</head>', `<meta property="og:title" content="${title}"><meta property="og:description" content="${desc}"></head>`);
+                }
+            }
+        } catch (e) { /* plain template */ }
+        res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+        return res.end(html);
+    }
+
     // --- static files ---
     let filePath = path.join(ROOT, decodeURIComponent(url.pathname));
     if (url.pathname === '/' || url.pathname === '') filePath = path.join(ROOT, 'index.html');

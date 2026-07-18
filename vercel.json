@@ -1,5 +1,13 @@
 {
   "cleanUrls": true,
+  "rewrites": [
+    { "source": "/article", "destination": "/api/article-page" }
+  ],
+  "functions": {
+    "api/article-page.js": {
+      "includeFiles": "article.html"
+    }
+  },
   "headers": [
     {
       "source": "/(.*)",
