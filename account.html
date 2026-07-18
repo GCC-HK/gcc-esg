@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In – GREEN FUTURE</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%231a5c38'/%3E%3Cpath d='M50 18 L58 42 L82 50 L58 58 L50 82 L42 58 L18 50 L42 42 Z' fill='%234caf50'/%3E%3Ccircle cx='50' cy='50' r='7' fill='%23fff'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700;8..60,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .acct {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: calc(var(--nav-height) + 60px) 24px 100px;
+        }
+        .acct-card {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 16px;
+            padding: 36px;
+        }
+        .acct h1 {
+            font-family: var(--font-serif);
+            font-size: 1.7rem;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .acct-sub {
+            font-size: 0.92rem;
+            color: var(--gray-600);
+            text-align: center;
+            margin-bottom: 26px;
+            line-height: 1.6;
+        }
+        .acct input[type="email"] {
+            width: 100%;
+            padding: 13px 16px;
+            border: 1.5px solid var(--gray-300);
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 1rem;
+            margin-bottom: 14px;
+        }
+        .acct input[type="email"]:focus { outline: none; border-color: var(--primary); }
+        .acct .btn { width: 100%; justify-content: center; }
+        .acct-msg { margin-top: 16px; font-size: 0.9rem; text-align: center; line-height: 1.6; }
+        .acct-msg.ok { color: var(--primary); font-weight: 600; }
+        .acct-msg.err { color: var(--risk); font-weight: 600; }
+        .acct-tier {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            border-radius: 999px;
+            padding: 5px 14px;
+            margin: 10px 0 18px;
+        }
+        .acct-tier-registered { background: rgba(26, 92, 56, 0.1); color: var(--primary); }
+        .acct-tier-member { background: rgba(0, 51, 102, 0.1); color: var(--ahk-blue); }
+        .acct-actions { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+        .acct-note { font-size: 0.8rem; color: var(--gray-600); margin-top: 20px; line-height: 1.6; text-align: center; }
+        .acct-back { display: block; text-align: center; margin-top: 24px; font-size: 0.88rem; font-weight: 600; color: var(--primary); }
+    </style>
+</head>
+<body>
+    <nav class="nav scrolled">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="assets/img/gcchk-logo.png" alt="GCC – German Chamber of Commerce Hong Kong">
+                <span>GREEN FUTURE</span>
+            </a>
+            <div class="nav-right">
+                <div class="lang-toggle">
+                    <button class="lang-btn active" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="zh">中文</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="acct">
+        <div class="acct-card" id="acctCard">
+            <p class="acct-msg"><span class="lang-en">Loading&hellip;</span><span class="lang-zh">加载中&hellip;</span></p>
+        </div>
+        <a class="acct-back" href="index.html"><span class="lang-en">&larr; Back to GREEN FUTURE</span><span class="lang-zh">&larr; 返回 GREEN FUTURE</span></a>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script>
+    (function () {
+        var currentLang = localStorage.getItem('gcc-lang') || 'en';
+        function applyLang() {
+            document.documentElement.lang = currentLang === 'zh' ? 'zh-Hans' : 'en';
+            document.body.classList.toggle('zh', currentLang === 'zh');
+            document.querySelectorAll('.lang-btn').forEach(function (b) {
+                b.classList.toggle('active', b.dataset.lang === currentLang);
+            });
+        }
+        document.querySelectorAll('.lang-btn').forEach(function (b) {
+            b.addEventListener('click', function () {
+                currentLang = b.dataset.lang;
+                localStorage.setItem('gcc-lang', currentLang);
+                applyLang();
+            });
+        });
+        applyLang();
+
+        var card = document.getElementById('acctCard');
+        var t = function (en, zh) { return '<span class="lang-en">' + en + '</span><span class="lang-zh">' + zh + '</span>'; };
+
+        function showNotConfigured() {
+            card.innerHTML = '<h1>' + t('Member Area', '会员专区') + '</h1>' +
+                '<p class="acct-sub">' + t('Sign-in opens soon. In the meantime, contact the Committee at gcc-sustainability@hongkong.ahk.de.', '登录功能即将开放。如有需要，请联系委员会：gcc-sustainability@hongkong.ahk.de。') + '</p>';
+            applyLang();
+        }
+
+        function showSignIn(client, msg) {
+            card.innerHTML = '<h1>' + t('Sign In', '登录') + '</h1>' +
+                '<p class="acct-sub">' + t('Free registration unlocks the full briefing archive and complete articles. No password — we email you a sign-in link.', '免费注册即可解锁完整简报档案和全文文章。无需密码——我们将向您发送登录链接。') + '</p>' +
+                '<form id="loginForm"><input type="email" id="loginEmail" placeholder="your@email.com" required>' +
+                '<button type="submit" class="btn btn-atlas">' + t('Email me a sign-in link', '向我发送登录链接') + '</button></form>' +
+                (msg || '') +
+                '<p class="acct-note">' + t('Committee member companies get extended access — granted by the GCC Sustainability Committee after registration.', '委员会成员企业可获得更高访问权限——注册后由GCC可持续发展委员会授予。') + '</p>';
+            applyLang();
+            document.getElementById('loginForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+                var email = document.getElementById('loginEmail').value.trim();
+                if (!email) return;
+                client.auth.signInWithOtp({ email: email, options: { emailRedirectTo: location.origin + '/account.html' } })
+                    .then(function (r) {
+                        if (r.error) throw r.error;
+                        card.querySelector('form').outerHTML = '<p class="acct-msg ok">' +
+                            t('Check your inbox — we sent a sign-in link to ' + email + '.', '请查收邮件——登录链接已发送至 ' + email + '。') + '</p>';
+                        applyLang();
+                    })
+                    .catch(function () {
+                        showSignIn(client, '<p class="acct-msg err">' + t('Could not send the link. Please try again.', '发送失败，请重试。') + '</p>');
+                    });
+            });
+        }
+
+        function showAccount(client, user) {
+            var isMember = user.app_metadata && user.app_metadata.tier === 'member';
+            card.innerHTML = '<h1>' + t('Your Account', '您的账户') + '</h1>' +
+                '<p class="acct-sub" style="margin-bottom:6px">' + user.email + '</p>' +
+                '<div style="text-align:center"><span class="acct-tier ' + (isMember ? 'acct-tier-member' : 'acct-tier-registered') + '">' +
+                (isMember ? t('Committee Member', '委员会成员') : t('Registered', '已注册')) + '</span></div>' +
+                '<p class="acct-sub">' + (isMember
+                    ? t('You have full access to all articles and member content.', '您可以访问所有文章及会员内容。')
+                    : t('You can read all registered-level articles. Committee member companies can request extended access.', '您可以阅读所有注册级文章。委员会成员企业可申请更高访问权限。')) + '</p>' +
+                '<div class="acct-actions">' +
+                '<a class="btn btn-atlas" href="index.html#briefing">' + t('Read the briefing', '阅读简报') + '</a>' +
+                (!isMember ? '<a class="btn btn-outline" href="mailto:gcc-sustainability@hongkong.ahk.de?subject=Member access request">' + t('Request member access', '申请会员权限') + '</a>' : '') +
+                '<button class="btn btn-outline" id="signOut">' + t('Sign out', '退出登录') + '</button>' +
+                '</div>';
+            applyLang();
+            document.getElementById('signOut').addEventListener('click', function () {
+                client.auth.signOut().then(function () { location.reload(); });
+            });
+        }
+
+        fetch('/api/auth-config')
+            .then(function (r) { if (!r.ok) throw new Error('unconfigured'); return r.json(); })
+            .then(function (cfg) {
+                var client = window.supabase.createClient(cfg.url, cfg.anonKey);
+                client.auth.getSession().then(function (s) {
+                    var session = s.data && s.data.session;
+                    if (session && session.user) showAccount(client, session.user);
+                    else showSignIn(client);
+                });
+                client.auth.onAuthStateChange(function (event, session) {
+                    if (event === 'SIGNED_IN' && session) showAccount(client, session.user);
+                });
+            })
+            .catch(showNotConfigured);
+    })();
+    </script>
+</body>
+</html>

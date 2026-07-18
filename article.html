@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article – GREEN FUTURE</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%231a5c38'/%3E%3Cpath d='M50 18 L58 42 L82 50 L58 58 L50 82 L42 58 L18 50 L42 42 Z' fill='%234caf50'/%3E%3Ccircle cx='50' cy='50' r='7' fill='%23fff'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700;8..60,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .artpage {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: calc(var(--nav-height) + 48px) 24px 90px;
+        }
+        .artpage-back {
+            display: inline-block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 26px;
+        }
+        .artpage-back:hover { text-decoration: underline; }
+        .artpage .briefing-kicker { margin-bottom: 10px; }
+        .artpage h1 {
+            font-family: var(--font-serif);
+            font-size: clamp(1.7rem, 3.6vw, 2.5rem);
+            line-height: 1.2;
+            margin-bottom: 12px;
+        }
+        .artpage-date {
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--gray-600);
+            margin-bottom: 24px;
+        }
+        .artpage-image { margin: 0 0 28px; }
+        .artpage-image img { width: 100%; border-radius: 10px; }
+        .artpage-image figcaption { font-size: 0.75rem; color: var(--gray-600); margin-top: 6px; }
+        .artpage .briefing-row { margin-bottom: 20px; }
+        .artpage .briefing-row p { font-size: 1.02rem; line-height: 1.75; }
+        .artpage-body { border-top: 1px solid var(--gray-200); margin-top: 30px; padding-top: 26px; }
+        .artpage-body h2 { font-family: var(--font-serif); font-size: 1.35rem; margin: 28px 0 10px; }
+        .artpage-body h3 { font-size: 1.05rem; font-weight: 700; margin: 22px 0 8px; }
+        .artpage-body p { font-size: 1.02rem; line-height: 1.75; margin-bottom: 14px; }
+        .artpage-body ul { margin: 0 0 14px 22px; list-style: disc; }
+        .artpage-body li { font-size: 1rem; line-height: 1.65; margin-bottom: 6px; }
+        .artpage-lock {
+            text-align: center;
+            background: var(--gray-100);
+            border: 1px solid var(--gray-200);
+            border-radius: 14px;
+            padding: 44px 28px;
+            margin-top: 24px;
+        }
+        .artpage-lock h2 { font-family: var(--font-serif); font-size: 1.3rem; margin-bottom: 10px; }
+        .artpage-lock p { font-size: 0.92rem; color: var(--gray-600); margin-bottom: 20px; line-height: 1.6; }
+        .artpage-lock .btn { margin: 0 6px 8px; }
+        .artpage-loading { text-align: center; padding: 90px 0; color: var(--gray-600); }
+    </style>
+</head>
+<body>
+    <nav class="nav scrolled">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="assets/img/gcchk-logo.png" alt="GCC – German Chamber of Commerce Hong Kong">
+                <span>GREEN FUTURE</span>
+            </a>
+            <div class="nav-right">
+                <div class="lang-toggle">
+                    <button class="lang-btn active" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="zh">中文</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="artpage" id="artpage">
+        <div class="artpage-loading"><span class="lang-en">Loading article&hellip;</span><span class="lang-zh">正在加载文章&hellip;</span></div>
+    </main>
+
+    <script>
+    (function () {
+        var currentLang = localStorage.getItem('gcc-lang') || 'en';
+        function applyLang() {
+            document.documentElement.lang = currentLang === 'zh' ? 'zh-Hans' : 'en';
+            document.body.classList.toggle('zh', currentLang === 'zh');
+            document.querySelectorAll('.lang-btn').forEach(function (b) {
+                b.classList.toggle('active', b.dataset.lang === currentLang);
+            });
+        }
+        document.querySelectorAll('.lang-btn').forEach(function (b) {
+            b.addEventListener('click', function () {
+                currentLang = b.dataset.lang;
+                localStorage.setItem('gcc-lang', currentLang);
+                applyLang();
+            });
+        });
+        applyLang();
+
+        var t = function (en, zh) { return '<span class="lang-en">' + en + '</span><span class="lang-zh">' + (zh || en) + '</span>'; };
+        var pillarLabels = {
+            'eu': { en: 'EU Regulatory', zh: '欧盟法规' }, 'germany': { en: 'Germany & Retail', zh: '德国与零售' },
+            'china-hk': { en: 'China & Hong Kong', zh: '中国与香港' }, 'standards': { en: 'Standards & Certification', zh: '标准与认证' },
+            'explainer': { en: 'Explainer', zh: '解读' }
+        };
+
+        function authToken() {
+            try {
+                for (var i = 0; i < localStorage.length; i++) {
+                    var k = localStorage.key(i);
+                    if (k && k.indexOf('sb-') === 0 && k.indexOf('-auth-token') === k.length - 11) {
+                        var v = JSON.parse(localStorage.getItem(k));
+                        return (v && v.access_token) || null;
+                    }
+                }
+            } catch (e) {}
+            return null;
+        }
+
+        function renderBlocks(blocks) {
+            if (!Array.isArray(blocks)) return '';
+            var html = '', listOpen = false;
+            blocks.forEach(function (b) {
+                if (b._type !== 'block') return;
+                var text = (b.children || []).map(function (c) { return c.text || ''; }).join('');
+                var isItem = b.listItem === 'bullet';
+                if (isItem && !listOpen) { html += '<ul>'; listOpen = true; }
+                if (!isItem && listOpen) { html += '</ul>'; listOpen = false; }
+                if (isItem) { html += '<li>' + text + '</li>'; return; }
+                if (b.style === 'h2') html += '<h2>' + text + '</h2>';
+                else if (b.style === 'h3') html += '<h3>' + text + '</h3>';
+                else html += '<p>' + text + '</p>';
+            });
+            if (listOpen) html += '</ul>';
+            return html;
+        }
+
+        var slug = new URLSearchParams(location.search).get('slug');
+        var main = document.getElementById('artpage');
+
+        function fail() {
+            main.innerHTML = '<div class="artpage-loading">' + t('Article not found.', '未找到该文章。') +
+                '<p style="margin-top:16px"><a class="artpage-back" href="index.html#briefing">' + t('&larr; Back to the briefing', '&larr; 返回简报') + '</a></p></div>';
+            applyLang();
+        }
+        if (!slug) { fail(); return; }
+
+        var headers = {};
+        var token = authToken();
+        if (token) headers['Authorization'] = 'Bearer ' + token;
+
+        fetch('/api/content?type=article&slug=' + encodeURIComponent(slug), { headers: headers })
+            .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+            .then(function (p) {
+                var pillar = pillarLabels[p.pillar] || { en: p.pillar, zh: p.pillar };
+                var dateStr = p.publishedAt ? new Date(p.publishedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
+                document.title = (p.titleEn || 'Article') + ' – GREEN FUTURE';
+
+                var head =
+                    '<a class="artpage-back" href="index.html#briefing">' + t('&larr; All news', '&larr; 全部新闻') + '</a>' +
+                    '<div><span class="briefing-kicker">' + t(pillar.en, pillar.zh) + '</span></div>' +
+                    '<h1>' + t(p.titleEn, p.titleZh) + '</h1>' +
+                    '<div class="artpage-date">HONG KONG &middot; ' + dateStr + '</div>' +
+                    (p.imageUrl ? '<figure class="artpage-image"><img src="' + p.imageUrl + '" alt="">' + (p.imageCredit ? '<figcaption>' + p.imageCredit + '</figcaption>' : '') + '</figure>' : '');
+
+                if (p.locked) {
+                    var premium = p.accessLevel === 'premium';
+                    main.innerHTML = head +
+                        '<p style="font-size:1.05rem;line-height:1.7;color:var(--gray-600)">' + t(p.teaserEn || '', p.teaserZh || '') + '</p>' +
+                        '<div class="artpage-lock">' +
+                        '<h2>' + (premium ? t('Member content', '会员内容') : t('Free registration required', '需要免费注册')) + '</h2>' +
+                        '<p>' + (premium
+                            ? t('This in-depth report is reserved for Committee member companies.', '此深度报告仅面向委员会成员企业开放。')
+                            : t('Sign in with your email — free, no password — to read the full article.', '使用邮箱登录（免费、无需密码）即可阅读全文。')) + '</p>' +
+                        '<a class="btn btn-atlas" style="width:auto" href="account.html">' + (premium ? t('Sign in', '登录') : t('Sign in free', '免费登录')) + '</a>' +
+                        (premium ? '<a class="btn btn-outline" href="mailto:gcc-sustainability@hongkong.ahk.de?subject=Member access request">' + t('Request member access', '申请会员权限') + '</a>' : '') +
+                        '</div>';
+                } else {
+                    var row = function (le, lz, te, tz) {
+                        return te ? '<div class="briefing-row"><div class="briefing-row-label">' + t(le, lz) + '</div><p>' + t(te, tz) + '</p></div>' : '';
+                    };
+                    var sources = '';
+                    if (Array.isArray(p.sources) && p.sources.length) {
+                        sources = '<p class="briefing-sources">' + t('Source:', '来源：') + ' ' + p.sources.map(function (u) {
+                            var host = u; try { host = new URL(u).hostname.replace(/^www\./, ''); } catch (e) {}
+                            return '<a href="' + u + '" target="_blank" rel="noopener">' + host + ' &nearr;</a>';
+                        }).join(' &middot; ') + '</p>';
+                    }
+                    main.innerHTML = head +
+                        row('What happened', '发生了什么', p.whatHappenedEn, p.whatHappenedZh) +
+                        row('Why it matters', '为何重要', p.whyItMattersEn, p.whyItMattersZh) +
+                        row('What to do', '应对措施', p.supplierActionEn, p.supplierActionZh) +
+                        (p.bodyEn ? '<div class="artpage-body">' + renderBlocks(currentLang === 'zh' && p.bodyZh ? p.bodyZh : p.bodyEn) + '</div>' : '') +
+                        sources;
+                }
+                applyLang();
+            })
+            .catch(fail);
+    })();
+    </script>
+</body>
+</html>

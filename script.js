@@ -1231,10 +1231,39 @@ function applyLang(scope) {
     }
 }
 
+function authToken() {
+    try {
+        for (let i = 0; i < localStorage.length; i++) {
+            const k = localStorage.key(i);
+            if (k && k.startsWith('sb-') && k.endsWith('-auth-token')) {
+                const v = JSON.parse(localStorage.getItem(k));
+                return (v && v.access_token) || null;
+            }
+        }
+    } catch (e) { /* no session */ }
+    return null;
+}
+
 async function loadContent(type) {
-    const r = await fetch(`/api/content?type=${type}`);
+    const headers = {};
+    const token = authToken();
+    if (token) headers['Authorization'] = `Bearer ${token}`;
+    const r = await fetch(`/api/content?type=${type}`, { headers });
     if (!r.ok) throw new Error(`content ${type}: ${r.status}`);
     return r.json();
+}
+
+// Nav sign-in state
+const navSignin = document.getElementById('navSignin');
+if (navSignin && authToken()) {
+    navSignin.innerHTML = '<span class="lang-en">Account</span><span class="lang-zh">账户</span>';
+    applyLangWhenReady();
+}
+function applyLangWhenReady() {
+    if (currentLang === 'zh' && navSignin) {
+        navSignin.querySelectorAll('.lang-en').forEach(el => el.style.display = 'none');
+        navSignin.querySelectorAll('.lang-zh').forEach(el => el.style.display = 'inline');
+    }
 }
 
 const catDisplay = {
@@ -1390,26 +1419,68 @@ function renderBriefing(posts) {
         applyLang(dateline);
     }
 
+    const titleLink = (p, tag) => `<${tag}><a class="briefing-title-link" href="article.html?slug=${p.slug || ''}"><span class="lang-en">${p.titleEn}</span><span class="lang-zh">${p.titleZh || p.titleEn}</span></a></${tag}>`;
+
+    const lockCta = p => {
+        const premium = p.accessLevel === 'premium';
+        const label = premium
+            ? '<span class="lang-en">Member content &mdash; sign in</span><span class="lang-zh">会员内容——请登录</span>'
+            : '<span class="lang-en">Sign in free to read</span><span class="lang-zh">免费登录阅读全文</span>';
+        return `<a class="briefing-lock-cta ${premium ? 'briefing-lock-premium' : ''}" href="account.html">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            ${label} &rarr;</a>`;
+    };
+
+    const readMore = p => `<p class="briefing-readmore"><a href="article.html?slug=${p.slug || ''}"><span class="lang-en">Full article &rarr;</span><span class="lang-zh">阅读全文 &rarr;</span></a></p>`;
+
     const [lead, ...rest] = posts;
 
-    const leadHtml = `
+    const leadImg = lead.imageUrl
+        ? `<a href="article.html?slug=${lead.slug || ''}" class="briefing-lead-img"><img src="${lead.imageUrl}" alt="" loading="lazy"></a>`
+        : '';
+
+    const leadHtml = lead.locked ? `
+        <article class="briefing-lead briefing-locked" id="briefing-${lead.slug || ''}">
+            ${kicker(lead)}
+            ${titleLink(lead, 'h3')}
+            ${leadImg}
+            <p class="briefing-item-text"><span class="lang-en">${lead.teaserEn || ''}</span><span class="lang-zh">${lead.teaserZh || lead.teaserEn || ''}</span></p>
+            ${lockCta(lead)}
+        </article>` : `
         <article class="briefing-lead" id="briefing-${lead.slug || ''}">
             ${kicker(lead)}
-            <h3><span class="lang-en">${lead.titleEn}</span><span class="lang-zh">${lead.titleZh || lead.titleEn}</span></h3>
+            ${titleLink(lead, 'h3')}
+            ${leadImg}
             ${row('What happened', '发生了什么', lead.whatHappenedEn, lead.whatHappenedZh)}
             ${row('Why it matters', '为何重要', lead.whyItMattersEn, lead.whyItMattersZh)}
             ${row('What to do', '应对措施', lead.supplierActionEn, lead.supplierActionZh)}
             ${sourceLinks(lead)}
+            ${readMore(lead)}
         </article>`;
 
-    const restHtml = rest.map(p => `
+    const restHtml = rest.map(p => {
+        const thumb = p.imageUrl ? `<a href="article.html?slug=${p.slug || ''}" class="briefing-thumb"><img src="${p.imageUrl}" alt="" loading="lazy"></a>` : '';
+        if (p.locked) {
+            return `
+        <article class="briefing-item briefing-locked" id="briefing-${p.slug || ''}">
+            ${kicker(p)}
+            ${titleLink(p, 'h4')}
+            ${thumb}
+            <p class="briefing-item-text"><span class="lang-en">${p.teaserEn || ''}</span><span class="lang-zh">${p.teaserZh || p.teaserEn || ''}</span></p>
+            ${lockCta(p)}
+        </article>`;
+        }
+        return `
         <article class="briefing-item" id="briefing-${p.slug || ''}">
             ${kicker(p)}
-            <h4><span class="lang-en">${p.titleEn}</span><span class="lang-zh">${p.titleZh || p.titleEn}</span></h4>
+            ${titleLink(p, 'h4')}
+            ${thumb}
             <p class="briefing-item-text"><span class="lang-en">${p.whatHappenedEn || ''}</span><span class="lang-zh">${p.whatHappenedZh || p.whatHappenedEn || ''}</span></p>
             ${p.supplierActionEn ? `<p class="briefing-item-action"><strong><span class="lang-en">What to do:</span><span class="lang-zh">应对措施：</span></strong> <span class="lang-en">${p.supplierActionEn}</span><span class="lang-zh">${p.supplierActionZh || p.supplierActionEn}</span></p>` : ''}
             ${sourceLinks(p)}
-        </article>`).join('');
+            ${readMore(p)}
+        </article>`;
+    }).join('');
 
     list.innerHTML = `
         <div class="briefing-columns">

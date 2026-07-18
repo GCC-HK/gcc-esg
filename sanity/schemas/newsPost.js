@@ -37,6 +37,8 @@ export default {
             name: 'sources', title: 'Sources (URLs)', type: 'array',
             of: [{ type: 'url' }]
         },
+        { name: 'imageUrl', title: 'Image URL (e.g. assets/img/news/x.jpg)', type: 'string' },
+        { name: 'imageCredit', title: 'Image credit/license', type: 'string' },
         {
             name: 'accessLevel', title: 'Access level', type: 'string',
             description: 'public = headline visible to all; registered = full text needs sign-up',

@@ -26,9 +26,19 @@ Stack: static site + Vercel serverless functions (`/api`) + Sanity CMS (content)
 - ⚠️ The API token used for seeding passed through chat — rotate it at sanity.io/manage → API → Tokens when convenient. It is not stored in the repo.
 - To edit content: either use a deployed Sanity Studio (Step 4 of the project roadmap) or re-run a seed script with an editor token
 
-### 5. Vercel environment variables (Project → Settings → Environment Variables)
+### 5. Supabase (member area / sign-in)
+- [ ] supabase.com → New project (name "gcc-green-future", region Singapore, free tier)
+- [ ] Project Settings → API: copy the **Project URL** and the **anon public key**
+- [ ] Add both to Vercel env vars (below). That's all — magic-link email sign-in works out of the box (Supabase's built-in mailer; switch to Resend SMTP at go-live for deliverability)
+- [ ] **Granting member access:** Supabase Dashboard → Authentication → Users → select user → edit App Metadata → `{"tier": "member"}`. Registered users need no action.
+- Content tiers are set per post/regulation in Sanity via the `accessLevel` field (`public` / `registered` / `premium`). Gating is enforced server-side in `/api/content` — locked text never reaches the browser.
+- Local testing: `SUPABASE_URL=... SUPABASE_ANON_KEY=... node scripts/dev-server.js`
+
+### 6. Vercel environment variables (Project → Settings → Environment Variables)
 | Variable | Value |
 |---|---|
+| `SUPABASE_URL` | from Supabase Settings → API |
+| `SUPABASE_ANON_KEY` | from Supabase Settings → API (anon public) |
 | `RESEND_API_KEY` | from Resend |
 | `RESEND_AUDIENCE_ID` | from Resend Audiences |
 | `RESEND_FROM` | `GCC Green Future <briefing@send.gcchk-esg.com>` |
