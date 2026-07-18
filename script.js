@@ -1386,7 +1386,7 @@ function renderBriefing(posts) {
         const d = new Date(posts[0].publishedAt);
         const en = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }).toUpperCase();
         const zh = `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`;
-        dateline.innerHTML = `<span class="lang-en">HONG KONG &middot; ${en} &middot; WEEKLY EDITION</span><span class="lang-zh">香港 &middot; ${zh} &middot; 每周版</span>`;
+        dateline.innerHTML = `<span class="lang-en">HONG KONG &middot; ${en}</span><span class="lang-zh">香港 &middot; ${zh}</span>`;
         applyLang(dateline);
     }
 
