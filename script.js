@@ -64,7 +64,9 @@ const statusLabelsZh = {
 };
 
 // ===== REGULATIONS DATABASE =====
-const regulations = [
+// Built-in fallback data. On load, the site fetches the live version from
+// Sanity CMS via /api/content and replaces this array if available.
+let regulations = [
     {
         id: 'csrd',
         name: 'CSRD',
@@ -72,23 +74,23 @@ const regulations = [
         status: 'inforce',
         statusLabel: 'IN FORCE',
         inForce: '5 January 2023',
-        complianceDeadline: '1 January 2025 (companies >1,000 employees & >€450M turnover)',
-        lastReviewed: 'March 2026',
+        complianceDeadline: 'First reporting for FY2027, published 2028 (companies >1,000 employees & >€450M turnover)',
+        lastReviewed: 'July 2026',
         eurlex: 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32022L2464',
         sections: [
             { title: 'REPORTING', text: 'Double materiality assessment required. Report under European Sustainability Reporting Standards (ESRS) with third-party assurance.' },
             { title: 'SUPPLY CHAIN', text: 'Disclosure of Scope 3 emissions, supply chain due diligence processes, and supplier sustainability performance. Smaller suppliers are indirectly affected via their EU buyer\'s reporting obligations.' },
-            { title: 'PENALTIES', text: 'Member state penalties apply. Directors personally liable for reporting failures. Potential fines up to 10M EUR or 5% of turnover.' }
+            { title: 'PENALTIES', text: 'Penalties are set at member-state level and must be effective, proportionate and dissuasive. Example: Germany provides fines of up to €10M or 5% of turnover for capital-market-oriented companies.' }
         ],
         applies: (cat, markets, role, size) => {
             const euMarket = markets.includes('eu') || markets.includes('germany');
             return euMarket && size === 'large';
         },
         reason: (cat, markets, role, size) => {
-            return 'Under the Omnibus I revision (March 2026), companies with >1,000 employees AND >€450M turnover must report. Smaller suppliers are indirectly affected via their EU buyer\'s reporting obligations.';
+            return 'Under Omnibus I (Directive (EU) 2026/470, in force 18 March 2026), companies with >1,000 employees AND >€450M turnover report from FY2027 (first reports in 2028). Smaller suppliers are indirectly affected via their EU buyer\'s reporting obligations.';
         },
         reasonZh: (cat, markets, role, size) => {
-            return '根据Omnibus I修订版（2026年3月），员工超过1,000人且营业额超过4.5亿欧元的企业必须报告。较小的供应商通过其欧盟买家的报告义务间接受到影响。';
+            return '根据Omnibus I修订指令（(EU) 2026/470，2026年3月18日生效），员工超过1,000人且营业额超过4.5亿欧元的企业自2027财年起报告（首份报告于2028年发布）。较小的供应商通过其欧盟买家的报告义务间接受到影响。';
         }
     },
     {
@@ -99,22 +101,22 @@ const regulations = [
         statusLabel: 'PREPARE NOW',
         inForce: '25 July 2024',
         complianceDeadline: 'July 2029 (companies >5,000 employees & >€1.5B turnover)',
-        lastReviewed: 'March 2026',
+        lastReviewed: 'July 2026',
         eurlex: 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024L1760',
         sections: [
-            { title: 'SUPPLY CHAIN', text: 'Mandatory human rights and environmental due diligence limited to direct (Tier 1) business partners. Risk-based approach for deeper tiers.' },
-            { title: 'REPORTING', text: 'Annual due diligence statement. Climate transition plan aligned with Paris Agreement targets.' },
-            { title: 'PENALTIES', text: 'Fines up to 5% of worldwide net turnover. Civil liability for damages caused by due diligence failures.' }
+            { title: 'SUPPLY CHAIN', text: 'Mandatory human rights and environmental due diligence under a risk-based approach: focus where adverse impacts are most likely and most severe across the chain of activities.' },
+            { title: 'REPORTING', text: 'Annual due diligence statement on identified impacts and actions taken. (Omnibus I removed the mandatory climate transition plan adoption requirement.)' },
+            { title: 'PENALTIES', text: 'Fines capped at 3% of net worldwide turnover. Civil liability is governed by member-state national law (the EU-harmonised liability regime was removed by Omnibus I).' }
         ],
         applies: (cat, markets, role, size) => {
             const euMarket = markets.includes('eu') || markets.includes('germany');
             return euMarket && size === 'large';
         },
         reason: (cat, markets, role, size) => {
-            return 'Under the Omnibus I revision (March 2026), companies with >5,000 employees AND >€1.5B turnover must conduct Tier 1 supply chain due diligence by July 2029.';
+            return 'Under Omnibus I (Directive (EU) 2026/470), companies with >5,000 employees AND >€1.5B turnover must conduct risk-based supply chain due diligence from July 2029.';
         },
         reasonZh: (cat, markets, role, size) => {
-            return '根据Omnibus I修订版（2026年3月），员工超过5,000人且营业额超过15亿欧元的企业须在2029年7月前完成一级供应链尽职调查。';
+            return '根据Omnibus I修订指令（(EU) 2026/470），员工超过5,000人且营业额超过15亿欧元的企业须自2029年7月起开展基于风险的供应链尽职调查。';
         }
     },
     {
@@ -125,57 +127,55 @@ const regulations = [
         statusLabel: 'PHASING IN',
         inForce: '1 October 2023 (transitional)',
         complianceDeadline: '1 January 2026 (definitive phase)',
-        lastReviewed: 'March 2026',
+        lastReviewed: 'July 2026',
         eurlex: 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0956',
         sections: [
-            { title: 'REPORTING', text: 'Quarterly CBAM reports during transitional phase. Declare embedded emissions for all covered imports.' },
-            { title: 'DOCUMENTATION', text: 'Verified emissions data from production facilities. CBAM certificates must be purchased to cover embedded carbon.' },
+            { title: 'REPORTING', text: 'Definitive regime since 1 January 2026: annual CBAM declarations (first due 30 September 2027). Importers below 50 tonnes/year cumulative are exempt under Reg. (EU) 2025/2083.' },
+            { title: 'DOCUMENTATION', text: 'Verified emissions data from production facilities. CBAM certificates must be purchased to cover embedded carbon (certificate sales start February 2027).' },
             { title: 'PENALTIES', text: 'Penalties for non-reporting: 10-50 EUR per tonne of unreported emissions. Certificate shortfall penalties mirror EU ETS prices.' }
         ],
         applies: (cat, markets, role, size) => {
             const euMarket = markets.includes('eu') || markets.includes('germany');
-            const relevantCat = ['electronics', 'construction', 'furniture'].includes(cat);
+            const relevantCat = cat === 'construction';
             const relevantRole = role === 'supplier' || role === 'importer';
             return euMarket && relevantCat && relevantRole;
         },
         reason: (cat, markets, role, size) => {
-            const catName = { electronics: 'Electronics', construction: 'Construction Products', furniture: 'Furniture & Home Goods' }[cat] || cat;
             const roleText = role === 'supplier' ? 'an exporter to the EU' : 'an EU-based importer';
-            return `As ${roleText} of ${catName}, you must declare embedded carbon emissions under CBAM's carbon border adjustment mechanism.`;
+            return `As ${roleText} of Construction Products, your iron & steel, cement and aluminium goods fall under CBAM's embedded-emissions declarations. A proposed extension (~180 downstream steel/aluminium products, e.g. car parts and appliances) may broaden coverage from 2028.`;
         },
         reasonZh: (cat, markets, role, size) => {
-            const catName = { electronics: '电子产品', construction: '建筑材料', furniture: '家具与家居用品' }[cat] || cat;
             const roleText = role === 'supplier' ? '向欧盟出口' : '作为欧盟进口商';
-            return `${roleText}${catName}，您须根据CBAM碳边境调节机制申报内含碳排放量。`;
+            return `${roleText}建筑材料，其中的钢铁、水泥和铝产品属于CBAM覆盖范围，须申报内含碳排放量。拟议的扩展方案（约180种下游钢铝产品，如汽车零部件和家电）可能自2028年起扩大覆盖范围。`;
         }
     },
     {
         id: 'eudr',
         name: 'EUDR',
         ref: '(EU) 2023/1115',
-        status: 'inforce',
-        statusLabel: 'IN FORCE',
-        inForce: '29 June 2023',
-        complianceDeadline: '30 December 2024 (large), 30 June 2025 (SMEs)',
-        lastReviewed: 'March 2026',
+        status: 'phasing',
+        statusLabel: 'PHASING IN',
+        inForce: '29 June 2023 (application postponed twice)',
+        complianceDeadline: '30 December 2026 (large & medium), 30 June 2027 (micro & small) — per Reg. (EU) 2025/2650',
+        lastReviewed: 'July 2026',
         eurlex: 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1115',
         sections: [
             { title: 'SUPPLY CHAIN', text: 'Due diligence system to verify products are deforestation-free. Geolocation data required for production plots.' },
             { title: 'DOCUMENTATION', text: 'Due diligence statements for each shipment. Traceability records maintained for 5 years minimum.' },
-            { title: 'PENALTIES', text: 'Fines proportionate to environmental damage, minimum 4% of EU turnover. Product confiscation and market bans.' }
+            { title: 'PENALTIES', text: 'Member states must provide for maximum fines of at least 4% of EU-wide turnover. Product confiscation and market bans.' }
         ],
         applies: (cat, markets, role, size) => {
             const euMarket = markets.includes('eu') || markets.includes('germany');
-            const relevantCat = ['furniture', 'food', 'textiles'].includes(cat);
+            const relevantCat = ['furniture', 'food'].includes(cat);
             return euMarket && relevantCat;
         },
         reason: (cat, markets, role, size) => {
-            const catName = { furniture: 'Furniture & Home Goods (wood-based)', food: 'Food & Packaging', textiles: 'Textiles & Apparel' }[cat] || cat;
-            return `${catName} products may contain commodities (wood, rubber, palm oil, soy) covered by the EU Deforestation Regulation.`;
+            const catName = { furniture: 'Furniture & Home Goods (wood-based)', food: 'Food & Packaging' }[cat] || cat;
+            return `${catName} products may contain commodities covered by the EU Deforestation Regulation (cattle, cocoa, coffee, oil palm, rubber, soya, wood — cotton and other textile fibres are NOT in scope).`;
         },
         reasonZh: (cat, markets, role, size) => {
-            const catName = { furniture: '家具与家居用品（木制品）', food: '食品与包装', textiles: '纺织品与服装' }[cat] || cat;
-            return `${catName}可能含有欧盟零毁林法规覆盖的原料（木材、橡胶、棕榈油、大豆）。`;
+            const catName = { furniture: '家具与家居用品（木制品）', food: '食品与包装' }[cat] || cat;
+            return `${catName}可能含有欧盟零毁林法规覆盖的原料（牛、可可、咖啡、油棕、橡胶、大豆、木材——棉花及其他纺织纤维不在范围内）。`;
         }
     },
     {
@@ -184,14 +184,14 @@ const regulations = [
         ref: '(EU) 2023/1542',
         status: 'phasing',
         statusLabel: 'PHASING IN',
-        inForce: '17 August 2023',
-        complianceDeadline: '18 February 2025 (labelling), 18 August 2025 (carbon footprint)',
-        lastReviewed: 'March 2026',
+        inForce: '17 August 2023 (applies from 18 February 2024)',
+        complianceDeadline: '18 August 2026 (labelling), 18 February 2027 (battery passport), 18 August 2027 (due diligence)',
+        lastReviewed: 'July 2026',
         eurlex: 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1542',
         sections: [
             { title: 'PRODUCT DESIGN', text: 'Minimum recycled content thresholds. Removability and replaceability requirements for portable batteries.' },
-            { title: 'DOCUMENTATION', text: 'Battery passport (digital) required for EV and industrial batteries. Carbon footprint declaration and labelling.' },
-            { title: 'SUPPLY CHAIN', text: 'Due diligence for cobalt, lithium, nickel, and natural graphite sourcing. Collection and recycling targets.' }
+            { title: 'DOCUMENTATION', text: 'Battery passport (digital) required for EV, LMT and industrial >2 kWh batteries from 18 February 2027. Labelling/QR requirements apply from 18 August 2026; the carbon footprint declaration awaits its delegated act (methodology still pending).' },
+            { title: 'SUPPLY CHAIN', text: 'Due diligence for cobalt, lithium, nickel, and natural graphite sourcing — postponed to 18 August 2027 by Reg. (EU) 2025/1561. Collection and recycling targets.' }
         ],
         applies: (cat, markets, role, size) => {
             const euMarket = markets.includes('eu') || markets.includes('germany');
@@ -212,7 +212,7 @@ const regulations = [
         statusLabel: 'IN FORCE',
         inForce: '17 October 2023',
         complianceDeadline: 'Varies by product (2023-2035)',
-        lastReviewed: 'March 2026',
+        lastReviewed: 'July 2026',
         eurlex: 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R2055',
         sections: [
             { title: 'PRODUCT DESIGN', text: 'Ban on intentionally added microplastics (synthetic polymers <5mm). Reformulation required for restricted products.' },
@@ -240,8 +240,8 @@ const regulations = [
         status: 'prepare',
         statusLabel: 'PREPARE NOW',
         inForce: '18 July 2024',
-        complianceDeadline: 'Product-specific delegated acts from 2025 onwards',
-        lastReviewed: 'March 2026',
+        complianceDeadline: 'First delegated acts expected 2026–2027 (iron & steel, textiles); obligations apply ~18 months after each act',
+        lastReviewed: 'July 2026',
         eurlex: 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1781',
         sections: [
             { title: 'PRODUCT DESIGN', text: 'Performance requirements for durability, repairability, recyclability, energy efficiency, and resource use.' },
@@ -267,9 +267,9 @@ const regulations = [
         ref: '(EU) 2024/1799',
         status: 'prepare',
         statusLabel: 'PREPARE NOW',
-        inForce: '20 November 2024',
+        inForce: '30 July 2024',
         complianceDeadline: '31 July 2026 (member state transposition)',
-        lastReviewed: 'March 2026',
+        lastReviewed: 'July 2026',
         eurlex: 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024L1799',
         sections: [
             { title: 'PRODUCT DESIGN', text: 'Products must be designed for repair. Spare parts available for minimum period. Anti-repair practices prohibited.' },
@@ -296,9 +296,9 @@ const regulations = [
         ref: 'COM/2023/166',
         status: 'prepare',
         statusLabel: 'PREPARE NOW',
-        inForce: 'Proposed (March 2023)',
-        complianceDeadline: 'Expected 2026-2027 (post-adoption)',
-        lastReviewed: 'March 2026',
+        inForce: 'Proposed March 2023 — negotiations suspended',
+        complianceDeadline: 'Stalled: Commission announced intended withdrawal (June 2025); adoption not currently expected',
+        lastReviewed: 'July 2026',
         eurlex: 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=COM:2023:166:FIN',
         sections: [
             { title: 'DOCUMENTATION', text: 'All environmental claims must be substantiated by scientific evidence and verified by accredited third-party bodies.' },
@@ -312,11 +312,66 @@ const regulations = [
         },
         reason: (cat, markets, role, size) => {
             const roleText = role === 'brand' ? 'a Brand/Retailer' : 'an EU-based importer';
-            return `As ${roleText}, any sustainability or environmental claims on your products will require third-party verified scientific evidence.`;
+            return `As ${roleText}, note this proposal is currently stalled — but environmental claims are already regulated by the Empowering Consumers Directive (EU) 2024/825, applying from 27 September 2026.`;
         },
         reasonZh: (cat, markets, role, size) => {
             const roleText = role === 'brand' ? '品牌/零售商' : '欧盟进口商';
-            return `作为${roleText}，您产品上的任何可持续性或环保声明都将需要经第三方验证的科学证据。`;
+            return `作为${roleText}，请注意该提案目前处于停滞状态——但环保声明已受《赋能消费者绿色转型指令》(EU) 2024/825监管，该指令自2026年9月27日起适用。`;
+        }
+    },
+    {
+        id: 'empco',
+        name: 'Empowering Consumers Directive',
+        ref: '(EU) 2024/825',
+        status: 'phasing',
+        statusLabel: 'PHASING IN',
+        inForce: '26 March 2024',
+        complianceDeadline: 'Rules apply from 27 September 2026 (member state transposition by 27 March 2026)',
+        lastReviewed: 'July 2026',
+        eurlex: 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024L0825',
+        sections: [
+            { title: 'DOCUMENTATION', text: 'Bans generic environmental claims ("eco-friendly", "green", "climate neutral") without recognised excellent environmental performance. Claims based solely on carbon offsetting are prohibited.' },
+            { title: 'PRODUCT DESIGN', text: 'Sustainability labels only permitted if based on an approved certification scheme or established by public authorities. Durability and repairability information requirements.' },
+            { title: 'PENALTIES', text: 'Enforced through national unfair-commercial-practices regimes; fines and injunctions vary by member state.' }
+        ],
+        applies: (cat, markets, role, size) => {
+            const euMarket = markets.includes('eu') || markets.includes('germany');
+            const relevantRole = role === 'brand' || role === 'importer';
+            return euMarket && relevantRole;
+        },
+        reason: (cat, markets, role, size) => {
+            const roleText = role === 'brand' ? 'a Brand/Retailer' : 'an EU-based importer';
+            return `As ${roleText}, any environmental marketing claims on products or packaging must comply with the new anti-greenwashing rules from 27 September 2026.`;
+        },
+        reasonZh: (cat, markets, role, size) => {
+            const roleText = role === 'brand' ? '品牌/零售商' : '欧盟进口商';
+            return `作为${roleText}，自2026年9月27日起，产品或包装上的任何环保营销声明均须符合新的反"漂绿"规则。`;
+        }
+    },
+    {
+        id: 'wfdtextiles',
+        name: 'Textiles EPR (Waste Framework Directive)',
+        ref: '(EU) 2025/1892',
+        status: 'prepare',
+        statusLabel: 'PREPARE NOW',
+        inForce: '16 October 2025',
+        complianceDeadline: 'EPR schemes in all member states by 17 April 2028',
+        lastReviewed: 'July 2026',
+        eurlex: 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025L1892',
+        sections: [
+            { title: 'SUPPLY CHAIN', text: 'Mandatory extended producer responsibility (EPR) for textiles and footwear in every member state. Producers (incl. importers and e-commerce sellers) pay fees funding collection, sorting and recycling.' },
+            { title: 'DOCUMENTATION', text: 'Producer registration in each member state where products are sold. Fees eco-modulated by durability, recyclability and recycled content.' },
+            { title: 'PENALTIES', text: 'Non-registered producers may not place textiles on that member state\'s market. National enforcement and fines.' }
+        ],
+        applies: (cat, markets, role, size) => {
+            const euMarket = markets.includes('eu') || markets.includes('germany');
+            return euMarket && cat === 'textiles';
+        },
+        reason: (cat, markets, role, size) => {
+            return 'Textiles & Apparel producers selling into the EU will pay eco-modulated EPR fees in every member state — design for durability and recyclability directly lowers the fee.';
+        },
+        reasonZh: (cat, markets, role, size) => {
+            return '向欧盟销售的纺织品与服装生产商将在每个成员国缴纳按生态标准调节的生产者责任延伸（EPR）费用——耐用性和可回收性设计可直接降低费用。';
         }
     },
     {
@@ -327,7 +382,7 @@ const regulations = [
         statusLabel: 'IN FORCE',
         inForce: '21 July 2011',
         complianceDeadline: 'Ongoing (applies at point of market placement)',
-        lastReviewed: 'March 2026',
+        lastReviewed: 'July 2026',
         eurlex: 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32011L0065',
         sections: [
             { title: 'PRODUCT DESIGN', text: 'Maximum concentration limits for lead, mercury, cadmium, hexavalent chromium, PBB, and PBDE in electrical/electronic equipment.' },
@@ -353,7 +408,7 @@ const regulations = [
         statusLabel: 'PHASING IN',
         inForce: '11 February 2025',
         complianceDeadline: '12 August 2026 (first obligations apply)',
-        lastReviewed: 'March 2026',
+        lastReviewed: 'July 2026',
         eurlex: 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R0040',
         sections: [
             { title: 'PRODUCT DESIGN', text: 'Minimum recycled content in plastic packaging. Packaging must be recyclable and meet design-for-recycling criteria by 2030.' },
@@ -381,7 +436,7 @@ const regulations = [
         statusLabel: 'PREPARE NOW',
         inForce: '13 December 2024',
         complianceDeadline: '14 December 2027 (applies from)',
-        lastReviewed: 'March 2026',
+        lastReviewed: 'July 2026',
         eurlex: 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R3015',
         sections: [
             { title: 'SUPPLY CHAIN', text: 'Prohibition on placing products made with forced labour on the EU market. Applies at any stage of production, manufacture, harvest, or extraction.' },
@@ -406,8 +461,8 @@ const regulations = [
         status: 'phasing',
         statusLabel: 'PHASING IN',
         inForce: '18 July 2024 (ESPR framework)',
-        complianceDeadline: 'First wave 2026-2027 (textiles, electronics, furniture)',
-        lastReviewed: 'March 2026',
+        complianceDeadline: 'First delegated acts 2026–2027; DPP obligations expected 2027–2030 (textiles, furniture, steel & aluminium first)',
+        lastReviewed: 'July 2026',
         eurlex: 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1781',
         sections: [
             { title: 'DOCUMENTATION', text: 'Unique product identifier linked to digital record containing materials, origin, carbon footprint, repairability score, and end-of-life instructions.' },
@@ -416,16 +471,16 @@ const regulations = [
         ],
         applies: (cat, markets, role, size) => {
             const euMarket = markets.includes('eu') || markets.includes('germany');
-            const relevantCat = ['electronics', 'textiles', 'furniture'].includes(cat);
+            const relevantCat = ['textiles', 'furniture', 'construction'].includes(cat);
             return euMarket && relevantCat;
         },
         reason: (cat, markets, role, size) => {
-            const catName = { electronics: 'Electronics & Batteries', textiles: 'Textiles & Apparel', furniture: 'Furniture & Home Goods' }[cat] || cat;
-            return `${catName} are among the first product categories requiring a Digital Product Passport with full lifecycle data accessible via QR code.`;
+            const catName = { textiles: 'Textiles & Apparel', furniture: 'Furniture & Home Goods', construction: 'Construction Products (iron & steel, aluminium)' }[cat] || cat;
+            return `${catName} are among the first product categories in the ESPR Working Plan (April 2025) requiring a Digital Product Passport with lifecycle data accessible via QR code — obligations expected 2027–2030.`;
         },
         reasonZh: (cat, markets, role, size) => {
-            const catName = { electronics: '电子产品与电池', textiles: '纺织品与服装', furniture: '家具与家居用品' }[cat] || cat;
-            return `${catName}是首批需要数字产品护照的产品类别，须通过二维码提供完整的生命周期数据。`;
+            const catName = { textiles: '纺织品与服装', furniture: '家具与家居用品', construction: '建筑材料（钢铁、铝）' }[cat] || cat;
+            return `根据ESPR工作计划（2025年4月），${catName}是首批需要数字产品护照的产品类别，须通过二维码提供生命周期数据——义务预计于2027至2030年生效。`;
         }
     }
 ];
@@ -457,14 +512,73 @@ navLinks.querySelectorAll('a').forEach(link => {
     });
 });
 
-// ===== ADVANCED FILTER TOGGLE =====
-const advancedToggle = document.getElementById('advancedToggle');
-const advancedPanel = document.getElementById('advancedPanel');
+// ===== COMPASS WIZARD =====
+const wizardPanes = document.querySelectorAll('.wizard-pane');
+const wizardStepBtns = document.querySelectorAll('.wizard-step');
 
-advancedToggle.addEventListener('click', () => {
-    advancedToggle.classList.toggle('active');
-    advancedPanel.classList.toggle('active');
+function currentWizardStep() {
+    const active = document.querySelector('.wizard-pane.active');
+    return active ? parseInt(active.dataset.pane, 10) : 1;
+}
+
+function goToStep(n) {
+    wizardPanes.forEach(p => p.classList.toggle('active', p.dataset.pane === String(n)));
+    wizardStepBtns.forEach(s => {
+        const sn = parseInt(s.dataset.step, 10);
+        s.classList.toggle('active', sn === n);
+        s.classList.toggle('done', sn < n);
+    });
+}
+
+function flashAttention(el) {
+    el.classList.add('wizard-attention');
+    setTimeout(() => el.classList.remove('wizard-attention'), 1200);
+}
+
+document.querySelectorAll('.wizard-next').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const target = parseInt(btn.dataset.next, 10);
+        if (target === 2 && !document.getElementById('filterCategory').value) {
+            flashAttention(document.getElementById('wizardCatGrid'));
+            return;
+        }
+        if (target === 3 && document.querySelectorAll('input[name="market"]:checked').length === 0) {
+            flashAttention(document.getElementById('wizardMarkets'));
+            return;
+        }
+        goToStep(target);
+    });
 });
+
+document.querySelectorAll('.wizard-back').forEach(btn => {
+    btn.addEventListener('click', () => goToStep(parseInt(btn.dataset.back, 10)));
+});
+
+// Step indicators: allow jumping back to completed steps
+wizardStepBtns.forEach(s => {
+    s.addEventListener('click', () => {
+        const n = parseInt(s.dataset.step, 10);
+        if (n < currentWizardStep()) goToStep(n);
+    });
+});
+
+// Category buttons sync with the hidden select (kept for language + HS-lookup compatibility)
+const catSelect = document.getElementById('filterCategory');
+
+function syncCatButtons() {
+    document.querySelectorAll('.wizard-cat').forEach(b => {
+        b.classList.toggle('active', b.dataset.value === catSelect.value);
+    });
+}
+
+document.querySelectorAll('.wizard-cat').forEach(btn => {
+    btn.addEventListener('click', () => {
+        catSelect.value = btn.dataset.value;
+        syncCatButtons();
+    });
+});
+
+catSelect.addEventListener('change', syncCatButtons);
 
 // ===== ATLAS FILTER LOGIC =====
 const atlasSubmit = document.getElementById('atlasSubmit');
@@ -496,10 +610,7 @@ atlasSubmit.addEventListener('click', () => {
 
     atlasEmpty.style.display = 'none';
 
-    const statusOrder = { inforce: 0, phasing: 1, prepare: 2 };
-    applicable.sort((a, b) => statusOrder[a.status] - statusOrder[b.status]);
-
-    atlasCards.innerHTML = applicable.map(reg => {
+    const renderRegCard = reg => {
         const badgeClass = `badge-${reg.status}`;
         const reasonEn = reg.reason(category, markets, role, size);
         const reasonZh = reg.reasonZh(category, markets, role, size);
@@ -536,6 +647,25 @@ atlasSubmit.addEventListener('click', () => {
                 </div>
             </article>
         `;
+    };
+
+    const compassGroups = [
+        { statuses: ['inforce'], en: 'ACT NOW', zh: '立即行动', descEn: 'Already in force — these rules apply to your products today.', descZh: '已生效——这些规则现已适用于您的产品。' },
+        { statuses: ['phasing'], en: 'PREPARE', zh: '提前准备', descEn: 'Phasing in — compliance deadlines within the next 1–2 years.', descZh: '逐步实施——合规期限在未来1至2年内。' },
+        { statuses: ['prepare'], en: 'WATCH', zh: '持续关注', descEn: 'Adopted or proposed — start building readiness now.', descZh: '已通过或拟议中——请立即开始准备。' }
+    ];
+
+    atlasCards.innerHTML = compassGroups.map(g => {
+        const regs = applicable.filter(r => g.statuses.includes(r.status));
+        if (!regs.length) return '';
+        return `
+            <div class="compass-group">
+                <div class="compass-group-header">
+                    <h3><span class="lang-en">${g.en}</span><span class="lang-zh">${g.zh}</span></h3>
+                    <p><span class="lang-en">${g.descEn}</span><span class="lang-zh">${g.descZh}</span></p>
+                </div>
+                ${regs.map(renderRegCard).join('')}
+            </div>`;
     }).join('');
 
     // Re-apply language state to newly rendered DOM
@@ -598,14 +728,14 @@ function getHSSpecialNotes(code) {
     }
     if (chapter === 95) {
         notes.push({
-            en: 'Toy product \u2014 check additionally for EU Toy Safety Directive 2009/48/EC.',
-            zh: '\u73a9\u5177\u4ea7\u54c1 \u2014 \u8bf7\u540c\u65f6\u6838\u67e5\u6b27\u76df\u73a9\u5177\u5b89\u5168\u6307\u4ee4 2009/48/EC\u3002'
+            en: 'Toy product \u2014 EU Toy Safety Directive 2009/48/EC applies; the new Toy Safety Regulation (EU) 2025/2509 (incl. toy Digital Product Passport) applies from 1 August 2030.',
+            zh: '\u73a9\u5177\u4ea7\u54c1 \u2014 \u6b27\u76df\u73a9\u5177\u5b89\u5168\u6307\u4ee4 2009/48/EC \u9002\u7528\uff1b\u65b0\u7684\u73a9\u5177\u5b89\u5168\u6cd5\u89c4 (EU) 2025/2509\uff08\u542b\u73a9\u5177\u6570\u5b57\u4ea7\u54c1\u62a4\u7167\uff09\u81ea2030\u5e748\u67081\u65e5\u8d77\u9002\u7528\u3002'
         });
     }
     if (chapter >= 50 && chapter <= 63) {
         notes.push({
-            en: 'Textile product \u2014 EU Deforestation Regulation may apply for natural fibre sourcing.',
-            zh: '\u7eba\u7ec7\u54c1 \u2014 \u5929\u7136\u7ea4\u7ef4\u91c7\u8d2d\u53ef\u80fd\u9002\u7528\u6b27\u76df\u68ee\u6797\u780d\u4f10\u6cd5\u89c4\u3002'
+            en: 'Textile product \u2014 EU textiles EPR applies: producer responsibility schemes in all member states by April 2028 (Directive (EU) 2025/1892).',
+            zh: '\u7eba\u7ec7\u54c1 \u2014 \u6b27\u76df\u7eba\u7ec7\u54c1\u751f\u4ea7\u8005\u8d23\u4efb\u5ef6\u4f38\uff08EPR\uff09\u9002\u7528\uff1a\u6240\u6709\u6210\u5458\u56fd\u987b\u4e8e2028\u5e744\u6708\u524d\u5efa\u7acb\u76f8\u5173\u5236\u5ea6\uff08\u6307\u4ee4 (EU) 2025/1892\uff09\u3002'
         });
     }
     return notes;
@@ -676,15 +806,16 @@ async function lookupHSCode() {
         return;
     }
 
-    // Auto-select the matching category
+    // Auto-select the matching category (and sync the wizard buttons)
     document.getElementById('filterCategory').value = category;
+    document.getElementById('filterCategory').dispatchEvent(new Event('change'));
 
     const catName = hsCategoryNames[category];
     const notes = getHSSpecialNotes(code);
     const notesHtml = notes.map(n =>
         `<div class="hs-note"><span class="lang-en">${n.en}</span><span class="lang-zh">${n.zh}</span></div>`
     ).join('');
-    const manualLink = '<a href="#" class="hs-manual-link" onclick="event.preventDefault();document.getElementById(\'filterCategory\').focus()"><span class="lang-en">Not your product? Select manually above.</span><span class="lang-zh">\u4e0d\u662f\u60a8\u7684\u4ea7\u54c1\uff1f\u8bf7\u5728\u4e0a\u65b9\u624b\u52a8\u9009\u62e9\u3002</span></a>';
+    const manualLink = '<a href="#" class="hs-manual-link" onclick="event.preventDefault();document.querySelector(\'#wizardCatGrid .wizard-cat\').focus()"><span class="lang-en">Not your product? Select manually above.</span><span class="lang-zh">\u4e0d\u662f\u60a8\u7684\u4ea7\u54c1\uff1f\u8bf7\u5728\u4e0a\u65b9\u624b\u52a8\u9009\u62e9\u3002</span></a>';
 
     if (description) {
         const safeDesc = escapeHtml(description);
@@ -715,23 +846,32 @@ document.getElementById('hsCodeInput').addEventListener('input', function() {
 });
 
 // ===== CBAM CALCULATOR =====
+// Indicative sector averages. Since 2026 the EU publishes country- and
+// route-specific default values (IR 2025/2621, +10% mark-up in 2026 rising to
+// +30% by 2028) and route-specific CBAM benchmarks (IR 2025/2620).
+// Emission intensities are DIRECT emissions only for steel, aluminium and
+// hydrogen — CBAM counts indirect (electricity) emissions only for cement,
+// fertilisers and electricity.
 const cbamSectorData = {
-    steel_bof:            { emissions: 2.1,  benchmark: 1.328 },
-    steel_eaf:            { emissions: 0.4,  benchmark: 0.283 },
-    aluminium_primary:    { emissions: 6.7,  benchmark: 1.514 },
-    aluminium_secondary:  { emissions: 0.9,  benchmark: 0.400 },
-    cement:               { emissions: 0.8,  benchmark: 0.766 },
-    fertilisers:          { emissions: 2.3,  benchmark: 1.619 },
-    hydrogen:             { emissions: 10.6, benchmark: 8.850 }
+    steel_bof:            { emissions: 2.0,  benchmark: 1.248 },
+    steel_eaf:            { emissions: 0.4,  benchmark: 0.215 },
+    aluminium_primary:    { emissions: 1.5,  benchmark: 1.464 },
+    aluminium_secondary:  { emissions: 0.4,  benchmark: 0.400 },
+    cement:               { emissions: 0.8,  benchmark: 0.693 },
+    fertilisers:          { emissions: 2.3,  benchmark: 1.570 },
+    hydrogen:             { emissions: 10.4, benchmark: 6.840 }
 };
 
+// Headline carbon prices (€/tCO2e, mid-2026). CBAM Art. 9 credits only the
+// price EFFECTIVELY PAID net of free allocation/rebates — actual deductions
+// are usually lower than these headline rates.
 const cbamCarbonPrices = {
-    CN: 12, IN: 2, TR: 0, RU: 0, KR: 8, UA: 1,
-    GB: 45, VN: 0, ID: 0, BR: 0, JP: 3, EG: 0, ZA: 9, OTHER: 0
+    CN: 10, IN: 0, TR: 0, RU: 0, KR: 6, UA: 1,
+    GB: 66, VN: 0, ID: 0, BR: 0, JP: 12, EG: 0, ZA: 15, OTHER: 0
 };
 
-const CBAM_PRICE = 75.36;
-const CBAM_FREE_ALLOC_2026 = 0.975; // 97.5% free allocation in 2026
+const CBAM_PRICE = 75.28; // Q2 2026 certificate price (published 6 Jul 2026); quarterly in 2026, weekly from 2027
+const CBAM_FREE_ALLOC_2026 = 0.975; // 2026 CBAM factor: 97.5% of the benchmark deducted; payable share reaches 100% by 2034
 
 // Update default displays when sector changes
 document.getElementById('cbamSector').addEventListener('change', function() {
@@ -977,6 +1117,12 @@ document.getElementById('cbamCalculate').addEventListener('click', function() {
         </div>`;
     }
 
+    // 50 t/year de minimis (Reg. (EU) 2025/2083) — covers iron & steel, aluminium,
+    // fertilisers, cement; NOT hydrogen or electricity
+    if (volume < 50 && sector !== 'hydrogen') {
+        html += `<div class="cbam-callout cbam-callout-green"><span class="lang-en"><strong>De minimis exemption likely:</strong> importers whose cumulative CBAM-goods imports stay below 50 tonnes per year are exempt from CBAM obligations (Reg. (EU) 2025/2083; does not apply to hydrogen or electricity). The costs above apply only if the importing company exceeds this threshold across all its CBAM imports.</span><span class="lang-zh"><strong>可能适用微量豁免：</strong>每年累计进口CBAM产品低于50公吨的进口商可豁免CBAM义务（法规 (EU) 2025/2083；不适用于氢气和电力）。以上成本仅在进口商全部CBAM进口量超过该门槛时适用。</span></div>`;
+    }
+
     // Callouts (role-aware messaging)
     if (usingDefaultEmissions) {
         if (role === 'supplier') {
@@ -996,7 +1142,7 @@ document.getElementById('cbamCalculate').addEventListener('click', function() {
         html += `<div class="cbam-callout cbam-callout-green"><span class="lang-en">Your emissions intensity is at or below the EU benchmark. Minimal CBAM exposure for 2026.</span><span class="lang-zh">\u60a8\u7684\u6392\u653e\u5f3a\u5ea6\u7b49\u4e8e\u6216\u4f4e\u4e8e\u6b27\u76df\u57fa\u51c6\u503c\u30022026\u5e74CBAM\u98ce\u9669\u6781\u4f4e\u3002</span></div>`;
     }
 
-    html += `<div class="cbam-disclaimer"><span class="lang-en">This estimate uses the Q1 2026 CBAM certificate price (\u20ac75.36/tCO\u2082e), a 2.5% CBAM phase-in factor (97.5% free allocation), and EU published default values. Actual costs depend on verified emissions data, carbon prices paid in the country of origin, and quarterly certificate price updates. This is not legal or financial advice.</span><span class="lang-zh">\u672c\u4f30\u7b97\u4f7f\u75282026\u5e74\u7b2c\u4e00\u5b63\u5ea6CBAM\u8bc1\u4e66\u4ef7\u683c\uff08\u20ac75.36/tCO\u2082e\uff09\u30012.5%CBAM\u8fc7\u6e21\u56e0\u5b50\uff0897.5%\u514d\u8d39\u914d\u989d\uff09\u53ca\u6b27\u76df\u516c\u5e03\u7684\u9ed8\u8ba4\u503c\u3002\u5b9e\u9645\u6210\u672c\u53d6\u51b3\u4e8e\u7ecf\u6838\u5b9e\u7684\u6392\u653e\u6570\u636e\u3001\u539f\u4ea7\u56fd\u5df2\u652f\u4ed8\u7684\u78b3\u4ef7\uff0c\u4ee5\u53ca\u5b63\u5ea6\u8bc1\u4e66\u4ef7\u683c\u66f4\u65b0\u3002\u672c\u5de5\u5177\u4e0d\u6784\u6210\u6cd5\u5f8b\u6216\u8d22\u52a1\u5efa\u8bae\u3002</span></div>
+    html += `<div class="cbam-disclaimer"><span class="lang-en">This estimate uses the Q2 2026 CBAM certificate price (\u20ac75.28/tCO\u2082e), the 2026 CBAM factor (97.5% of the EU benchmark deducted as free allocation; the payable share rises to 100% by 2034), and indicative default values \u2014 since 2026 the EU publishes country- and route-specific defaults with a +10% mark-up (rising to +30% by 2028). Carbon-price credits count only the price effectively paid net of free allocation and rebates. Certificate sales start February 2027; the first annual declaration is due 30 September 2027. This is not legal or financial advice.</span><span class="lang-zh">\u672c\u4f30\u7b97\u4f7f\u75282026\u5e74\u7b2c\u4e8c\u5b63\u5ea6CBAM\u8bc1\u4e66\u4ef7\u683c\uff08\u20ac75.28/tCO\u2082e\uff09\u30012026\u5e74CBAM\u56e0\u5b50\uff08\u6b27\u76df\u57fa\u51c6\u503c\u768497.5%\u4f5c\u4e3a\u514d\u8d39\u914d\u989d\u6263\u51cf\uff1b\u5e94\u4ed8\u6bd4\u4f8b\u81f32034\u5e74\u5347\u81f3100%\uff09\u53ca\u6307\u793a\u6027\u9ed8\u8ba4\u503c\u2014\u2014\u81ea2026\u5e74\u8d77\u6b27\u76df\u53d1\u5e03\u6309\u56fd\u5bb6\u548c\u751f\u4ea7\u5de5\u827a\u533a\u5206\u7684\u9ed8\u8ba4\u503c\u5e76\u9644\u52a010%\u4e0a\u6d6e\uff08\u81f32028\u5e74\u5347\u81f330%\uff09\u3002\u78b3\u4ef7\u62b5\u6263\u4ec5\u8ba1\u5165\u6263\u9664\u514d\u8d39\u914d\u989d\u53ca\u8fd4\u8fd8\u540e\u5b9e\u9645\u6709\u6548\u652f\u4ed8\u7684\u78b3\u4ef7\u3002\u8bc1\u4e66\u9500\u552e\u81ea2027\u5e742\u6708\u5f00\u59cb\uff1b\u9996\u4efd\u5e74\u5ea6\u7533\u62a5\u987b\u4e8e2027\u5e749\u670830\u65e5\u524d\u63d0\u4ea4\u3002\u672c\u5de5\u5177\u4e0d\u6784\u6210\u6cd5\u5f8b\u6216\u8d22\u52a1\u5efa\u8bae\u3002</span></div>
         <a href="mailto:gcc-sustainability@hongkong.ahk.de" class="cbam-cta"><span class="lang-en">Get Expert CBAM Guidance \u2192</span><span class="lang-zh">\u83b7\u53d6\u4e13\u4e1aCBAM\u6307\u5bfc \u2192</span></a>
     </div>`;
 
@@ -1022,20 +1168,195 @@ faqItems.forEach(item => {
     });
 });
 
-// ===== BRIEF FORM =====
+// ===== BRIEF FORM (Resend via /api/subscribe) =====
 const briefForm = document.getElementById('briefForm');
 if (briefForm) {
-    briefForm.addEventListener('submit', (e) => {
+    briefForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const email = briefForm.querySelector('input[type="email"]').value;
-        if (email) {
-            const msg = currentLang === 'zh'
-                ? `谢谢！简报将发送至 ${email}。`
-                : `Thank you! Your brief will be sent to ${email}.`;
-            briefForm.innerHTML = `<p style="color: var(--primary); font-weight: 600; font-size: 0.9rem;">${msg}</p>`;
+        const emailInput = briefForm.querySelector('input[type="email"]');
+        const consentInput = document.getElementById('briefConsent');
+        const submitBtn = briefForm.querySelector('button[type="submit"]');
+        const email = emailInput.value.trim();
+        if (!email || (consentInput && !consentInput.checked)) return;
+
+        const msgs = {
+            ok:   { en: `Thank you! A confirmation has been sent to ${email}.`, zh: `谢谢！确认邮件已发送至 ${email}。` },
+            soon: { en: 'Sign-up opens soon — in the meantime, email us at gcc-sustainability@hongkong.ahk.de.', zh: '订阅功能即将开放——请暂时发送邮件至 gcc-sustainability@hongkong.ahk.de。' },
+            err:  { en: 'Something went wrong. Please try again or email us directly.', zh: '出现错误，请重试或直接给我们发送邮件。' }
+        };
+        const finish = (m) => {
+            briefForm.innerHTML = `<p style="color: var(--primary); font-weight: 600; font-size: 0.9rem;">${currentLang === 'zh' ? m.zh : m.en}</p>`;
+        };
+        const showError = (m) => {
+            let msgEl = briefForm.querySelector('.brief-msg');
+            if (!msgEl) {
+                msgEl = document.createElement('p');
+                msgEl.className = 'brief-msg';
+                briefForm.appendChild(msgEl);
+            }
+            msgEl.textContent = currentLang === 'zh' ? m.zh : m.en;
+            submitBtn.disabled = false;
+        };
+
+        submitBtn.disabled = true;
+        try {
+            const r = await fetch('/api/subscribe', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, consent: true, lang: currentLang })
+            });
+            if (r.ok) finish(msgs.ok);
+            else if (r.status === 503) finish(msgs.soon);
+            else showError(msgs.err);
+        } catch (err) {
+            showError(msgs.err);
         }
     });
 }
+
+// ===== CMS CONTENT (Sanity via /api/content proxy) =====
+function applyLang(scope) {
+    if (currentLang === 'zh') {
+        scope.querySelectorAll('.lang-en').forEach(el => el.style.display = 'none');
+        scope.querySelectorAll('.lang-zh').forEach(el => el.style.display = 'inline');
+    }
+}
+
+async function loadContent(type) {
+    const r = await fetch(`/api/content?type=${type}`);
+    if (!r.ok) throw new Error(`content ${type}: ${r.status}`);
+    return r.json();
+}
+
+const catDisplay = {
+    en: { electronics: 'Electronics & Batteries', textiles: 'Textiles & Apparel', cosmetics: 'Cosmetics & Personal Care', toys: 'Toys', furniture: 'Furniture & Home Goods', food: 'Food & Packaging', construction: 'Construction Products', other: 'your products' },
+    zh: { electronics: '电子产品与电池', textiles: '纺织品与服装', cosmetics: '化妆品与个人护理', toys: '玩具', furniture: '家具与家居用品', food: '食品与包装', construction: '建筑材料', other: '您的产品' }
+};
+const roleDisplay = {
+    en: { supplier: 'an exporter to the EU', importer: 'an EU-based importer', brand: 'a Brand/Retailer', manufacturer: 'a manufacturer with an EU entity' },
+    zh: { supplier: '向欧盟出口', importer: '作为欧盟进口商', brand: '品牌/零售商', manufacturer: '拥有欧盟实体的制造商' }
+};
+
+function regFromSanity(d) {
+    const statusLabels = { inforce: 'IN FORCE', phasing: 'PHASING IN', prepare: 'PREPARE NOW' };
+    const fill = (tpl, lang, cat, role) => (tpl || '')
+        .replace('{category}', catDisplay[lang][cat] || catDisplay[lang].other)
+        .replace('{role}', roleDisplay[lang][role] || '');
+    return {
+        id: d.regId,
+        name: d.name,
+        ref: d.ref,
+        status: d.status,
+        statusLabel: statusLabels[d.status] || d.status,
+        inForce: d.inForce,
+        complianceDeadline: d.complianceDeadline,
+        lastReviewed: d.lastReviewed
+            ? new Date(d.lastReviewed).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })
+            : '',
+        eurlex: d.eurlex,
+        sections: (d.sections || []).map(s => ({ title: s.title, text: s.textEn })),
+        applies: (cat, markets, role, size) => {
+            const euMarket = markets.includes('eu') || markets.includes('germany');
+            if (!euMarket) return false;
+            if (d.categories && d.categories.length && !d.categories.includes(cat)) return false;
+            if (d.roles && d.roles.length && !d.roles.includes(role)) return false;
+            if (d.sizes && d.sizes.length && !d.sizes.includes(size)) return false;
+            return true;
+        },
+        reason: (cat, markets, role, size) => fill(d.reasonEn, 'en', cat, role),
+        reasonZh: (cat, markets, role, size) => fill(d.reasonZh, 'zh', cat, role)
+    };
+}
+
+loadContent('regulations').then(list => {
+    if (Array.isArray(list) && list.length) {
+        regulations = list.map(regFromSanity);
+    }
+}).catch(() => { /* CMS unavailable — keep built-in fallback data */ });
+
+// ----- Deadline Radar -----
+function renderRadar(deadlines) {
+    const section = document.getElementById('radar');
+    const list = document.getElementById('radarList');
+    if (!section || !list || !Array.isArray(deadlines)) return;
+
+    const today = new Date();
+    const upcoming = deadlines.filter(d => d.date && new Date(d.date) >= today).slice(0, 10);
+    if (!upcoming.length) return;
+
+    list.innerHTML = upcoming.map(d => {
+        const dt = new Date(d.date);
+        const days = Math.max(0, Math.ceil((dt - today) / 86400000));
+        const dateStr = dt.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+        const urgency = days <= 90 ? 'radar-soon' : days <= 365 ? 'radar-near' : 'radar-far';
+        const expected = d.confidence === 'expected'
+            ? ' &middot; <span class="radar-expected"><span class="lang-en">expected date</span><span class="lang-zh">预期日期</span></span>'
+            : '';
+        const affects = d.affects
+            ? ` &middot; <span class="lang-en">${d.affects}</span><span class="lang-zh">${d.affectsZh || d.affects}</span>`
+            : '';
+        return `
+            <div class="radar-item ${urgency}">
+                <div class="radar-date">
+                    <span class="radar-days">${days}</span>
+                    <span class="radar-days-label"><span class="lang-en">days</span><span class="lang-zh">天</span></span>
+                </div>
+                <div class="radar-body">
+                    <div class="radar-label"><span class="lang-en">${d.labelEn}</span><span class="lang-zh">${d.labelZh || d.labelEn}</span></div>
+                    <div class="radar-meta">${dateStr}${affects}${expected}</div>
+                </div>
+            </div>`;
+    }).join('');
+
+    applyLang(list);
+    section.style.display = '';
+}
+
+loadContent('deadlines').then(renderRadar).catch(() => { /* section stays hidden */ });
+
+// ----- Weekly Briefing -----
+const pillarLabels = {
+    'eu': { en: 'EU Regulatory', zh: '欧盟法规' },
+    'germany': { en: 'Germany & Retail', zh: '德国与零售' },
+    'china-hk': { en: 'China & Hong Kong', zh: '中国与香港' },
+    'standards': { en: 'Standards & Certification', zh: '标准与认证' },
+    'explainer': { en: 'Explainer', zh: '解读' }
+};
+
+function renderBriefing(posts) {
+    const section = document.getElementById('briefing');
+    const list = document.getElementById('briefingList');
+    if (!section || !list || !Array.isArray(posts) || !posts.length) return;
+
+    const row = (labelEn, labelZh, textEn, textZh) => textEn ? `
+        <div class="briefing-row">
+            <div class="briefing-row-label"><span class="lang-en">${labelEn}</span><span class="lang-zh">${labelZh}</span></div>
+            <p><span class="lang-en">${textEn}</span><span class="lang-zh">${textZh || textEn}</span></p>
+        </div>` : '';
+
+    list.innerHTML = posts.map(p => {
+        const pillar = pillarLabels[p.pillar] || { en: p.pillar, zh: p.pillar };
+        const dateStr = p.publishedAt
+            ? new Date(p.publishedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+            : '';
+        return `
+            <article class="briefing-card">
+                <div class="briefing-meta">
+                    <span class="briefing-pillar briefing-pillar-${p.pillar}"><span class="lang-en">${pillar.en}</span><span class="lang-zh">${pillar.zh}</span></span>
+                    <span class="briefing-date">${dateStr}</span>
+                </div>
+                <h3><span class="lang-en">${p.titleEn}</span><span class="lang-zh">${p.titleZh || p.titleEn}</span></h3>
+                ${row('What happened', '发生了什么', p.whatHappenedEn, p.whatHappenedZh)}
+                ${row('Why it matters', '为何重要', p.whyItMattersEn, p.whyItMattersZh)}
+                ${row('What to do', '应对措施', p.supplierActionEn, p.supplierActionZh)}
+            </article>`;
+    }).join('');
+
+    applyLang(list);
+    section.style.display = '';
+}
+
+loadContent('news').then(renderBriefing).catch(() => { /* section stays hidden */ });
 
 // ===== SCROLL REVEAL =====
 const observerOptions = {
