@@ -1360,23 +1360,45 @@ function renderBriefing(posts) {
             <p><span class="lang-en">${textEn}</span><span class="lang-zh">${textZh || textEn}</span></p>
         </div>` : '';
 
-    list.innerHTML = posts.map(p => {
+    const kicker = p => {
         const pillar = pillarLabels[p.pillar] || { en: p.pillar, zh: p.pillar };
-        const dateStr = p.publishedAt
-            ? new Date(p.publishedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
-            : '';
-        return `
-            <article class="briefing-card" id="briefing-${p.slug || ''}">
-                <div class="briefing-meta">
-                    <span class="briefing-pillar briefing-pillar-${p.pillar}"><span class="lang-en">${pillar.en}</span><span class="lang-zh">${pillar.zh}</span></span>
-                    <span class="briefing-date">${dateStr}</span>
-                </div>
-                <h3><span class="lang-en">${p.titleEn}</span><span class="lang-zh">${p.titleZh || p.titleEn}</span></h3>
-                ${row('What happened', '发生了什么', p.whatHappenedEn, p.whatHappenedZh)}
-                ${row('Why it matters', '为何重要', p.whyItMattersEn, p.whyItMattersZh)}
-                ${row('What to do', '应对措施', p.supplierActionEn, p.supplierActionZh)}
-            </article>`;
-    }).join('');
+        return `<span class="briefing-kicker"><span class="lang-en">${pillar.en}</span><span class="lang-zh">${pillar.zh}</span></span>`;
+    };
+
+    // Newspaper dateline from the lead story's publish date
+    const dateline = document.getElementById('briefingDateline');
+    if (dateline && posts[0].publishedAt) {
+        const d = new Date(posts[0].publishedAt);
+        const en = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }).toUpperCase();
+        const zh = `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`;
+        dateline.innerHTML = `<span class="lang-en">HONG KONG &middot; ${en} &middot; WEEKLY EDITION</span><span class="lang-zh">香港 &middot; ${zh} &middot; 每周版</span>`;
+        applyLang(dateline);
+    }
+
+    const [lead, ...rest] = posts;
+
+    const leadHtml = `
+        <article class="briefing-lead" id="briefing-${lead.slug || ''}">
+            ${kicker(lead)}
+            <h3><span class="lang-en">${lead.titleEn}</span><span class="lang-zh">${lead.titleZh || lead.titleEn}</span></h3>
+            ${row('What happened', '发生了什么', lead.whatHappenedEn, lead.whatHappenedZh)}
+            ${row('Why it matters', '为何重要', lead.whyItMattersEn, lead.whyItMattersZh)}
+            ${row('What to do', '应对措施', lead.supplierActionEn, lead.supplierActionZh)}
+        </article>`;
+
+    const restHtml = rest.map(p => `
+        <article class="briefing-item" id="briefing-${p.slug || ''}">
+            ${kicker(p)}
+            <h4><span class="lang-en">${p.titleEn}</span><span class="lang-zh">${p.titleZh || p.titleEn}</span></h4>
+            <p class="briefing-item-text"><span class="lang-en">${p.whatHappenedEn || ''}</span><span class="lang-zh">${p.whatHappenedZh || p.whatHappenedEn || ''}</span></p>
+            ${p.supplierActionEn ? `<p class="briefing-item-action"><strong><span class="lang-en">What to do:</span><span class="lang-zh">应对措施：</span></strong> <span class="lang-en">${p.supplierActionEn}</span><span class="lang-zh">${p.supplierActionZh || p.supplierActionEn}</span></p>` : ''}
+        </article>`).join('');
+
+    list.innerHTML = `
+        <div class="briefing-columns">
+            ${leadHtml}
+            <div class="briefing-secondary">${restHtml}</div>
+        </div>`;
 
     applyLang(list);
     section.style.display = '';

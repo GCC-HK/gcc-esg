@@ -246,10 +246,7 @@
 
             <!-- Results -->
             <div class="atlas-results" id="atlasResults">
-                <div class="atlas-empty" id="atlasEmpty">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-                    <p><span class="lang-en">Answer the three quick steps above, then click <strong>"Show My Regulations"</strong> to see which EU rules apply to you &mdash; grouped by urgency.</span><span class="lang-zh">请完成上方三个步骤，然后点击<strong>"显示适用法规"</strong>，按紧急程度查看适用于您的欧盟法规。</span></p>
-                </div>
+                <div class="atlas-empty" id="atlasEmpty" style="display: none;"></div>
                 <div class="atlas-cards" id="atlasCards"></div>
             </div>
 
@@ -417,9 +414,11 @@
     <!-- Weekly Briefing (content from Sanity; hidden if unavailable) -->
     <section class="briefing" id="briefing" style="display: none;">
         <div class="container">
-            <div class="atlas-label"><span class="lang-en">GREEN SOURCING BRIEFING</span><span class="lang-zh">绿色采购简报</span></div>
-            <h2 class="section-title"><span class="lang-en">This Week in Sustainable Sourcing</span><span class="lang-zh">本周绿色采购动态</span></h2>
-            <p class="section-subtitle"><span class="lang-en">Weekly regulatory updates for the Hong Kong sourcing community and their manufacturers.</span><span class="lang-zh">面向香港采购业界及其制造商的每周法规动态。</span></p>
+            <header class="briefing-masthead">
+                <div class="briefing-masthead-kicker"><span class="lang-en">WEEKLY UPDATES FOR THE HONG KONG SOURCING COMMUNITY</span><span class="lang-zh">面向香港采购业界的每周动态</span></div>
+                <h2 class="briefing-title"><span class="lang-en">The Green Sourcing Briefing</span><span class="lang-zh">绿色采购简报</span></h2>
+                <div class="briefing-dateline" id="briefingDateline"></div>
+            </header>
             <div class="briefing-list" id="briefingList"></div>
             <div class="briefing-subscribe">
                 <a href="#footer" class="btn btn-primary"><span class="lang-en">Get the Briefing by Email</span><span class="lang-zh">通过邮件订阅简报</span></a>
@@ -715,11 +714,6 @@
                         </label>
                         <button type="submit" class="btn btn-primary btn-sm"><span class="lang-en">Send Brief</span><span class="lang-zh">发送简报</span></button>
                     </form>
-                </div>
-                <div class="cta-card cta-consult">
-                    <h4><span class="lang-en">Book a Consultation</span><span class="lang-zh">预约咨询</span></h4>
-                    <p><span class="lang-en">Speak directly with our sustainability compliance experts.</span><span class="lang-zh">直接与我们的可持续发展合规专家交流。</span></p>
-                    <a href="mailto:gcc-sustainability@hongkong.ahk.de" class="btn btn-accent btn-sm"><span class="lang-en">Get in Touch</span><span class="lang-zh">联系我们</span></a>
                 </div>
                 <div class="cta-card cta-join">
                     <h4><span class="lang-en">Join the Committee</span><span class="lang-zh">加入委员会</span></h4>
