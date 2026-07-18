@@ -4,6 +4,7 @@ let currentLang = localStorage.getItem('gcc-lang') || 'en';
 function setLanguage(lang) {
     currentLang = lang;
     localStorage.setItem('gcc-lang', lang);
+    document.documentElement.lang = lang === 'zh' ? 'zh-Hans' : 'en';
 
     if (lang === 'zh') {
         document.body.classList.add('zh');
@@ -1159,11 +1160,16 @@ const faqItems = document.querySelectorAll('.faq-item');
 
 faqItems.forEach(item => {
     const question = item.querySelector('.faq-question');
+    question.setAttribute('aria-expanded', 'false');
     question.addEventListener('click', () => {
         const isActive = item.classList.contains('active');
-        faqItems.forEach(i => i.classList.remove('active'));
+        faqItems.forEach(i => {
+            i.classList.remove('active');
+            i.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+        });
         if (!isActive) {
             item.classList.add('active');
+            question.setAttribute('aria-expanded', 'true');
         }
     });
 });
@@ -1281,30 +1287,50 @@ function renderRadar(deadlines) {
     if (!section || !list || !Array.isArray(deadlines)) return;
 
     const today = new Date();
-    const upcoming = deadlines.filter(d => d.date && new Date(d.date) >= today).slice(0, 10);
+    const upcoming = deadlines.filter(d => d.date && new Date(d.date) >= today);
     if (!upcoming.length) return;
 
-    list.innerHTML = upcoming.map(d => {
-        const dt = new Date(d.date);
-        const days = Math.max(0, Math.ceil((dt - today) / 86400000));
-        const dateStr = dt.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
-        const urgency = days <= 90 ? 'radar-soon' : days <= 365 ? 'radar-near' : 'radar-far';
-        const expected = d.confidence === 'expected'
-            ? ' &middot; <span class="radar-expected"><span class="lang-en">expected date</span><span class="lang-zh">预期日期</span></span>'
-            : '';
-        const affects = d.affects
-            ? ` &middot; <span class="lang-en">${d.affects}</span><span class="lang-zh">${d.affectsZh || d.affects}</span>`
-            : '';
+    const groups = [
+        { key: 'soon', en: 'NEXT 6 MONTHS', zh: '未来6个月', descEn: 'Act now — these dates are imminent.', descZh: '立即行动——期限迫近。' },
+        { key: 'near', en: '6–18 MONTHS', zh: '6至18个月', descEn: 'Plan and budget for these this year.', descZh: '请于今年内规划和预算。' },
+        { key: 'far', en: 'ON THE HORIZON', zh: '中长期', descEn: 'Monitor and prepare early.', descZh: '持续关注，提前准备。' }
+    ];
+
+    const byGroup = { soon: [], near: [], far: [] };
+    upcoming.forEach(d => {
+        const days = Math.max(0, Math.ceil((new Date(d.date) - today) / 86400000));
+        const key = days <= 180 ? 'soon' : days <= 550 ? 'near' : 'far';
+        byGroup[key].push({ ...d, days });
+    });
+
+    list.innerHTML = groups.map(g => {
+        const items = byGroup[g.key];
+        if (!items.length) return '';
+        const cards = items.map(d => {
+            const dateStr = new Date(d.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+            const expected = d.confidence === 'expected'
+                ? ' <span class="radar-expected"><span class="lang-en">expected</span><span class="lang-zh">预期</span></span>'
+                : '';
+            const affects = d.affects
+                ? `<div class="radar-affects"><span class="lang-en">${d.affects}</span><span class="lang-zh">${d.affectsZh || d.affects}</span></div>`
+                : '';
+            return `
+                <div class="radar-item">
+                    <div class="radar-days-chip"><strong>${d.days}</strong><span class="lang-en">days</span><span class="lang-zh">天</span></div>
+                    <div class="radar-body">
+                        <div class="radar-label"><span class="lang-en">${d.labelEn}</span><span class="lang-zh">${d.labelZh || d.labelEn}</span></div>
+                        <div class="radar-meta">${dateStr}${expected}</div>
+                        ${affects}
+                    </div>
+                </div>`;
+        }).join('');
         return `
-            <div class="radar-item ${urgency}">
-                <div class="radar-date">
-                    <span class="radar-days">${days}</span>
-                    <span class="radar-days-label"><span class="lang-en">days</span><span class="lang-zh">天</span></span>
+            <div class="radar-col radar-col-${g.key}">
+                <div class="radar-col-header">
+                    <h3><span class="lang-en">${g.en}</span><span class="lang-zh">${g.zh}</span></h3>
+                    <p><span class="lang-en">${g.descEn}</span><span class="lang-zh">${g.descZh}</span></p>
                 </div>
-                <div class="radar-body">
-                    <div class="radar-label"><span class="lang-en">${d.labelEn}</span><span class="lang-zh">${d.labelZh || d.labelEn}</span></div>
-                    <div class="radar-meta">${dateStr}${affects}${expected}</div>
-                </div>
+                <div class="radar-col-items">${cards}</div>
             </div>`;
     }).join('');
 
@@ -1340,7 +1366,7 @@ function renderBriefing(posts) {
             ? new Date(p.publishedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
             : '';
         return `
-            <article class="briefing-card">
+            <article class="briefing-card" id="briefing-${p.slug || ''}">
                 <div class="briefing-meta">
                     <span class="briefing-pillar briefing-pillar-${p.pillar}"><span class="lang-en">${pillar.en}</span><span class="lang-zh">${pillar.zh}</span></span>
                     <span class="briefing-date">${dateStr}</span>
@@ -1354,6 +1380,29 @@ function renderBriefing(posts) {
 
     applyLang(list);
     section.style.display = '';
+
+    // Hero news ticker: click jumps to the article card
+    const ticker = document.getElementById('newsTicker');
+    const track = document.getElementById('tickerTrack');
+    if (ticker && track) {
+        const half = posts.map(p =>
+            `<a class="ticker-item" href="#briefing-${p.slug || ''}"><span class="lang-en">${p.titleEn}</span><span class="lang-zh">${p.titleZh || p.titleEn}</span></a>`
+        ).join('<span class="ticker-sep">&#9679;</span>') + '<span class="ticker-sep">&#9679;</span>';
+        track.innerHTML = half + half; // duplicated for a seamless loop
+        applyLang(track);
+        ticker.style.display = '';
+        track.addEventListener('click', (e) => {
+            const a = e.target.closest('a.ticker-item');
+            if (!a) return;
+            e.preventDefault();
+            const target = document.querySelector(a.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                target.classList.add('briefing-flash');
+                setTimeout(() => target.classList.remove('briefing-flash'), 2500);
+            }
+        });
+    }
 }
 
 loadContent('news').then(renderBriefing).catch(() => { /* section stays hidden */ });

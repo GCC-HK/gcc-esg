@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GREEN FUTURE – Empowering Sustainable Compliance</title>
+    <meta name="description" content="EU sustainability compliance for the Hong Kong sourcing community: check which regulations apply to your products, estimate CBAM costs, and follow weekly regulatory updates. By the GCC Sustainability Working Group.">
+    <meta property="og:title" content="GREEN FUTURE – GCC Sustainability Compliance">
+    <meta property="og:description" content="Which EU sustainability rules apply to your products? Free compliance check, CBAM cost estimator and weekly briefing for sourcing offices and manufacturers.">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#1a5c38">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%231a5c38'/%3E%3Cpath d='M50 18 L58 42 L82 50 L58 58 L50 82 L42 58 L18 50 L42 42 Z' fill='%234caf50'/%3E%3Ccircle cx='50' cy='50' r='7' fill='%23fff'/%3E%3C/svg%3E">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -50,6 +56,13 @@
                 </div>
             </div>
         </div>
+        <!-- News Ticker (populated from Sanity; hidden if unavailable) -->
+        <div class="ticker" id="newsTicker" style="display: none;">
+            <span class="ticker-badge"><span class="lang-en">THIS WEEK</span><span class="lang-zh">本周动态</span></span>
+            <div class="ticker-viewport">
+                <div class="ticker-track" id="tickerTrack"></div>
+            </div>
+        </div>
     </section>
 
     <!-- 3. Urgency Bar -->
@@ -58,6 +71,49 @@
             <p><span class="lang-en">Non-compliance with EU sustainability regulations can result in fines of up to 3% of worldwide turnover (CSDDD) or at least up to 4% of EU turnover (EUDR), product bans from the EU market, and client delisting.</span><span class="lang-zh">不符合欧盟可持续发展法规可能导致：罚款最高达全球营业额的3%（CSDDD）或欧盟营业额的至少4%（EUDR）、产品被禁止进入欧盟市场，以及被客户取消合作。</span></p>
         </div>
     </div>
+
+    <!-- Guided Start -->
+    <section class="start" id="start">
+        <div class="container">
+            <h2 class="section-title"><span class="lang-en">Where Should I Start?</span><span class="lang-zh">我该从哪里开始？</span></h2>
+            <p class="section-subtitle"><span class="lang-en">Pick the question that sounds like you &mdash; we'll take you to the answer.</span><span class="lang-zh">选择最符合您情况的问题——我们将直接带您找到答案。</span></p>
+            <div class="start-grid">
+                <a href="#compass" class="start-card start-card-compass">
+                    <div class="start-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+                    </div>
+                    <h3><span class="lang-en">"Which EU rules apply to my products?"</span><span class="lang-zh">"哪些欧盟法规适用于我的产品？"</span></h3>
+                    <p><span class="lang-en">Answer 3 quick questions and get your personal regulation list.</span><span class="lang-zh">回答3个简单问题，获取您的专属法规清单。</span></p>
+                    <span class="start-arrow">&rarr;</span>
+                </a>
+                <a href="#cbam" class="start-card start-card-cbam">
+                    <div class="start-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+                    </div>
+                    <h3><span class="lang-en">"My EU buyer is asking for carbon data"</span><span class="lang-zh">"我的欧盟买家要求提供碳排放数据"</span></h3>
+                    <p><span class="lang-en">Estimate your CBAM cost exposure and see if you are exempt.</span><span class="lang-zh">估算您的CBAM成本，查看是否可豁免。</span></p>
+                    <span class="start-arrow">&rarr;</span>
+                </a>
+                <a href="#radar" class="start-card start-card-radar">
+                    <div class="start-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    </div>
+                    <h3><span class="lang-en">"Which deadlines are coming up?"</span><span class="lang-zh">"近期有哪些合规期限？"</span></h3>
+                    <p><span class="lang-en">See every EU compliance date on the radar, sorted by urgency.</span><span class="lang-zh">按紧急程度查看所有欧盟合规日期。</span></p>
+                    <span class="start-arrow">&rarr;</span>
+                </a>
+                <a href="#briefing" class="start-card start-card-news">
+                    <div class="start-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-4 0V6"/><path d="M18 14h-8M18 10h-8M18 18h-8"/></svg>
+                    </div>
+                    <h3><span class="lang-en">"What changed this week?"</span><span class="lang-zh">"本周有哪些新变化？"</span></h3>
+                    <p><span class="lang-en">The weekly briefing: what happened, why it matters, what to do.</span><span class="lang-zh">每周简报：发生了什么、为何重要、如何应对。</span></p>
+                    <span class="start-arrow">&rarr;</span>
+                </a>
+            </div>
+            <p class="start-help"><span class="lang-en">Still not sure? <a href="mailto:gcc-sustainability@hongkong.ahk.de">Write to the Working Group</a> &mdash; we answer in English, Chinese and German.</span><span class="lang-zh">仍不确定？<a href="mailto:gcc-sustainability@hongkong.ahk.de">写信给工作组</a>——我们提供英文、中文和德文解答。</span></p>
+        </div>
+    </section>
 
     <!-- 4. Green Sourcing Compass -->
     <section class="atlas" id="compass">
