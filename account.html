@@ -74,8 +74,12 @@
             </a>
             <div class="nav-right">
                 <div class="lang-toggle">
-                    <button class="lang-btn active" data-lang="en">EN</button>
-                    <button class="lang-btn" data-lang="zh">中文</button>
+                    <select id="langSelect" aria-label="Language / 语言 / Sprache / Ngôn ngữ">
+                        <option value="en">EN</option>
+                        <option value="zh">中文</option>
+                        <option value="de">DE</option>
+                        <option value="vi">VI</option>
+                    </select>
                 </div>
             </div>
         </div>
@@ -83,33 +87,33 @@
 
     <main class="acct">
         <div class="acct-card" id="acctCard">
-            <p class="acct-msg"><span class="lang-en">Loading&hellip;</span><span class="lang-zh">加载中&hellip;</span></p>
+            <p class="acct-msg"><span class="lang-en">Loading&hellip;</span><span class="lang-zh">加载中&hellip;</span><span class="lang-de">Wird geladen&hellip;</span><span class="lang-vi">Đang tải&hellip;</span></p>
         </div>
-        <a class="acct-back" href="index.html"><span class="lang-en">&larr; Back to GREEN FUTURE</span><span class="lang-zh">&larr; 返回 GREEN FUTURE</span></a>
+        <a class="acct-back" href="index.html"><span class="lang-en">&larr; Back to GREEN FUTURE</span><span class="lang-zh">&larr; 返回 GREEN FUTURE</span><span class="lang-de">&larr; Zurück zu GREEN FUTURE</span><span class="lang-vi">&larr; Quay lại GREEN FUTURE</span></a>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     <script>
     (function () {
+        var LANGS = ['en', 'zh', 'de', 'vi'];
         var currentLang = localStorage.getItem('gcc-lang') || 'en';
+        if (LANGS.indexOf(currentLang) < 0) currentLang = 'en';
         function applyLang() {
-            document.documentElement.lang = currentLang === 'zh' ? 'zh-Hans' : 'en';
-            document.body.classList.toggle('zh', currentLang === 'zh');
-            document.querySelectorAll('.lang-btn').forEach(function (b) {
-                b.classList.toggle('active', b.dataset.lang === currentLang);
-            });
+            document.documentElement.lang = { en: 'en', zh: 'zh-Hans', de: 'de', vi: 'vi' }[currentLang];
+            LANGS.forEach(function (l) { document.body.classList.toggle(l, l === currentLang && l !== 'en'); });
+            var sel = document.getElementById('langSelect');
+            if (sel) sel.value = currentLang;
         }
-        document.querySelectorAll('.lang-btn').forEach(function (b) {
-            b.addEventListener('click', function () {
-                currentLang = b.dataset.lang;
-                localStorage.setItem('gcc-lang', currentLang);
-                applyLang();
-            });
+        var langSel = document.getElementById('langSelect');
+        if (langSel) langSel.addEventListener('change', function () {
+            currentLang = langSel.value;
+            localStorage.setItem('gcc-lang', currentLang);
+            applyLang();
         });
         applyLang();
 
         var card = document.getElementById('acctCard');
-        var t = function (en, zh) { return '<span class="lang-en">' + en + '</span><span class="lang-zh">' + zh + '</span>'; };
+        var t = function (en, zh, de, vi) { return '<span class="lang-en">' + en + '</span><span class="lang-zh">' + (zh || en) + '</span>' + (de ? '<span class="lang-de">' + de + '</span>' : '') + (vi ? '<span class="lang-vi">' + vi + '</span>' : ''); };
 
         // Preview mode: active only while real sign-in (Supabase) is not yet
         // configured — lets reviewers experience all three access tiers.
@@ -117,14 +121,14 @@
             var demo = localStorage.getItem('gcc-demo-tier');
             if (demo === 'registered' || demo === 'member') {
                 var isMember = demo === 'member';
-                card.innerHTML = '<h1>' + t('Preview Account', '预览账户') + '</h1>' +
+                card.innerHTML = '<h1>' + t('Preview Account', '预览账户', 'Vorschau-Konto', 'Tài khoản xem trước') + '</h1>' +
                     '<div style="text-align:center"><span class="acct-tier ' + (isMember ? 'acct-tier-member' : 'acct-tier-registered') + '">' +
-                    (isMember ? t('Committee Member (preview)', '委员会成员（预览）') : t('Registered (preview)', '已注册（预览）')) + '</span></div>' +
-                    '<p class="acct-sub">' + t('You are previewing the site as a ' + (isMember ? 'Committee member' : 'registered reader') + '. Locked articles are now open at this level.', '您正在以' + (isMember ? '委员会成员' : '注册读者') + '身份预览网站。相应级别的文章现已解锁。') + '</p>' +
+                    (isMember ? t('Committee Member (preview)', '委员会成员（预览）', 'Ausschussmitglied (Vorschau)', 'Hội viên Ủy ban (xem trước)') : t('Registered (preview)', '已注册（预览）', 'Registriert (Vorschau)', 'Đã đăng ký (xem trước)')) + '</span></div>' +
+                    '<p class="acct-sub">' + t('You are previewing the site as a ' + (isMember ? 'Committee member' : 'registered reader') + '. Locked articles are now open at this level.', '您正在以' + (isMember ? '委员会成员' : '注册读者') + '身份预览网站。相应级别的文章现已解锁。', 'Sie sehen die Website in der Vorschau als ' + (isMember ? 'Ausschussmitglied' : 'registrierter Leser') + '. Gesperrte Artikel sind auf dieser Stufe nun freigeschaltet.', 'Bạn đang xem trước trang web với tư cách ' + (isMember ? 'hội viên Ủy ban' : 'độc giả đã đăng ký') + '. Các bài viết bị khóa hiện đã được mở ở cấp độ này.') + '</p>' +
                     '<div class="acct-actions">' +
-                    '<a class="btn btn-atlas" href="index.html#briefing">' + t('Read the briefing', '阅读简报') + '</a>' +
-                    '<button class="btn btn-outline" id="demoSwitch">' + (isMember ? t('Switch to Registered view', '切换为注册读者视图') : t('Switch to Member view', '切换为会员视图')) + '</button>' +
-                    '<button class="btn btn-outline" id="demoOut">' + t('Exit preview (public view)', '退出预览（公开视图）') + '</button>' +
+                    '<a class="btn btn-atlas" href="index.html#briefing">' + t('Read the briefing', '阅读简报', 'Briefing lesen', 'Đọc bản tin') + '</a>' +
+                    '<button class="btn btn-outline" id="demoSwitch">' + (isMember ? t('Switch to Registered view', '切换为注册读者视图', 'Zur Registriert-Ansicht wechseln', 'Chuyển sang chế độ xem Đã đăng ký') : t('Switch to Member view', '切换为会员视图', 'Zur Mitglieder-Ansicht wechseln', 'Chuyển sang chế độ xem Hội viên')) + '</button>' +
+                    '<button class="btn btn-outline" id="demoOut">' + t('Exit preview (public view)', '退出预览（公开视图）', 'Vorschau beenden (öffentliche Ansicht)', 'Thoát xem trước (chế độ công khai)') + '</button>' +
                     '</div>';
                 applyLang();
                 document.getElementById('demoSwitch').addEventListener('click', function () {
@@ -137,13 +141,13 @@
                 });
                 return;
             }
-            card.innerHTML = '<h1>' + t('Member Area Preview', '会员专区预览') + '</h1>' +
-                '<p class="acct-sub">' + t('Email sign-in launches with the public release. For this preview, choose a view to experience the member area:', '邮箱登录将随正式上线开放。在此预览版中，请选择一个视图体验会员专区：') + '</p>' +
+            card.innerHTML = '<h1>' + t('Member Area Preview', '会员专区预览', 'Vorschau des Mitgliederbereichs', 'Xem trước Khu vực Hội viên') + '</h1>' +
+                '<p class="acct-sub">' + t('Email sign-in launches with the public release. For this preview, choose a view to experience the member area:', '邮箱登录将随正式上线开放。在此预览版中，请选择一个视图体验会员专区：', 'Die E-Mail-Anmeldung startet mit der öffentlichen Veröffentlichung. Wählen Sie für diese Vorschau eine Ansicht, um den Mitgliederbereich kennenzulernen:', 'Tính năng đăng nhập bằng email sẽ ra mắt cùng phiên bản chính thức. Trong bản xem trước này, vui lòng chọn một chế độ xem để trải nghiệm khu vực hội viên:') + '</p>' +
                 '<div class="acct-actions">' +
-                '<button class="btn btn-atlas" id="demoReg">' + t('Preview as Registered (free tier)', '以注册读者身份预览（免费）') + '</button>' +
-                '<button class="btn btn-atlas" id="demoMem" style="background:var(--ahk-blue)">' + t('Preview as Committee Member', '以委员会成员身份预览') + '</button>' +
+                '<button class="btn btn-atlas" id="demoReg">' + t('Preview as Registered (free tier)', '以注册读者身份预览（免费）', 'Vorschau als Registriert (kostenlose Stufe)', 'Xem trước với tư cách Đã đăng ký (gói miễn phí)') + '</button>' +
+                '<button class="btn btn-atlas" id="demoMem" style="background:var(--ahk-blue)">' + t('Preview as Committee Member', '以委员会成员身份预览', 'Vorschau als Ausschussmitglied', 'Xem trước với tư cách Hội viên Ủy ban') + '</button>' +
                 '</div>' +
-                '<p class="acct-note">' + t('In the live version, readers register free by email (no password) and the Committee grants member access to member companies.', '正式版中，读者通过邮箱免费注册（无需密码），委员会向成员企业授予会员权限。') + '</p>';
+                '<p class="acct-note">' + t('In the live version, readers register free by email (no password) and the Committee grants member access to member companies.', '正式版中，读者通过邮箱免费注册（无需密码），委员会向成员企业授予会员权限。', 'In der Live-Version registrieren sich Leser kostenlos per E-Mail (ohne Passwort), und der Ausschuss gewährt Mitgliedsunternehmen den Mitgliederzugang.', 'Trong phiên bản chính thức, độc giả đăng ký miễn phí qua email (không cần mật khẩu) và Ủy ban cấp quyền truy cập hội viên cho các doanh nghiệp hội viên.') + '</p>';
             applyLang();
             var go = function (tier) {
                 localStorage.setItem('gcc-demo-tier', tier);
@@ -154,12 +158,12 @@
         }
 
         function showSignIn(client, msg) {
-            card.innerHTML = '<h1>' + t('Sign In', '登录') + '</h1>' +
-                '<p class="acct-sub">' + t('Free registration unlocks the full briefing archive and complete articles. No password — we email you a sign-in link.', '免费注册即可解锁完整简报档案和全文文章。无需密码——我们将向您发送登录链接。') + '</p>' +
+            card.innerHTML = '<h1>' + t('Sign In', '登录', 'Anmelden', 'Đăng nhập') + '</h1>' +
+                '<p class="acct-sub">' + t('Free registration unlocks the full briefing archive and complete articles. No password — we email you a sign-in link.', '免费注册即可解锁完整简报档案和全文文章。无需密码——我们将向您发送登录链接。', 'Die kostenlose Registrierung schaltet das vollständige Briefing-Archiv und alle Artikel frei. Kein Passwort — wir senden Ihnen einen Anmeldelink per E-Mail.', 'Đăng ký miễn phí để mở khóa toàn bộ kho lưu trữ bản tin và các bài viết đầy đủ. Không cần mật khẩu — chúng tôi sẽ gửi liên kết đăng nhập qua email cho bạn.') + '</p>' +
                 '<form id="loginForm"><input type="email" id="loginEmail" placeholder="your@email.com" required>' +
-                '<button type="submit" class="btn btn-atlas">' + t('Email me a sign-in link', '向我发送登录链接') + '</button></form>' +
+                '<button type="submit" class="btn btn-atlas">' + t('Email me a sign-in link', '向我发送登录链接', 'Anmeldelink per E-Mail senden', 'Gửi liên kết đăng nhập cho tôi') + '</button></form>' +
                 (msg || '') +
-                '<p class="acct-note">' + t('Committee member companies get extended access — granted by the GCC Sustainability Committee after registration.', '委员会成员企业可获得更高访问权限——注册后由GCC可持续发展委员会授予。') + '</p>';
+                '<p class="acct-note">' + t('Committee member companies get extended access — granted by the GCC Sustainability Committee after registration.', '委员会成员企业可获得更高访问权限——注册后由GCC可持续发展委员会授予。', 'Mitgliedsunternehmen des Ausschusses erhalten erweiterten Zugang — gewährt vom GCC-Nachhaltigkeitsausschuss nach der Registrierung.', 'Các doanh nghiệp hội viên của Ủy ban được cấp quyền truy cập mở rộng — do Ủy ban Phát triển Bền vững GCC cấp sau khi đăng ký.') + '</p>';
             applyLang();
             document.getElementById('loginForm').addEventListener('submit', function (e) {
                 e.preventDefault();
@@ -169,28 +173,28 @@
                     .then(function (r) {
                         if (r.error) throw r.error;
                         card.querySelector('form').outerHTML = '<p class="acct-msg ok">' +
-                            t('Check your inbox — we sent a sign-in link to ' + email + '.', '请查收邮件——登录链接已发送至 ' + email + '。') + '</p>';
+                            t('Check your inbox — we sent a sign-in link to ' + email + '.', '请查收邮件——登录链接已发送至 ' + email + '。', 'Bitte prüfen Sie Ihren Posteingang — wir haben einen Anmeldelink an ' + email + ' gesendet.', 'Vui lòng kiểm tra hộp thư — chúng tôi đã gửi liên kết đăng nhập đến ' + email + '.') + '</p>';
                         applyLang();
                     })
                     .catch(function () {
-                        showSignIn(client, '<p class="acct-msg err">' + t('Could not send the link. Please try again.', '发送失败，请重试。') + '</p>');
+                        showSignIn(client, '<p class="acct-msg err">' + t('Could not send the link. Please try again.', '发送失败，请重试。', 'Der Link konnte nicht gesendet werden. Bitte versuchen Sie es erneut.', 'Không thể gửi liên kết. Vui lòng thử lại.') + '</p>');
                     });
             });
         }
 
         function showAccount(client, user) {
             var isMember = user.app_metadata && user.app_metadata.tier === 'member';
-            card.innerHTML = '<h1>' + t('Your Account', '您的账户') + '</h1>' +
+            card.innerHTML = '<h1>' + t('Your Account', '您的账户', 'Ihr Konto', 'Tài khoản của bạn') + '</h1>' +
                 '<p class="acct-sub" style="margin-bottom:6px">' + user.email + '</p>' +
                 '<div style="text-align:center"><span class="acct-tier ' + (isMember ? 'acct-tier-member' : 'acct-tier-registered') + '">' +
-                (isMember ? t('Committee Member', '委员会成员') : t('Registered', '已注册')) + '</span></div>' +
+                (isMember ? t('Committee Member', '委员会成员', 'Ausschussmitglied', 'Hội viên Ủy ban') : t('Registered', '已注册', 'Registriert', 'Đã đăng ký')) + '</span></div>' +
                 '<p class="acct-sub">' + (isMember
-                    ? t('You have full access to all articles and member content.', '您可以访问所有文章及会员内容。')
-                    : t('You can read all registered-level articles. Committee member companies can request extended access.', '您可以阅读所有注册级文章。委员会成员企业可申请更高访问权限。')) + '</p>' +
+                    ? t('You have full access to all articles and member content.', '您可以访问所有文章及会员内容。', 'Sie haben vollen Zugriff auf alle Artikel und Mitgliederinhalte.', 'Bạn có toàn quyền truy cập tất cả bài viết và nội dung dành cho hội viên.')
+                    : t('You can read all registered-level articles. Committee member companies can request extended access.', '您可以阅读所有注册级文章。委员会成员企业可申请更高访问权限。', 'Sie können alle Artikel der Registriert-Stufe lesen. Mitgliedsunternehmen des Ausschusses können erweiterten Zugang anfragen.', 'Bạn có thể đọc tất cả bài viết ở cấp độ đã đăng ký. Các doanh nghiệp hội viên của Ủy ban có thể yêu cầu quyền truy cập mở rộng.')) + '</p>' +
                 '<div class="acct-actions">' +
-                '<a class="btn btn-atlas" href="index.html#briefing">' + t('Read the briefing', '阅读简报') + '</a>' +
-                (!isMember ? '<a class="btn btn-outline" href="mailto:gcc-sustainability@hongkong.ahk.de?subject=Member access request">' + t('Request member access', '申请会员权限') + '</a>' : '') +
-                '<button class="btn btn-outline" id="signOut">' + t('Sign out', '退出登录') + '</button>' +
+                '<a class="btn btn-atlas" href="index.html#briefing">' + t('Read the briefing', '阅读简报', 'Briefing lesen', 'Đọc bản tin') + '</a>' +
+                (!isMember ? '<a class="btn btn-outline" href="mailto:gcc-sustainability@hongkong.ahk.de?subject=Member access request">' + t('Request member access', '申请会员权限', 'Mitgliederzugang anfragen', 'Yêu cầu quyền truy cập hội viên') + '</a>' : '') +
+                '<button class="btn btn-outline" id="signOut">' + t('Sign out', '退出登录', 'Abmelden', 'Đăng xuất') + '</button>' +
                 '</div>';
             applyLang();
             document.getElementById('signOut').addEventListener('click', function () {

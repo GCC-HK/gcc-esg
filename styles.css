@@ -39,9 +39,15 @@ body {
 }
 
 /* ===== LANGUAGE TOGGLE ===== */
-.lang-zh { display: none; }
-body.zh .lang-en { display: none; }
+.lang-zh, .lang-de, .lang-vi { display: none; }
+body.zh .lang-en, body.de .lang-en, body.vi .lang-en { display: none; }
 body.zh .lang-zh { display: inline; }
+body.de .lang-de { display: inline; }
+body.vi .lang-vi { display: inline; }
+/* Fallback: if no translation sibling exists, keep showing English */
+body.zh .lang-en:not(:has(~ .lang-zh)) { display: inline; }
+body.de .lang-en:not(:has(~ .lang-de)) { display: inline; }
+body.vi .lang-en:not(:has(~ .lang-vi)) { display: inline; }
 
 .container {
     max-width: 1200px;
@@ -3100,4 +3106,22 @@ a.radar-item-link:hover .radar-arrow { opacity: 1; }
 .briefing-primary > .briefing-item {
     border-top: 1px solid var(--gray-300);
     border-bottom: none;
+}
+
+
+/* ===== LANGUAGE PICKER (4 languages) ===== */
+.lang-toggle select {
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--primary);
+    border: 1.5px solid var(--primary);
+    border-radius: 999px;
+    padding: 6px 12px;
+    background: var(--white);
+    cursor: pointer;
+}
+
+.lang-toggle select:focus-visible {
+    outline: 3px solid var(--accent);
 }

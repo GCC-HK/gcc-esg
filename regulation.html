@@ -88,35 +88,37 @@
             </a>
             <div class="nav-right">
                 <div class="lang-toggle">
-                    <button class="lang-btn active" data-lang="en">EN</button>
-                    <button class="lang-btn" data-lang="zh">中文</button>
+                    <select id="langSelect" aria-label="Language / 语言 / Sprache / Ngôn ngữ">
+                        <option value="en">EN</option>
+                        <option value="zh">中文</option>
+                        <option value="de">DE</option>
+                        <option value="vi">VI</option>
+                    </select>
                 </div>
             </div>
         </div>
     </nav>
 
     <main class="regpage" id="regpage">
-        <div class="regpage-loading" id="regLoading"><span class="lang-en">Loading regulation&hellip;</span><span class="lang-zh">正在加载法规信息&hellip;</span></div>
+        <div class="regpage-loading" id="regLoading"><span class="lang-en">Loading regulation&hellip;</span><span class="lang-zh">正在加载法规信息&hellip;</span><span class="lang-de">Verordnung wird geladen&hellip;</span><span class="lang-vi">Đang tải quy định&hellip;</span></div>
     </main>
 
     <script>
     (function () {
+        var LANGS = ['en', 'zh', 'de', 'vi'];
         var currentLang = localStorage.getItem('gcc-lang') || 'en';
-
+        if (LANGS.indexOf(currentLang) < 0) currentLang = 'en';
         function applyLang() {
-            document.documentElement.lang = currentLang === 'zh' ? 'zh-Hans' : 'en';
-            document.body.classList.toggle('zh', currentLang === 'zh');
-            document.querySelectorAll('.lang-btn').forEach(function (b) {
-                b.classList.toggle('active', b.dataset.lang === currentLang);
-            });
+            document.documentElement.lang = { en: 'en', zh: 'zh-Hans', de: 'de', vi: 'vi' }[currentLang];
+            LANGS.forEach(function (l) { document.body.classList.toggle(l, l === currentLang && l !== 'en'); });
+            var sel = document.getElementById('langSelect');
+            if (sel) sel.value = currentLang;
         }
-
-        document.querySelectorAll('.lang-btn').forEach(function (b) {
-            b.addEventListener('click', function () {
-                currentLang = b.dataset.lang;
-                localStorage.setItem('gcc-lang', currentLang);
-                applyLang();
-            });
+        var langSel = document.getElementById('langSelect');
+        if (langSel) langSel.addEventListener('change', function () {
+            currentLang = langSel.value;
+            localStorage.setItem('gcc-lang', currentLang);
+            applyLang();
         });
         applyLang();
 
@@ -124,10 +126,18 @@
             'REPORTING': '报告义务', 'SUPPLY CHAIN': '供应链要求', 'PRODUCT DESIGN': '产品设计',
             'DOCUMENTATION': '文件要求', 'PENALTIES': '违规处罚'
         };
+        var sectionHeadersDe = {
+            'REPORTING': 'Berichtspflichten', 'SUPPLY CHAIN': 'Lieferkette', 'PRODUCT DESIGN': 'Produktdesign',
+            'DOCUMENTATION': 'Dokumentation', 'PENALTIES': 'Sanktionen'
+        };
+        var sectionHeadersVi = {
+            'REPORTING': 'Nghĩa vụ báo cáo', 'SUPPLY CHAIN': 'Chuỗi cung ứng', 'PRODUCT DESIGN': 'Thiết kế sản phẩm',
+            'DOCUMENTATION': 'Hồ sơ tài liệu', 'PENALTIES': 'Chế tài xử phạt'
+        };
         var statusMeta = {
-            inforce: { cls: 'badge-inforce', en: 'IN FORCE', zh: '已生效' },
-            phasing: { cls: 'badge-phasing', en: 'PHASING IN', zh: '逐步实施' },
-            prepare: { cls: 'badge-prepare', en: 'PREPARE NOW', zh: '立即准备' }
+            inforce: { cls: 'badge-inforce', en: 'IN FORCE', zh: '已生效', de: 'IN KRAFT', vi: 'ĐÃ CÓ HIỆU LỰC' },
+            phasing: { cls: 'badge-phasing', en: 'PHASING IN', zh: '逐步实施', de: 'SCHRITTWEISE EINFÜHRUNG', vi: 'ĐANG TRIỂN KHAI TỪNG BƯỚC' },
+            prepare: { cls: 'badge-prepare', en: 'PREPARE NOW', zh: '立即准备', de: 'JETZT VORBEREITEN', vi: 'CHUẨN BỊ NGAY' }
         };
 
         var id = new URLSearchParams(location.search).get('id');
@@ -135,8 +145,8 @@
 
         function fail() {
             main.innerHTML = '<div class="regpage-error">' +
-                '<p><span class="lang-en">Regulation not found or content unavailable.</span><span class="lang-zh">未找到该法规或内容暂不可用。</span></p>' +
-                '<p style="margin-top:16px"><a class="regpage-back" href="index.html#compass"><span class="lang-en">&larr; Back to the Compass</span><span class="lang-zh">&larr; 返回指南针</span></a></p></div>';
+                '<p><span class="lang-en">Regulation not found or content unavailable.</span><span class="lang-zh">未找到该法规或内容暂不可用。</span><span class="lang-de">Verordnung nicht gefunden oder Inhalt nicht verfügbar.</span><span class="lang-vi">Không tìm thấy quy định hoặc nội dung hiện không khả dụng.</span></p>' +
+                '<p style="margin-top:16px"><a class="regpage-back" href="index.html#compass"><span class="lang-en">&larr; Back to the Compass</span><span class="lang-zh">&larr; 返回指南针</span><span class="lang-de">&larr; Zurück zum Kompass</span><span class="lang-vi">&larr; Quay lại La bàn</span></a></p></div>';
             applyLang();
         }
 
@@ -149,18 +159,20 @@
                 if (!d) { fail(); return; }
 
                 document.title = d.name + ' – GREEN FUTURE';
-                var st = statusMeta[d.status] || { cls: '', en: d.status, zh: d.status };
+                var st = statusMeta[d.status] || { cls: '', en: d.status, zh: d.status, de: d.status, vi: d.status };
                 var reviewed = d.lastReviewed
                     ? new Date(d.lastReviewed).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })
                     : '';
 
                 var sections = (d.sections || []).map(function (s) {
                     var zhTitle = sectionHeadersZh[s.title] || s.title;
+                    var deTitle = sectionHeadersDe[s.title] || s.title;
+                    var viTitle = sectionHeadersVi[s.title] || s.title;
                     var body = s.textZh
                         ? '<p><span class="lang-en">' + s.textEn + '</span><span class="lang-zh">' + s.textZh + '</span></p>'
                         : '<p>' + (s.textEn || '') + '</p>';
                     return '<div class="regpage-section">' +
-                        '<h2><span class="lang-en">' + s.title + '</span><span class="lang-zh">' + zhTitle + '</span></h2>' +
+                        '<h2><span class="lang-en">' + s.title + '</span><span class="lang-zh">' + zhTitle + '</span><span class="lang-de">' + deTitle + '</span><span class="lang-vi">' + viTitle + '</span></h2>' +
                         body + '</div>';
                 }).join('');
 
@@ -169,25 +181,25 @@
                     var en = d.reasonEn.replace('{category}', 'Affected products').replace('As {role}, ', '').replace('{role}', 'exporters');
                     var zh = (d.reasonZh || '').replace('{category}', '相关产品').replace('作为{role}，', '').replace('{role}', '出口商');
                     overview = '<div class="regpage-section">' +
-                        '<h2><span class="lang-en">WHY IT MATTERS FOR SUPPLIERS</span><span class="lang-zh">对供应商的影响</span></h2>' +
+                        '<h2><span class="lang-en">WHY IT MATTERS FOR SUPPLIERS</span><span class="lang-zh">对供应商的影响</span><span class="lang-de">WARUM ES FÜR LIEFERANTEN WICHTIG IST</span><span class="lang-vi">VÌ SAO ĐIỀU NÀY QUAN TRỌNG VỚI NHÀ CUNG CẤP</span></h2>' +
                         '<p><span class="lang-en">' + en + '</span><span class="lang-zh">' + (zh || en) + '</span></p></div>';
                 }
 
                 main.innerHTML =
-                    '<a class="regpage-back" href="index.html#radar"><span class="lang-en">&larr; Back to overview</span><span class="lang-zh">&larr; 返回总览</span></a>' +
-                    '<div><span class="badge ' + st.cls + '"><span class="lang-en">' + st.en + '</span><span class="lang-zh">' + st.zh + '</span></span></div>' +
+                    '<a class="regpage-back" href="index.html#radar"><span class="lang-en">&larr; Back to overview</span><span class="lang-zh">&larr; 返回总览</span><span class="lang-de">&larr; Zurück zur Übersicht</span><span class="lang-vi">&larr; Quay lại tổng quan</span></a>' +
+                    '<div><span class="badge ' + st.cls + '"><span class="lang-en">' + st.en + '</span><span class="lang-zh">' + st.zh + '</span><span class="lang-de">' + st.de + '</span><span class="lang-vi">' + st.vi + '</span></span></div>' +
                     '<h1>' + d.name + '</h1>' +
                     '<div class="regpage-ref">' + (d.ref || '') + '</div>' +
                     '<div class="regpage-meta">' +
-                        '<div><div class="regpage-meta-label"><span class="lang-en">In force from</span><span class="lang-zh">生效日期</span></div><div class="regpage-meta-value">' + (d.inForce || '—') + '</div></div>' +
-                        '<div><div class="regpage-meta-label"><span class="lang-en">Compliance deadline</span><span class="lang-zh">合规截止日期</span></div><div class="regpage-meta-value">' + (d.complianceDeadline || '—') + '</div></div>' +
-                        '<div><div class="regpage-meta-label"><span class="lang-en">Last reviewed</span><span class="lang-zh">最近更新</span></div><div class="regpage-meta-value">' + reviewed + '</div></div>' +
+                        '<div><div class="regpage-meta-label"><span class="lang-en">In force from</span><span class="lang-zh">生效日期</span><span class="lang-de">In Kraft seit</span><span class="lang-vi">Có hiệu lực từ</span></div><div class="regpage-meta-value">' + (d.inForce || '—') + '</div></div>' +
+                        '<div><div class="regpage-meta-label"><span class="lang-en">Compliance deadline</span><span class="lang-zh">合规截止日期</span><span class="lang-de">Frist zur Einhaltung</span><span class="lang-vi">Thời hạn tuân thủ</span></div><div class="regpage-meta-value">' + (d.complianceDeadline || '—') + '</div></div>' +
+                        '<div><div class="regpage-meta-label"><span class="lang-en">Last reviewed</span><span class="lang-zh">最近更新</span><span class="lang-de">Zuletzt geprüft</span><span class="lang-vi">Cập nhật gần nhất</span></div><div class="regpage-meta-value">' + reviewed + '</div></div>' +
                     '</div>' +
                     overview + sections +
                     '<div class="regpage-ctas">' +
-                        (d.eurlex ? '<a href="' + d.eurlex + '" target="_blank" rel="noopener" class="btn btn-atlas" style="width:auto"><span class="lang-en">Read the official text</span><span class="lang-zh">查阅官方原文</span></a>' : '') +
-                        '<a href="index.html#footer" class="btn btn-outline"><span class="lang-en">Get the weekly briefing</span><span class="lang-zh">订阅每周简报</span></a>' +
-                        '<a href="mailto:gcc-sustainability@hongkong.ahk.de" class="btn btn-outline"><span class="lang-en">Ask the Committee</span><span class="lang-zh">咨询委员会</span></a>' +
+                        (d.eurlex ? '<a href="' + d.eurlex + '" target="_blank" rel="noopener" class="btn btn-atlas" style="width:auto"><span class="lang-en">Read the official text</span><span class="lang-zh">查阅官方原文</span><span class="lang-de">Offiziellen Rechtstext lesen</span><span class="lang-vi">Đọc văn bản chính thức</span></a>' : '') +
+                        '<a href="index.html#footer" class="btn btn-outline"><span class="lang-en">Get the weekly briefing</span><span class="lang-zh">订阅每周简报</span><span class="lang-de">Wöchentliches Briefing erhalten</span><span class="lang-vi">Nhận bản tin hàng tuần</span></a>' +
+                        '<a href="mailto:gcc-sustainability@hongkong.ahk.de" class="btn btn-outline"><span class="lang-en">Ask the Committee</span><span class="lang-zh">咨询委员会</span><span class="lang-de">Den Ausschuss fragen</span><span class="lang-vi">Liên hệ Ủy ban</span></a>' +
                     '</div>';
                 applyLang();
             })

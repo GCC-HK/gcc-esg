@@ -45,7 +45,9 @@ export default {
                         options: { list: ['REPORTING', 'SUPPLY CHAIN', 'PRODUCT DESIGN', 'DOCUMENTATION', 'PENALTIES'] }
                     },
                     { name: 'textEn', title: 'Text (EN)', type: 'text' },
-                    { name: 'textZh', title: 'Text (中文)', type: 'text' }
+                    { name: 'textZh', title: 'Text (中文)', type: 'text' },
+                    { name: 'textDe', title: 'Text (Deutsch)', type: 'text' },
+                    { name: 'textVi', title: 'Text (Tiếng Việt)', type: 'text' }
                 ]
             }]
         },
@@ -69,6 +71,8 @@ export default {
         },
         { name: 'reasonEn', title: 'Why it applies (EN)', type: 'text' },
         { name: 'reasonZh', title: 'Why it applies (中文)', type: 'text' },
+        { name: 'reasonDe', title: 'Why it applies (Deutsch)', type: 'text' },
+        { name: 'reasonVi', title: 'Why it applies (Tiếng Việt)', type: 'text' },
         {
             name: 'accessLevel', title: 'Access level', type: 'string',
             options: { list: ['public', 'registered', 'premium'] },

@@ -1,54 +1,44 @@
 // ===== LANGUAGE TOGGLE =====
 let currentLang = localStorage.getItem('gcc-lang') || 'en';
 
+const LANGS = ['en', 'zh', 'de', 'vi'];
+const HTML_LANG = { en: 'en', zh: 'zh-Hans', de: 'de', vi: 'vi' };
+
 function setLanguage(lang) {
+    if (!LANGS.includes(lang)) lang = 'en';
     currentLang = lang;
     localStorage.setItem('gcc-lang', lang);
-    document.documentElement.lang = lang === 'zh' ? 'zh-Hans' : 'en';
+    document.documentElement.lang = HTML_LANG[lang];
+    LANGS.forEach(l => document.body.classList.toggle(l, l === lang && l !== 'en'));
 
-    if (lang === 'zh') {
-        document.body.classList.add('zh');
-    } else {
-        document.body.classList.remove('zh');
-    }
+    const sel = document.getElementById('langSelect');
+    if (sel) sel.value = lang;
 
-    // Update toggle buttons
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.lang === lang);
-        btn.setAttribute('aria-pressed', String(btn.dataset.lang === lang));
-    });
-
-    // Update select options text
+    // Select options: use per-language data attributes, falling back to English
     document.querySelectorAll('select option[data-zh]').forEach(opt => {
-        opt.textContent = lang === 'zh' ? opt.dataset.zh : opt.dataset.en;
+        opt.textContent = opt.dataset[lang] || opt.dataset.en || opt.textContent;
     });
 
-    // Update HS code input placeholder
-    const hsInput = document.getElementById('hsCodeInput');
-    if (hsInput) {
-        hsInput.placeholder = lang === 'zh' ? '例如：8507' : 'e.g. 8507';
-    }
-
-    // Update CBAM input placeholders
-    const cbamPlaceholders = [
-        ['cbamVolume', '例如：500', 'e.g. 500'],
-        ['cbamCnCode', '例如：72061000', 'e.g. 72061000'],
-        ['cbamCustomEmissions', '例如：1.8', 'e.g. 1.8'],
-        ['cbamCustomBenchmark', '例如：1.3', 'e.g. 1.3']
-    ];
-    cbamPlaceholders.forEach(([id, zh, en]) => {
+    // Input placeholders (fall back to English)
+    const ph = {
+        hsCodeInput: { en: 'e.g. 8507', zh: '例如：8507', de: 'z.\u202fB. 8507', vi: 'VD: 8507' },
+        cbamVolume: { en: 'e.g. 500', zh: '例如：500', de: 'z.\u202fB. 500', vi: 'VD: 500' },
+        cbamCnCode: { en: 'e.g. 72061000', zh: '例如：72061000', de: 'z.\u202fB. 72061000', vi: 'VD: 72061000' },
+        cbamCustomEmissions: { en: 'e.g. 1.8', zh: '例如：1.8', de: 'z.\u202fB. 1,8', vi: 'VD: 1.8' },
+        cbamCustomBenchmark: { en: 'e.g. 1.3', zh: '例如：1.3', de: 'z.\u202fB. 1,3', vi: 'VD: 1.3' }
+    };
+    Object.entries(ph).forEach(([id, m]) => {
         const el = document.getElementById(id);
-        if (el) el.placeholder = lang === 'zh' ? zh : en;
+        if (el) el.placeholder = m[lang] || m.en;
     });
 }
 
 // Initialize language on load
 setLanguage(currentLang);
 
-// Bind toggle buttons
-document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
-});
+// Bind the language dropdown
+const langSelect = document.getElementById('langSelect');
+if (langSelect) langSelect.addEventListener('change', () => setLanguage(langSelect.value));
 
 // ===== SECTION HEADER TRANSLATIONS FOR DYNAMIC CARDS =====
 const sectionHeadersZh = {
@@ -59,10 +49,38 @@ const sectionHeadersZh = {
     'PENALTIES': '违规处罚'
 };
 
+const sectionHeadersDe = {
+    'REPORTING': 'BERICHTSPFLICHTEN',
+    'SUPPLY CHAIN': 'LIEFERKETTE',
+    'PRODUCT DESIGN': 'PRODUKTDESIGN',
+    'DOCUMENTATION': 'DOKUMENTATION',
+    'PENALTIES': 'SANKTIONEN'
+};
+
+const sectionHeadersVi = {
+    'REPORTING': 'BÁO CÁO',
+    'SUPPLY CHAIN': 'CHUỖI CUNG ỨNG',
+    'PRODUCT DESIGN': 'THIẾT KẾ SẢN PHẨM',
+    'DOCUMENTATION': 'HỒ SƠ TÀI LIỆU',
+    'PENALTIES': 'CHẾ TÀI XỬ PHẠT'
+};
+
 const statusLabelsZh = {
     'IN FORCE': '已生效',
     'PHASING IN': '逐步实施',
     'PREPARE NOW': '立即准备'
+};
+
+const statusLabelsDe = {
+    'IN FORCE': 'IN KRAFT',
+    'PHASING IN': 'STUFENWEISE',
+    'PREPARE NOW': 'JETZT VORBEREITEN'
+};
+
+const statusLabelsVi = {
+    'IN FORCE': 'ĐÃ HIỆU LỰC',
+    'PHASING IN': 'ĐANG TRIỂN KHAI',
+    'PREPARE NOW': 'CHUẨN BỊ NGAY'
 };
 
 // ===== REGULATIONS DATABASE =====
@@ -598,15 +616,11 @@ atlasSubmit.addEventListener('click', () => {
     if (applicable.length === 0) {
         atlasEmpty.innerHTML = `
             <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-            <p><span class="lang-en">No regulations matched your current selection. Try selecting <strong>European Union</strong> or <strong>Germany</strong> as a target market, or adjust your product category and role.</span><span class="lang-zh">没有匹配您当前选择的法规。请尝试选择<strong>欧盟</strong>或<strong>德国</strong>作为目标市场，或调整您的产品类别和角色。</span></p>
+            <p><span class="lang-en">No regulations matched your current selection. Try selecting <strong>European Union</strong> or <strong>Germany</strong> as a target market, or adjust your product category and role.</span><span class="lang-zh">没有匹配您当前选择的法规。请尝试选择<strong>欧盟</strong>或<strong>德国</strong>作为目标市场，或调整您的产品类别和角色。</span><span class="lang-de">Keine Vorschriften entsprechen Ihrer Auswahl. Wählen Sie <strong>Europäische Union</strong> oder <strong>Deutschland</strong> als Zielmarkt oder passen Sie Produktkategorie und Rolle an.</span><span class="lang-vi">Không có quy định nào khớp với lựa chọn của bạn. Hãy chọn <strong>Liên minh châu Âu</strong> hoặc <strong>Đức</strong> làm thị trường mục tiêu, hoặc điều chỉnh danh mục sản phẩm và vai trò.</span></p>
         `;
         atlasEmpty.style.display = 'block';
         atlasCards.innerHTML = '';
         // Re-apply language state to new DOM
-        if (currentLang === 'zh') {
-            atlasEmpty.querySelectorAll('.lang-en').forEach(el => el.style.display = 'none');
-            atlasEmpty.querySelectorAll('.lang-zh').forEach(el => el.style.display = 'inline');
-        }
         return;
     }
 
@@ -617,15 +631,19 @@ atlasSubmit.addEventListener('click', () => {
         const reasonEn = reg.reason(category, markets, role, size);
         const reasonZh = reg.reasonZh(category, markets, role, size);
         const statusZh = statusLabelsZh[reg.statusLabel] || reg.statusLabel;
+        const statusDe = statusLabelsDe[reg.statusLabel] || reg.statusLabel;
+        const statusVi = statusLabelsVi[reg.statusLabel] || reg.statusLabel;
 
         const sectionsHTML = reg.sections.map(s => {
             const titleZh = sectionHeadersZh[s.title] || s.title;
+            const titleDe = sectionHeadersDe[s.title] || s.title;
+            const titleVi = sectionHeadersVi[s.title] || s.title;
             const body = s.textZh
-                ? `<p><span class="lang-en">${s.text}</span><span class="lang-zh">${s.textZh}</span></p>`
+                ? `<p><span class="lang-en">${s.text}</span><span class="lang-zh">${s.textZh}</span>${s.textDe ? `<span class="lang-de">${s.textDe}</span>` : ''}${s.textVi ? `<span class="lang-vi">${s.textVi}</span>` : ''}</p>`
                 : `<p>${s.text}</p>`;
             return `
             <div class="reg-section">
-                <div class="reg-section-title"><span class="lang-en">${s.title}</span><span class="lang-zh">${titleZh}</span></div>
+                <div class="reg-section-title"><span class="lang-en">${s.title}</span><span class="lang-zh">${titleZh}</span><span class="lang-de">${titleDe}</span><span class="lang-vi">${titleVi}</span></div>
                 ${body}
             </div>`;
         }).join('');
@@ -636,21 +654,21 @@ atlasSubmit.addEventListener('click', () => {
                     <div>
                         <div class="reg-result-title">${reg.name} <span class="reg-result-ref">${reg.ref}</span></div>
                     </div>
-                    <span class="reg-badges">${reg.badge === 'new' ? '<span class="badge badge-recency badge-recency-new"><span class="lang-en">NEW</span><span class="lang-zh">新规</span></span>' : ''}${reg.badge === 'updated' ? '<span class="badge badge-recency badge-recency-upd"><span class="lang-en">UPDATED</span><span class="lang-zh">已更新</span></span>' : ''}<span class="badge ${badgeClass}"><span class="lang-en">${reg.statusLabel}</span><span class="lang-zh">${statusZh}</span></span></span>
+                    <span class="reg-badges">${reg.badge === 'new' ? '<span class="badge badge-recency badge-recency-new"><span class="lang-en">NEW</span><span class="lang-zh">新规</span><span class="lang-de">NEU</span><span class="lang-vi">MỚI</span></span>' : ''}${reg.badge === 'updated' ? '<span class="badge badge-recency badge-recency-upd"><span class="lang-en">UPDATED</span><span class="lang-zh">已更新</span><span class="lang-de">AKTUALISIERT</span><span class="lang-vi">CẬP NHẬT</span></span>' : ''}<span class="badge ${badgeClass}"><span class="lang-en">${reg.statusLabel}</span><span class="lang-zh">${statusZh}</span><span class="lang-de">${statusDe}</span><span class="lang-vi">${statusVi}</span></span></span>
                 </div>
-                <p class="reg-result-reason"><span class="lang-en">${reasonEn}</span><span class="lang-zh">${reasonZh}</span></p>
+                <p class="reg-result-reason"><span class="lang-en">${reasonEn}</span><span class="lang-zh">${reasonZh}</span>${reg.reasonDe ? `<span class="lang-de">${reg.reasonDe(category, markets, role, size)}</span>` : ''}${reg.reasonVi ? `<span class="lang-vi">${reg.reasonVi(category, markets, role, size)}</span>` : ''}</p>
                 <div class="reg-result-sections">
                     ${sectionsHTML}
                 </div>
                 <div class="reg-result-footer">
                     <div class="reg-result-dates">
-                        <span><span class="lang-en">In force from</span><span class="lang-zh">生效日期</span> ${reg.inForce}</span>
-                        <span><span class="lang-en">Compliance deadline:</span><span class="lang-zh">合规截止日期:</span> ${reg.complianceDeadline}</span>
-                        <span><span class="lang-en">Last reviewed:</span><span class="lang-zh">最近更新:</span> ${reg.lastReviewed}</span>
+                        <span><span class="lang-en">In force from</span><span class="lang-zh">生效日期</span><span class="lang-de">In Kraft seit</span><span class="lang-vi">Hiệu lực từ</span> ${reg.inForce}</span>
+                        <span><span class="lang-en">Compliance deadline:</span><span class="lang-zh">合规截止日期:</span><span class="lang-de">Frist:</span><span class="lang-vi">Hạn tuân thủ:</span> ${reg.complianceDeadline}</span>
+                        <span><span class="lang-en">Last reviewed:</span><span class="lang-zh">最近更新:</span><span class="lang-de">Zuletzt geprüft:</span><span class="lang-vi">Kiểm tra lần cuối:</span> ${reg.lastReviewed}</span>
                     </div>
                     <span class="reg-result-links">
-                        <a href="regulation.html?id=${reg.id}" class="reg-result-link"><span class="lang-en">Learn more &rarr;</span><span class="lang-zh">了解更多 &rarr;</span></a>
-                        <a href="${reg.eurlex}" target="_blank" rel="noopener" class="reg-result-link"><span class="lang-en">Official text &rarr;</span><span class="lang-zh">官方原文 &rarr;</span></a>
+                        <a href="regulation.html?id=${reg.id}" class="reg-result-link"><span class="lang-en">Learn more &rarr;</span><span class="lang-zh">了解更多 &rarr;</span><span class="lang-de">Mehr erfahren &rarr;</span><span class="lang-vi">Tìm hiểu thêm &rarr;</span></a>
+                        <a href="${reg.eurlex}" target="_blank" rel="noopener" class="reg-result-link"><span class="lang-en">Official text &rarr;</span><span class="lang-zh">官方原文 &rarr;</span><span class="lang-de">Offizieller Text &rarr;</span><span class="lang-vi">Văn bản chính thức &rarr;</span></a>
                     </span>
                 </div>
             </article>
@@ -658,9 +676,9 @@ atlasSubmit.addEventListener('click', () => {
     };
 
     const compassGroups = [
-        { statuses: ['inforce'], en: 'ACT NOW', zh: '立即行动', descEn: 'Already in force — these rules apply to your products today.', descZh: '已生效——这些规则现已适用于您的产品。' },
-        { statuses: ['phasing'], en: 'PREPARE', zh: '提前准备', descEn: 'Phasing in — compliance deadlines within the next 1–2 years.', descZh: '逐步实施——合规期限在未来1至2年内。' },
-        { statuses: ['prepare'], en: 'WATCH', zh: '持续关注', descEn: 'Adopted or proposed — start building readiness now.', descZh: '已通过或拟议中——请立即开始准备。' }
+        { statuses: ['inforce'], en: 'ACT NOW', zh: '立即行动', de: 'JETZT HANDELN', vi: 'HÀNH ĐỘNG NGAY', descEn: 'Already in force — these rules apply to your products today.', descZh: '已生效——这些规则现已适用于您的产品。', descDe: 'Bereits in Kraft — diese Regeln gelten heute für Ihre Produkte.', descVi: 'Đã có hiệu lực — các quy định này áp dụng cho sản phẩm của bạn ngay hôm nay.' },
+        { statuses: ['phasing'], en: 'PREPARE', zh: '提前准备', de: 'VORBEREITEN', vi: 'CHUẨN BỊ', descEn: 'Phasing in — compliance deadlines within the next 1–2 years.', descZh: '逐步实施——合规期限在未来1至2年内。', descDe: 'Stufenweise Einführung — Fristen innerhalb der nächsten 1–2 Jahre.', descVi: 'Đang triển khai — thời hạn tuân thủ trong 1–2 năm tới.' },
+        { statuses: ['prepare'], en: 'WATCH', zh: '持续关注', de: 'BEOBACHTEN', vi: 'THEO DÕI', descEn: 'Adopted or proposed — start building readiness now.', descZh: '已通过或拟议中——请立即开始准备。', descDe: 'Verabschiedet oder vorgeschlagen — beginnen Sie jetzt mit der Vorbereitung.', descVi: 'Đã thông qua hoặc đang đề xuất — hãy bắt đầu chuẩn bị ngay.' }
     ];
 
     atlasCards.innerHTML = compassGroups.map(g => {
@@ -670,18 +688,14 @@ atlasSubmit.addEventListener('click', () => {
         return `
             <div class="compass-group">
                 <div class="compass-group-header">
-                    <h3><span class="lang-en">${g.en}</span><span class="lang-zh">${g.zh}</span></h3>
-                    <p><span class="lang-en">${g.descEn}</span><span class="lang-zh">${g.descZh}</span></p>
+                    <h3><span class="lang-en">${g.en}</span><span class="lang-zh">${g.zh}</span><span class="lang-de">${g.de}</span><span class="lang-vi">${g.vi}</span></h3>
+                    <p><span class="lang-en">${g.descEn}</span><span class="lang-zh">${g.descZh}</span><span class="lang-de">${g.descDe}</span><span class="lang-vi">${g.descVi}</span></p>
                 </div>
                 ${regs.map(renderRegCard).join('')}
             </div>`;
     }).join('');
 
     // Re-apply language state to newly rendered DOM
-    if (currentLang === 'zh') {
-        atlasCards.querySelectorAll('.lang-en').forEach(el => el.style.display = 'none');
-        atlasCards.querySelectorAll('.lang-zh').forEach(el => el.style.display = 'inline');
-    }
 
     document.getElementById('atlasResults').scrollIntoView({ behavior: 'smooth', block: 'start' });
 });
@@ -898,12 +912,6 @@ document.getElementById('cbamSector').addEventListener('change', function() {
         emD.innerHTML = '<span class="lang-en">Select a sector to see the default value</span><span class="lang-zh">\u8bf7\u5148\u9009\u62e9\u4ea7\u54c1\u7c7b\u522b\u4ee5\u67e5\u770b\u9ed8\u8ba4\u503c</span>';
         bmD.innerHTML = '<span class="lang-en">Select a sector to see the default value</span><span class="lang-zh">\u8bf7\u5148\u9009\u62e9\u4ea7\u54c1\u7c7b\u522b\u4ee5\u67e5\u770b\u9ed8\u8ba4\u503c</span>';
     }
-    if (currentLang === 'zh') {
-        [emD, bmD].forEach(el => {
-            el.querySelectorAll('.lang-en').forEach(e => e.style.display = 'none');
-            el.querySelectorAll('.lang-zh').forEach(e => e.style.display = 'inline');
-        });
-    }
 });
 
 // Role change: update volume label
@@ -914,10 +922,6 @@ document.querySelectorAll('input[name="cbamRole"]').forEach(r => {
             lbl.innerHTML = '<span class="lang-en">Annual Export Volume to EU (metric tonnes)</span><span class="lang-zh">\u6bcf\u5e74\u5411\u6b27\u76df\u51fa\u53e3\u91cf\uff08\u516c\u5428\uff09</span>';
         } else {
             lbl.innerHTML = '<span class="lang-en">Annual Import Volume (metric tonnes)</span><span class="lang-zh">\u6bcf\u5e74\u8fdb\u53e3\u91cf\uff08\u516c\u5428\uff09</span>';
-        }
-        if (currentLang === 'zh') {
-            lbl.querySelectorAll('.lang-en').forEach(e => e.style.display = 'none');
-            lbl.querySelectorAll('.lang-zh').forEach(e => e.style.display = 'inline');
         }
     });
 });
@@ -972,7 +976,6 @@ document.getElementById('cbamCalculate').addEventListener('click', function() {
 
     if (!sector || !country || isNaN(volume) || volume <= 0) {
         resultDiv.innerHTML = '<div class="cbam-result-card cbam-error"><span class="lang-en">Please select a sector, country, and enter a valid export volume.</span><span class="lang-zh">\u8bf7\u9009\u62e9\u4ea7\u54c1\u7c7b\u522b\u3001\u539f\u4ea7\u56fd\u5e76\u8f93\u5165\u6709\u6548\u7684\u51fa\u53e3\u91cf\u3002</span></div>';
-        if (currentLang === 'zh') { resultDiv.querySelectorAll('.lang-en').forEach(e => e.style.display = 'none'); resultDiv.querySelectorAll('.lang-zh').forEach(e => e.style.display = 'inline'); }
         return;
     }
 
@@ -986,7 +989,6 @@ document.getElementById('cbamCalculate').addEventListener('click', function() {
         const v = parseFloat(document.getElementById('cbamCustomEmissions').value);
         if (isNaN(v) || v < 0) {
             resultDiv.innerHTML = '<div class="cbam-result-card cbam-error"><span class="lang-en">Please enter a valid emissions intensity value.</span><span class="lang-zh">\u8bf7\u8f93\u5165\u6709\u6548\u7684\u6392\u653e\u5f3a\u5ea6\u503c\u3002</span></div>';
-            if (currentLang === 'zh') { resultDiv.querySelectorAll('.lang-en').forEach(e => e.style.display = 'none'); resultDiv.querySelectorAll('.lang-zh').forEach(e => e.style.display = 'inline'); }
             return;
         }
         emissions = v;
@@ -998,7 +1000,6 @@ document.getElementById('cbamCalculate').addEventListener('click', function() {
         const v = parseFloat(document.getElementById('cbamCustomBenchmark').value);
         if (isNaN(v) || v < 0) {
             resultDiv.innerHTML = '<div class="cbam-result-card cbam-error"><span class="lang-en">Please enter a valid benchmark value.</span><span class="lang-zh">\u8bf7\u8f93\u5165\u6709\u6548\u7684\u57fa\u51c6\u503c\u3002</span></div>';
-            if (currentLang === 'zh') { resultDiv.querySelectorAll('.lang-en').forEach(e => e.style.display = 'none'); resultDiv.querySelectorAll('.lang-zh').forEach(e => e.style.display = 'inline'); }
             return;
         }
         benchmark = v;
@@ -1176,10 +1177,6 @@ document.getElementById('cbamCalculate').addEventListener('click', function() {
 
     resultDiv.innerHTML = html;
 
-    if (currentLang === 'zh') {
-        resultDiv.querySelectorAll('.lang-en').forEach(e => e.style.display = 'none');
-        resultDiv.querySelectorAll('.lang-zh').forEach(e => e.style.display = 'inline');
-    }
 });
 
 // ===== FAQ ACCORDION =====
@@ -1249,10 +1246,8 @@ if (briefForm) {
 
 // ===== CMS CONTENT (Sanity via /api/content proxy) =====
 function applyLang(scope) {
-    if (currentLang === 'zh') {
-        scope.querySelectorAll('.lang-en').forEach(el => el.style.display = 'none');
-        scope.querySelectorAll('.lang-zh').forEach(el => el.style.display = 'inline');
-    }
+    // Language visibility is fully CSS-driven via the body class — injected
+    // content obeys automatically. Kept as a no-op for call-site stability.
 }
 
 function authToken() {
@@ -1286,23 +1281,20 @@ async function loadContent(type) {
 // Nav sign-in state
 const navSignin = document.getElementById('navSignin');
 if (navSignin && (authToken() || demoTier())) {
-    navSignin.innerHTML = '<span class="lang-en">Account</span><span class="lang-zh">账户</span>';
-    applyLangWhenReady();
-}
-function applyLangWhenReady() {
-    if (currentLang === 'zh' && navSignin) {
-        navSignin.querySelectorAll('.lang-en').forEach(el => el.style.display = 'none');
-        navSignin.querySelectorAll('.lang-zh').forEach(el => el.style.display = 'inline');
-    }
+    navSignin.innerHTML = '<span class="lang-en">Account</span><span class="lang-zh">账户</span><span class="lang-de">Konto</span><span class="lang-vi">Tài khoản</span>';
 }
 
 const catDisplay = {
     en: { electronics: 'Electronics & Batteries', textiles: 'Textiles & Apparel', cosmetics: 'Cosmetics & Personal Care', toys: 'Toys', furniture: 'Furniture & Home Goods', food: 'Food & Packaging', construction: 'Construction Products', other: 'your products' },
-    zh: { electronics: '电子产品与电池', textiles: '纺织品与服装', cosmetics: '化妆品与个人护理', toys: '玩具', furniture: '家具与家居用品', food: '食品与包装', construction: '建筑材料', other: '您的产品' }
+    zh: { electronics: '电子产品与电池', textiles: '纺织品与服装', cosmetics: '化妆品与个人护理', toys: '玩具', furniture: '家具与家居用品', food: '食品与包装', construction: '建筑材料', other: '您的产品' },
+    de: { electronics: 'Elektronik & Batterien', textiles: 'Textilien & Bekleidung', cosmetics: 'Kosmetik & Körperpflege', toys: 'Spielzeug', furniture: 'Möbel & Haushaltswaren', food: 'Lebensmittel & Verpackung', construction: 'Bauprodukte', other: 'Ihre Produkte' },
+    vi: { electronics: 'Điện tử & Pin', textiles: 'Dệt may & Trang phục', cosmetics: 'Mỹ phẩm & Chăm sóc cá nhân', toys: 'Đồ chơi', furniture: 'Nội thất & Đồ gia dụng', food: 'Thực phẩm & Bao bì', construction: 'Vật liệu xây dựng', other: 'sản phẩm của bạn' }
 };
 const roleDisplay = {
     en: { supplier: 'an exporter to the EU', importer: 'an EU-based importer', brand: 'a Brand/Retailer', manufacturer: 'a manufacturer with an EU entity' },
-    zh: { supplier: '向欧盟出口', importer: '作为欧盟进口商', brand: '品牌/零售商', manufacturer: '拥有欧盟实体的制造商' }
+    zh: { supplier: '向欧盟出口', importer: '作为欧盟进口商', brand: '品牌/零售商', manufacturer: '拥有欧盟实体的制造商' },
+    de: { supplier: 'Exporteur in die EU', importer: 'EU-Importeur', brand: 'Marke/Händler', manufacturer: 'Hersteller mit EU-Niederlassung' },
+    vi: { supplier: 'nhà xuất khẩu sang EU', importer: 'nhà nhập khẩu tại EU', brand: 'thương hiệu/nhà bán lẻ', manufacturer: 'nhà sản xuất có pháp nhân tại EU' }
 };
 
 function regFromSanity(d) {
@@ -1324,7 +1316,7 @@ function regFromSanity(d) {
         eurlex: d.eurlex,
         badge: d.badge,
         newSince: d.newSince,
-        sections: (d.sections || []).map(s => ({ title: s.title, text: s.textEn, textZh: s.textZh })),
+        sections: (d.sections || []).map(s => ({ title: s.title, text: s.textEn, textZh: s.textZh, textDe: s.textDe, textVi: s.textVi })),
         applies: (cat, markets, role, size) => {
             const regMarkets = (d.markets && d.markets.length) ? d.markets : ['eu', 'germany'];
             if (!markets.some(m => regMarkets.includes(m))) return false;
@@ -1334,7 +1326,9 @@ function regFromSanity(d) {
             return true;
         },
         reason: (cat, markets, role, size) => fill(d.reasonEn, 'en', cat, role),
-        reasonZh: (cat, markets, role, size) => fill(d.reasonZh, 'zh', cat, role)
+        reasonZh: (cat, markets, role, size) => fill(d.reasonZh, 'zh', cat, role),
+        reasonDe: d.reasonDe ? ((cat, markets, role, size) => fill(d.reasonDe, 'de', cat, role)) : null,
+        reasonVi: d.reasonVi ? ((cat, markets, role, size) => fill(d.reasonVi, 'vi', cat, role)) : null
     };
 }
 
@@ -1355,9 +1349,9 @@ function renderRadar(deadlines) {
     if (!upcoming.length) return;
 
     const groups = [
-        { key: 'soon', en: 'NEXT 6 MONTHS', zh: '未来6个月', descEn: 'Act now — these dates are imminent.', descZh: '立即行动——期限迫近。' },
-        { key: 'near', en: '6–14 MONTHS', zh: '6至14个月', descEn: 'Plan and budget for these this year.', descZh: '请于今年内规划和预算。' },
-        { key: 'far', en: 'ON THE HORIZON', zh: '中长期', descEn: 'Monitor and prepare early.', descZh: '持续关注，提前准备。' }
+        { key: 'soon', en: 'NEXT 6 MONTHS', zh: '未来6个月', de: 'NÄCHSTE 6 MONATE', vi: '6 THÁNG TỚI', descEn: 'Act now — these dates are imminent.', descZh: '立即行动——期限迫近。', descDe: 'Jetzt handeln — diese Termine stehen unmittelbar bevor.', descVi: 'Hành động ngay — các thời hạn đã cận kề.' },
+        { key: 'near', en: '6–14 MONTHS', zh: '6至14个月', de: '6–14 MONATE', vi: '6–14 THÁNG', descEn: 'Plan and budget for these this year.', descZh: '请于今年内规划和预算。', descDe: 'Dieses Jahr planen und budgetieren.', descVi: 'Lên kế hoạch và ngân sách trong năm nay.' },
+        { key: 'far', en: 'ON THE HORIZON', zh: '中长期', de: 'AM HORIZONT', vi: 'TRUNG–DÀI HẠN', descEn: 'Monitor and prepare early.', descZh: '持续关注，提前准备。', descDe: 'Beobachten und früh vorbereiten.', descVi: 'Theo dõi và chuẩn bị sớm.' }
     ];
 
     const byGroup = { soon: [], near: [], far: [] };
@@ -1373,13 +1367,13 @@ function renderRadar(deadlines) {
         const cards = items.map(d => {
             const dateStr = new Date(d.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
             const expected = d.confidence === 'expected'
-                ? ' <span class="radar-expected"><span class="lang-en">expected</span><span class="lang-zh">预期</span></span>'
+                ? ' <span class="radar-expected"><span class="lang-en">expected</span><span class="lang-zh">预期</span><span class="lang-de">erwartet</span><span class="lang-vi">dự kiến</span></span>'
                 : '';
             const affects = d.affects
                 ? `<div class="radar-affects"><span class="lang-en">${d.affects}</span><span class="lang-zh">${d.affectsZh || d.affects}</span></div>`
                 : '';
             const inner = `
-                    <div class="radar-days-chip"><strong>${d.days}</strong><span class="lang-en">days</span><span class="lang-zh">天</span></div>
+                    <div class="radar-days-chip"><strong>${d.days}</strong><span class="lang-en">days</span><span class="lang-zh">天</span><span class="lang-de">Tage</span><span class="lang-vi">ngày</span></div>
                     <div class="radar-body">
                         <div class="radar-label"><span class="lang-en">${d.labelEn}</span><span class="lang-zh">${d.labelZh || d.labelEn}</span></div>
                         <div class="radar-meta">${dateStr}${expected}</div>
@@ -1393,8 +1387,8 @@ function renderRadar(deadlines) {
         return `
             <div class="radar-col radar-col-${g.key}">
                 <div class="radar-col-header">
-                    <h3><span class="lang-en">${g.en}</span><span class="lang-zh">${g.zh}</span></h3>
-                    <p><span class="lang-en">${g.descEn}</span><span class="lang-zh">${g.descZh}</span></p>
+                    <h3><span class="lang-en">${g.en}</span><span class="lang-zh">${g.zh}</span><span class="lang-de">${g.de}</span><span class="lang-vi">${g.vi}</span></h3>
+                    <p><span class="lang-en">${g.descEn}</span><span class="lang-zh">${g.descZh}</span><span class="lang-de">${g.descDe}</span><span class="lang-vi">${g.descVi}</span></p>
                 </div>
                 <div class="radar-col-items">${cards}</div>
             </div>`;
@@ -1408,11 +1402,11 @@ loadContent('deadlines').then(renderRadar).catch(() => { /* section stays hidden
 
 // ----- Weekly Briefing -----
 const pillarLabels = {
-    'eu': { en: 'EU Regulatory', zh: '欧盟法规' },
-    'germany': { en: 'Germany & Retail', zh: '德国与零售' },
-    'china-hk': { en: 'China & Hong Kong', zh: '中国与香港' },
-    'standards': { en: 'Standards & Certification', zh: '标准与认证' },
-    'explainer': { en: 'Explainer', zh: '解读' }
+    'eu': { en: 'EU Regulatory', zh: '欧盟法规', de: 'EU-Regulierung', vi: 'Quy định EU' },
+    'germany': { en: 'Germany & Retail', zh: '德国与零售', de: 'Deutschland & Handel', vi: 'Đức & Bán lẻ' },
+    'china-hk': { en: 'China & Hong Kong', zh: '中国与香港', de: 'China & Hongkong', vi: 'Trung Quốc & Hồng Kông' },
+    'standards': { en: 'Standards & Certification', zh: '标准与认证', de: 'Normen & Zertifizierung', vi: 'Tiêu chuẩn & Chứng nhận' },
+    'explainer': { en: 'Explainer', zh: '解读', de: 'Erklärt', vi: 'Giải thích' }
 };
 
 function renderBriefing(posts) {
@@ -1422,13 +1416,13 @@ function renderBriefing(posts) {
 
     const row = (labelEn, labelZh, textEn, textZh) => textEn ? `
         <div class="briefing-row">
-            <div class="briefing-row-label"><span class="lang-en">${labelEn}</span><span class="lang-zh">${labelZh}</span></div>
+            <div class="briefing-row-label"><span class="lang-en">${labelEn}</span><span class="lang-zh">${labelZh}</span><span class="lang-de">${labelEn === 'What happened' ? 'Was ist passiert' : labelEn === 'Why it matters' ? 'Warum es wichtig ist' : 'Was zu tun ist'}</span><span class="lang-vi">${labelEn === 'What happened' ? 'Điều gì đã xảy ra' : labelEn === 'Why it matters' ? 'Vì sao quan trọng' : 'Cần làm gì'}</span></div>
             <p><span class="lang-en">${textEn}</span><span class="lang-zh">${textZh || textEn}</span></p>
         </div>` : '';
 
     const kicker = p => {
         const pillar = pillarLabels[p.pillar] || { en: p.pillar, zh: p.pillar };
-        return `<span class="briefing-kicker"><span class="lang-en">${pillar.en}</span><span class="lang-zh">${pillar.zh}</span></span>`;
+        return `<span class="briefing-kicker"><span class="lang-en">${pillar.en}</span><span class="lang-zh">${pillar.zh}</span><span class="lang-de">${pillar.de || pillar.en}</span><span class="lang-vi">${pillar.vi || pillar.en}</span></span>`;
     };
 
     const sourceLinks = p => {
@@ -1438,7 +1432,7 @@ function renderBriefing(posts) {
             try { host = new URL(u).hostname.replace(/^www\./, ''); } catch (e) { /* keep raw */ }
             return `<a href="${u}" target="_blank" rel="noopener">${host} &nearr;</a>`;
         }).join(' &middot; ');
-        return `<p class="briefing-sources"><span class="lang-en">Source:</span><span class="lang-zh">来源：</span> ${links}</p>`;
+        return `<p class="briefing-sources"><span class="lang-en">Source:</span><span class="lang-zh">来源：</span><span class="lang-de">Quelle:</span><span class="lang-vi">Nguồn:</span> ${links}</p>`;
     };
 
     // Newspaper dateline from the lead story's publish date
@@ -1447,7 +1441,9 @@ function renderBriefing(posts) {
         const d = new Date(posts[0].publishedAt);
         const en = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }).toUpperCase();
         const zh = `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`;
-        dateline.innerHTML = `<span class="lang-en">HONG KONG &middot; ${en}</span><span class="lang-zh">香港 &middot; ${zh}</span>`;
+        const deDate = d.toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' }).toUpperCase();
+        const viDate = d.toLocaleDateString('vi-VN', { day: 'numeric', month: 'long', year: 'numeric' }).toUpperCase();
+        dateline.innerHTML = `<span class="lang-en">HONG KONG &middot; ${en}</span><span class="lang-zh">香港 &middot; ${zh}</span><span class="lang-de">HONGKONG &middot; ${deDate}</span><span class="lang-vi">HỒNG KÔNG &middot; ${viDate}</span>`;
         applyLang(dateline);
     }
 
@@ -1456,14 +1452,14 @@ function renderBriefing(posts) {
     const lockCta = p => {
         const premium = p.accessLevel === 'premium';
         const label = premium
-            ? '<span class="lang-en">Member content &mdash; sign in</span><span class="lang-zh">会员内容——请登录</span>'
-            : '<span class="lang-en">Sign in free to read</span><span class="lang-zh">免费登录阅读全文</span>';
+            ? '<span class="lang-en">Member content &mdash; sign in</span><span class="lang-zh">会员内容——请登录</span><span class="lang-de">Mitgliederinhalt &mdash; anmelden</span><span class="lang-vi">Nội dung hội viên &mdash; đăng nhập</span>'
+            : '<span class="lang-en">Sign in free to read</span><span class="lang-zh">免费登录阅读全文</span><span class="lang-de">Kostenlos anmelden und lesen</span><span class="lang-vi">Đăng nhập miễn phí để đọc</span>';
         return `<a class="briefing-lock-cta ${premium ? 'briefing-lock-premium' : ''}" href="account.html">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
             ${label} &rarr;</a>`;
     };
 
-    const readMore = p => `<p class="briefing-readmore"><a href="/article?slug=${p.slug || ''}"><span class="lang-en">Full article &rarr;</span><span class="lang-zh">阅读全文 &rarr;</span></a></p>`;
+    const readMore = p => `<p class="briefing-readmore"><a href="/article?slug=${p.slug || ''}"><span class="lang-en">Full article &rarr;</span><span class="lang-zh">阅读全文 &rarr;</span><span class="lang-de">Ganzer Artikel &rarr;</span><span class="lang-vi">Bài đầy đủ &rarr;</span></a></p>`;
 
     const [lead, ...rest] = posts;
 
@@ -1485,7 +1481,7 @@ function renderBriefing(posts) {
             ${titleLink(p, 'h4')}
             ${thumb}
             <p class="briefing-item-text"><span class="lang-en">${p.whatHappenedEn || ''}</span><span class="lang-zh">${p.whatHappenedZh || p.whatHappenedEn || ''}</span></p>
-            ${p.supplierActionEn ? `<p class="briefing-item-action"><strong><span class="lang-en">What to do:</span><span class="lang-zh">应对措施：</span></strong> <span class="lang-en">${p.supplierActionEn}</span><span class="lang-zh">${p.supplierActionZh || p.supplierActionEn}</span></p>` : ''}
+            ${p.supplierActionEn ? `<p class="briefing-item-action"><strong><span class="lang-en">What to do:</span><span class="lang-zh">应对措施：</span><span class="lang-de">Was zu tun ist:</span><span class="lang-vi">Cần làm gì:</span></strong> <span class="lang-en">${p.supplierActionEn}</span><span class="lang-zh">${p.supplierActionZh || p.supplierActionEn}</span></p>` : ''}
             ${sourceLinks(p)}
             ${readMore(p)}
         </article>`;

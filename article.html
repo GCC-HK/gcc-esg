@@ -72,41 +72,45 @@
             </a>
             <div class="nav-right">
                 <div class="lang-toggle">
-                    <button class="lang-btn active" data-lang="en">EN</button>
-                    <button class="lang-btn" data-lang="zh">中文</button>
+                    <select id="langSelect" aria-label="Language / 语言 / Sprache / Ngôn ngữ">
+                        <option value="en">EN</option>
+                        <option value="zh">中文</option>
+                        <option value="de">DE</option>
+                        <option value="vi">VI</option>
+                    </select>
                 </div>
             </div>
         </div>
     </nav>
 
     <main class="artpage" id="artpage">
-        <div class="artpage-loading"><span class="lang-en">Loading article&hellip;</span><span class="lang-zh">正在加载文章&hellip;</span></div>
+        <div class="artpage-loading"><span class="lang-en">Loading article&hellip;</span><span class="lang-zh">正在加载文章&hellip;</span><span class="lang-de">Artikel wird geladen&hellip;</span><span class="lang-vi">Đang tải bài viết&hellip;</span></div>
     </main>
 
     <script>
     (function () {
+        var LANGS = ['en', 'zh', 'de', 'vi'];
         var currentLang = localStorage.getItem('gcc-lang') || 'en';
+        if (LANGS.indexOf(currentLang) < 0) currentLang = 'en';
         function applyLang() {
-            document.documentElement.lang = currentLang === 'zh' ? 'zh-Hans' : 'en';
-            document.body.classList.toggle('zh', currentLang === 'zh');
-            document.querySelectorAll('.lang-btn').forEach(function (b) {
-                b.classList.toggle('active', b.dataset.lang === currentLang);
-            });
+            document.documentElement.lang = { en: 'en', zh: 'zh-Hans', de: 'de', vi: 'vi' }[currentLang];
+            LANGS.forEach(function (l) { document.body.classList.toggle(l, l === currentLang && l !== 'en'); });
+            var sel = document.getElementById('langSelect');
+            if (sel) sel.value = currentLang;
         }
-        document.querySelectorAll('.lang-btn').forEach(function (b) {
-            b.addEventListener('click', function () {
-                currentLang = b.dataset.lang;
-                localStorage.setItem('gcc-lang', currentLang);
-                applyLang();
-            });
+        var langSel = document.getElementById('langSelect');
+        if (langSel) langSel.addEventListener('change', function () {
+            currentLang = langSel.value;
+            localStorage.setItem('gcc-lang', currentLang);
+            applyLang();
         });
         applyLang();
 
-        var t = function (en, zh) { return '<span class="lang-en">' + en + '</span><span class="lang-zh">' + (zh || en) + '</span>'; };
+        var t = function (en, zh, de, vi) { return '<span class="lang-en">' + en + '</span><span class="lang-zh">' + (zh || en) + '</span>' + (de ? '<span class="lang-de">' + de + '</span>' : '') + (vi ? '<span class="lang-vi">' + vi + '</span>' : ''); };
         var pillarLabels = {
-            'eu': { en: 'EU Regulatory', zh: '欧盟法规' }, 'germany': { en: 'Germany & Retail', zh: '德国与零售' },
-            'china-hk': { en: 'China & Hong Kong', zh: '中国与香港' }, 'standards': { en: 'Standards & Certification', zh: '标准与认证' },
-            'explainer': { en: 'Explainer', zh: '解读' }
+            'eu': { en: 'EU Regulatory', zh: '欧盟法规', de: 'EU-Regulierung', vi: 'Quy định của EU' }, 'germany': { en: 'Germany & Retail', zh: '德国与零售', de: 'Deutschland & Einzelhandel', vi: 'Đức & Bán lẻ' },
+            'china-hk': { en: 'China & Hong Kong', zh: '中国与香港', de: 'China & Hongkong', vi: 'Trung Quốc & Hồng Kông' }, 'standards': { en: 'Standards & Certification', zh: '标准与认证', de: 'Normen & Zertifizierung', vi: 'Tiêu chuẩn & Chứng nhận' },
+            'explainer': { en: 'Explainer', zh: '解读', de: 'Erklärt', vi: 'Giải thích' }
         };
 
         function authToken() {
@@ -144,8 +148,8 @@
         var main = document.getElementById('artpage');
 
         function fail() {
-            main.innerHTML = '<div class="artpage-loading">' + t('Article not found.', '未找到该文章。') +
-                '<p style="margin-top:16px"><a class="artpage-back" href="index.html#briefing">' + t('&larr; Back to the briefing', '&larr; 返回简报') + '</a></p></div>';
+            main.innerHTML = '<div class="artpage-loading">' + t('Article not found.', '未找到该文章。', 'Artikel nicht gefunden.', 'Không tìm thấy bài viết.') +
+                '<p style="margin-top:16px"><a class="artpage-back" href="index.html#briefing">' + t('&larr; Back to the briefing', '&larr; 返回简报', '&larr; Zurück zum Briefing', '&larr; Quay lại bản tin') + '</a></p></div>';
             applyLang();
         }
         if (!slug) { fail(); return; }
@@ -164,8 +168,8 @@
                 document.title = (p.titleEn || 'Article') + ' – GREEN FUTURE';
 
                 var head =
-                    '<a class="artpage-back" href="index.html#briefing">' + t('&larr; All news', '&larr; 全部新闻') + '</a>' +
-                    '<div><span class="briefing-kicker">' + t(pillar.en, pillar.zh) + '</span></div>' +
+                    '<a class="artpage-back" href="index.html#briefing">' + t('&larr; All news', '&larr; 全部新闻', '&larr; Alle Nachrichten', '&larr; Tất cả tin tức') + '</a>' +
+                    '<div><span class="briefing-kicker">' + t(pillar.en, pillar.zh, pillar.de, pillar.vi) + '</span></div>' +
                     '<h1>' + t(p.titleEn, p.titleZh) + '</h1>' +
                     '<div class="artpage-date">HONG KONG &middot; ' + dateStr + '</div>' +
                     (p.imageUrl ? '<figure class="artpage-image"><img src="' + p.imageUrl + '" alt="">' + (p.imageCredit ? '<figcaption>' + p.imageCredit + '</figcaption>' : '') + '</figure>' : '');
@@ -175,28 +179,28 @@
                     main.innerHTML = head +
                         '<p style="font-size:1.05rem;line-height:1.7;color:var(--gray-600)">' + t(p.teaserEn || '', p.teaserZh || '') + '</p>' +
                         '<div class="artpage-lock">' +
-                        '<h2>' + (premium ? t('Member content', '会员内容') : t('Free registration required', '需要免费注册')) + '</h2>' +
+                        '<h2>' + (premium ? t('Member content', '会员内容', 'Inhalt für Mitglieder', 'Nội dung dành cho hội viên') : t('Free registration required', '需要免费注册', 'Kostenlose Registrierung erforderlich', 'Yêu cầu đăng ký miễn phí')) + '</h2>' +
                         '<p>' + (premium
-                            ? t('This in-depth report is reserved for Committee member companies.', '此深度报告仅面向委员会成员企业开放。')
-                            : t('Sign in with your email — free, no password — to read the full article.', '使用邮箱登录（免费、无需密码）即可阅读全文。')) + '</p>' +
-                        '<a class="btn btn-atlas" style="width:auto" href="account.html">' + (premium ? t('Sign in', '登录') : t('Sign in free', '免费登录')) + '</a>' +
-                        (premium ? '<a class="btn btn-outline" href="mailto:gcc-sustainability@hongkong.ahk.de?subject=Member access request">' + t('Request member access', '申请会员权限') + '</a>' : '') +
+                            ? t('This in-depth report is reserved for Committee member companies.', '此深度报告仅面向委员会成员企业开放。', 'Dieser ausführliche Bericht ist den Mitgliedsunternehmen des Ausschusses vorbehalten.', 'Báo cáo chuyên sâu này dành riêng cho các doanh nghiệp hội viên của Ủy ban.')
+                            : t('Sign in with your email — free, no password — to read the full article.', '使用邮箱登录（免费、无需密码）即可阅读全文。', 'Melden Sie sich mit Ihrer E-Mail-Adresse an — kostenlos, ohne Passwort — um den vollständigen Artikel zu lesen.', 'Đăng nhập bằng email của bạn — miễn phí, không cần mật khẩu — để đọc toàn bộ bài viết.')) + '</p>' +
+                        '<a class="btn btn-atlas" style="width:auto" href="account.html">' + (premium ? t('Sign in', '登录', 'Anmelden', 'Đăng nhập') : t('Sign in free', '免费登录', 'Kostenlos anmelden', 'Đăng nhập miễn phí')) + '</a>' +
+                        (premium ? '<a class="btn btn-outline" href="mailto:gcc-sustainability@hongkong.ahk.de?subject=Member access request">' + t('Request member access', '申请会员权限', 'Mitgliederzugang anfragen', 'Yêu cầu quyền truy cập hội viên') + '</a>' : '') +
                         '</div>';
                 } else {
-                    var row = function (le, lz, te, tz) {
-                        return te ? '<div class="briefing-row"><div class="briefing-row-label">' + t(le, lz) + '</div><p>' + t(te, tz) + '</p></div>' : '';
+                    var row = function (le, lz, lde, lvi, te, tz) {
+                        return te ? '<div class="briefing-row"><div class="briefing-row-label">' + t(le, lz, lde, lvi) + '</div><p>' + t(te, tz) + '</p></div>' : '';
                     };
                     var sources = '';
                     if (Array.isArray(p.sources) && p.sources.length) {
-                        sources = '<p class="briefing-sources">' + t('Source:', '来源：') + ' ' + p.sources.map(function (u) {
+                        sources = '<p class="briefing-sources">' + t('Source:', '来源：', 'Quelle:', 'Nguồn:') + ' ' + p.sources.map(function (u) {
                             var host = u; try { host = new URL(u).hostname.replace(/^www\./, ''); } catch (e) {}
                             return '<a href="' + u + '" target="_blank" rel="noopener">' + host + ' &nearr;</a>';
                         }).join(' &middot; ') + '</p>';
                     }
                     main.innerHTML = head +
-                        row('What happened', '发生了什么', p.whatHappenedEn, p.whatHappenedZh) +
-                        row('Why it matters', '为何重要', p.whyItMattersEn, p.whyItMattersZh) +
-                        row('What to do', '应对措施', p.supplierActionEn, p.supplierActionZh) +
+                        row('What happened', '发生了什么', 'Was ist passiert', 'Điều gì đã xảy ra', p.whatHappenedEn, p.whatHappenedZh) +
+                        row('Why it matters', '为何重要', 'Warum es wichtig ist', 'Vì sao điều này quan trọng', p.whyItMattersEn, p.whyItMattersZh) +
+                        row('What to do', '应对措施', 'Was zu tun ist', 'Cần làm gì', p.supplierActionEn, p.supplierActionZh) +
                         (p.bodyEn ? '<div class="artpage-body">' + renderBlocks(currentLang === 'zh' && p.bodyZh ? p.bodyZh : p.bodyEn) + '</div>' : '') +
                         sources;
                 }
