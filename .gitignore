@@ -8,3 +8,6 @@ node_modules/
 
 # Source materials (member logos, licensed stock, CI manual) — never commit
 input/
+
+# Internal strategy documents — do not publish
+Monetization Proposal.docx
