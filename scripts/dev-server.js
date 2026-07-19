@@ -24,7 +24,7 @@ const NEWS_FIELDS = 'titleEn,titleZh,"slug":slug.current,publishedAt,pillar,what
 
 const QUERIES = {
     regulations: '*[_type=="regulation"]{regId,name,ref,status,inForce,complianceDeadline,lastReviewed,eurlex,sections,categories,roles,sizes,reasonEn,reasonZh,reasonDe,reasonVi,accessLevel,badge,newSince,markets}',
-    news: `*[_type=="newsPost"]|order(publishedAt desc)[0...12]{${NEWS_FIELDS}}`,
+    news: `*[_type=="newsPost"]|order(publishedAt desc)[0...20]{${NEWS_FIELDS}}`,
     deadlines: '*[_type=="deadline"]|order(date asc){labelEn,labelZh,date,affects,affectsZh,confidence,regId}'
 };
 

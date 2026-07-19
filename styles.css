@@ -3125,3 +3125,130 @@ a.radar-item-link:hover .radar-arrow { opacity: 1; }
 .lang-toggle select:focus-visible {
     outline: 3px solid var(--accent);
 }
+
+/* ===== MEMBER RESOURCE LIBRARY ===== */
+.library {
+    padding: 90px 0;
+    background: linear-gradient(180deg, #eef3f9 0%, #f7f9fc 100%);
+    border-top: 3px solid var(--ahk-blue);
+}
+
+.library .section-icon {
+    background: rgba(0, 51, 102, 0.08);
+    color: var(--ahk-blue);
+}
+
+.library .atlas-label {
+    color: var(--ahk-blue);
+    background: rgba(0, 51, 102, 0.08);
+}
+
+.library-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+
+.library-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-top: 4px solid var(--ahk-blue);
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.library-card .briefing-kicker {
+    color: var(--ahk-blue);
+}
+
+.library-card h3 {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    line-height: 1.35;
+}
+
+.library-card .briefing-item-text {
+    flex: 1;
+}
+
+.library-locked h3,
+.library-locked .briefing-item-text {
+    opacity: 0.75;
+}
+
+.library-read {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--ahk-blue);
+}
+
+.library-read:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 900px) {
+    .library-grid { grid-template-columns: 1fr; }
+}
+
+/* ===== MEMBER-LOCKED BUTTONS ===== */
+.member-locked-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--ahk-blue);
+    background: rgba(0, 51, 102, 0.08);
+    border-radius: 999px;
+    padding: 9px 18px;
+}
+
+.member-locked-btn:hover {
+    background: rgba(0, 51, 102, 0.14);
+}
+
+.radar-actions {
+    text-align: center;
+    margin-top: 26px;
+}
+
+.radar-actions .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.cbam-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px;
+    margin-top: 18px;
+}
+
+.cbam-actions .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* ===== PRINT: BUYER-READY CBAM REPORT ===== */
+@media print {
+    body * { visibility: hidden; }
+    #cbamResult, #cbamResult * { visibility: visible; }
+    #cbamResult { position: absolute; top: 60px; left: 0; width: 100%; }
+    #cbamResult::before {
+        content: "GREEN FUTURE · GCC Sustainability Committee · CBAM Cost Estimate · gcc-sustainability@hongkong.ahk.de";
+        visibility: visible;
+        display: block;
+        font-weight: 700;
+        font-size: 12pt;
+        border-bottom: 2px solid #1a5c38;
+        padding-bottom: 8px;
+        margin-bottom: 16px;
+    }
+    .cbam-actions, .cbam-cta { display: none !important; }
+}

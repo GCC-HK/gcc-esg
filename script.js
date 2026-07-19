@@ -1172,7 +1172,16 @@ document.getElementById('cbamCalculate').addEventListener('click', function() {
     }
 
     html += `<div class="cbam-disclaimer"><span class="lang-en">This estimate uses the Q2 2026 CBAM certificate price (\u20ac75.28/tCO\u2082e), the 2026 CBAM factor (97.5% of the EU benchmark deducted as free allocation; the payable share rises to 100% by 2034), and indicative default values \u2014 since 2026 the EU publishes country- and route-specific defaults with a +10% mark-up (rising to +30% by 2028). Carbon-price credits count only the price effectively paid net of free allocation and rebates. Certificate sales start February 2027; the first annual declaration is due 30 September 2027. This is not legal or financial advice.</span><span class="lang-zh">\u672c\u4f30\u7b97\u4f7f\u75282026\u5e74\u7b2c\u4e8c\u5b63\u5ea6CBAM\u8bc1\u4e66\u4ef7\u683c\uff08\u20ac75.28/tCO\u2082e\uff09\u30012026\u5e74CBAM\u56e0\u5b50\uff08\u6b27\u76df\u57fa\u51c6\u503c\u768497.5%\u4f5c\u4e3a\u514d\u8d39\u914d\u989d\u6263\u51cf\uff1b\u5e94\u4ed8\u6bd4\u4f8b\u81f32034\u5e74\u5347\u81f3100%\uff09\u53ca\u6307\u793a\u6027\u9ed8\u8ba4\u503c\u2014\u2014\u81ea2026\u5e74\u8d77\u6b27\u76df\u53d1\u5e03\u6309\u56fd\u5bb6\u548c\u751f\u4ea7\u5de5\u827a\u533a\u5206\u7684\u9ed8\u8ba4\u503c\u5e76\u9644\u52a010%\u4e0a\u6d6e\uff08\u81f32028\u5e74\u5347\u81f330%\uff09\u3002\u78b3\u4ef7\u62b5\u6263\u4ec5\u8ba1\u5165\u6263\u9664\u514d\u8d39\u914d\u989d\u53ca\u8fd4\u8fd8\u540e\u5b9e\u9645\u6709\u6548\u652f\u4ed8\u7684\u78b3\u4ef7\u3002\u8bc1\u4e66\u9500\u552e\u81ea2027\u5e742\u6708\u5f00\u59cb\uff1b\u9996\u4efd\u5e74\u5ea6\u7533\u62a5\u987b\u4e8e2027\u5e749\u670830\u65e5\u524d\u63d0\u4ea4\u3002\u672c\u5de5\u5177\u4e0d\u6784\u6210\u6cd5\u5f8b\u6216\u8d22\u52a1\u5efa\u8bae\u3002</span></div>
-        <a href="mailto:gcc-sustainability@hongkong.ahk.de" class="cbam-cta"><span class="lang-en">Get Expert CBAM Guidance \u2192</span><span class="lang-zh">\u83b7\u53d6\u4e13\u4e1aCBAM\u6307\u5bfc \u2192</span></a>
+        <div class="cbam-actions">
+            ${memberView()
+                ? `<button type="button" class="btn btn-outline cbam-export" onclick="window.print()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    <span class="lang-en">Export buyer-ready PDF report</span><span class="lang-zh">导出可提交买家的PDF报告</span><span class="lang-de">Käuferfertigen PDF-Bericht exportieren</span><span class="lang-vi">Xuất báo cáo PDF gửi khách hàng</span></button>`
+                : `<a href="account.html" class="member-locked-btn">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    <span class="lang-en">Member feature: PDF export</span><span class="lang-zh">会员功能：PDF导出</span><span class="lang-de">Mitgliederfunktion: PDF-Export</span><span class="lang-vi">Tính năng hội viên: xuất PDF</span></a>`}
+            <a href="mailto:gcc-sustainability@hongkong.ahk.de" class="cbam-cta"><span class="lang-en">Get Expert CBAM Guidance \u2192</span><span class="lang-zh">\u83b7\u53d6\u4e13\u4e1aCBAM\u6307\u5bfc \u2192</span><span class="lang-de">CBAM-Expertenberatung anfragen \u2192</span><span class="lang-vi">Nhận tư vấn chuyên gia CBAM \u2192</span></a>
+        </div>
     </div>`;
 
     resultDiv.innerHTML = html;
@@ -1261,6 +1270,20 @@ function authToken() {
         }
     } catch (e) { /* no session */ }
     return null;
+}
+
+function memberView() {
+    if (demoTier() === 'member') return true;
+    try {
+        for (let i = 0; i < localStorage.length; i++) {
+            const k = localStorage.key(i);
+            if (k && k.startsWith('sb-') && k.endsWith('-auth-token')) {
+                const v = JSON.parse(localStorage.getItem(k));
+                return !!(v && v.user && v.user.app_metadata && v.user.app_metadata.tier === 'member');
+            }
+        }
+    } catch (e) { /* no session */ }
+    return false;
 }
 
 function demoTier() {
@@ -1396,6 +1419,47 @@ function renderRadar(deadlines) {
 
     applyLang(list);
     section.style.display = '';
+
+    // Member feature: download all deadlines as calendar file
+    radarDeadlines = upcoming;
+    let actions = document.getElementById('radarActions');
+    if (!actions) {
+        actions = document.createElement('div');
+        actions.id = 'radarActions';
+        actions.className = 'radar-actions';
+        list.insertAdjacentElement('afterend', actions);
+    }
+    actions.innerHTML = memberView()
+        ? `<button type="button" class="btn btn-outline" id="radarIcsBtn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span class="lang-en">Add all deadlines to my calendar</span><span class="lang-zh">将所有期限加入我的日历</span><span class="lang-de">Alle Fristen in meinen Kalender</span><span class="lang-vi">Thêm mọi thời hạn vào lịch của tôi</span></button>`
+        : `<a href="account.html" class="member-locked-btn">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <span class="lang-en">Member feature: calendar download</span><span class="lang-zh">会员功能：日历下载</span><span class="lang-de">Mitgliederfunktion: Kalender-Download</span><span class="lang-vi">Tính năng hội viên: tải lịch</span></a>`;
+    const icsBtn = document.getElementById('radarIcsBtn');
+    if (icsBtn) icsBtn.addEventListener('click', downloadRadarIcs);
+}
+
+let radarDeadlines = [];
+
+function downloadRadarIcs() {
+    const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//GCC Green Future//EU Deadlines//EN'];
+    radarDeadlines.forEach((d, i) => {
+        const dt = String(d.date).replace(/-/g, '');
+        lines.push('BEGIN:VEVENT',
+            `UID:gcc-deadline-${i}-${dt}@gcchk-esg.com`,
+            `DTSTART;VALUE=DATE:${dt}`,
+            `SUMMARY:${(d.labelEn || '').replace(/[,;]/g, ' ')}`,
+            d.affects ? `DESCRIPTION:${d.affects.replace(/[,;]/g, ' ')}` : '',
+            'END:VEVENT');
+    });
+    lines.push('END:VCALENDAR');
+    const blob = new Blob([lines.filter(Boolean).join('\r\n')], { type: 'text/calendar' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'gcc-eu-compliance-deadlines.ics';
+    a.click();
+    URL.revokeObjectURL(a.href);
 }
 
 loadContent('deadlines').then(renderRadar).catch(() => { /* section stays hidden */ });
@@ -1406,10 +1470,37 @@ const pillarLabels = {
     'germany': { en: 'Germany & Retail', zh: '德国与零售', de: 'Deutschland & Handel', vi: 'Đức & Bán lẻ' },
     'china-hk': { en: 'China & Hong Kong', zh: '中国与香港', de: 'China & Hongkong', vi: 'Trung Quốc & Hồng Kông' },
     'standards': { en: 'Standards & Certification', zh: '标准与认证', de: 'Normen & Zertifizierung', vi: 'Tiêu chuẩn & Chứng nhận' },
-    'explainer': { en: 'Explainer', zh: '解读', de: 'Erklärt', vi: 'Giải thích' }
+    'explainer': { en: 'Explainer', zh: '解读', de: 'Erklärt', vi: 'Giải thích' },
+    'guide': { en: 'Member Guide', zh: '会员指南', de: 'Mitglieder-Leitfaden', vi: 'Cẩm nang hội viên' }
 };
 
-function renderBriefing(posts) {
+function renderLibrary(guides) {
+    const section = document.getElementById('library');
+    const grid = document.getElementById('libraryGrid');
+    if (!section || !grid || !guides.length) return;
+
+    grid.innerHTML = guides.map(p => {
+        const teaser = p.locked ? (p.teaserEn || '') : (p.whatHappenedEn || '');
+        const teaserZh = p.locked ? (p.teaserZh || teaser) : (p.whatHappenedZh || teaser);
+        const cta = p.locked
+            ? `<a class="briefing-lock-cta briefing-lock-premium" href="account.html">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <span class="lang-en">Members only &mdash; sign in</span><span class="lang-zh">仅限会员——请登录</span><span class="lang-de">Nur für Mitglieder &mdash; anmelden</span><span class="lang-vi">Chỉ dành cho hội viên &mdash; đăng nhập</span> &rarr;</a>`
+            : `<a class="library-read" href="/article?slug=${p.slug || ''}"><span class="lang-en">Read the guide &rarr;</span><span class="lang-zh">阅读指南 &rarr;</span><span class="lang-de">Leitfaden lesen &rarr;</span><span class="lang-vi">Đọc cẩm nang &rarr;</span></a>`;
+        return `
+        <article class="library-card ${p.locked ? 'library-locked' : ''}">
+            <span class="briefing-kicker"><span class="lang-en">Member Guide</span><span class="lang-zh">会员指南</span><span class="lang-de">Mitglieder-Leitfaden</span><span class="lang-vi">Cẩm nang hội viên</span></span>
+            <h3><a class="briefing-title-link" href="/article?slug=${p.slug || ''}"><span class="lang-en">${p.titleEn}</span><span class="lang-zh">${p.titleZh || p.titleEn}</span></a></h3>
+            <p class="briefing-item-text"><span class="lang-en">${teaser}</span><span class="lang-zh">${teaserZh}</span></p>
+            ${cta}
+        </article>`;
+    }).join('');
+    section.style.display = '';
+}
+
+function renderBriefing(allPosts) {
+    const posts = (allPosts || []).filter(p => p.pillar !== 'guide');
+    renderLibrary((allPosts || []).filter(p => p.pillar === 'guide'));
     const section = document.getElementById('briefing');
     const list = document.getElementById('briefingList');
     if (!section || !list || !Array.isArray(posts) || !posts.length) return;
