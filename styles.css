@@ -3087,3 +3087,17 @@ a.radar-item-link:hover .radar-arrow { opacity: 1; }
     background: rgba(222, 135, 3, 0.14);
     color: #a86503;
 }
+
+/* ===== BRIEFING PRIMARY COLUMN (lead + follow-up items) ===== */
+.briefing-primary {
+    padding: 0 32px 10px 0;
+}
+
+.briefing-primary .briefing-lead {
+    padding: 28px 0 10px;
+}
+
+.briefing-primary > .briefing-item {
+    border-top: 1px solid var(--gray-300);
+    border-bottom: none;
+}

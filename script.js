@@ -1467,6 +1467,30 @@ function renderBriefing(posts) {
 
     const [lead, ...rest] = posts;
 
+    const renderItem = p => {
+        const thumb = p.imageUrl ? `<a href="/article?slug=${p.slug || ''}" class="briefing-thumb"><img src="${p.imageUrl}" alt="" loading="lazy"></a>` : '';
+        if (p.locked) {
+            return `
+        <article class="briefing-item briefing-locked" id="briefing-${p.slug || ''}">
+            ${kicker(p)}
+            ${titleLink(p, 'h4')}
+            ${thumb}
+            <p class="briefing-item-text"><span class="lang-en">${p.teaserEn || ''}</span><span class="lang-zh">${p.teaserZh || p.teaserEn || ''}</span></p>
+            ${lockCta(p)}
+        </article>`;
+        }
+        return `
+        <article class="briefing-item" id="briefing-${p.slug || ''}">
+            ${kicker(p)}
+            ${titleLink(p, 'h4')}
+            ${thumb}
+            <p class="briefing-item-text"><span class="lang-en">${p.whatHappenedEn || ''}</span><span class="lang-zh">${p.whatHappenedZh || p.whatHappenedEn || ''}</span></p>
+            ${p.supplierActionEn ? `<p class="briefing-item-action"><strong><span class="lang-en">What to do:</span><span class="lang-zh">应对措施：</span></strong> <span class="lang-en">${p.supplierActionEn}</span><span class="lang-zh">${p.supplierActionZh || p.supplierActionEn}</span></p>` : ''}
+            ${sourceLinks(p)}
+            ${readMore(p)}
+        </article>`;
+    };
+
     const leadImg = lead.imageUrl
         ? `<a href="/article?slug=${lead.slug || ''}" class="briefing-lead-img"><img src="${lead.imageUrl}" alt="" loading="lazy"></a>`
         : '';
@@ -1490,33 +1514,18 @@ function renderBriefing(posts) {
             ${readMore(lead)}
         </article>`;
 
-    const restHtml = rest.map(p => {
-        const thumb = p.imageUrl ? `<a href="/article?slug=${p.slug || ''}" class="briefing-thumb"><img src="${p.imageUrl}" alt="" loading="lazy"></a>` : '';
-        if (p.locked) {
-            return `
-        <article class="briefing-item briefing-locked" id="briefing-${p.slug || ''}">
-            ${kicker(p)}
-            ${titleLink(p, 'h4')}
-            ${thumb}
-            <p class="briefing-item-text"><span class="lang-en">${p.teaserEn || ''}</span><span class="lang-zh">${p.teaserZh || p.teaserEn || ''}</span></p>
-            ${lockCta(p)}
-        </article>`;
-        }
-        return `
-        <article class="briefing-item" id="briefing-${p.slug || ''}">
-            ${kicker(p)}
-            ${titleLink(p, 'h4')}
-            ${thumb}
-            <p class="briefing-item-text"><span class="lang-en">${p.whatHappenedEn || ''}</span><span class="lang-zh">${p.whatHappenedZh || p.whatHappenedEn || ''}</span></p>
-            ${p.supplierActionEn ? `<p class="briefing-item-action"><strong><span class="lang-en">What to do:</span><span class="lang-zh">应对措施：</span></strong> <span class="lang-en">${p.supplierActionEn}</span><span class="lang-zh">${p.supplierActionZh || p.supplierActionEn}</span></p>` : ''}
-            ${sourceLinks(p)}
-            ${readMore(p)}
-        </article>`;
-    }).join('');
+    // Balance the columns: the lead is roughly as tall as 3 compact items,
+    // so move enough items into the left column that both sides level out.
+    const extraLeft = Math.max(0, Math.round((rest.length - 3) / 3));
+    const leftItems = rest.slice(0, extraLeft);
+    const secondaryItems = rest.slice(extraLeft);
+
+    const primaryHtml = leadHtml + leftItems.map(renderItem).join('');
+    const restHtml = secondaryItems.map(renderItem).join('');
 
     list.innerHTML = `
         <div class="briefing-columns">
-            ${leadHtml}
+            <div class="briefing-primary">${primaryHtml}</div>
             <div class="briefing-secondary">${restHtml}</div>
         </div>`;
 
