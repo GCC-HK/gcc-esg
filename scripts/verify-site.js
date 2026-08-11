@@ -107,14 +107,14 @@ doc.querySelector('.wizard-cat[data-value="construction"]').click();
 doc.getElementById('atlasSubmit').click();
 const cardsHtml2 = doc.getElementById('atlasCards').innerHTML;
 check('construction: CBAM card appears', cardsHtml2.includes('CBAM'));
-check('construction: downstream extension mentioned', cardsHtml2.includes('180 downstream'));
+check('construction: downstream extension mentioned', cardsHtml2.includes('downstream extension'));
 
 // --- Electronics no longer triggers CBAM/DPP ---
 doc.querySelector('.wizard-cat[data-value="electronics"]').click();
 doc.getElementById('atlasSubmit').click();
 const cardsHtml3 = doc.getElementById('atlasCards').innerHTML;
 check('electronics: no CBAM card', !cardsHtml3.includes('(EU) 2023/956'));
-check('electronics: Batteries card with Aug 2026 labelling', cardsHtml3.includes('18 August 2026 (labelling)'));
+check('electronics: Batteries card with Feb 2027 passport/QR deadline', cardsHtml3.includes('18 February 2027 (battery passport'));
 check('electronics: no DPP card (not first wave)', !cardsHtml3.includes('Under (EU) 2024/1781'));
 
 // --- EUDR dates via furniture ---
@@ -136,10 +136,11 @@ check('CBAM result rendered', cbamHtml.includes('cbam-result-card'));
 check('CBAM uses Q2 2026 price 75.28', cbamHtml.includes('75.28'));
 check('1000t: no de minimis callout', !cbamHtml.includes('De minimis'));
 
-// Expected math: emissions 2.0, benchmark 1.248, freeAlloc = 1.2168, liable = 0.7832/t
-// CN credit ratio 10/75.28 = 0.13284; net = 0.7832*(1-0.13284) = 0.67916/t; cost = 51.13/t
-const costPerTMatch = cbamHtml.match(/€51\.1\d/);
-check('per-tonne cost ≈ €51.13 (math verified)', !!costPerTMatch);
+// Expected math: emissions 2.0, benchmark 1.370 (IR 2025/2620 HRC BF-BOF),
+// freeAlloc = 1.33575, liable = 0.66425/t
+// CN credit ratio 10/75.28 = 0.13284; net = 0.66425*(1-0.13284) = 0.57601/t; cost = 43.36/t
+const costPerTMatch = cbamHtml.match(/€43\.3\d/);
+check('per-tonne cost ≈ €43.36 (math verified)', !!costPerTMatch);
 
 doc.getElementById('cbamVolume').value = '30';
 doc.getElementById('cbamCalculate').click();

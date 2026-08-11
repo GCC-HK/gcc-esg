@@ -62,9 +62,13 @@ User feedback: public/member difference was invisible (only 3 unlocked articles)
 
 ---
 
+## Phase 9 — Full fact-audit & corrections (11 Aug 2026)
+
+Trigger: committee member challenged the correctness of quoted legal standards. Ran a five-agent verification of all 20 regulations, 15 deadlines, 14 news posts and the CBAM calculator against primary sources (EUR-Lex, Commission, DHS/CBP, gov.uk, Bundestag). Result: ~90% verified correct (incl. all Omnibus/Dir (EU) 2026/470 facts and the €75.28 Q2-2026 CBAM price), 8 substantive errors + ~8 stale items found. Fixes: `scripts/seeds/seed-corrections-aug26.js` (4-language Sanity patches: CBAM definitive-phase penalties €100/t; UFLPA 187 entities per 3 Aug 2026 expansion; EUDR first-placer DDS + July DA leather removal; LkSG 1 Jul 2026 coalition narrowing plan; RoHS 10 substances; battery label/QR dates; R2R post-deadline update; CSRD German transposition framing; REACH news post fully reframed — revision was cancelled 27 Apr 2026; GPSR "postal AND electronic address"; battery-labelling deadline row deleted). Calculator: benchmarks aligned to finalized IR 2025/2620 (steel BF-BOF 1.370, new DRI-EAF route 0.481, scrap-EAF 0.072, alu 1.423/0.091, cement 0.83, ammonia 1.522), GB carbon price 66→60, UA 1→0.6, disclaimer notes China default ≈3.17 and the Jul 2026 ETS-review caveat on the 2034 phase-out. Flagship test figure changed €51.13 → **€43.36/t** (verify-site.js updated, all checks green). Hydrogen benchmark still ETS-derived indicative — verify against IR 2025/2620 Annex I. Seed run against production same day (14 regulations patched, 1 deadline deleted + 3 patched, 3 news posts re-framed, 3 body fixes) and verified live via API spot-checks (CBAM penalties, UFLPA 187, deadline radar 14 rows, REACH title, GPSR wording EN/ZH, LkSG DE coalition note). New DE/VI strings from this round need the same native review as the rest of the site.
+
 ## Standing operational notes
 
-- **Sanity editor token was shared via chat during setup — rotate it** (sanity.io/manage → API → Tokens) and use env vars only.
+- **Sanity editor token was shared via chat during setup and again on 11 Aug 2026 — rotate it now** (sanity.io/manage → API → Tokens) and use env vars only.
 - Dreamstime stock usage confirmed licensed for web by the owner (18 Jul).
 - Verification suite: `scripts/verify-site.js` (jsdom, ~70 assertions) — kept green throughout; visual QA via Playwright screenshots (desktop/mobile/all languages).
 - Email drafts for the ESG Committee and Chamber leadership prepared (see chat, 19 Jul); board ask: 20 min + mandate for the business case; second Co-Chair election upcoming (Anna leaving).

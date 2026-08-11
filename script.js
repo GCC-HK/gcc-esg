@@ -100,7 +100,7 @@ let regulations = [
         sections: [
             { title: 'REPORTING', text: 'Double materiality assessment required. Report under European Sustainability Reporting Standards (ESRS) with third-party assurance.' },
             { title: 'SUPPLY CHAIN', text: 'Disclosure of Scope 3 emissions, supply chain due diligence processes, and supplier sustainability performance. Smaller suppliers are indirectly affected via their EU buyer\'s reporting obligations.' },
-            { title: 'PENALTIES', text: 'Penalties are set at member-state level and must be effective, proportionate and dissuasive. Example: Germany provides fines of up to €10M or 5% of turnover for capital-market-oriented companies.' }
+            { title: 'PENALTIES', text: 'Penalties are set at member-state level and must be effective, proportionate and dissuasive. Germany has not yet transposed CSRD (due by 19 March 2027); its draft transposition act foresees fines up to €10M or 5% of turnover for capital-market-oriented companies, in line with the existing HGB regime.' }
         ],
         applies: (cat, markets, role, size) => {
             const euMarket = markets.includes('eu') || markets.includes('germany');
@@ -152,7 +152,7 @@ let regulations = [
         sections: [
             { title: 'REPORTING', text: 'Definitive regime since 1 January 2026: annual CBAM declarations (first due 30 September 2027). Importers below 50 tonnes/year cumulative are exempt under Reg. (EU) 2025/2083.' },
             { title: 'DOCUMENTATION', text: 'Verified emissions data from production facilities. CBAM certificates must be purchased to cover embedded carbon (certificate sales start February 2027).' },
-            { title: 'PENALTIES', text: 'Penalties for non-reporting: 10-50 EUR per tonne of unreported emissions. Certificate shortfall penalties mirror EU ETS prices.' }
+            { title: 'PENALTIES', text: 'Definitive-phase penalties (since 1 January 2026): certificate shortfalls incur the EU ETS excess-emissions penalty (€100 per tonne CO₂e, indexed); imports by non-authorised declarants can be fined three to five times that. (The earlier €10-50/t rates applied only to the transitional phase, which ended 31 December 2025.)' }
         ],
         applies: (cat, markets, role, size) => {
             const euMarket = markets.includes('eu') || markets.includes('germany');
@@ -162,11 +162,11 @@ let regulations = [
         },
         reason: (cat, markets, role, size) => {
             const roleText = role === 'supplier' ? 'an exporter to the EU' : 'an EU-based importer';
-            return `As ${roleText} of Construction Products, your iron & steel, cement and aluminium goods fall under CBAM's embedded-emissions declarations. A proposed extension (~180 downstream steel/aluminium products, e.g. car parts and appliances) may broaden coverage from 2028.`;
+            return `As ${roleText} of Construction Products, your iron & steel, cement and aluminium goods fall under CBAM's embedded-emissions declarations. A proposed downstream extension (Commission: ~180 steel/aluminium products; Parliament committee: 457) may broaden coverage from 2028.`;
         },
         reasonZh: (cat, markets, role, size) => {
             const roleText = role === 'supplier' ? '向欧盟出口' : '作为欧盟进口商';
-            return `${roleText}建筑材料，其中的钢铁、水泥和铝产品属于CBAM覆盖范围，须申报内含碳排放量。拟议的扩展方案（约180种下游钢铝产品，如汽车零部件和家电）可能自2028年起扩大覆盖范围。`;
+            return `${roleText}建筑材料，其中的钢铁、水泥和铝产品属于CBAM覆盖范围，须申报内含碳排放量。拟议的下游扩展方案（欧盟委员会：约180种钢铝产品；欧洲议会委员会：457种）可能自2028年起扩大覆盖范围。`;
         }
     },
     {
@@ -181,7 +181,7 @@ let regulations = [
         eurlex: 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1115',
         sections: [
             { title: 'SUPPLY CHAIN', text: 'Due diligence system to verify products are deforestation-free. Geolocation data required for production plots.' },
-            { title: 'DOCUMENTATION', text: 'Due diligence statements for each shipment. Traceability records maintained for 5 years minimum.' },
+            { title: 'DOCUMENTATION', text: 'Due diligence statements are filed only by the operator first placing the product on the EU market (Reg. (EU) 2025/2650); downstream companies just retain the DDS reference numbers. Traceability records maintained for 5 years minimum.' },
             { title: 'PENALTIES', text: 'Member states must provide for maximum fines of at least 4% of EU-wide turnover. Product confiscation and market bans.' }
         ],
         applies: (cat, markets, role, size) => {
@@ -205,12 +205,12 @@ let regulations = [
         status: 'phasing',
         statusLabel: 'PHASING IN',
         inForce: '17 August 2023 (applies from 18 February 2024)',
-        complianceDeadline: '18 August 2026 (labelling), 18 February 2027 (battery passport), 18 August 2027 (due diligence)',
+        complianceDeadline: '18 February 2027 (battery passport & QR marking), 18 August 2027 (due diligence); harmonised label tied to implementing act (expected late 2027/2028)',
         lastReviewed: 'July 2026',
         eurlex: 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1542',
         sections: [
             { title: 'PRODUCT DESIGN', text: 'Minimum recycled content thresholds. Removability and replaceability requirements for portable batteries.' },
-            { title: 'DOCUMENTATION', text: 'Battery passport (digital) required for EV, LMT and industrial >2 kWh batteries from 18 February 2027. Labelling/QR requirements apply from 18 August 2026; the carbon footprint declaration awaits its delegated act (methodology still pending).' },
+            { title: 'DOCUMENTATION', text: 'Battery passport (digital) required for EV, LMT and industrial >2 kWh batteries from 18 February 2027; QR-code marking applies from the same date. The general harmonised label applies from 18 August 2026 or 18 months after the labelling implementing act enters into force, whichever is later — expect late 2027/2028. The carbon footprint declaration awaits its delegated act.' },
             { title: 'SUPPLY CHAIN', text: 'Due diligence for cobalt, lithium, nickel, and natural graphite sourcing — postponed to 18 August 2027 by Reg. (EU) 2025/1561. Collection and recycling targets.' }
         ],
         applies: (cat, markets, role, size) => {
@@ -236,7 +236,7 @@ let regulations = [
         eurlex: 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R2055',
         sections: [
             { title: 'PRODUCT DESIGN', text: 'Ban on intentionally added microplastics (synthetic polymers <5mm). Reformulation required for restricted products.' },
-            { title: 'DOCUMENTATION', text: 'Instructions for use to minimize microplastic release. Reporting obligations on quantities placed on market.' },
+            { title: 'DOCUMENTATION', text: 'Instructions for use to minimize microplastic release — mandatory since 17 October 2025. Reporting obligations on quantities placed on the market (first annual reports were due 31 May 2026).' },
             { title: 'PENALTIES', text: 'Product withdrawal from market. National enforcement penalties apply based on member state implementation.' }
         ],
         applies: (cat, markets, role, size) => {
@@ -260,7 +260,7 @@ let regulations = [
         status: 'prepare',
         statusLabel: 'PREPARE NOW',
         inForce: '18 July 2024',
-        complianceDeadline: 'First delegated acts expected 2026–2027 (iron & steel, textiles); obligations apply ~18 months after each act',
+        complianceDeadline: 'First delegated acts expected 2026–2027 (indicative — none adopted as of mid-2026); obligations apply ~18 months after each act',
         lastReviewed: 'July 2026',
         eurlex: 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1781',
         sections: [
@@ -288,12 +288,12 @@ let regulations = [
         status: 'prepare',
         statusLabel: 'PREPARE NOW',
         inForce: '30 July 2024',
-        complianceDeadline: '31 July 2026 (member state transposition)',
+        complianceDeadline: 'Transposition deadline passed 31 July 2026 — Germany adopted its Reparaturgesetz (Bundesrat approval 10 July 2026); many member states still pending',
         lastReviewed: 'July 2026',
         eurlex: 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024L1799',
         sections: [
-            { title: 'PRODUCT DESIGN', text: 'Products must be designed for repair. Spare parts available for minimum period. Anti-repair practices prohibited.' },
-            { title: 'DOCUMENTATION', text: 'Repair information and manuals accessible to consumers and independent repairers. Repair scoring transparency.' },
+            { title: 'PRODUCT DESIGN', text: 'Manufacturers of products already subject to EU reparability requirements (washing machines, dishwashers, refrigerators, vacuum cleaners, displays, phones, tablets, etc.) must repair within a reasonable time at a reasonable price, and supply spare parts and tools. Anti-repair practices prohibited.' },
+            { title: 'DOCUMENTATION', text: 'Repair information and the European Repair Information Form accessible to consumers and independent repairers. Repair price lists published online (German implementing law).' },
             { title: 'PENALTIES', text: 'National penalties for non-compliance. Consumers gain right to repair beyond warranty. Potential collective redress.' }
         ],
         applies: (cat, markets, role, size) => {
@@ -303,11 +303,11 @@ let regulations = [
         },
         reason: (cat, markets, role, size) => {
             const catName = cat === 'electronics' ? 'Electronics' : 'Furniture & Home Goods';
-            return `${catName} must be designed for repair with spare parts available, and consumers will gain extended repair rights.`;
+            return `${catName} in the covered product groups (household appliances, phones, tablets, displays) must be repairable with spare parts available — Germany's implementing law was adopted in July 2026.`;
         },
         reasonZh: (cat, markets, role, size) => {
             const catName = cat === 'electronics' ? '电子产品' : '家具与家居用品';
-            return `${catName}必须设计为可维修，提供备件，消费者将获得延长的维修权利。`;
+            return `${catName}中属于覆盖产品组的品类（家用电器、手机、平板电脑、显示器）必须可维修并提供备件——德国实施法已于2026年7月通过。`;
         }
     },
     {
@@ -317,7 +317,7 @@ let regulations = [
         status: 'prepare',
         statusLabel: 'PREPARE NOW',
         inForce: 'Proposed March 2023 — negotiations suspended',
-        complianceDeadline: 'Stalled: Commission announced intended withdrawal (June 2025); adoption not currently expected',
+        complianceDeadline: 'Stalled: Commission announced intended withdrawal (June 2025) but has not formally withdrawn it — still listed in the 2026 work programme; adoption not currently expected',
         lastReviewed: 'July 2026',
         eurlex: 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=COM:2023:166:FIN',
         sections: [
@@ -405,7 +405,7 @@ let regulations = [
         lastReviewed: 'July 2026',
         eurlex: 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32011L0065',
         sections: [
-            { title: 'PRODUCT DESIGN', text: 'Maximum concentration limits for lead, mercury, cadmium, hexavalent chromium, PBB, and PBDE in electrical/electronic equipment.' },
+            { title: 'PRODUCT DESIGN', text: 'Maximum concentration limits for ten substances in electrical/electronic equipment: lead, mercury, cadmium, hexavalent chromium, PBB, PBDE, and the phthalates DEHP, BBP, DBP and DIBP. Annex III lead/cadmium exemptions were restructured in late 2025 (applicable from 1 July 2026) — re-check any exemption your products rely on.' },
             { title: 'DOCUMENTATION', text: 'EU Declaration of Conformity. Technical file with material composition evidence. CE marking required.' },
             { title: 'PENALTIES', text: 'Non-compliant products barred from EU market. Product recalls, fines, and potential criminal liability in member states.' }
         ],
@@ -481,7 +481,7 @@ let regulations = [
         status: 'phasing',
         statusLabel: 'PHASING IN',
         inForce: '18 July 2024 (ESPR framework)',
-        complianceDeadline: 'First delegated acts 2026–2027; DPP obligations expected 2027–2030 (textiles, furniture, steel & aluminium first)',
+        complianceDeadline: 'First delegated acts expected from 2026 (indicative — none adopted yet); DPP obligations expected 2028–2030 (steel first, then textiles, furniture)',
         lastReviewed: 'July 2026',
         eurlex: 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1781',
         sections: [
@@ -496,11 +496,11 @@ let regulations = [
         },
         reason: (cat, markets, role, size) => {
             const catName = { textiles: 'Textiles & Apparel', furniture: 'Furniture & Home Goods', construction: 'Construction Products (iron & steel, aluminium)' }[cat] || cat;
-            return `${catName} are among the first product categories in the ESPR Working Plan (April 2025) requiring a Digital Product Passport with lifecycle data accessible via QR code — obligations expected 2027–2030.`;
+            return `${catName} are among the first product categories in the ESPR Working Plan (April 2025) requiring a Digital Product Passport with lifecycle data accessible via QR code — obligations expected 2028–2030 (no delegated act adopted yet).`;
         },
         reasonZh: (cat, markets, role, size) => {
             const catName = { textiles: '纺织品与服装', furniture: '家具与家居用品', construction: '建筑材料（钢铁、铝）' }[cat] || cat;
-            return `根据ESPR工作计划（2025年4月），${catName}是首批需要数字产品护照的产品类别，须通过二维码提供生命周期数据——义务预计于2027至2030年生效。`;
+            return `根据ESPR工作计划（2025年4月），${catName}是首批需要数字产品护照的产品类别，须通过二维码提供生命周期数据——义务预计于2028至2030年生效（授权法案尚未通过）。`;
         }
     }
 ];
@@ -869,19 +869,25 @@ document.getElementById('hsCodeInput').addEventListener('input', function() {
 });
 
 // ===== CBAM CALCULATOR =====
-// Indicative sector averages. Since 2026 the EU publishes country- and
-// route-specific default values (IR 2025/2621, +10% mark-up in 2026 rising to
-// +30% by 2028) and route-specific CBAM benchmarks (IR 2025/2620).
+// Emission intensities are indicative sector averages (editorial). The EU's
+// official default values (IR 2025/2621) are country- and route-specific with
+// a +10% mark-up in 2026 rising to +30% by 2028 — and can be materially
+// higher (e.g. China BF-BOF steel slab default ≈ 3.17 tCO2e/t incl. mark-up).
+// Benchmarks: steel routes (hot-rolled coil), aluminium and cement match the
+// finalized IR 2025/2620 values (Dec 2025); the fertiliser bucket uses the
+// IR ammonia benchmark; hydrogen retains the ETS-derived indicative value
+// (verify against IR 2025/2620 Annex I for a specific CN code).
 // Emission intensities are DIRECT emissions only for steel, aluminium and
 // hydrogen — CBAM counts indirect (electricity) emissions only for cement,
 // fertilisers and electricity.
 const cbamSectorData = {
-    steel_bof:            { emissions: 2.0,  benchmark: 1.248 },
-    steel_eaf:            { emissions: 0.4,  benchmark: 0.215 },
-    aluminium_primary:    { emissions: 1.5,  benchmark: 1.464 },
-    aluminium_secondary:  { emissions: 0.4,  benchmark: 0.400 },
-    cement:               { emissions: 0.8,  benchmark: 0.693 },
-    fertilisers:          { emissions: 2.3,  benchmark: 1.570 },
+    steel_bof:            { emissions: 2.0,  benchmark: 1.370 },
+    steel_dri_eaf:        { emissions: 1.4,  benchmark: 0.481 },
+    steel_eaf:            { emissions: 0.4,  benchmark: 0.072 },
+    aluminium_primary:    { emissions: 1.5,  benchmark: 1.423 },
+    aluminium_secondary:  { emissions: 0.4,  benchmark: 0.091 },
+    cement:               { emissions: 0.8,  benchmark: 0.830 },
+    fertilisers:          { emissions: 2.3,  benchmark: 1.522 },
     hydrogen:             { emissions: 10.4, benchmark: 6.840 }
 };
 
@@ -889,12 +895,12 @@ const cbamSectorData = {
 // price EFFECTIVELY PAID net of free allocation/rebates — actual deductions
 // are usually lower than these headline rates.
 const cbamCarbonPrices = {
-    CN: 10, IN: 0, TR: 0, RU: 0, KR: 6, UA: 1,
-    GB: 66, VN: 0, ID: 0, BR: 0, JP: 12, EG: 0, ZA: 15, OTHER: 0
+    CN: 10, IN: 0, TR: 0, RU: 0, KR: 6, UA: 0.6,
+    GB: 60, VN: 0, ID: 0, BR: 0, JP: 12, EG: 0, ZA: 15, OTHER: 0
 };
 
 const CBAM_PRICE = 75.28; // Q2 2026 certificate price (published 6 Jul 2026); quarterly in 2026, weekly from 2027
-const CBAM_FREE_ALLOC_2026 = 0.975; // 2026 CBAM factor: 97.5% of the benchmark deducted; payable share reaches 100% by 2034
+const CBAM_FREE_ALLOC_2026 = 0.975; // 2026 CBAM factor: 97.5% of the benchmark deducted; 100% payable by 2034 under current law (Jul 2026 ETS review proposal would stretch this to 2038)
 
 // Update default displays when sector changes
 document.getElementById('cbamSector').addEventListener('change', function() {
@@ -1171,7 +1177,7 @@ document.getElementById('cbamCalculate').addEventListener('click', function() {
         html += `<div class="cbam-callout cbam-callout-green"><span class="lang-en">Your emissions intensity is at or below the EU benchmark. Minimal CBAM exposure for 2026.</span><span class="lang-zh">\u60a8\u7684\u6392\u653e\u5f3a\u5ea6\u7b49\u4e8e\u6216\u4f4e\u4e8e\u6b27\u76df\u57fa\u51c6\u503c\u30022026\u5e74CBAM\u98ce\u9669\u6781\u4f4e\u3002</span></div>`;
     }
 
-    html += `<div class="cbam-disclaimer"><span class="lang-en">This estimate uses the Q2 2026 CBAM certificate price (\u20ac75.28/tCO\u2082e), the 2026 CBAM factor (97.5% of the EU benchmark deducted as free allocation; the payable share rises to 100% by 2034), and indicative default values \u2014 since 2026 the EU publishes country- and route-specific defaults with a +10% mark-up (rising to +30% by 2028). Carbon-price credits count only the price effectively paid net of free allocation and rebates. Certificate sales start February 2027; the first annual declaration is due 30 September 2027. This is not legal or financial advice.</span><span class="lang-zh">\u672c\u4f30\u7b97\u4f7f\u75282026\u5e74\u7b2c\u4e8c\u5b63\u5ea6CBAM\u8bc1\u4e66\u4ef7\u683c\uff08\u20ac75.28/tCO\u2082e\uff09\u30012026\u5e74CBAM\u56e0\u5b50\uff08\u6b27\u76df\u57fa\u51c6\u503c\u768497.5%\u4f5c\u4e3a\u514d\u8d39\u914d\u989d\u6263\u51cf\uff1b\u5e94\u4ed8\u6bd4\u4f8b\u81f32034\u5e74\u5347\u81f3100%\uff09\u53ca\u6307\u793a\u6027\u9ed8\u8ba4\u503c\u2014\u2014\u81ea2026\u5e74\u8d77\u6b27\u76df\u53d1\u5e03\u6309\u56fd\u5bb6\u548c\u751f\u4ea7\u5de5\u827a\u533a\u5206\u7684\u9ed8\u8ba4\u503c\u5e76\u9644\u52a010%\u4e0a\u6d6e\uff08\u81f32028\u5e74\u5347\u81f330%\uff09\u3002\u78b3\u4ef7\u62b5\u6263\u4ec5\u8ba1\u5165\u6263\u9664\u514d\u8d39\u914d\u989d\u53ca\u8fd4\u8fd8\u540e\u5b9e\u9645\u6709\u6548\u652f\u4ed8\u7684\u78b3\u4ef7\u3002\u8bc1\u4e66\u9500\u552e\u81ea2027\u5e742\u6708\u5f00\u59cb\uff1b\u9996\u4efd\u5e74\u5ea6\u7533\u62a5\u987b\u4e8e2027\u5e749\u670830\u65e5\u524d\u63d0\u4ea4\u3002\u672c\u5de5\u5177\u4e0d\u6784\u6210\u6cd5\u5f8b\u6216\u8d22\u52a1\u5efa\u8bae\u3002</span></div>
+    html += `<div class="cbam-disclaimer"><span class="lang-en">This estimate uses the Q2 2026 CBAM certificate price (\u20ac75.28/tCO\u2082e), the 2026 CBAM factor (97.5% of the EU benchmark deducted as free allocation; under current law the payable share rises to 100% by 2034 \u2014 a July 2026 ETS review proposal would extend this to 2038), CBAM benchmarks aligned to IR 2025/2620, and indicative sector-average emission intensities. The EU's official default values (IR 2025/2621) are country- and route-specific with a +10% mark-up (rising to +30% by 2028) and can be materially higher \u2014 e.g. the China BF-BOF steel default is \u2248 3.17 tCO\u2082e/t. Carbon-price credits count only the price effectively paid net of free allocation and rebates. Certificate sales start February 2027; the first annual declaration is due 30 September 2027. This is not legal or financial advice.</span><span class="lang-zh">\u672c\u4f30\u7b97\u4f7f\u75282026\u5e74\u7b2c\u4e8c\u5b63\u5ea6CBAM\u8bc1\u4e66\u4ef7\u683c\uff08\u20ac75.28/tCO\u2082e\uff09\u30012026\u5e74CBAM\u56e0\u5b50\uff08\u6b27\u76df\u57fa\u51c6\u503c\u768497.5%\u4f5c\u4e3a\u514d\u8d39\u914d\u989d\u6263\u51cf\uff1b\u6309\u73b0\u884c\u6cd5\u5f8b\u5e94\u4ed8\u6bd4\u4f8b\u81f32034\u5e74\u5347\u81f3100%\u2014\u20142026\u5e747\u6708\u7684ETS\u4fee\u8ba2\u63d0\u6848\u62df\u5ef6\u81f32038\u5e74\uff09\u3001\u4e0eIR 2025/2620\u4e00\u81f4\u7684CBAM\u57fa\u51c6\u503c\uff0c\u4ee5\u53ca\u6307\u793a\u6027\u884c\u4e1a\u5e73\u5747\u6392\u653e\u5f3a\u5ea6\u3002\u6b27\u76df\u5b98\u65b9\u9ed8\u8ba4\u503c\uff08IR 2025/2621\uff09\u6309\u56fd\u5bb6\u548c\u751f\u4ea7\u5de5\u827a\u533a\u5206\u5e76\u9644\u52a010%\u4e0a\u6d6e\uff08\u81f32028\u5e74\u5347\u81f330%\uff09\uff0c\u53ef\u80fd\u660e\u663e\u66f4\u9ad8\u2014\u2014\u4f8b\u5982\u4e2d\u56fd\u8f6c\u7089\u94a2\u9ed8\u8ba4\u503c\u7ea6\u4e3a3.17 tCO\u2082e/t\u3002\u78b3\u4ef7\u62b5\u6263\u4ec5\u8ba1\u5165\u6263\u9664\u514d\u8d39\u914d\u989d\u53ca\u8fd4\u8fd8\u540e\u5b9e\u9645\u6709\u6548\u652f\u4ed8\u7684\u78b3\u4ef7\u3002\u8bc1\u4e66\u9500\u552e\u81ea2027\u5e742\u6708\u5f00\u59cb\uff1b\u9996\u4efd\u5e74\u5ea6\u7533\u62a5\u987b\u4e8e2027\u5e749\u670830\u65e5\u524d\u63d0\u4ea4\u3002\u672c\u5de5\u5177\u4e0d\u6784\u6210\u6cd5\u5f8b\u6216\u8d22\u52a1\u5efa\u8bae\u3002</span></div>
         <div class="cbam-actions">
             ${memberView()
                 ? `<button type="button" class="btn btn-outline cbam-export" onclick="window.print()">
