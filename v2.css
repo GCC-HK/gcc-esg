@@ -101,3 +101,17 @@
 .v2-mini-chip small { font-weight: 400; margin-left: 1px; }
 .v2-mini-row a { color: #1f2d3a; text-decoration: none; }
 .v2-mini-row a:hover { color: #1a5c38; text-decoration: underline; }
+
+/* compact tool-page headers: the tool, not the headline, owns the viewport */
+body[data-v2page="compass"] #compass, body[data-v2page="cbam"] #cbam { padding-top: 34px; }
+body[data-v2page="compass"] #compass .section-graphic,
+body[data-v2page="cbam"] #cbam .section-graphic { display: none; }
+body[data-v2page="compass"] #compass .section-head,
+body[data-v2page="cbam"] #cbam .section-head { margin-bottom: 18px; }
+body[data-v2page="compass"] #compass .section-title,
+body[data-v2page="cbam"] #cbam .section-title { font-size: 1.45rem; margin: 2px 0 4px; }
+body[data-v2page="compass"] #compass .section-subtitle,
+body[data-v2page="cbam"] #cbam .section-subtitle { font-size: 0.92rem; margin: 0; }
+
+/* anchored jumps must clear the fixed nav + news band */
+.v2-express, section[id], .cbam-panel { scroll-margin-top: calc(var(--nav-height) + 50px); }

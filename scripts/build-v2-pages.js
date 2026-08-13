@@ -18,7 +18,8 @@ const PAGES = {
     cbam: { file: 'v2-cbam.html', title: '[V2 Preview] CBAM Cost Calculator | GREEN FUTURE', show: ['cbam'] },
     briefing: { file: 'v2-briefing.html', title: '[V2 Preview] Green Sourcing Briefing | GREEN FUTURE', show: ['briefing'] },
     guides: { file: 'v2-guides.html', title: '[V2 Preview] Member Resource Library | GREEN FUTURE', show: ['library'] },
-    learn: { file: 'v2-learn.html', title: '[V2 Preview] Learn & About | GREEN FUTURE', show: ['guidance', 'benefits', 'risks-incentives', 'china-esg', 'actions', 'faq', 'about', 'trust'] }
+    learn: { file: 'v2-learn.html', title: '[V2 Preview] Learn — Why Compliance Matters | GREEN FUTURE', show: ['guidance', 'benefits', 'risks-incentives', 'china-esg', 'actions', 'faq'] },
+    about: { file: 'v2-about.html', title: '[V2 Preview] About the GCC Sustainability Committee | GREEN FUTURE', show: ['about', 'trust'] }
 };
 
 function pageStyle(key, show) {
@@ -28,7 +29,7 @@ function pageStyle(key, show) {
     css += `    .nav-links a[href="${navHref}"] { color: var(--primary); font-weight: 700; }\n`;
     if (key !== 'hub') {
         // no hero on subpages — clear the fixed nav + news band
-        css += '    body { padding-top: calc(var(--nav-height) + 58px); }\n';
+        css += '    body { padding-top: calc(var(--nav-height) + 42px); }\n';
     }
     return css;
 }

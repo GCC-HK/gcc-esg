@@ -102,7 +102,10 @@
                 <button type="button" class="btn-express" id="v2ExRun"><span class="lang-en">Show overview</span><span class="lang-zh">显示概览</span><span class="lang-de">&Uuml;bersicht anzeigen</span><span class="lang-vi">Xem tổng quan</span></button>
             </div>
             <div id="v2ExResult"></div>`;
-        anchor.insertBefore(el, anchor.children[2] || null);
+        // Directly after the section header, above the guided wizard — a
+        // merchandiser arriving from the hub lands on their tool without
+        // any scrolling.
+        anchor.insertBefore(el, anchor.children[1] || null);
         applyLang(el);
         document.getElementById('v2ExRun').addEventListener('click', runExpress);
     }
@@ -401,7 +404,10 @@
     fillMinis(0);
     const urlPersona = new URLSearchParams(window.location.search).get('persona');
     if (urlPersona && PAGE !== 'hub') {
-        applyPersona(urlPersona, true);
+        // No scroll on arrival — the page opens at the top where the express
+        // panel already sits; scrolling would only tuck it under the fixed
+        // nav + news band.
+        applyPersona(urlPersona, false);
     } else {
         const saved = localStorage.getItem('gcc-persona');
         if (saved && PAGE !== 'hub') applyPersona(saved, false);
