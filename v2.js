@@ -304,8 +304,45 @@
         }, 150));
     });
 
+    // ===== Content fallback for API-less viewing =====
+    // The news band, briefing and radar are fed by /api/content, which only
+    // exists behind the dev server or Vercel. When v2.html is opened as a
+    // plain file, that fetch fails and the sections silently hide. This
+    // fallback pulls public content straight from the Sanity CDN instead.
+    // Gating is preserved client-side: locked posts are reduced to the same
+    // teaser shape the API produces, and body fields are never requested.
+    const SANITY_Q = 'https://bvmxf21v.apicdn.sanity.io/v2024-01-01/data/query/production?query=';
+    const FALLBACK_NEWS = '*[_type=="newsPost"]|order(publishedAt desc)[0...20]{titleEn,titleZh,"slug":slug.current,publishedAt,pillar,whatHappenedEn,whatHappenedZh,whyItMattersEn,whyItMattersZh,supplierActionEn,supplierActionZh,sources,accessLevel,imageUrl,imageCredit,"hasBody":defined(bodyEn)}';
+    const FALLBACK_DEADLINES = '*[_type=="deadline"]|order(date asc){labelEn,labelZh,date,affects,affectsZh,confidence,regId}';
+
+    async function cdnFallback() {
+        try {
+            const probe = await fetch('/api/content?type=deadlines');
+            if (probe.ok) return; // API available — script.js already rendered
+        } catch (e) { /* no API — fall through */ }
+
+        const q = async (groq) => {
+            const r = await fetch(SANITY_Q + encodeURIComponent(groq));
+            if (!r.ok) throw new Error('sanity ' + r.status);
+            return (await r.json()).result || [];
+        };
+        const lockTeaser = (p) => ({
+            titleEn: p.titleEn, titleZh: p.titleZh, slug: p.slug, publishedAt: p.publishedAt,
+            pillar: p.pillar, accessLevel: p.accessLevel, imageUrl: p.imageUrl,
+            imageCredit: p.imageCredit, hasBody: p.hasBody, locked: true,
+            teaserEn: (p.whatHappenedEn || '').slice(0, 150) + '…',
+            teaserZh: (p.whatHappenedZh || '').slice(0, 80) + '…'
+        });
+        try {
+            const news = await q(FALLBACK_NEWS);
+            renderBriefing(news.map(p => (p.accessLevel === 'registered' || p.accessLevel === 'premium') ? lockTeaser(p) : p));
+        } catch (e) { /* section stays hidden */ }
+        try { renderRadar(await q(FALLBACK_DEADLINES)); } catch (e) { /* section stays hidden */ }
+    }
+
     // ===== Init =====
     buildExpress();
+    cdnFallback();
     const saved = localStorage.getItem('gcc-persona');
     if (saved) applyPersona(saved, false);
 })();
