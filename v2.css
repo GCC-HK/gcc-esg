@@ -140,3 +140,34 @@ section.library { background: #fff; }
 .v2-gate .btn-gate:hover { background: #14472b; }
 .v2-gate .v2-gate-sub { font-size: 13px; color: #6b7a72; margin-top: 14px; }
 .v2-gate .v2-gate-sub a { color: #1a5c38; }
+
+/* briefing cards reached from the news band need to clear the fixed chrome */
+[id^="briefing-"] { scroll-margin-top: calc(var(--nav-height) + 50px); }
+
+/* ===== Uniform page-top pattern on all subpages =====
+   Rule: pill eyebrow, headline below, subtitle — all left-aligned,
+   matching Home / Regulations / CBAM. */
+body[data-v2page="guides"] #library .container,
+body[data-v2page="about"] #about .container { text-align: left; }
+body[data-v2page="guides"] #library .section-title,
+body[data-v2page="guides"] #library .section-subtitle,
+body[data-v2page="about"] #about .section-title,
+body[data-v2page="about"] #about .section-subtitle { text-align: left; }
+body[data-v2page="guides"] #library .atlas-label,
+body[data-v2page="about"] #about .atlas-label { margin-left: 0; }
+body[data-v2page="guides"] #library .section-title,
+body[data-v2page="about"] #about .section-title { font-size: 1.45rem; margin: 10px 0 4px; }
+body[data-v2page="guides"] #library .section-subtitle,
+body[data-v2page="about"] #about .section-subtitle { font-size: 0.92rem; margin: 0 0 26px; }
+
+/* News page: masthead follows the same rule (kicker styled as pill) */
+body[data-v2page="briefing"] .briefing-masthead { text-align: left; border: none; padding: 0 0 6px; }
+body[data-v2page="briefing"] .briefing-masthead-kicker { display: inline-block; background: #e8f0eb; color: #1a5c38; border-radius: 999px; padding: 5px 14px; font-size: 11px; font-weight: 700; letter-spacing: .12em; }
+body[data-v2page="briefing"] .briefing-title { font-size: 1.45rem; margin: 10px 0 4px; text-align: left; }
+body[data-v2page="briefing"] .briefing-dateline { text-align: left; margin: 0 0 8px; }
+
+/* Learn page: divider follows the same rule (white field, pill eyebrow) */
+body[data-v2page="learn"] .v2-guidance-divider { background: #fff; border-top: none; padding: 30px 0 10px; }
+body[data-v2page="learn"] .v2-gd-eyebrow { display: inline-block; background: #e8ecf2; color: #003366; border-radius: 999px; padding: 5px 14px; font-size: 11px; letter-spacing: .12em; }
+body[data-v2page="learn"] .v2-guidance-divider h2 { font-size: 1.45rem; margin: 10px 0 4px; }
+body[data-v2page="learn"] .v2-guidance-divider p { font-size: 0.92rem; }

@@ -421,6 +421,21 @@
         applyLang(lib);
     }
 
+    // ===== News-band links =====
+    // script.js builds ticker items as in-page anchors (#briefing-<slug>),
+    // which only resolve on the News page. Rewrite them to cross-page links
+    // as they render.
+    function fixTickerLinks() {
+        document.querySelectorAll('a.ticker-item[href^="#briefing-"]').forEach(a => {
+            a.setAttribute('href', 'v2-briefing.html' + a.getAttribute('href'));
+        });
+    }
+    const tickerTrack = document.getElementById('tickerTrack');
+    if (tickerTrack) {
+        fixTickerLinks();
+        new MutationObserver(fixTickerLinks).observe(tickerTrack, { childList: true });
+    }
+
     // ===== News-band space reservation =====
     // Subpages only pad for the fixed ticker while it is actually visible —
     // without this, an empty reserved strip shows under the header whenever
@@ -433,11 +448,23 @@
         new MutationObserver(syncTicker).observe(tickerEl, { attributes: true, attributeFilter: ['style'] });
     }
 
+    // ===== Deferred hash jump =====
+    // CMS-rendered targets (briefing cards) do not exist when the browser
+    // resolves the URL hash on load — retry until the target renders.
+    function jumpToHash(attempt) {
+        const id = window.location.hash.slice(1);
+        if (!id) return;
+        const t = document.getElementById(id);
+        if (t && (t.offsetWidth || t.offsetHeight)) { t.scrollIntoView(); return; }
+        if (attempt < 10) setTimeout(() => jumpToHash(attempt + 1), 500);
+    }
+
     // ===== Init =====
     buildExpress();
     cdnFallback();
     fillMinis(0);
     gateGuides();
+    jumpToHash(0);
     const urlPersona = new URLSearchParams(window.location.search).get('persona');
     if (urlPersona && PAGE !== 'hub') {
         // No scroll on arrival — the page opens at the top where the express

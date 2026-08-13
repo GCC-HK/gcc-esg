@@ -18,7 +18,7 @@ const PAGES = {
     cbam: { file: 'v2-cbam.html', title: '[V2 Preview] CBAM Cost Calculator | GREEN FUTURE', show: ['cbam'] },
     briefing: { file: 'v2-briefing.html', title: '[V2 Preview] News — The Green Sourcing Briefing | GREEN FUTURE', show: ['briefing'] },
     guides: { file: 'v2-guides.html', title: '[V2 Preview] Member Resource Library | GREEN FUTURE', show: ['library'] },
-    learn: { file: 'v2-learn.html', title: '[V2 Preview] Learn — Why Compliance Matters | GREEN FUTURE', show: ['guidance', 'benefits', 'risks-incentives', 'china-esg', 'actions', 'faq'] },
+    learn: { file: 'v2-learn.html', title: '[V2 Preview] Learn — Why Compliance Matters | GREEN FUTURE', show: ['guidance', 'benefits', 'risks-incentives', 'actions', 'faq'] },
     about: { file: 'v2-about.html', title: '[V2 Preview] About the GCC Sustainability Committee | GREEN FUTURE', show: ['about', 'trust'] }
 };
 
