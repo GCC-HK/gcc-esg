@@ -236,21 +236,6 @@
 
     document.getElementById('atlasSubmit')?.addEventListener('click', () => setTimeout(injectAddons, 0));
 
-    // ===== CBAM result disclaimer (prepended, not buried at the bottom) =====
-    const CBAM_DISCLAIMER = `
-        <div class="v2-disclaimer">
-            <span aria-hidden="true">&#9888;</span>
-            <div><span class="lang-en"><strong>Indicative estimate &mdash; not a CBAM declaration.</strong> Based on the official Q2 2026 certificate price and IR 2025/2620 benchmarks, but with simplified sector averages. Your actual liability depends on CN codes, verified installation data and official country defaults, which can be materially higher. Full method notes below.</span><span class="lang-zh"><strong>指示性估算——并非CBAM申报。</strong>基于官方2026年第二季度证书价格和IR 2025/2620基准值，但采用简化的行业平均值。实际义务取决于CN编码、经核实的设施数据和官方国家默认值（可能明显更高）。完整方法说明见下方。</span><span class="lang-de"><strong>Indikative Sch&auml;tzung &mdash; keine CBAM-Erkl&auml;rung.</strong> Basiert auf dem offiziellen Zertifikatspreis Q2 2026 und den Benchmarks der IR 2025/2620, jedoch mit vereinfachten Sektordurchschnitten. Die tats&auml;chliche Belastung h&auml;ngt von CN-Codes, verifizierten Anlagendaten und offiziellen L&auml;nder-Standardwerten ab.</span><span class="lang-vi"><strong>Ước t&iacute;nh tham khảo &mdash; kh&ocirc;ng phải khai b&aacute;o CBAM.</strong> Dựa tr&ecirc;n gi&aacute; chứng chỉ Q2 2026 ch&iacute;nh thức v&agrave; chuẩn IR 2025/2620, nhưng d&ugrave;ng mức trung b&igrave;nh ng&agrave;nh đơn giản h&oacute;a. Nghĩa vụ thực tế phụ thuộc m&atilde; CN, dữ liệu cơ sở đ&atilde; x&aacute;c minh v&agrave; gi&aacute; trị mặc định ch&iacute;nh thức theo quốc gia.</span></div>
-        </div>`;
-
-    document.getElementById('cbamCalculate')?.addEventListener('click', () => setTimeout(() => {
-        const res = document.getElementById('cbamResult');
-        if (res && res.innerHTML.trim() && !res.querySelector('.v2-disclaimer') && !res.querySelector('.cbam-error')) {
-            res.insertAdjacentHTML('afterbegin', CBAM_DISCLAIMER);
-            applyLang(res);
-        }
-    }, 0));
-
     // ===== CSV "Regulatory Sheet" export =====
     function csvCell(v) {
         const s = String(v == null ? '' : v).replace(/\s+/g, ' ').trim();

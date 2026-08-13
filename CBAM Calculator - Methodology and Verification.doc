@@ -1,18 +1,19 @@
 <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
 <head>
 <meta charset="utf-8">
-<title>CBAM Calculator — Methodology &amp; Verification</title>
+<title>CBAM Calculator — Methodology &amp; Verification (v3.0)</title>
 <!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom></w:WordDocument></xml><![endif]-->
 <style>
   body { font-family: 'Source Sans 3', Calibri, Arial, sans-serif; font-size: 11pt; color: #1a1a1a; line-height: 1.45; margin: 2.5cm; }
   h1 { font-size: 17pt; color: #1a5c38; border-bottom: 2pt solid #1a5c38; padding-bottom: 6pt; }
   h2 { font-size: 13pt; color: #1a5c38; margin-top: 18pt; }
   h3 { font-size: 11.5pt; color: #003366; margin-top: 14pt; }
-  table { border-collapse: collapse; width: 100%; margin: 8pt 0; font-size: 10pt; }
+  table { border-collapse: collapse; width: 100%; margin: 8pt 0; font-size: 9.5pt; }
   th { background: #1a5c38; color: #fff; text-align: left; padding: 5pt 7pt; }
-  td { border: 0.5pt solid #b8c4bd; padding: 5pt 7pt; vertical-align: top; }
+  td { border: 0.5pt solid #b8c4bd; padding: 4pt 6pt; vertical-align: top; }
   .formula { background: #f2f6f3; border-left: 3pt solid #1a5c38; padding: 8pt 12pt; font-family: Consolas, monospace; font-size: 10pt; margin: 8pt 0; }
   .caveat { background: #fdf3e7; border-left: 3pt solid #DE8703; padding: 8pt 12pt; margin: 8pt 0; }
+  .resolved { background: #eef7f1; border-left: 3pt solid #1a5c38; padding: 8pt 12pt; margin: 8pt 0; }
   .meta { color: #555; font-size: 10pt; }
   li { margin-bottom: 4pt; }
 </style>
@@ -21,130 +22,121 @@
 
 <h1>Green Sourcing Compass — CBAM Cost Calculator<br>Methodology &amp; Verification Document</h1>
 <p class="meta">GCC Sustainability Committee, German Chamber of Commerce Hong Kong<br>
-Version 2.0 &nbsp;·&nbsp; Constants as deployed on 13 August 2026 &nbsp;·&nbsp; Prepared for member verification<br>
-Contact: Green Sourcing Compass project team</p>
+<b>Version 3.0</b> &nbsp;·&nbsp; Constants as deployed 15 August 2026 (V2 platform) &nbsp;·&nbsp; Prepared for member verification<br>
+Major change vs v2.0: the calculator now applies the <b>official country-specific default values</b> of Implementing Regulation (EU) 2025/2621 <b>as corrected by IR (EU) 2026/1740</b> (31 July 2026, retroactive to 1 January 2026), the year-by-year CBAM factor schedule to 2034, and route-resolved benchmarks. All values below were extracted from the published Official Journal texts on EUR-Lex (primary sources).</p>
 
 <h2>1. Purpose and scope</h2>
-<p>The calculator produces an <b>indicative estimate</b> of the annual EU CBAM certificate cost for a given import/export volume of CBAM goods in the definitive regime (from 1 January 2026). It is a screening tool for suppliers and sourcing offices — it does not replace the official CBAM declaration, which is based on CN-code-level goods categories, installation-specific verified emissions and the exact benchmarks of Implementing Regulation (EU) 2025/2620. The tool displays this limitation to every user.</p>
+<p>The calculator produces an <b>indicative estimate</b> of the annual EU CBAM certificate cost. In default mode it now reproduces the <b>official default-values scenario</b> — the cost an EU importer faces if the supplier provides no verified emissions data. In custom mode the user's verified installation values are used instead. It is a screening tool, not a CBAM declaration; a prominent disclaimer states this above every result.</p>
 
 <h2>2. Calculation method, step by step</h2>
-<p>Inputs: product sector <i>s</i>, country of origin <i>c</i>, annual volume <i>V</i> (tonnes), emission intensity <i>E</i> (tCO₂e/t — sector default or user-supplied verified value), benchmark <i>B</i> (tCO₂e/t — sector default or user-supplied).</p>
+<p>Inputs: product sector <i>s</i>, origin country <i>c</i>, import year <i>y</i> (2026–2034), volume <i>V</i> (t), emissions mode (official default or verified custom value <i>E</i>), aluminium product form where relevant, and optionally the carbon price actually paid at origin.</p>
 <div class="formula">
-1. Free-allocation deduction per tonne: &nbsp; FA = B × 0.975 <i>(2026 CBAM factor)</i><br>
-2. Liable emissions per tonne: &nbsp; L = max(0, E − FA)<br>
-3. Origin carbon-price credit ratio (Art. 9): &nbsp; r = min(1, P<sub>origin</sub> / P<sub>CBAM</sub>)<br>
-4. Net certificates per tonne: &nbsp; N = L × (1 − r)<br>
-5. Cost per tonne: &nbsp; C = N × P<sub>CBAM</sub><br>
-6. Annual totals: &nbsp; each per-tonne figure × V
+1. Default emissions (default mode): E = AnnexI(c, s) × (1 + markup(y, s)) &nbsp;— AnnexI values EXCLUDE mark-up<br>
+2. Benchmark: B = IR2620_ColumnB(bucket) [+ aluminium form add-on]; in default mode the bucket follows the route Annex I assigns to the origin country<br>
+3. Free-allocation deduction: FA = B × factor(y) &nbsp;(factor per Dir. 2003/87/EC Art. 10a(1a))<br>
+4. Liable emissions: L = max(0, E − FA)<br>
+5. Carbon-price credit: r = min(1, P<sub>paid</sub> / P<sub>CBAM</sub>) &nbsp;(P<sub>paid</sub> = user input, else headline table)<br>
+6. Cost: C = L × (1 − r) × P<sub>CBAM</sub>; annual total = C × V<br>
+7. Projection: steps 1–6 repeated for every year 2026–2034 (mark-up and factor change per year); ±€20 price sensitivity band displayed
 </div>
-<p>Where P<sub>CBAM</sub> = €75.28/tCO₂e and P<sub>origin</sub> is the headline carbon price of the origin country (Section 5). If the user enters a verified emission intensity, the tool additionally shows the saving versus the sector default. Volumes below 50 t/year trigger a de-minimis note (Section 6). Results are labelled LOW (&lt;€10k), MEDIUM (≤€100k) or HIGH (&gt;€100k) exposure — an editorial banding with no legal meaning.</p>
 
-<h2>3. Constants and their sources</h2>
+<h2>3. Constants and sources — all verified against EUR-Lex</h2>
 
-<h3>3.1 Certificate price</h3>
+<h3>3.1 Certificate price and CBAM factor schedule</h3>
 <table>
 <tr><th>Constant</th><th>Value</th><th>Source</th></tr>
-<tr><td>CBAM certificate price P<sub>CBAM</sub></td><td>€75.28 /tCO₂e</td><td>European Commission, official Q2 2026 CBAM certificate price, published 6 July 2026 (quarterly ETS-auction average; prices quarterly in 2026, weekly from 2027). https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism/price-cbam-certificates_en</td></tr>
-<tr><td>2026 CBAM factor</td><td>97.5% of benchmark deducted (2.5% payable)</td><td>Reg. (EU) 2023/956 as amended; phase-in schedule to 100% payable by 2034 under current law. <b>Note:</b> the Commission's ETS review proposal of 17 July 2026 would stretch the free-allocation phase-out to 2037/38 — proposal only, not reflected in the maths, but flagged in the tool's disclaimer.</td></tr>
+<tr><td>Certificate price P<sub>CBAM</sub></td><td>€75.28 /tCO₂e (Q2 2026, published 6 Jul 2026)</td><td>Commission price page (taxation-customs.ec.europa.eu). Updated quarterly in 2026, weekly from 2027 — maintenance rule below.</td></tr>
+<tr><td>CBAM factor (free-allocation share)</td><td>2026: 97.5% · 2027: 95% · 2028: 90% · 2029: 77.5% · 2030: 51.5% · 2031: 39% · 2032: 26.5% · 2033: 14% · 2034+: 0%</td><td>Directive 2003/87/EC Art. 10a(1a), consolidated text (CELEX 02003L0087-20240301), quoted verbatim. Unchanged by Reg. (EU) 2025/2083.</td></tr>
+<tr><td>Default-value mark-up</td><td>Cement, iron &amp; steel, aluminium, hydrogen: +10% (2026), +20% (2027), +30% (2028+). Fertilisers: +1% flat.</td><td>Corrected Annex I introductory part, IR (EU) 2026/1740 (verbatim).</td></tr>
 </table>
 
-<h3>3.2 CBAM benchmarks (deduction base)</h3>
-<p>Benchmarks follow the <b>finalized Implementing Regulation (EU) 2025/2620</b> (16 December 2025) where a published sector figure could be verified. The IR defines benchmarks per aggregated goods category and production route; the calculator uses one representative value per sector bucket:</p>
+<h3>3.2 CBAM benchmarks (IR 2025/2620, Column B = default-values path)</h3>
+<p>The Annex distinguishes Column A (process benchmark, actual-data path) from Column B (benchmark including precursors, default-values path). The calculator uses Column B, consistent with its default-values scenario.</p>
 <table>
-<tr><th>Sector bucket</th><th>Benchmark (tCO₂e/t)</th><th>Basis / verification status</th></tr>
-<tr><td>Iron &amp; steel — BF-BOF</td><td>1.370</td><td>IR 2025/2620 hot-rolled coil, BF-BOF route (finalized; down from 1.530 draft). Verified via Fastmarkets/Eurometal reporting of the final IR.</td></tr>
-<tr><td>Iron &amp; steel — DRI+EAF</td><td>0.481</td><td>IR 2025/2620 hot-rolled coil, DRI-EAF route (finalized; down from 1.033 draft).</td></tr>
-<tr><td>Iron &amp; steel — scrap EAF</td><td>0.072</td><td>IR 2025/2620 hot-rolled coil, scrap-EAF route (finalized; down from 0.288 draft).</td></tr>
-<tr><td>Aluminium — primary</td><td>1.423</td><td>IR 2025/2620 unwrought primary aluminium (finalized; down from 1.464 draft). Verified via Argus Media.</td></tr>
-<tr><td>Aluminium — secondary</td><td>0.091</td><td>IR 2025/2620 unwrought secondary aluminium, &gt;50% scrap (finalized; down from 0.139 draft). Note: the IR adds +0.056 for intermediate and +0.166 for end-use aluminium products — not modelled per bucket.</td></tr>
-<tr><td>Cement</td><td>0.830</td><td>Portland cement benchmark per IR 2025/2620 (includes direct + indirect emissions — cement is the only calculator sector where CBAM prices indirect emissions).</td></tr>
-<tr><td>Fertilisers</td><td>1.522</td><td>IR 2025/2620 ammonia benchmark, used as representative for the fertiliser bucket (urea and mixed fertilisers have distinct, partly lower benchmarks — see verification item V4).</td></tr>
-<tr><td>Hydrogen</td><td>6.840</td><td><b>ETS-derived indicative value — NOT yet verified against IR 2025/2620 Annex I.</b> See verification item V3.</td></tr>
+<tr><th>Bucket</th><th>Benchmark (tCO₂e/t)</th><th>Annex reference</th></tr>
+<tr><td>Steel — BF-BOF</td><td>1.370</td><td>HRC 7208, route (C) — verified</td></tr>
+<tr><td>Steel — DRI+EAF</td><td>0.481</td><td>HRC, route (D) — verified</td></tr>
+<tr><td>Steel — scrap-EAF</td><td>0.072</td><td>HRC, route (E) — verified</td></tr>
+<tr><td>Aluminium primary</td><td>1.423</td><td>Unwrought 7601, route (K) — verified</td></tr>
+<tr><td>Aluminium secondary</td><td>0.091</td><td>Unwrought 7601, route (L) — verified</td></tr>
+<tr><td>Aluminium form add-ons</td><td>+0.056 semis (bars, wire, plates, sheets) · +0.060 profiles/tubes/structures · +0.166 foil &amp; containers</td><td>Column A add-ons, 7603–7616 — three tiers (v2.0's single +0.166 "end-use" tier corrected)</td></tr>
+<tr><td>Cement</td><td><b>0.666</b> (grey Portland 2523 29 00)</td><td><b>Corrected in v3.0</b> — v2.0 used 0.83, which is not the Annex value; white cement is 0.859</td></tr>
+<tr><td>Fertilisers — ammonia</td><td>1.522</td><td>2814 10 00 — verified</td></tr>
+<tr><td>Fertilisers — urea</td><td>0.902</td><td>3102 10 19, Column B — verified (new bucket in v3.0)</td></tr>
+<tr><td>Hydrogen</td><td><b>5.089</b></td><td><b>Corrected in v3.0</b> — v2.0's ETS-derived 6.84 replaced by the actual Annex value for 2804 10 00 (verification item V3 resolved)</td></tr>
 </table>
 
-<h3>3.3 Default emission intensities (pre-filled, user-overridable)</h3>
-<p>These are <b>editorial, sector-average indicative values</b> — deliberately country-neutral. They are NOT the EU's official default values. The official defaults (IR 2025/2621) are country- and route-specific and carry a mark-up of +10% (2026), +20% (2027), +30% (2028+; fertilisers +1% throughout). They can be materially higher — e.g. the official China BF-BOF steel-slab default is ≈ 3.167 tCO₂e/t including mark-up. The tool states this in the on-page disclaimer and encourages users to enter verified installation data.</p>
+<h3>3.3 Country default values (corrected Annex I, IR 2026/1740 — base values EXCLUDING mark-up, tCO₂e/t)</h3>
+<p>One value per product per country; the route letter is Annex I's assumed production route for that origin, which selects the benchmark. "—" = no country entry: the regulation directs use of the "Other Countries and Territories" row. steel = HRC 7208 · alu = unwrought 7601 · cement = grey Portland 2523 29 00 (incl. indirect) · ammonia = 2814 10 00 (incl. indirect) · urea = 3102 10 19 (incl. indirect).</p>
 <table>
-<tr><th>Sector bucket</th><th>Default E (tCO₂e/t)</th><th>Character</th></tr>
-<tr><td>Steel BF-BOF</td><td>2.0</td><td>Indicative global BF-BOF average, direct emissions</td></tr>
-<tr><td>Steel DRI+EAF</td><td>1.4</td><td>Indicative NG-based DRI-EAF average, direct</td></tr>
-<tr><td>Steel scrap-EAF</td><td>0.4</td><td>Indicative, direct</td></tr>
-<tr><td>Aluminium primary</td><td>1.5</td><td>Indicative, direct only (electrolysis; excludes indirect)</td></tr>
-<tr><td>Aluminium secondary</td><td>0.4</td><td>Indicative, direct</td></tr>
-<tr><td>Cement</td><td>0.8</td><td>Indicative, direct + indirect</td></tr>
-<tr><td>Fertilisers</td><td>2.3</td><td>Indicative (ammonia-based chain), direct + indirect</td></tr>
-<tr><td>Hydrogen</td><td>10.4</td><td>Indicative SMR grey hydrogen, direct</td></tr>
+<tr><th>Country</th><th>Steel (route)</th><th>Aluminium (route)</th><th>Cement</th><th>Ammonia</th><th>Urea</th><th>Hydrogen</th></tr>
+<tr><td>China</td><td>3.187 (C)</td><td>3.000 (K)</td><td>1.420</td><td>4.360</td><td>2.850</td><td>26.640</td></tr>
+<tr><td>India</td><td>4.280 (C)</td><td>1.870 (K)</td><td>1.480</td><td>3.280</td><td>2.220</td><td>14.030</td></tr>
+<tr><td>Türkiye</td><td>2.428 (C)</td><td>1.700 (K)</td><td>—</td><td>2.270</td><td>1.510</td><td>10.820</td></tr>
+<tr><td>Russia</td><td>3.430 (C)</td><td>2.160 (K)</td><td>1.380</td><td>2.260</td><td>1.470</td><td>10.820</td></tr>
+<tr><td>South Korea</td><td>2.118 (C)</td><td>0.360 (L)</td><td>0.940</td><td>—</td><td>1.540</td><td>14.030</td></tr>
+<tr><td>Ukraine</td><td>2.483 (C)</td><td>0.360 (L)</td><td>1.380</td><td>2.250</td><td>1.450</td><td>10.820</td></tr>
+<tr><td>United Kingdom</td><td>2.420 (C)</td><td>1.870 (K)</td><td>0.980</td><td>2.050</td><td>1.260</td><td>10.820</td></tr>
+<tr><td>Vietnam</td><td>2.350 (C)</td><td>0.360 (L)</td><td>—</td><td>3.610</td><td>2.430</td><td>10.820</td></tr>
+<tr><td>Indonesia</td><td>8.230 (C)</td><td>1.700 (K)</td><td>—</td><td>2.280</td><td>1.580</td><td>10.820</td></tr>
+<tr><td>Brazil</td><td>1.620 (C)</td><td>1.700 (K)</td><td>—</td><td>3.210</td><td>2.070</td><td>10.820</td></tr>
+<tr><td>Japan</td><td>2.100 (C)</td><td>0.360 (L)</td><td>0.890</td><td>2.190</td><td>1.520</td><td>14.030</td></tr>
+<tr><td>Egypt</td><td>—</td><td>1.870 (K)</td><td>1.290</td><td>2.050</td><td>1.390</td><td>10.820</td></tr>
+<tr><td>South Africa</td><td>4.140 (C)</td><td>2.358 (K)</td><td>—</td><td>3.640</td><td>2.360</td><td>25.940</td></tr>
+<tr><td><b>Other Countries (Annex I fallback row)</b></td><td>4.049 (C)</td><td>2.203 (K)</td><td>1.440</td><td>3.130</td><td>2.720</td><td>17.740</td></tr>
 </table>
-<p>Per Annex II of Reg. (EU) 2023/956, only direct emissions count for iron &amp; steel, aluminium and hydrogen; indirect (electricity) emissions additionally count for cement, fertilisers and electricity.</p>
+<p>Routes: (C) BF-BOF · (D) DRI-EAF · (E) scrap-EAF · (K) primary aluminium · (L) secondary aluminium. Note KR/UA/VN/JP aluminium is treated as secondary (0.360) by Annex I.</p>
 
-<h2>4. (Reserved)</h2>
+<h3>3.4 Origin carbon prices (Art. 9 credit)</h3>
+<p>Unchanged from v2.0 (headline mid-2026 values: CN 10, GB 60, JP 12, KR 6, ZA 15, UA 0.6, others 0) — but the calculator now also accepts the <b>price actually paid</b> as a user input, which overrides the headline table; Art. 9 credits only the effectively-paid price.</p>
 
-<h2>5. Origin-country carbon prices (Article 9 deduction)</h2>
-<p>Headline prices in €/tCO₂e, mid-2026 snapshot. Art. 9 credits only the carbon price <b>effectively paid</b>, net of free allocation and rebates — real deductions are usually lower than these headline figures, so the tool if anything <i>understates</i> the CBAM cost slightly for these origins. Zeros denote pilot or non-operational schemes with no effectively-paid price.</p>
+<h2>4. Worked examples (both pinned in the automated regression suite)</h2>
 <table>
-<tr><th>Country</th><th>€/t</th><th>Basis</th></tr>
-<tr><td>China</td><td>10</td><td>National ETS, CEA ≈ 86–100 CNY mid-2026</td></tr>
-<tr><td>United Kingdom</td><td>60</td><td>UK ETS traded range £30–55; 2026 penalty reference £49.41 ≈ €57 (set at upper-mid range)</td></tr>
-<tr><td>Japan</td><td>12</td><td>GX-ETS, FY2026 corridor ≈ €10–25; creditability as "effectively paid" untested</td></tr>
-<tr><td>South Korea</td><td>6</td><td>K-ETS KAU ≈ KRW 8–9k</td></tr>
-<tr><td>South Africa</td><td>15</td><td>Carbon tax R308/t from 1 Jan 2026</td></tr>
-<tr><td>Ukraine</td><td>0.6</td><td>CO₂ tax ≈ €0.59</td></tr>
-<tr><td>India, Türkiye, Russia, Vietnam, Indonesia, Brazil, Egypt, other</td><td>0</td><td>No operational effectively-paid carbon price for CBAM purposes</td></tr>
+<tr><th>Scenario</th><th>Computation</th><th>Result</th></tr>
+<tr><td><b>Official default:</b> 1,000 t Chinese BOF-route steel, 2026, no data provided</td><td>E = 3.187 × 1.10 = 3.5057; FA = 1.370 × 0.975 = 1.33575; L = 2.16995; credit 10/75.28; C = 2.16995 × 65.28</td><td><b>€141.65/t · ≈ €141,654/yr</b></td></tr>
+<tr><td>Same, year 2030</td><td>E = 3.187 × 1.30; FA = 1.370 × 0.515</td><td>€224.40/t</td></tr>
+<tr><td><b>Verified data:</b> same shipment, verified 2.0 tCO₂e/t</td><td>L = 2.0 − 1.33575 = 0.66425; C = 0.66425 × 65.28</td><td>€43.36/t — the data-pack saving vs default: ≈ €98/t</td></tr>
 </table>
 
-<h2>6. De-minimis rule</h2>
-<p>Reg. (EU) 2025/2083 (in force 20 October 2025): importers below <b>50 tonnes cumulative net mass per year</b> across iron &amp; steel, aluminium, fertilisers and cement are exempt; the threshold does <b>not</b> apply to hydrogen or electricity. The calculator shows an exemption hint for volumes under 50 t and a callout in the result.</p>
-
-<h2>7. Worked example (the test case in our automated suite)</h2>
-<p>1,000 t/year BF-BOF steel from China, sector defaults:</p>
-<table>
-<tr><th>Step</th><th>Computation</th><th>Result</th></tr>
-<tr><td>Free allocation FA</td><td>1.370 × 0.975</td><td>1.33575 tCO₂e/t</td></tr>
-<tr><td>Liable L</td><td>2.0 − 1.33575</td><td>0.66425 tCO₂e/t</td></tr>
-<tr><td>Credit ratio r</td><td>10 / 75.28</td><td>0.13284</td></tr>
-<tr><td>Net certificates N</td><td>0.66425 × (1 − 0.13284)</td><td>0.57601 tCO₂e/t</td></tr>
-<tr><td>Cost per tonne C</td><td>0.57601 × €75.28</td><td><b>€43.36 /t</b></td></tr>
-<tr><td>Annual total</td><td>× 1,000 t</td><td><b>≈ €43,362</b></td></tr>
-</table>
-<p>This figure is asserted in the automated regression test (scripts/verify-site.js) — any change to a constant that alters the result breaks the build.</p>
-
-<h2>8. Known limitations (displayed or documented)</h2>
+<h2>5. Known limitations (displayed or documented)</h2>
 <ul>
-<li>One representative benchmark per sector bucket, while IR 2025/2620 is CN-code- and route-specific with separate columns for actual-data vs default-value declarations.</li>
-<li>Default emission intensities are country-neutral averages; official IR 2025/2621 country defaults (with mark-up) can be substantially higher, especially for China steel.</li>
-<li>Precursor cascades (e.g. purchased coke, sintered ore, unwrought aluminium in downstream products) are not modelled.</li>
-<li>Aluminium intermediate/end-product benchmark add-ons (+0.056 / +0.166) are not modelled.</li>
-<li>Art. 9 deduction uses headline origin prices, not the effectively-paid net price.</li>
-<li>The 2034 free-allocation phase-out reflects current law; the July 2026 ETS review proposal (extension to 2037/38) is flagged but not modelled.</li>
+<li>Product granularity: one representative CN code per bucket (HRC for steel, unwrought for aluminium, grey Portland for cement, 3102 10 19 for urea). Other CN codes in the same category can differ; the full parsed Annex I (12,949 rows) is retained for future per-CN lookup.</li>
+<li>Precursor cascades and Annex IV (precursors of unknown origin) are not modelled — that is the verified-data path by design.</li>
+<li>Certificate price held constant in the projection (±€20 band shown); real ETS prices will move.</li>
+<li>Art. 9 headline prices are approximations unless the user enters the effectively-paid price.</li>
 </ul>
 
-<h2>9. Verification checklist for the reviewing member</h2>
+<div class="caveat"><b>Regulatory watch:</b> (1) IR 2025/2620 recital 10 — the 2026 benchmarks are based on <i>estimated</i> ETS 2026–2030 benchmarks and will be reviewed once the final ETS benchmarks are published; updated values would apply to imports from 1 Jan 2027. (2) The July 2026 ETS-review proposal would stretch free allocation to 2037/38; the projection follows current law and is footnoted accordingly on the page.</div>
+
+<h2>6. Verification checklist for the reviewing member (v3.0)</h2>
 <table>
-<tr><th>#</th><th>Item</th><th>Suggested check</th></tr>
-<tr><td>V1</td><td>Formula (Section 2) matches Reg. (EU) 2023/956 Arts. 6, 9, 31 and the definitive-regime mechanics</td><td>Legal text / advisor review</td></tr>
-<tr><td>V2</td><td>Steel, aluminium, cement, ammonia benchmarks against IR 2025/2620 Annex I (Commission publishes an Excel companion file)</td><td>Compare Annex I values for representative CN codes</td></tr>
-<tr><td>V3</td><td><b>Hydrogen benchmark 6.840 — unverified against the final IR; highest-priority check</b></td><td>IR 2025/2620 Annex I, CN 2804 10 00</td></tr>
-<tr><td>V4</td><td>Whether the ammonia benchmark (1.522) is a fair representative for the fertiliser bucket, or urea/mixed-fertiliser benchmarks should be a separate bucket</td><td>IR 2025/2620 Annex I fertiliser categories</td></tr>
-<tr><td>V5</td><td>Default emission intensities (Section 3.3) plausible as indicative averages</td><td>Sense-check vs IEA/industry benchmarks and IR 2025/2621 country defaults</td></tr>
-<tr><td>V6</td><td>Origin carbon prices (Section 5) as mid-2026 snapshot</td><td>ICAP price monitor; World Bank Carbon Pricing Dashboard</td></tr>
-<tr><td>V7</td><td>Q2 2026 certificate price €75.28 and its update cadence</td><td>Commission price page (link in 3.1)</td></tr>
-<tr><td>V8</td><td>De-minimis mechanics incl. hydrogen/electricity carve-out</td><td>Reg. (EU) 2025/2083</td></tr>
+<tr><th>#</th><th>Item</th><th>Status / suggested check</th></tr>
+<tr><td>V1</td><td>Formula matches Reg. (EU) 2023/956 mechanics</td><td>Open — legal review</td></tr>
+<tr><td>V2</td><td>Benchmarks vs IR 2025/2620 Annex</td><td><b>Resolved</b> — extracted from the OJ text; spot-check invited</td></tr>
+<tr><td>V3</td><td>Hydrogen benchmark</td><td><b>Resolved</b> — 5.089 per Annex (was 6.84 ETS-derived)</td></tr>
+<tr><td>V4</td><td>Fertiliser representativeness</td><td><b>Resolved</b> — ammonia and urea are now separate buckets</td></tr>
+<tr><td>V5</td><td>Country default values vs corrected Annex I (IR 2026/1740)</td><td><b>New</b> — table in §3.3 extracted from the OJ text; spot-check e.g. China 7208 = 3.187 and the mark-up wording in the Annex introduction</td></tr>
+<tr><td>V6</td><td>Origin carbon prices (headline table)</td><td>Open — ICAP/World Bank cross-check</td></tr>
+<tr><td>V7</td><td>Certificate price €75.28 + update cadence</td><td>Resolved — Commission price page</td></tr>
+<tr><td>V8</td><td>CBAM factor schedule</td><td><b>Resolved</b> — Dir. 2003/87/EC Art. 10a(1a) verbatim</td></tr>
 </table>
 
-<h2>10. Maintenance rule</h2>
-<p>The certificate price is updated quarterly in 2026 (weekly from 2027) — the constant and the on-page label state the quarter explicitly and are updated when the Commission publishes a new price. All constants live in one block of <i>script.js</i> with source comments; the regression suite pins the worked example. Every constant change requires a source and a rerun of the suite.</p>
-
-<div class="caveat"><b>Disclaimer shown to users:</b> the tool is an indicative estimate, not legal or financial advice; it names the price vintage, the CBAM factor, the benchmark source (IR 2025/2620), warns that official country-specific defaults can be materially higher, and points to certificate sales (Feb 2027) and the first declaration deadline (30 Sep 2027).</div>
+<h2>7. Maintenance rules</h2>
+<ul>
+<li>Certificate price: update on each Commission publication (quarterly 2026, weekly 2027+); the page labels the vintage.</li>
+<li>Benchmarks: re-check when the Commission publishes final ETS benchmarks (expected before 2027 imports; recital 10).</li>
+<li>Default values: re-extract on any further correction of IR 2025/2621 (subscribe to OJ alerts for the CBAM implementing acts).</li>
+<li>All constants live in one data module (v2-cbam-data.js) with a review date shown on the page; every change requires a source and a green regression run (worked examples above are pinned).</li>
+</ul>
 
 <h2>Annex: primary sources</h2>
 <ul>
-<li>Reg. (EU) 2023/956 (CBAM) — EUR-Lex CELEX:32023R0956</li>
-<li>Reg. (EU) 2025/2083 (simplification/de-minimis) — OJ 17 Oct 2025</li>
-<li>Implementing Reg. (EU) 2025/2620 (benchmarks) — OJ L, 16 Dec 2025</li>
-<li>Implementing Reg. (EU) 2025/2621 (default values &amp; mark-ups) — OJ L, 16 Dec 2025</li>
-<li>Commission CBAM certificate price page — taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism/price-cbam-certificates_en</li>
-<li>Commission ETS review proposal, 17 Jul 2026 (free-allocation phase-out extension — proposal stage)</li>
-<li>Eurometal / Fastmarkets and Argus Media reporting of the finalized IR 2025/2620 benchmark values (Dec 2025)</li>
+<li>IR (EU) 2026/1740 — corrected default values (Annex I &amp; IV): eur-lex.europa.eu/eli/reg_impl/2026/1740/oj/eng</li>
+<li>IR (EU) 2025/2620 — CBAM benchmarks: eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=OJ:L_202502620</li>
+<li>IR (EU) 2025/2621 — original default-values act</li>
+<li>Directive 2003/87/EC Art. 10a(1a), consolidated — CBAM factor schedule</li>
+<li>Reg. (EU) 2023/956 (CBAM) and Reg. (EU) 2025/2083 (de-minimis, certificate-sales timing)</li>
+<li>Commission CBAM certificate price page — taxation-customs.ec.europa.eu</li>
 </ul>
 
 </body>

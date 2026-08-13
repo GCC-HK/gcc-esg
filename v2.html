@@ -450,6 +450,7 @@
                                 <option value="aluminium_secondary" data-en="Aluminium (Secondary / Recycled)" data-zh="铝（再生铝）" data-de="Aluminium (Sekundär / Recycelt)" data-vi="Nhôm (Thứ cấp / Tái chế)">Aluminium (Secondary / Recycled)</option>
                                 <option value="cement" data-en="Cement" data-zh="水泥" data-de="Zement" data-vi="Xi măng">Cement</option>
                                 <option value="fertilisers" data-en="Fertilisers (Ammonia-based)" data-zh="化肥（氨基）" data-de="Düngemittel (auf Ammoniakbasis)" data-vi="Phân bón (gốc amoniac)">Fertilisers (Ammonia-based)</option>
+                                <option value="urea" data-en="Fertilisers — Urea" data-zh="化肥——尿素" data-de="Düngemittel — Harnstoff" data-vi="Phân bón — Urê">Fertilisers — Urea</option>
                                 <option value="hydrogen" data-en="Hydrogen" data-zh="氢气" data-de="Wasserstoff" data-vi="Hydro">Hydrogen</option>
                             </select>
                         </div>
@@ -472,6 +473,26 @@
                                 <option value="ZA" data-en="South Africa" data-zh="南非" data-de="Südafrika" data-vi="Nam Phi">South Africa</option>
                                 <option value="OTHER" data-en="Other (no carbon pricing)" data-zh="其他（无碳定价）" data-de="Sonstige (keine CO₂-Bepreisung)" data-vi="Khác (không có định giá carbon)">Other (no carbon pricing)</option>
                             </select>
+                        </div>
+                        <div class="cbam-form-group v2-cbam-extra">
+                            <label for="v2CbamYear"><span class="lang-en">Import year</span><span class="lang-zh">进口年份</span><span class="lang-de">Einfuhrjahr</span><span class="lang-vi">Năm nhập khẩu</span></label>
+                            <select id="v2CbamYear">
+                                <option value="2026" selected>2026</option><option value="2027">2027</option><option value="2028">2028</option><option value="2029">2029</option><option value="2030">2030</option><option value="2031">2031</option><option value="2032">2032</option><option value="2033">2033</option><option value="2034">2034</option>
+                            </select>
+                        </div>
+                        <div class="cbam-form-group v2-cbam-extra" id="v2AluFormGroup" style="display:none">
+                            <label for="v2AluForm"><span class="lang-en">Aluminium product form</span><span class="lang-zh">铝产品形态</span><span class="lang-de">Aluminium-Produktform</span><span class="lang-vi">Dạng sản phẩm nhôm</span></label>
+                            <select id="v2AluForm">
+                                <option value="unwrought" data-en="Unwrought metal" data-zh="未锻轧金属">Unwrought metal</option>
+                                <option value="semi" data-en="Semi-finished — bars, wire, plates, sheets (+0.056)" data-zh="半成品——棒、线、板、片（+0.056）">Semi-finished — bars, wire, plates, sheets (+0.056)</option>
+                                <option value="profiles" data-en="Profiles, tubes, structures (+0.060)" data-zh="型材、管材、结构件（+0.060）">Profiles, tubes, structures (+0.060)</option>
+                                <option value="foil" data-en="Foil &amp; containers (+0.166)" data-zh="铝箔与容器（+0.166）">Foil &amp; containers (+0.166)</option>
+                            </select>
+                        </div>
+                        <div class="cbam-form-group v2-cbam-extra">
+                            <label for="v2PricePaid"><span class="lang-en">Carbon price actually paid at origin (€/tCO&#8322;e, optional)</span><span class="lang-zh">在原产国实际支付的碳价（€/tCO&#8322;e，可选）</span><span class="lang-de">Tats&auml;chlich gezahlter CO&#8322;-Preis (€/t, optional)</span><span class="lang-vi">Gi&aacute; carbon thực trả tại xuất xứ (€/tCO&#8322;e, t&ugrave;y chọn)</span></label>
+                            <input type="number" id="v2PricePaid" min="0" step="0.1" placeholder="">
+                            <div class="cbam-default-value" id="v2PricePaidHint"></div>
                         </div>
                         <div class="filter-group">
                             <label for="cbamCnCode"><span class="lang-en">CN Code (optional)</span><span class="lang-zh">CN编码（选填）</span><span class="lang-de">CN-Code (optional)</span><span class="lang-vi">Mã CN (tùy chọn)</span></label>
@@ -855,6 +876,8 @@
     </footer>
 
     <script src="script.js"></script>
+    <script src="v2-cbam-data.js"></script>
     <script src="v2.js"></script>
+    <script src="v2-cbam.js"></script>
 </body>
 </html>
