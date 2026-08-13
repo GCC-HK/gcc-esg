@@ -398,10 +398,34 @@
         }
     }
 
+    // ===== Guides page: member gate =====
+    // The guide bodies are already protected server-side; this gate replaces
+    // the public teaser view with an explicit sign-in ask, per committee
+    // decision: the library is a member benefit, not a shop window.
+    function gateGuides() {
+        if (PAGE !== 'guides') return;
+        const signedIn = (typeof authToken === 'function' && authToken()) || (typeof demoTier === 'function' && demoTier());
+        if (signedIn) return;
+        const lib = document.getElementById('library');
+        if (!lib) return;
+        lib.style.display = '';
+        const grid = document.getElementById('libraryGrid');
+        if (grid) grid.style.display = 'none';
+        grid?.insertAdjacentHTML('beforebegin', `
+            <div class="v2-gate">
+                <h3><span class="lang-en">Member area</span><span class="lang-zh">会员专区</span><span class="lang-de">Mitgliederbereich</span><span class="lang-vi">Khu vực thành viên</span></h3>
+                <p><span class="lang-en">The in-depth guides are reserved for member companies. Sign in to access the library.</span><span class="lang-zh">深度指南仅面向会员企业。请登录以访问资源库。</span><span class="lang-de">Die Leitf&auml;den sind Mitgliedsunternehmen vorbehalten. Melden Sie sich an, um auf die Bibliothek zuzugreifen.</span><span class="lang-vi">Cẩm nang chuy&ecirc;n s&acirc;u d&agrave;nh ri&ecirc;ng cho c&ocirc;ng ty th&agrave;nh vi&ecirc;n. Đăng nhập để truy cập thư viện.</span></p>
+                <a class="btn-gate" href="account.html"><span class="lang-en">Sign in</span><span class="lang-zh">登录</span><span class="lang-de">Anmelden</span><span class="lang-vi">Đăng nhập</span></a>
+                <p class="v2-gate-sub"><span class="lang-en">Not a member yet? <a href="https://hongkong.ahk.de/membership" target="_blank" rel="noopener">Join the German Chamber of Commerce Hong Kong</a>.</span><span class="lang-zh">还不是会员？<a href="https://hongkong.ahk.de/membership" target="_blank" rel="noopener">加入香港德国商会</a>。</span><span class="lang-de">Noch kein Mitglied? <a href="https://hongkong.ahk.de/membership" target="_blank" rel="noopener">Werden Sie Mitglied der Deutschen Handelskammer Hongkong</a>.</span><span class="lang-vi">Chưa l&agrave; hội vi&ecirc;n? <a href="https://hongkong.ahk.de/membership" target="_blank" rel="noopener">Gia nhập Ph&ograve;ng Thương mại Đức tại Hồng K&ocirc;ng</a>.</span></p>
+            </div>`);
+        applyLang(lib);
+    }
+
     // ===== Init =====
     buildExpress();
     cdnFallback();
     fillMinis(0);
+    gateGuides();
     const urlPersona = new URLSearchParams(window.location.search).get('persona');
     if (urlPersona && PAGE !== 'hub') {
         // No scroll on arrival — the page opens at the top where the express
