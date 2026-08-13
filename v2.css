@@ -183,12 +183,12 @@ body[data-v2page="learn"] .v2-guidance-divider p { font-size: 0.92rem; }
 body[data-v2page="compass"] #compass .section-head,
 body[data-v2page="cbam"] #cbam .section-head { justify-content: center; }
 body[data-v2page="compass"] #compass .section-head-text,
-body[data-v2page="cbam"] #cbam .section-head-text { text-align: center; }
+body[data-v2page="cbam"] #cbam .section-head-text,
+body[data-v2page="compass"] #compass .section-head-text .section-title,
+body[data-v2page="compass"] #compass .section-head-text .section-subtitle,
+body[data-v2page="cbam"] #cbam .section-head-text .section-title,
+body[data-v2page="cbam"] #cbam .section-head-text .section-subtitle { text-align: center; }
 body[data-v2page="compass"] #compass .atlas-label,
 body[data-v2page="cbam"] #cbam .atlas-label { margin-left: auto; margin-right: auto; }
 
-/* hub hero: centred to match */
-body[data-v2page="hub"] .hero-content { text-align: center; }
-body[data-v2page="hub"] .hero-eyebrow { display: inline-block; }
-body[data-v2page="hub"] .hero-subline-bar { margin-left: auto; margin-right: auto; }
-body[data-v2page="hub"] .hero-ctas { justify-content: center; }
+/* hub hero stays left-aligned (committee decision) */

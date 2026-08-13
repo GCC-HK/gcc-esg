@@ -108,6 +108,12 @@
         anchor.insertBefore(el, anchor.children[1] || null);
         applyLang(el);
         document.getElementById('v2ExRun').addEventListener('click', runExpress);
+        // "use the guided check below" — #compass points at the section top
+        // (where the user already is), so scroll to the wizard block instead
+        el.querySelector('.v2-express-head a').addEventListener('click', (ev) => {
+            ev.preventDefault();
+            el.nextElementSibling?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
     }
 
     function statusBadgeColor(status) {
