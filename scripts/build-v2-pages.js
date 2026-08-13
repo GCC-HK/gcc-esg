@@ -16,7 +16,7 @@ const PAGES = {
     hub: { file: 'v2.html', title: '[V2 Preview] GREEN FUTURE — EU Sustainability Compliance | GCC Sustainability Committee', show: ['hero', 'personas', 'v2hub', 'trust'] },
     compass: { file: 'v2-compass.html', title: '[V2 Preview] Regulations — Green Sourcing Compass | GREEN FUTURE', show: ['compass', 'radar'] },
     cbam: { file: 'v2-cbam.html', title: '[V2 Preview] CBAM Cost Calculator | GREEN FUTURE', show: ['cbam'] },
-    briefing: { file: 'v2-briefing.html', title: '[V2 Preview] Green Sourcing Briefing | GREEN FUTURE', show: ['briefing'] },
+    briefing: { file: 'v2-briefing.html', title: '[V2 Preview] News — The Green Sourcing Briefing | GREEN FUTURE', show: ['briefing'] },
     guides: { file: 'v2-guides.html', title: '[V2 Preview] Member Resource Library | GREEN FUTURE', show: ['library'] },
     learn: { file: 'v2-learn.html', title: '[V2 Preview] Learn — Why Compliance Matters | GREEN FUTURE', show: ['guidance', 'benefits', 'risks-incentives', 'china-esg', 'actions', 'faq'] },
     about: { file: 'v2-about.html', title: '[V2 Preview] About the GCC Sustainability Committee | GREEN FUTURE', show: ['about', 'trust'] }
