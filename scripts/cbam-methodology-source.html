@@ -30,15 +30,13 @@ Major change vs v2.0: the calculator now applies the <b>official country-specifi
 
 <h2>2. Calculation method, step by step</h2>
 <p>Inputs: product sector <i>s</i>, origin country <i>c</i>, import year <i>y</i> (2026–2034), volume <i>V</i> (t), emissions mode (official default or verified custom value <i>E</i>), aluminium product form where relevant, and optionally the carbon price actually paid at origin.</p>
-<div class="formula">
-1. Default emissions (default mode): E = AnnexI(c, s) × (1 + markup(y, s)) &nbsp;— AnnexI values EXCLUDE mark-up<br>
+<div class="formula"><p>1. Default emissions (default mode): E = AnnexI(c, s) × (1 + markup(y, s)) &nbsp;— AnnexI values EXCLUDE mark-up<br>
 2. Benchmark: B = IR2620_ColumnB(bucket) [+ aluminium form add-on]; in default mode the bucket follows the route Annex I assigns to the origin country<br>
 3. Free-allocation deduction: FA = B × factor(y) &nbsp;(factor per Dir. 2003/87/EC Art. 10a(1a))<br>
 4. Liable emissions: L = max(0, E − FA)<br>
 5. Carbon-price credit: r = min(1, P<sub>paid</sub> / P<sub>CBAM</sub>) &nbsp;(P<sub>paid</sub> = user input, else headline table)<br>
 6. Cost: C = L × (1 − r) × P<sub>CBAM</sub>; annual total = C × V<br>
-7. Projection: steps 1–6 repeated for every year 2026–2034 (mark-up and factor change per year); ±€20 price sensitivity band displayed
-</div>
+7. Projection: steps 1–6 repeated for every year 2026–2034 (mark-up and factor change per year); ±€20 price sensitivity band displayed</p></div>
 
 <h3>2.1 Input-resolution logic (what the calculator decides for the user)</h3>
 <table>
@@ -132,7 +130,7 @@ Major change vs v2.0: the calculator now applies the <b>official country-specifi
 <li>Art. 9 headline prices are approximations unless the user enters the effectively-paid price.</li>
 </ul>
 
-<div class="caveat"><b>Regulatory watch:</b> (1) IR 2025/2620 recital 10 — the 2026 benchmarks are based on <i>estimated</i> ETS 2026–2030 benchmarks and will be reviewed once the final ETS benchmarks are published; updated values would apply to imports from 1 Jan 2027. (2) The July 2026 ETS-review proposal would stretch free allocation to 2037/38; the projection follows current law and is footnoted accordingly on the page.</div>
+<div class="caveat"><p><b>Regulatory watch:</b> (1) IR 2025/2620 recital 10 — the 2026 benchmarks are based on <i>estimated</i> ETS 2026–2030 benchmarks and will be reviewed once the final ETS benchmarks are published; updated values would apply to imports from 1 Jan 2027. (2) The July 2026 ETS-review proposal would stretch free allocation to 2037/38; the projection follows current law and is footnoted accordingly on the page.</p></div>
 
 <h2>6. Verification checklist for the reviewing member (v3.0)</h2>
 <table>
