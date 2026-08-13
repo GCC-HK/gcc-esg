@@ -55,8 +55,18 @@
         }
     }
 
+    const PAGE = document.body.dataset.v2page || 'hub';
+
     document.querySelectorAll('.v2-persona-card').forEach(card => {
-        card.addEventListener('click', () => applyPersona(card.dataset.persona, true));
+        card.addEventListener('click', () => {
+            if (PAGE === 'hub') {
+                // Hub: the persona doors lead into the finder page
+                localStorage.setItem('gcc-persona', card.dataset.persona);
+                window.location.href = 'v2-compass.html?persona=' + card.dataset.persona;
+                return;
+            }
+            applyPersona(card.dataset.persona, true);
+        });
     });
 
     // ===== Express check (merchandiser finder variant) =====
@@ -340,9 +350,60 @@
         try { renderRadar(await q(FALLBACK_DEADLINES)); } catch (e) { /* section stays hidden */ }
     }
 
+    // ===== Hub live previews: next deadlines + latest briefing =====
+    // The hidden radar/briefing sections still render on the hub (script.js
+    // populates them from the CMS); we mirror the first items into the hub
+    // preview cards once they exist.
+    function fillMinis(attempt) {
+        if (PAGE !== 'hub') return;
+        const pairs = [['radarList', 'v2MiniDeadlines'], ['briefingList', 'v2MiniNews']];
+        let missing = false;
+
+        // Compact extraction — the rendered radar/briefing markup is far too
+        // heavy for a preview card, so only day-chip + label / title + kicker
+        // are lifted out of the hidden sections.
+        const dl = document.getElementById('v2MiniDeadlines');
+        if (dl && !dl.childElementCount) {
+            const cards = document.querySelectorAll('#radarList .radar-days-chip');
+            if (!cards.length) missing = true;
+            else {
+                dl.innerHTML = Array.from(cards).slice(0, 4).map(chip => {
+                    const label = chip.parentElement.querySelector('.radar-label');
+                    return `<div class="v2-mini-row"><span class="v2-mini-chip">${chip.querySelector('strong')?.textContent || ''}<small>d</small></span><span>${label ? label.innerHTML : ''}</span></div>`;
+                }).join('');
+                applyLang(dl);
+            }
+        }
+        const nw = document.getElementById('v2MiniNews');
+        if (nw && !nw.childElementCount) {
+            const titles = document.querySelectorAll('#briefingList .briefing-title-link');
+            if (!titles.length) missing = true;
+            else {
+                nw.innerHTML = Array.from(titles).slice(0, 4).map(t =>
+                    `<div class="v2-mini-row"><a href="${t.getAttribute('href')}">${t.innerHTML}</a></div>`
+                ).join('');
+                applyLang(nw);
+            }
+        }
+
+        if (missing && attempt < 8) setTimeout(() => fillMinis(attempt + 1), 700);
+        else {
+            for (const [, dstId] of pairs) {
+                const dst = document.getElementById(dstId);
+                if (dst && !dst.childElementCount) dst.innerHTML = '<p class="v2-mini-empty"><span class="lang-en">Live content unavailable in this preview — open the full page.</span><span class="lang-zh">预览中暂无实时内容——请打开完整页面。</span><span class="lang-de">Live-Inhalte in dieser Vorschau nicht verf&uuml;gbar.</span><span class="lang-vi">Nội dung trực tiếp không khả dụng trong bản xem trước.</span></p>';
+            }
+        }
+    }
+
     // ===== Init =====
     buildExpress();
     cdnFallback();
-    const saved = localStorage.getItem('gcc-persona');
-    if (saved) applyPersona(saved, false);
+    fillMinis(0);
+    const urlPersona = new URLSearchParams(window.location.search).get('persona');
+    if (urlPersona && PAGE !== 'hub') {
+        applyPersona(urlPersona, true);
+    } else {
+        const saved = localStorage.getItem('gcc-persona');
+        if (saved && PAGE !== 'hub') applyPersona(saved, false);
+    }
 })();
