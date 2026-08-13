@@ -115,3 +115,12 @@ body[data-v2page="cbam"] #cbam .section-subtitle { font-size: 0.92rem; margin: 0
 
 /* anchored jumps must clear the fixed nav + news band */
 .v2-express, section[id], .cbam-panel { scroll-margin-top: calc(var(--nav-height) + 50px); }
+
+/* consistent subpage headers: no decorative icon discs, tighter top padding */
+body:not([data-v2page="hub"]) .section-icon,
+body:not([data-v2page="hub"]) .section-graphic { display: none; }
+body[data-v2page="briefing"] #briefing { padding-top: 30px; }
+body[data-v2page="guides"] #library { padding-top: 34px; }
+body[data-v2page="about"] #about { padding-top: 34px; }
+body[data-v2page="learn"] .v2-guidance-divider { padding-top: 30px; }
+body[data-v2page="learn"] section.v2-guidance { padding-top: 44px; }
