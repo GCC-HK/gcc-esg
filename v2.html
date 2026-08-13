@@ -30,10 +30,7 @@
     .v2-persona-card h3 { font-family:'Source Serif 4', serif; color:#1a5c38; margin:0 0 8px; font-size:20px; }
     .v2-persona-card p { margin:0 0 12px; color:#3d4a43; font-size:14px; }
     .v2-persona-cta { color:#1a5c38; font-weight:600; font-size:14px; }
-    .v2-quickbar { display:flex; gap:10px; flex-wrap:wrap; margin-top:20px; }
-    .v2-quickbar a { background:#fff; border:1px solid #cdd9d1; border-radius:999px; padding:7px 16px; font-size:13px; color:#1a5c38; text-decoration:none; font-weight:600; }
-    .v2-quickbar a:hover { background:#1a5c38; color:#fff; }
-    .v2-export-bar { display:flex; align-items:center; gap:12px; flex-wrap:wrap; background:#eef4f0; border:1px solid #cdd9d1; border-radius:10px; padding:12px 16px; margin:18px 0 6px; }
+                .v2-export-bar { display:flex; align-items:center; gap:12px; flex-wrap:wrap; background:#eef4f0; border:1px solid #cdd9d1; border-radius:10px; padding:12px 16px; margin:18px 0 6px; }
     .v2-export-bar .btn-csv { background:#1a5c38; color:#fff; border:none; border-radius:8px; padding:9px 18px; font-weight:600; cursor:pointer; font-size:14px; }
     .v2-export-bar .btn-csv:hover { background:#14472b; }
     .v2-export-note { font-size:12.5px; color:#4c5a52; }
@@ -88,10 +85,13 @@
     .v2-next { box-shadow: none; }
 
     /* V2 round 3: sticky section nav (appears after scrolling past the persona strip) */
-    .v2-stickybar { position: fixed; left: 0; right: 0; z-index: 1100; background: rgba(255,255,255,.97); border-bottom: 1px solid #dde6e0; padding: 8px 24px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; transform: translateY(-130%); transition: transform .2s ease; }
-    .v2-stickybar.visible { transform: none; }
-    .v2-stickybar a { background: #fff; border: 1px solid #cdd9d1; border-radius: 999px; padding: 5px 14px; font-size: 12.5px; color: #1a5c38; text-decoration: none; font-weight: 600; }
-    .v2-stickybar a:hover { background: #1a5c38; color: #fff; }
+                
+    /* V2 round 4 */
+    .ticker { position: fixed; top: var(--nav-height); left: 0; right: 0; bottom: auto; z-index: 900; background: #14432c; }
+    .hero { padding-top: 150px; }
+    .cbam { background: linear-gradient(160deg, #0d2f1d 0%, #1a5c38 100%); }
+    .cbam-info-note { opacity: .8; font-size: .85rem; margin-top: 26px; }
+    .wizard-next { display: block; margin-left: auto; }
     </style>
 </head>
 <body>
@@ -131,6 +131,16 @@
         </div>
     </nav>
 
+    <!-- V2: news ticker moved to top — alerts visible immediately on arrival -->
+<!-- News Ticker (populated from Sanity; hidden if unavailable) -->
+        <div class="ticker" id="newsTicker" style="display: none;">
+            <span class="ticker-badge"><span class="lang-en">LATEST NEWS</span><span class="lang-zh">最新动态</span><span class="lang-de">AKTUELLE MELDUNGEN</span><span class="lang-vi">TIN MỚI NHẤT</span></span>
+            <div class="ticker-viewport">
+                <div class="ticker-track" id="tickerTrack"></div>
+            </div>
+        </div>
+
+
     <!-- 2. Hero Section -->
     <section class="hero" id="hero">
         <div class="container">
@@ -148,13 +158,6 @@
                 <div class="hero-image">
                     <img src="assets/img/hero-eu-flags.jpg" width="1400" height="933" alt="European Union flags in front of the European Parliament">
                 </div>
-            </div>
-        </div>
-        <!-- News Ticker (populated from Sanity; hidden if unavailable) -->
-        <div class="ticker" id="newsTicker" style="display: none;">
-            <span class="ticker-badge"><span class="lang-en">LATEST NEWS</span><span class="lang-zh">最新动态</span><span class="lang-de">AKTUELLE MELDUNGEN</span><span class="lang-vi">TIN MỚI NHẤT</span></span>
-            <div class="ticker-viewport">
-                <div class="ticker-track" id="tickerTrack"></div>
             </div>
         </div>
     </section>
@@ -176,12 +179,6 @@
                     <span class="v2-persona-cta"><span class="lang-en">Product overview + CSV &rarr;</span><span class="lang-zh">产品概览 + CSV &rarr;</span><span class="lang-de">Produkt&uuml;bersicht + CSV &rarr;</span><span class="lang-vi">Tổng quan + CSV &rarr;</span></span>
                 </button>
             </div>
-            <nav class="v2-quickbar" aria-label="Quick navigation">
-                <a href="#compass"><span class="lang-en">1 &middot; Product Check</span><span class="lang-zh">1 &middot; 产品检查</span><span class="lang-de">1 &middot; Produkt-Check</span><span class="lang-vi">1 &middot; Kiểm tra sản phẩm</span></a>
-                <a href="#radar"><span class="lang-en">2 &middot; Deadlines</span><span class="lang-zh">2 &middot; 合规期限</span><span class="lang-de">2 &middot; Fristen</span><span class="lang-vi">2 &middot; Thời hạn</span></a>
-                <a href="#briefing"><span class="lang-en">3 &middot; Briefing</span><span class="lang-zh">3 &middot; 简报</span><span class="lang-de">3 &middot; Briefing</span><span class="lang-vi">3 &middot; Bản tin</span></a>
-                <a href="#cbam"><span class="lang-en">4 &middot; CBAM Tool</span><span class="lang-zh">4 &middot; CBAM工具</span><span class="lang-de">4 &middot; CBAM-Tool</span><span class="lang-vi">4 &middot; Công cụ CBAM</span></a>
-            </nav>
         </div>
     </section>
 
@@ -447,10 +444,6 @@
             </div>
 
             <div class="cbam-panel">
-                <div class="cbam-info-note">
-                    <p><span class="lang-en">CBAM applies to 6 sectors: Iron &amp; Steel, Aluminium, Cement, Fertilisers, Electricity, and Hydrogen. The definitive regime began January 2026; importers below 50 tonnes/year (cumulative) are exempt. A proposed extension would add ~180 downstream steel/aluminium products (e.g. car parts, appliances) from 2028. If your product is not covered, you are not directly subject to CBAM &mdash; but your EU buyers' supply chain reporting obligations may still require your carbon data.</span><span class="lang-zh">CBAM适用于六个行业：铁和钢、铝、水泥、化肥、电力和氢气。最终机制已于2026年1月生效；每年累计进口量低于50公吨的进口商可获豁免。拟议的扩展方案将自2028年起新增约180种下游钢铝产品（如汽车零部件、家电）。若您的产品不在覆盖范围内，您暂不直接受CBAM约束，但您的欧盟买家的供应链报告义务仍可能需要您提供碳排放数据。</span><span class="lang-de">CBAM gilt für 6 Sektoren: Eisen &amp; Stahl, Aluminium, Zement, Düngemittel, Strom und Wasserstoff. Das endgültige Regime begann im Januar 2026; Importeure unter 50 Tonnen/Jahr (kumuliert) sind befreit. Eine vorgeschlagene Erweiterung würde ab 2028 rund 180 nachgelagerte Stahl-/Aluminiumprodukte (z. B. Autoteile, Haushaltsgeräte) hinzufügen. Ist Ihr Produkt nicht erfasst, unterliegen Sie CBAM nicht direkt &mdash; die Lieferketten-Berichtspflichten Ihrer EU-Käufer können jedoch weiterhin Ihre CO₂-Daten erfordern.</span><span class="lang-vi">CBAM áp dụng cho 6 lĩnh vực: Sắt &amp; Thép, Nhôm, Xi măng, Phân bón, Điện và Hydro. Cơ chế chính thức bắt đầu từ tháng 1 năm 2026; nhà nhập khẩu dưới 50 tấn/năm (lũy kế) được miễn trừ. Một đề xuất mở rộng sẽ bổ sung khoảng 180 sản phẩm thép/nhôm hạ nguồn (ví dụ: phụ tùng ô tô, thiết bị gia dụng) từ năm 2028. Nếu sản phẩm của bạn không thuộc phạm vi áp dụng, bạn không trực tiếp chịu CBAM &mdash; nhưng nghĩa vụ báo cáo chuỗi cung ứng của các khách hàng EU vẫn có thể yêu cầu dữ liệu carbon của bạn.</span></p>
-                </div>
-
                 <div class="cbam-role-selector">
                     <label><span class="lang-en">I am a:</span><span class="lang-zh">我的角色：</span><span class="lang-de">Ich bin:</span><span class="lang-vi">Tôi là:</span></label>
                     <div class="cbam-role-options">
@@ -470,6 +463,7 @@
                         </label>
                     </div>
                 </div>
+
 
                 <div class="cbam-inputs">
                     <div class="cbam-inputs-grid">
@@ -557,6 +551,10 @@
                 <button class="btn btn-atlas" id="cbamCalculate"><span class="lang-en">Calculate My CBAM Exposure</span><span class="lang-zh">计算我的CBAM合规成本</span><span class="lang-de">Meine CBAM-Kosten berechnen</span><span class="lang-vi">Tính chi phí CBAM của tôi</span></button>
 
                 <div id="cbamResult"></div>
+                <div class="cbam-info-note">
+                    <p><span class="lang-en">CBAM applies to 6 sectors: Iron &amp; Steel, Aluminium, Cement, Fertilisers, Electricity, and Hydrogen. The definitive regime began January 2026; importers below 50 tonnes/year (cumulative) are exempt. A proposed extension would add ~180 downstream steel/aluminium products (e.g. car parts, appliances) from 2028. If your product is not covered, you are not directly subject to CBAM &mdash; but your EU buyers' supply chain reporting obligations may still require your carbon data.</span><span class="lang-zh">CBAM适用于六个行业：铁和钢、铝、水泥、化肥、电力和氢气。最终机制已于2026年1月生效；每年累计进口量低于50公吨的进口商可获豁免。拟议的扩展方案将自2028年起新增约180种下游钢铝产品（如汽车零部件、家电）。若您的产品不在覆盖范围内，您暂不直接受CBAM约束，但您的欧盟买家的供应链报告义务仍可能需要您提供碳排放数据。</span><span class="lang-de">CBAM gilt für 6 Sektoren: Eisen &amp; Stahl, Aluminium, Zement, Düngemittel, Strom und Wasserstoff. Das endgültige Regime begann im Januar 2026; Importeure unter 50 Tonnen/Jahr (kumuliert) sind befreit. Eine vorgeschlagene Erweiterung würde ab 2028 rund 180 nachgelagerte Stahl-/Aluminiumprodukte (z. B. Autoteile, Haushaltsgeräte) hinzufügen. Ist Ihr Produkt nicht erfasst, unterliegen Sie CBAM nicht direkt &mdash; die Lieferketten-Berichtspflichten Ihrer EU-Käufer können jedoch weiterhin Ihre CO₂-Daten erfordern.</span><span class="lang-vi">CBAM áp dụng cho 6 lĩnh vực: Sắt &amp; Thép, Nhôm, Xi măng, Phân bón, Điện và Hydro. Cơ chế chính thức bắt đầu từ tháng 1 năm 2026; nhà nhập khẩu dưới 50 tấn/năm (lũy kế) được miễn trừ. Một đề xuất mở rộng sẽ bổ sung khoảng 180 sản phẩm thép/nhôm hạ nguồn (ví dụ: phụ tùng ô tô, thiết bị gia dụng) từ năm 2028. Nếu sản phẩm của bạn không thuộc phạm vi áp dụng, bạn không trực tiếp chịu CBAM &mdash; nhưng nghĩa vụ báo cáo chuỗi cung ứng của các khách hàng EU vẫn có thể yêu cầu dữ liệu carbon của bạn.</span></p>
+                </div>
+
             </div>
         </div>
     </section>

@@ -293,28 +293,19 @@
         setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 0);
     }
 
-    // ===== Sticky section nav: keeps orientation on a long page =====
-    function buildStickyBar() {
-        const quickbar = document.querySelector('.v2-quickbar');
-        const personas = document.querySelector('.v2-personas');
-        if (!quickbar || !personas) return;
-        const bar = document.createElement('div');
-        bar.className = 'v2-stickybar';
-        bar.innerHTML = quickbar.innerHTML;
-        document.body.appendChild(bar);
-        const nav = document.querySelector('nav');
-        const place = () => { bar.style.top = (nav ? nav.offsetHeight : 0) + 'px'; };
-        const onScroll = () => bar.classList.toggle('visible', personas.getBoundingClientRect().bottom < (nav ? nav.offsetHeight : 0));
-        place();
-        window.addEventListener('resize', place, { passive: true });
-        window.addEventListener('scroll', onScroll, { passive: true });
-        onScroll();
-        applyLang(bar);
-    }
+    // ===== Wizard auto-advance: picking a category moves to step 2 =====
+    // Registered after script.js's own .wizard-cat handlers, so the category
+    // is already set when this fires; clicking the pane-1 Next button reuses
+    // script.js's validation and pane logic. The markets step stays manual
+    // (multi-select cannot auto-advance).
+    document.querySelectorAll('.wizard-cat').forEach(btn => {
+        btn.addEventListener('click', () => setTimeout(() => {
+            document.querySelector('.wizard-next[data-next="2"]')?.click();
+        }, 150));
+    });
 
     // ===== Init =====
     buildExpress();
-    buildStickyBar();
     const saved = localStorage.getItem('gcc-persona');
     if (saved) applyPersona(saved, false);
 })();
