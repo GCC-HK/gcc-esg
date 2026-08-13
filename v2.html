@@ -67,6 +67,31 @@
     .v2-table td { border-bottom:1px solid #e3eae5; padding:8px 10px; vertical-align:top; }
     .v2-table td:first-child { font-weight:600; white-space:nowrap; }
     .v2-table .v2-t-status { white-space:nowrap; font-size:11px; font-weight:700; letter-spacing:.04em; }
+
+    /* V2 round 3: unmistakable urgency group banners */
+    .compass-group { margin: 38px 0 30px; }
+    .compass-group:first-child { margin-top: 10px; }
+    .compass-group-header { border: none; border-radius: 10px; padding: 13px 18px; margin-bottom: 16px; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+    .compass-group-header h3 { color: #fff; font-size: 1.02rem; letter-spacing: 2px; margin: 0; display: flex; align-items: center; gap: 10px; }
+    .compass-group-header p { color: rgba(255,255,255,.92); margin: 0; font-size: 0.88rem; }
+    .v2-g-count { background: rgba(255,255,255,.22); border-radius: 999px; padding: 1px 10px; font-size: 0.8rem; font-weight: 700; letter-spacing: 0; }
+    .v2-g-act .compass-group-header { background: #C34343; }
+    .v2-g-prep .compass-group-header { background: #DE8703; }
+    .v2-g-watch .compass-group-header { background: #003366; }
+    .v2-g-act .reg-result { border-left: 4px solid #C34343; }
+    .v2-g-prep .reg-result { border-left: 4px solid #DE8703; }
+    .v2-g-watch .reg-result { border-left: 4px solid #003366; }
+
+    /* V2 round 3: declutter — one soft card style, slimmer chrome */
+    .reg-result { box-shadow: none; border: 1px solid #e3eae5; border-radius: 10px; }
+    .v2-export-bar { background: transparent; border: none; border-radius: 0; padding: 6px 0; }
+    .v2-next { box-shadow: none; }
+
+    /* V2 round 3: sticky section nav (appears after scrolling past the persona strip) */
+    .v2-stickybar { position: fixed; left: 0; right: 0; z-index: 1100; background: rgba(255,255,255,.97); border-bottom: 1px solid #dde6e0; padding: 8px 24px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; transform: translateY(-130%); transition: transform .2s ease; }
+    .v2-stickybar.visible { transform: none; }
+    .v2-stickybar a { background: #fff; border: 1px solid #cdd9d1; border-radius: 999px; padding: 5px 14px; font-size: 12.5px; color: #1a5c38; text-decoration: none; font-weight: 600; }
+    .v2-stickybar a:hover { background: #1a5c38; color: #fff; }
     </style>
 </head>
 <body>

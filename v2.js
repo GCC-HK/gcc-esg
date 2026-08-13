@@ -183,8 +183,23 @@
         </div>`
     };
 
+    // ===== Urgency group banners: color-code and count each result group =====
+    const GROUP_CLASSES = { 'ACT NOW': 'v2-g-act', 'PREPARE': 'v2-g-prep', 'WATCH': 'v2-g-watch' };
+
+    function enhanceGroups() {
+        document.querySelectorAll('#atlasCards .compass-group').forEach(g => {
+            const label = g.querySelector('.compass-group-header h3 .lang-en')?.textContent.trim();
+            if (GROUP_CLASSES[label]) g.classList.add(GROUP_CLASSES[label]);
+            const h3 = g.querySelector('.compass-group-header h3');
+            if (h3 && !h3.querySelector('.v2-g-count')) {
+                h3.insertAdjacentHTML('beforeend', `<span class="v2-g-count">${g.querySelectorAll('.reg-result').length}</span>`);
+            }
+        });
+    }
+
     // ===== Wizard result add-ons: disclaimer + export bar + next steps =====
     function injectAddons() {
+        enhanceGroups();
         const cards = document.getElementById('atlasCards');
         if (!cards || !cards.innerHTML.trim()) return;
         document.querySelectorAll('.v2-wizard-addon, .v2-wizard-next').forEach(el => el.remove());
@@ -278,8 +293,28 @@
         setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 0);
     }
 
+    // ===== Sticky section nav: keeps orientation on a long page =====
+    function buildStickyBar() {
+        const quickbar = document.querySelector('.v2-quickbar');
+        const personas = document.querySelector('.v2-personas');
+        if (!quickbar || !personas) return;
+        const bar = document.createElement('div');
+        bar.className = 'v2-stickybar';
+        bar.innerHTML = quickbar.innerHTML;
+        document.body.appendChild(bar);
+        const nav = document.querySelector('nav');
+        const place = () => { bar.style.top = (nav ? nav.offsetHeight : 0) + 'px'; };
+        const onScroll = () => bar.classList.toggle('visible', personas.getBoundingClientRect().bottom < (nav ? nav.offsetHeight : 0));
+        place();
+        window.addEventListener('resize', place, { passive: true });
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+        applyLang(bar);
+    }
+
     // ===== Init =====
     buildExpress();
+    buildStickyBar();
     const saved = localStorage.getItem('gcc-persona');
     if (saved) applyPersona(saved, false);
 })();
