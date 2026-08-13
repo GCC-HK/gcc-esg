@@ -22,7 +22,7 @@
 
 <h1>Green Sourcing Compass — CBAM Cost Calculator<br>Methodology &amp; Verification Document</h1>
 <p class="meta">GCC Sustainability Committee, German Chamber of Commerce Hong Kong<br>
-<b>Version 3.0</b> &nbsp;·&nbsp; Constants as deployed 15 August 2026 (V2 platform) &nbsp;·&nbsp; Prepared for member verification<br>
+<b>Version 3.1</b> &nbsp;·&nbsp; Constants as deployed 15 August 2026 (V2 platform) &nbsp;·&nbsp; Prepared for member verification of the calculation logic<br>
 Major change vs v2.0: the calculator now applies the <b>official country-specific default values</b> of Implementing Regulation (EU) 2025/2621 <b>as corrected by IR (EU) 2026/1740</b> (31 July 2026, retroactive to 1 January 2026), the year-by-year CBAM factor schedule to 2034, and route-resolved benchmarks. All values below were extracted from the published Official Journal texts on EUR-Lex (primary sources).</p>
 
 <h2>1. Purpose and scope</h2>
@@ -39,6 +39,32 @@ Major change vs v2.0: the calculator now applies the <b>official country-specifi
 6. Cost: C = L × (1 − r) × P<sub>CBAM</sub>; annual total = C × V<br>
 7. Projection: steps 1–6 repeated for every year 2026–2034 (mark-up and factor change per year); ±€20 price sensitivity band displayed
 </div>
+
+<h3>2.1 Input-resolution logic (what the calculator decides for the user)</h3>
+<table>
+<tr><th>Decision</th><th>Rule</th><th>Legal basis</th></tr>
+<tr><td>Emissions intensity E</td><td>1) user-entered verified value, if custom mode; else 2) country row in corrected Annex I; else 3) Annex I "Other Countries and Territories" row (this is what the regulation itself prescribes for missing/"–" entries); the editorial sector average survives only as a last-resort safety net that no selectable origin currently reaches. In default mode the year's mark-up is applied on top (base values in the corrected Annex exclude it).</td><td>IR 2025/2621 Annex I as corrected by IR 2026/1740, incl. introductory part (fallback rule and mark-up wording verbatim)</td></tr>
+<tr><td>Benchmark B</td><td>In default mode with an official country value, the benchmark follows the production route Annex I assigns to that origin (route letter C/D/E/K/L) — NOT the user's route selection; the result card notes this when they differ. In custom mode the user's own sector/route selection applies. Aluminium form add-on (+0.056 / +0.060 / +0.166) added on top.</td><td>Annex I route flags; IR 2025/2620 Annex, Column B (default-values path)</td></tr>
+<tr><td>Free allocation</td><td>B × CBAM factor of the import year (97.5% in 2026 → 0% from 2034).</td><td>Dir. 2003/87/EC Art. 10a(1a); Reg. (EU) 2023/956 Art. 31</td></tr>
+<tr><td>Carbon-price credit</td><td>User-entered price actually paid, if provided; else headline table (approximation, labelled as such). Credit ratio capped at 1.</td><td>Reg. (EU) 2023/956 Art. 9 (only the price effectively paid is creditable)</td></tr>
+<tr><td>Certificates &amp; cost</td><td>Liable emissions × (1 − credit ratio) × certificate price; certificate price is the official quarterly figure, labelled with its vintage.</td><td>Reg. (EU) 2023/956 Arts. 6, 20–22; Commission price publication</td></tr>
+</table>
+
+<h3>2.2 Fully worked derivation — every intermediate value (Example A)</h3>
+<p>1,000 t hot-rolled coil from China, import year 2026, no verified data, no carbon-price entry:</p>
+<table>
+<tr><th>Step</th><th>Operation</th><th>Value</th><th>Source of the number</th></tr>
+<tr><td>1</td><td>Annex I base default, China, 7208 (route C)</td><td>3.187 tCO₂e/t</td><td>IR 2026/1740 Annex I</td></tr>
+<tr><td>2</td><td>Mark-up 2026 (steel): 3.187 × 1.10</td><td>3.5057 tCO₂e/t</td><td>Annex I introductory part</td></tr>
+<tr><td>3</td><td>Benchmark, HRC route C (Column B)</td><td>1.370 tCO₂e/t</td><td>IR 2025/2620 Annex</td></tr>
+<tr><td>4</td><td>Free allocation: 1.370 × 0.975</td><td>1.33575 tCO₂e/t</td><td>Dir. 2003/87/EC Art. 10a(1a)</td></tr>
+<tr><td>5</td><td>Liable: 3.5057 − 1.33575</td><td>2.16995 tCO₂e/t</td><td>—</td></tr>
+<tr><td>6</td><td>Credit ratio: 10 / 75.28 (China headline)</td><td>0.13284</td><td>Art. 9; headline table §3.4</td></tr>
+<tr><td>7</td><td>Net certificates: 2.16995 × (1 − 0.13284)</td><td>1.88169 tCO₂e/t</td><td>—</td></tr>
+<tr><td>8</td><td>Cost/t: 1.88169 × €75.28</td><td><b>€141.65</b></td><td>Q2 2026 certificate price</td></tr>
+<tr><td>9</td><td>Annual: × 1,000 t</td><td><b>≈ €141,654</b></td><td>—</td></tr>
+</table>
+<p><b>Reproduction:</b> the same computation is pinned in the automated test suite; the reviewer can reproduce it on the CBAM page (sector Iron &amp; Steel BOF, country China, 1,000 t, year 2026, defaults) or with a calculator from the table above. The constants live in a single data file (v2-cbam-data.js) whose comments carry the same source references as this document.</p>
 
 <h2>3. Constants and sources — all verified against EUR-Lex</h2>
 
