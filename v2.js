@@ -421,6 +421,18 @@
         applyLang(lib);
     }
 
+    // ===== News-band space reservation =====
+    // Subpages only pad for the fixed ticker while it is actually visible —
+    // without this, an empty reserved strip shows under the header whenever
+    // the ticker has no content (e.g. no API when the file is opened
+    // directly).
+    const tickerEl = document.getElementById('newsTicker');
+    if (tickerEl) {
+        const syncTicker = () => document.body.classList.toggle('v2-has-ticker', tickerEl.style.display !== 'none');
+        syncTicker();
+        new MutationObserver(syncTicker).observe(tickerEl, { attributes: true, attributeFilter: ['style'] });
+    }
+
     // ===== Init =====
     buildExpress();
     cdnFallback();
