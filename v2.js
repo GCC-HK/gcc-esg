@@ -414,31 +414,48 @@
         applyLang(lib);
     }
 
-    // ===== News-band links =====
-    // script.js builds ticker items as in-page anchors (#briefing-<slug>),
-    // which only resolve on the News page. Rewrite them to cross-page links
-    // as they render.
-    function fixTickerLinks() {
-        document.querySelectorAll('a.ticker-item[href^="#briefing-"]').forEach(a => {
-            a.setAttribute('href', 'v2-briefing.html' + a.getAttribute('href'));
-        });
-    }
+    // ===== News band (homepage only) =====
+    // script.js renders the full post list and its click handler breaks on
+    // cross-page hrefs (querySelector on a URL throws after preventDefault —
+    // the reported "nothing happens"). Rebuild: keep the 3 newest headlines,
+    // duplicate once for a seamless -50% loop, rewrite links cross-page and
+    // navigate in a capture-phase handler before script.js sees the click.
     const tickerTrack = document.getElementById('tickerTrack');
-    if (tickerTrack) {
-        fixTickerLinks();
-        new MutationObserver(fixTickerLinks).observe(tickerTrack, { childList: true });
+    let tickerTuning = false;
+    function tuneTicker() {
+        if (tickerTuning || !tickerTrack) return;
+        const items = Array.from(tickerTrack.querySelectorAll('a.ticker-item'));
+        if (!items.length) return;
+        // already tuned (observer fires async, after the guard flag resets —
+        // a content check is the only reliable stop condition)
+        if (items.length <= 6 && items.every(a => (a.getAttribute('href') || '').startsWith('v2-briefing.html'))) return;
+        const seen = new Set();
+        const top = [];
+        for (const a of items) {
+            let href = a.getAttribute('href') || '';
+            if (href.startsWith('#briefing-')) href = 'v2-briefing.html' + href;
+            if (seen.has(href)) continue;
+            seen.add(href);
+            a.setAttribute('href', href);
+            top.push(a.outerHTML);
+            if (top.length === 3) break;
+        }
+        const sep = '<span class="ticker-sep">&#9679;</span>';
+        const half = top.join(sep) + sep;
+        tickerTuning = true;
+        tickerTrack.innerHTML = half + half; // two copies → seamless loop
+        tickerTuning = false;
     }
-
-    // ===== News-band space reservation =====
-    // Subpages only pad for the fixed ticker while it is actually visible —
-    // without this, an empty reserved strip shows under the header whenever
-    // the ticker has no content (e.g. no API when the file is opened
-    // directly).
-    const tickerEl = document.getElementById('newsTicker');
-    if (tickerEl) {
-        const syncTicker = () => document.body.classList.toggle('v2-has-ticker', tickerEl.style.display !== 'none');
-        syncTicker();
-        new MutationObserver(syncTicker).observe(tickerEl, { attributes: true, attributeFilter: ['style'] });
+    if (tickerTrack) {
+        tuneTicker();
+        new MutationObserver(tuneTicker).observe(tickerTrack, { childList: true });
+        document.getElementById('newsTicker').addEventListener('click', (ev) => {
+            const a = ev.target.closest('a.ticker-item');
+            if (!a) return;
+            ev.preventDefault();
+            ev.stopPropagation();
+            window.location.href = a.getAttribute('href');
+        }, true);
     }
 
     // ===== Deferred hash jump =====

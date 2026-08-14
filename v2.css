@@ -118,7 +118,7 @@ body[data-v2page="compass"] #compass .section-subtitle,
 body[data-v2page="cbam"] #cbam .section-subtitle { font-size: 0.92rem; margin: 0; }
 
 /* anchored jumps must clear the fixed nav + news band */
-.v2-express, section[id], .cbam-panel { scroll-margin-top: calc(var(--nav-height) + 50px); }
+.v2-express, section[id], .cbam-panel { scroll-margin-top: calc(var(--nav-height) + 12px); }
 
 /* consistent subpage headers: no decorative icon discs, tighter top padding */
 body:not([data-v2page="hub"]) .section-icon,
@@ -146,7 +146,7 @@ section.library { background: #fff; }
 .v2-gate .v2-gate-sub a { color: #1a5c38; }
 
 /* briefing cards reached from the news band need to clear the fixed chrome */
-[id^="briefing-"] { scroll-margin-top: calc(var(--nav-height) + 50px); }
+[id^="briefing-"] { scroll-margin-top: calc(var(--nav-height) + 12px); }
 
 /* ===== Uniform page-top pattern on all subpages =====
    Rule: pill eyebrow, headline below, subtitle — all left-aligned,
@@ -212,3 +212,9 @@ body[data-v2page="cbam"] #cbam .atlas-label { margin-left: auto; margin-right: a
 /* clickable deadline preview rows */
 a.v2-mini-row { text-decoration: none; color: inherit; }
 a.v2-mini-row:hover span:last-child { color: #1a5c38; text-decoration: underline; }
+
+/* news band: homepage only, calmer pace */
+.ticker-track { animation-duration: 60s; }
+
+/* deadline radar deep link lands with the headline right under the header */
+body[data-v2page="compass"] #radar { padding-top: 28px; }
