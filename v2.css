@@ -208,3 +208,7 @@ body[data-v2page="cbam"] #cbam .atlas-label { margin-left: auto; margin-right: a
 .footer .v2-footer-grid h4 { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; opacity: .7; }
 .footer .v2-footer-grid ul { list-style: none; padding: 0; margin: 0; }
 .footer .v2-footer-grid li { margin-bottom: 6px; font-size: 14px; }
+
+/* clickable deadline preview rows */
+a.v2-mini-row { text-decoration: none; color: inherit; }
+a.v2-mini-row:hover span:last-child { color: #1a5c38; text-decoration: underline; }
