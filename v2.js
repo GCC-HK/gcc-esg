@@ -363,7 +363,9 @@
             else {
                 dl.innerHTML = Array.from(cards).slice(0, 4).map(chip => {
                     const label = chip.parentElement.querySelector('.radar-label');
-                    return `<div class="v2-mini-row"><span class="v2-mini-chip">${chip.querySelector('strong')?.textContent || ''}<small>d</small></span><span>${label ? label.innerHTML : ''}</span></div>`;
+                    const href = chip.closest('a.radar-item-link')?.getAttribute('href');
+                    const inner = `<span class="v2-mini-chip">${chip.querySelector('strong')?.textContent || ''}<small>d</small></span><span>${label ? label.innerHTML : ''}</span>`;
+                    return href ? `<a class="v2-mini-row" href="${href}">${inner}</a>` : `<div class="v2-mini-row">${inner}</div>`;
                 }).join('');
                 applyLang(dl);
             }
