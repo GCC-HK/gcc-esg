@@ -192,3 +192,15 @@ body[data-v2page="compass"] #compass .atlas-label,
 body[data-v2page="cbam"] #cbam .atlas-label { margin-left: auto; margin-right: auto; }
 
 /* hub hero stays left-aligned (committee decision) */
+
+/* slim footer (chamber-style) */
+.v2-cta-band { display: flex; justify-content: space-between; align-items: center; gap: 18px; flex-wrap: wrap; border-bottom: 1px solid rgba(255,255,255,.15); padding: 26px 0; margin-bottom: 30px; }
+.v2-cta-band strong { display: block; font-size: 17px; margin-bottom: 2px; }
+.v2-cta-sub { font-size: 13.5px; opacity: .75; }
+.v2-cta-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.v2-footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 28px; padding-bottom: 22px; }
+@media (max-width: 760px) { .v2-footer-grid { grid-template-columns: 1fr; } }
+.v2-affiliation { font-size: 13.5px; opacity: .85; max-width: 340px; }
+.footer .v2-footer-grid h4 { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; opacity: .7; }
+.footer .v2-footer-grid ul { list-style: none; padding: 0; margin: 0; }
+.footer .v2-footer-grid li { margin-bottom: 6px; font-size: 14px; }
