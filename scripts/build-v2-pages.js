@@ -28,11 +28,10 @@ function pageStyle(key, show) {
     let css = `${hidden} { display: none !important; }\n`;
     css += `    .nav-links a[href="${navHref}"] { color: var(--primary); font-weight: 700; }\n`;
     if (key !== 'hub') {
-        // no hero on subpages — clear the fixed nav; the news-band strip is
-        // only reserved while the ticker is actually visible (v2.js toggles
-        // the class), otherwise an empty band shows under the header
+        // no hero on subpages — clear the fixed nav; the news band lives on
+        // the homepage only
         css += '    body { padding-top: var(--nav-height); }\n';
-        css += '    body.v2-has-ticker { padding-top: calc(var(--nav-height) + 42px); }\n';
+        css += '    #newsTicker { display: none !important; }\n';
     }
     return css;
 }
