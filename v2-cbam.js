@@ -117,6 +117,17 @@
         $('v2AluForm')?.addEventListener(ev, updateDisplays);
     });
 
+    // CN-code plausibility per sector (chapter/heading prefixes; committee
+    // decision: no € figure without a CN code — CBAM scope is CN-defined)
+    const CN_PREFIXES = { steel: ['72', '73'], alu: ['76'], cement: ['2523', '2507'],
+        fertilisers: ['2808', '2814', '2834', '3102', '3105'], urea: ['3102'], hydrogen: ['2804'] };
+
+    function cnCheck(sector, cn) {
+        const key = SECTOR_KEY[sector];
+        const prefixes = CN_PREFIXES[key] || [];
+        return prefixes.some(p => cn.startsWith(p));
+    }
+
     // ===== calculate =====
     own.cbamCalculate.addEventListener('click', () => {
         const s = selection();
@@ -125,6 +136,14 @@
             out.innerHTML = `<div class="cbam-result-card cbam-error">${span4('Please select a sector, country, and enter a valid volume.', '请选择产品类别、原产国并输入有效数量。', 'Bitte Sektor, Land und gültige Menge angeben.', 'Vui lòng chọn lĩnh vực, quốc gia và nhập khối lượng hợp lệ.')}</div>`;
             return;
         }
+        const cn = ($('cbamCnCode')?.value || '').replace(/\D/g, '');
+        if (cn.length !== 8) {
+            out.innerHTML = `<div class="cbam-result-card cbam-error">${span4('Please enter the 8-digit CN code of your product (from your customs or export documents). CBAM scope is defined by CN code — without it we cannot confirm your product falls under CBAM.', '请输入产品的8位CN编码（见报关或出口单据）。CBAM适用范围由CN编码界定——没有编码无法确认您的产品是否属于CBAM。', 'Bitte geben Sie den 8-stelligen CN-Code Ihres Produkts ein (aus Ihren Zoll- oder Exportdokumenten). Ohne CN-Code lässt sich nicht bestätigen, dass Ihr Produkt unter CBAM fällt.', 'Vui lòng nhập mã CN 8 chữ số của sản phẩm (từ chứng từ hải quan hoặc xuất khẩu). Không có mã CN thì không thể xác nhận sản phẩm thuộc CBAM.')}</div>`;
+            applyLang(out);
+            return;
+        }
+        const cnWarn = cnCheck(s.sector, cn) ? '' :
+            `<div class="cbam-callout cbam-cn-warn">${span4(`CN code ${cn} does not look like a typical code for the selected sector — please double-check the code and the sector. The estimate below assumes your sector selection is correct.`, `CN编码${cn}与所选行业的常见编码不符——请核对编码与行业。以下估算以您选择的行业为准。`, `Der CN-Code ${cn} passt nicht zu den typischen Codes des gewählten Sektors — bitte Code und Sektor prüfen. Die Schätzung unten folgt Ihrer Sektorauswahl.`, `Mã CN ${cn} không giống mã điển hình của lĩnh vực đã chọn — vui lòng kiểm tra lại. Ước tính bên dưới dựa trên lĩnh vực bạn chọn.`)}</div>`;
 
         const deInfo0 = defaultEmissions(s.sector, s.country, s.year);
         let E, official = false;
@@ -175,7 +194,7 @@
                 <span class="v2-proj-year">${p.y}</span>
             </div>`).join('');
 
-        out.innerHTML = DISC + `
+        out.innerHTML = DISC + cnWarn + `
             <div class="cbam-result-card">
                 <span class="badge ${badge[0]}"><span class="lang-en">${badge[1]}</span><span class="lang-zh">${badge[2]}</span><span class="lang-de">${badge[1]}</span><span class="lang-vi">${badge[1]}</span></span>
                 <h3>${span4(`Estimated CBAM cost, ${s.year}`, `CBAM成本估算（${s.year}年）`, `Geschätzte CBAM-Kosten, ${s.year}`, `Chi phí CBAM ước tính, ${s.year}`)}</h3>

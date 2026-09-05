@@ -33,6 +33,7 @@ function boot(file) {
 }
 
 const PAGES = {
+    'index.html':       { page: 'hub',      shown: ['hero', 'v2hub'],      hidden: ['compass', 'cbam', 'faq'] },
     'v2.html':          { page: 'hub',      shown: ['hero', 'v2hub'],      hidden: ['compass', 'cbam', 'faq'] },
     'v2-compass.html':  { page: 'compass',  shown: ['compass', 'radar'],   hidden: ['hero', 'cbam', 'benefits'] },
     'v2-cbam.html':     { page: 'cbam',     shown: ['cbam'],               hidden: ['hero', 'compass', 'briefing'] },
@@ -58,6 +59,15 @@ const PAGES = {
         check(`${file}: chamber CTA present`, !!doc.querySelector('.v2-cta-band a[href*="hongkong.ahk.de"]'));
         check(`${file}: no dead committee email`, !doc.body.innerHTML.includes('gcc-sustainability@'));
         check(`${file}: no quick links / logo strip in footer`, !doc.querySelector('.footer-partners') && !doc.body.innerHTML.includes('Quick Links'));
+        // committee review round (Sep 2026)
+        check(`${file}: always-on legal topline`, !!doc.getElementById('v2Topline'));
+        check(`${file}: no sign-in in nav`, !doc.getElementById('navSignin') && !doc.querySelector('.nav-signin-mobile'));
+        check(`${file}: Vietnamese hidden from language selector`, !doc.querySelector('#langSelect option[value="vi"]'));
+        check(`${file}: nav has Tools, not CBAM`, !!doc.querySelector('.nav-links a[href="index.html#v2hub"]') && !doc.querySelector('.nav-links a[href="v2-cbam.html"]'));
+        check(`${file}: US market removed from wizard`, !doc.querySelector('#wizardMarkets input[value="us"]'));
+        check(`${file}: CBAM tool card locked`, !doc.querySelector('a.v2-tool-card[href="v2-cbam.html"]') && !!doc.getElementById('v2CbamToolCard'));
+        check(`${file}: member library announced as launching soon`, !!doc.querySelector('.v2-tool-member .v2-lock-badge'));
+        check(`${file}: hub CTA has no Join-the-Committee mailto`, !doc.querySelector('.v2-cta-band a[href^="mailto"]'));
     }
 
     // Functional: calculator works on the CBAM page
@@ -67,6 +77,11 @@ const PAGES = {
         doc.getElementById('cbamSector').dispatchEvent(new (doc.defaultView.Event)('change'));
         doc.getElementById('cbamCountry').value = 'CN';
         doc.getElementById('cbamVolume').value = '1000';
+        // committee decision: no result without an 8-digit CN code
+        doc.getElementById('cbamCalculate').click();
+        await new Promise(r => setTimeout(r, 10));
+        check('cbam page: blocks without CN code', doc.getElementById('cbamResult').innerHTML.includes('CN code'));
+        doc.getElementById('cbamCnCode').value = '72061000';
         doc.getElementById('cbamCalculate').click();
         await new Promise(r => setTimeout(r, 10));
         // CN steel, official corrected default: E=3.187×1.10=3.5057, B=1.370×0.975 → €141.65/t
@@ -125,6 +140,32 @@ const PAGES = {
         check('compass page: CSV has Chinese column', csvTxt.includes('适用原因'));
     }
 
+    // Functional: multi-category comparison matrix (committee request #28)
+    {
+        const { doc } = boot('v2-compass.html');
+        await new Promise(r => setTimeout(r, 10));
+        const chips = doc.querySelectorAll('#v2ExCats .v2-ex-cat');
+        check('compass page: express category chips built', chips.length >= 7);
+        doc.querySelector('#v2ExCats .v2-ex-cat[data-value="textiles"]').click();
+        doc.querySelector('#v2ExCats .v2-ex-cat[data-value="toys"]').click();
+        doc.getElementById('v2ExRun').click();
+        await new Promise(r => setTimeout(r, 10));
+        check('compass page: comparison matrix renders', doc.getElementById('v2ExResult').innerHTML.includes('v2-cmp-table'));
+        check('compass page: per-category columns + checkmarks', doc.querySelectorAll('#v2ExResult .v2-cmp-cat').length === 2 && doc.querySelectorAll('#v2ExResult .v2-cmp-yes').length > 0);
+    }
+
+    // Learn page: voluntary certifications + glossary live here now
+    {
+        const { doc } = boot('v2-learn.html');
+        const hiddenList = doc.getElementById('v2PageStyle').textContent.split('{')[0];
+        check('learn page: glossary + voluntary sections visible', !hiddenList.includes('#glossary') && !hiddenList.includes('#voluntary'));
+        check('learn page: glossary has 10 terms', doc.querySelectorAll('.v2-glossary-card').length === 10);
+    }
+    {
+        const { doc } = boot('v2-compass.html');
+        check('compass page: voluntary certifications moved off results flow', doc.getElementById('v2PageStyle').textContent.split('{')[0].includes('#voluntary'));
+    }
+
     // Functional: hub persona door sets localStorage and navigates
     {
         const { doc, window } = boot('v2.html');
@@ -142,7 +183,8 @@ const PAGES = {
         await new Promise(r => setTimeout(r, 10));
         check('guides page: gate shown when signed out', !!doc.querySelector('.v2-gate'));
         check('guides page: grid hidden behind gate', doc.getElementById('libraryGrid').style.display === 'none');
-        check('guides page: gate links to sign-in and chamber', !!doc.querySelector('.v2-gate a[href="account.html"]') && !!doc.querySelector('.v2-gate a[href*="hongkong.ahk.de"]'));
+        check('guides page: gate is launching-soon, no sign-in', !doc.querySelector('.v2-gate a[href="account.html"]') && doc.querySelector('.v2-gate h3 .lang-en').textContent.includes('launching soon'));
+        check('guides page: gate offers committee contact + chamber links', !!doc.querySelector('.v2-gate a[href^="mailto:info@hongkong.ahk.de"]') && !!doc.querySelector('.v2-gate a[href*="hongkong.ahk.de"]'));
     }
     {
         // demo member tier → no gate

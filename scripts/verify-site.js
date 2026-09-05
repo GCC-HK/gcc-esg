@@ -20,7 +20,8 @@ window.fetch = (url) => {
     const u = String(url);
     const ok = (data) => Promise.resolve({ ok: true, status: 200, json: async () => data });
     if (u.includes('/api/content?type=deadlines')) return ok([
-        { labelEn: 'Test deadline', labelZh: '测试期限', date: '2026-09-01', affects: 'Everyone', affectsZh: '所有人', confidence: 'fixed' },
+        // 30 days out — a hard-coded date silently rots past "today"
+        { labelEn: 'Test deadline', labelZh: '测试期限', date: new Date(Date.now() + 30 * 86400000).toISOString().slice(0, 10), affects: 'Everyone', affectsZh: '所有人', confidence: 'fixed' },
         { labelEn: 'Expected one', date: '2028-01-01', confidence: 'expected' },
         { labelEn: 'Horizon deadline', date: '2030-01-01', confidence: 'fixed' },
         { labelEn: 'Past deadline', date: '2020-01-01', confidence: 'fixed' }
@@ -156,26 +157,16 @@ switchLang('de');
 check('de mode sets body class', doc.body.classList.contains('de') && !doc.body.classList.contains('zh'));
 check('de spans exist in wizard', !!doc.querySelector('.wizard-cat[data-value="toys"] .lang-de'));
 check('html lang attribute de', doc.documentElement.lang === 'de');
-switchLang('vi');
-check('vi mode sets body class', doc.body.classList.contains('vi'));
+// Vietnamese is parked until native review (committee decision Sep 2026):
+// the option is gone from the selector but the spans stay in the DOM
+check('vi option removed from selector', !doc.querySelector('#langSelect option[value="vi"]'));
 check('vi spans exist in hero', !!doc.querySelector('.hero-eyebrow .lang-vi'));
 switchLang('zh');
 check('wizard cat has zh span', !!doc.querySelector('.wizard-cat[data-value="toys"] .lang-zh'));
 
-// --- Brief form (subscribe) ---
-const briefForm = doc.getElementById('briefForm');
-check('consent checkbox present', !!doc.getElementById('briefConsent'));
-briefForm.querySelector('input[type="email"]').value = 'test@example.com';
-// no consent → submit does nothing
-briefForm.dispatchEvent(new window.Event('submit', { cancelable: true }));
-check('submit blocked without consent', !!briefForm.querySelector('button[type="submit"]'));
-// with consent → fetch stub rejects → error message shown, button re-enabled
-doc.getElementById('briefConsent').checked = true;
-briefForm.dispatchEvent(new window.Event('submit', { cancelable: true }));
+// --- Brief form: retired with the V1 one-pager (V2 hub has no subscribe card) ---
+check('V1 subscribe form removed', !doc.getElementById('briefForm'));
 setTimeout(() => {
-    const msgEl = briefForm.querySelector('.brief-msg');
-    check('error message shown when API unreachable', !!msgEl && msgEl.textContent.length > 0);
-    check('submit button re-enabled after error', briefForm.querySelector('button[type="submit"]').disabled === false);
 
     // --- CMS-driven sections (stubbed /api/content) ---
     const radar = doc.getElementById('radar');

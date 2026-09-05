@@ -140,6 +140,8 @@ const server = http.createServer(async (req, res) => {
     // --- static files ---
     let filePath = path.join(ROOT, decodeURIComponent(url.pathname));
     if (url.pathname === '/' || url.pathname === '') filePath = path.join(ROOT, 'index.html');
+    // Vercel cleanUrls parity: /v2 → v2.html etc.
+    if (!path.extname(filePath) && fs.existsSync(filePath + '.html')) filePath += '.html';
     if (!filePath.startsWith(ROOT)) { res.writeHead(403); return res.end(); }
     fs.readFile(filePath, (err, buf) => {
         if (err) { res.writeHead(404); return res.end('Not found'); }

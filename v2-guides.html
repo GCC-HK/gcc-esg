@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[V2 Preview] Member Resource Library | GREEN FUTURE</title>
-    <meta name="description" content="EU sustainability compliance for the Hong Kong sourcing community: check which regulations apply to your products, estimate CBAM costs, and follow the latest regulatory updates. By the GCC Sustainability Committee.">
-    <meta property="og:title" content="GREEN FUTURE – GCC Sustainability Compliance">
-    <meta property="og:description" content="Which EU sustainability rules apply to your products? Free compliance check, CBAM cost estimator and news briefing for sourcing offices and manufacturers.">
+    <title>Member Resource Library | Green Sourcing Hub</title>
+    <meta name="description" content="Navigating EU sustainability requirements for the Hong Kong sourcing community: check which requirements apply to your products, follow deadlines, and get regular regulatory updates. By the GCC ESG Committee.">
+    <meta property="og:title" content="Green Sourcing Hub – GCC Sustainability Compliance">
+    <meta property="og:description" content="Which EU sustainability requirements apply to your products? Compliance check, deadline radar and news briefing for sourcing offices and suppliers with the EU as target market.">
     <meta property="og:type" content="website">
     <meta name="theme-color" content="#1a5c38">
     <link rel="icon" type="image/png" href="assets/img/gcchk-logo.png">
@@ -17,40 +17,37 @@
 
     <link rel="stylesheet" href="v2.css">
     <style id="v2PageStyle">
-    #hero, #personas, #v2hub, #start, #compass, #radar, #briefing, #cbam, #guidance, #benefits, #risks-incentives, #china-esg, #actions, #about, #faq, #trust { display: none !important; }
+    #hero, #personas, #v2hub, #start, #compass, #radar, #briefing, #cbam, #guidance, #benefits, #risks-incentives, #china-esg, #actions, #voluntary, #about, #faq, #glossary, #trust { display: none !important; }
     .nav-links a[href="v2-guides.html"] { color: var(--primary); font-weight: 700; }
-    body { padding-top: var(--nav-height); }
+    body { padding-top: calc(var(--nav-height) + var(--topline-h, 0px)); }
     #newsTicker { display: none !important; }
     </style>
 </head>
 <body data-v2page="guides">
-    <div class="v2-ribbon">V2 LAYOUT PREVIEW — for committee comparison; live site unchanged</div>
+    <div class="v2-topline" id="v2Topline"><span class="lang-en">Informational platform of the GCC ESG Committee &mdash; not legal advice. Verify details against the official sources linked on this site.</span><span class="lang-zh">德国商会ESG委员会信息平台——不构成法律意见。请以本站链接的官方来源为准。</span><span class="lang-de">Informationsplattform des GCC-ESG-Ausschusses &mdash; keine Rechtsberatung. Ma&szlig;geblich sind die verlinkten offiziellen Quellen.</span><span class="lang-vi">Nền tảng th&ocirc;ng tin của Ủy ban Ph&aacute;t triển Bền vững GCC &mdash; kh&ocirc;ng phải tư vấn ph&aacute;p l&yacute;. Vui l&ograve;ng đối chiếu c&aacute;c nguồn ch&iacute;nh thức được li&ecirc;n kết.</span></div>
     <!-- 1. Navigation -->
     <nav class="nav" id="nav">
         <div class="nav-container">
-            <a href="v2.html" class="nav-logo">
+            <a href="index.html" class="nav-logo">
                 <img src="assets/img/gcchk-logo.png" alt="GCC – German Chamber of Commerce Hong Kong">
-                <span>GREEN FUTURE</span>
+                <span>GREEN SOURCING HUB</span>
             </a>
             <ul class="nav-links" id="navLinks">
-                <li><a href="v2.html"><span class="lang-en">Home</span><span class="lang-zh">首页</span><span class="lang-de">Start</span><span class="lang-vi">Trang chủ</span></a></li>
+                <li><a href="index.html"><span class="lang-en">Home</span><span class="lang-zh">首页</span><span class="lang-de">Start</span><span class="lang-vi">Trang chủ</span></a></li>
                 <li><a href="v2-compass.html"><span class="lang-en">Regulations</span><span class="lang-zh">法规</span><span class="lang-de">Vorschriften</span><span class="lang-vi">Quy định</span></a></li>
-                <li><a href="v2-cbam.html"><span class="lang-en">CBAM</span><span class="lang-zh">碳边境CBAM</span><span class="lang-de">CBAM</span><span class="lang-vi">CBAM</span></a></li>
+                <li><a href="index.html#v2hub"><span class="lang-en">Tools</span><span class="lang-zh">工具</span><span class="lang-de">Tools</span><span class="lang-vi">Công cụ</span></a></li>
                 <li><a href="v2-compass.html#radar"><span class="lang-en">Deadlines</span><span class="lang-zh">合规期限</span><span class="lang-de">Fristen</span><span class="lang-vi">Thời hạn</span></a></li>
                 <li><a href="v2-briefing.html"><span class="lang-en">News</span><span class="lang-zh">新闻</span><span class="lang-de">Nachrichten</span><span class="lang-vi">Tin tức</span></a></li>
                 <li><a href="v2-guides.html"><span class="lang-en">Guides</span><span class="lang-zh">实操指南</span><span class="lang-de">Leitfäden</span><span class="lang-vi">Hướng dẫn</span></a></li>
                 <li><a href="v2-learn.html"><span class="lang-en">Learn</span><span class="lang-zh">了解</span><span class="lang-de">Wissen</span><span class="lang-vi">Tìm hiểu</span></a></li>
-                <li><a href="v2-about.html"><span class="lang-en">About the Committee</span><span class="lang-zh">关于委员会</span><span class="lang-de">Über den Ausschuss</span><span class="lang-vi">Về Ủy ban</span></a></li>
-                <li class="nav-signin-mobile"><a href="account.html"><span class="lang-en">Sign in</span><span class="lang-zh">登录</span><span class="lang-de">Anmelden</span><span class="lang-vi">Đăng nhập</span></a></li>
+                <li><a href="v2-about.html"><span class="lang-en">About</span><span class="lang-zh">关于</span><span class="lang-de">Über uns</span><span class="lang-vi">Giới thiệu</span></a></li>
             </ul>
             <div class="nav-right">
-                <a href="account.html" class="nav-signin" id="navSignin"><span class="lang-en">Sign in</span><span class="lang-zh">登录</span><span class="lang-de">Anmelden</span><span class="lang-vi">Đăng nhập</span></a>
                 <div class="lang-toggle">
-                    <select id="langSelect" aria-label="Language / 语言 / Sprache / Ngôn ngữ">
+                    <select id="langSelect" aria-label="Language / 语言 / Sprache">
                         <option value="en">EN</option>
                         <option value="zh">中文</option>
                         <option value="de">DE</option>
-                        <option value="vi">VI</option>
                     </select>
                 </div>
                 <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
@@ -77,10 +74,10 @@
         <div class="container">
             <div class="hero-grid">
                 <div class="hero-content">
-                    <div class="hero-eyebrow"><span class="lang-en">For sourcing offices &amp; manufacturers exporting to Europe</span><span class="lang-zh">面向采购办公室及出口欧洲的制造商</span><span class="lang-de">Für Einkaufsbüros &amp; Hersteller mit Export nach Europa</span><span class="lang-vi">Dành cho văn phòng thu mua &amp; nhà sản xuất xuất khẩu sang châu Âu</span></div>
-                    <h1><span class="lang-en">EU Sustainability Rules, Explained for Asian Suppliers.</span><span class="lang-zh">欧盟可持续发展法规，为亚洲供应商解读</span><span class="lang-de">EU-Nachhaltigkeitsvorschriften, verständlich erklärt für asiatische Lieferanten.</span><span class="lang-vi">Quy định phát triển bền vững của EU, giải thích dành cho nhà cung cấp châu Á.</span></h1>
+                    <div class="hero-eyebrow"><span class="lang-en">For suppliers in Asia &amp; sourcing offices with the EU as their target market</span><span class="lang-zh">面向以欧盟为目标市场的亚洲供应商及采购办公室</span><span class="lang-de">Für Lieferanten in Asien &amp; Einkaufsbüros mit Zielmarkt EU</span><span class="lang-vi">Dành cho nhà cung cấp tại châu Á &amp; văn phòng thu mua với thị trường mục tiêu là EU</span></div>
+                    <h1><span class="lang-en">Navigating EU Sustainability Requirements</span><span class="lang-zh">驾驭欧盟可持续发展要求</span><span class="lang-de">Orientierung bei den EU-Nachhaltigkeitsanforderungen</span><span class="lang-vi">Định hướng các yêu cầu phát triển bền vững của EU</span></h1>
                     <div class="hero-subline-bar"></div>
-                    <p class="hero-subhead"><span class="lang-en">Free tools from the German Chamber of Commerce Hong Kong: check which regulations apply to your products, estimate your CBAM costs, and get regular updates.</span><span class="lang-zh">香港德国商会免费工具：查明适用于您产品的法规、估算CBAM成本、获取最新动态。</span><span class="lang-de">Kostenlose Tools der Deutschen Handelskammer Hongkong: Prüfen Sie, welche Vorschriften für Ihre Produkte gelten, schätzen Sie Ihre CBAM-Kosten und erhalten Sie regelmäßige Updates.</span><span class="lang-vi">Công cụ miễn phí từ Phòng Thương mại Đức tại Hồng Kông: kiểm tra quy định nào áp dụng cho sản phẩm của bạn, ước tính chi phí CBAM và nhận cập nhật thường xuyên.</span></p>
+                    <p class="hero-subhead"><span class="lang-en">A knowledge platform by the ESG Committee of the German Chamber of Commerce Hong Kong &mdash; helping suppliers in China and Asia and their European partners understand and prepare for evolving EU sustainability requirements.</span><span class="lang-zh">香港德国商会ESG委员会知识平台——帮助中国及亚洲供应商与其欧洲合作伙伴理解并应对不断演变的欧盟可持续发展要求。</span><span class="lang-de">Eine Wissensplattform des ESG-Ausschusses der Deutschen Handelskammer Hongkong &mdash; sie hilft Lieferanten in China und Asien und ihren europäischen Partnern, die EU-Nachhaltigkeitsanforderungen zu verstehen und sich darauf vorzubereiten.</span><span class="lang-vi">Nền tảng kiến thức của Ủy ban ESG thuộc Phòng Thương mại Đức tại Hồng Kông &mdash; giúp nhà cung cấp tại Trung Quốc và châu Á cùng các đối tác châu Âu hiểu và chuẩn bị cho các yêu cầu phát triển bền vững của EU.</span></p>
                     <div class="hero-ctas">
                         <a href="v2-compass.html" class="btn btn-primary"><span class="lang-en">Check My Products</span><span class="lang-zh">查询我的产品</span><span class="lang-de">Meine Produkte prüfen</span><span class="lang-vi">Kiểm tra sản phẩm của tôi</span></a>
                         <a href="#footer" class="btn btn-secondary"><span class="lang-en">Contact Us</span><span class="lang-zh">联系我们</span><span class="lang-de">Kontakt aufnehmen</span><span class="lang-vi">Liên hệ với chúng tôi</span></a>
@@ -96,17 +93,20 @@
     <!-- V2: persona quick-start strip (replaces long guided-start for the two main user groups) -->
     <section class="v2-personas" id="personas">
         <div class="container">
+            <div class="v2-step-chip"><span class="lang-en">STEP 1 &middot; YOUR PERSPECTIVE</span><span class="lang-zh">第1步 &middot; 您的视角</span><span class="lang-de">SCHRITT 1 &middot; IHRE PERSPEKTIVE</span><span class="lang-vi">BƯỚC 1 &middot; GÓC NHÌN CỦA BẠN</span></div>
+            <h2 class="v2-personas-title"><span class="lang-en">Which perspective best describes you?</span><span class="lang-zh">哪种视角最符合您的情况？</span><span class="lang-de">Welche Perspektive beschreibt Sie am besten?</span><span class="lang-vi">Góc nhìn nào mô tả đúng nhất về bạn?</span></h2>
+            <p class="v2-personas-sub"><span class="lang-en">Your choice tailors the tools and results across the platform.</span><span class="lang-zh">您的选择将决定平台各工具及结果的呈现方式。</span><span class="lang-de">Ihre Wahl passt Tools und Ergebnisse auf der gesamten Plattform an.</span><span class="lang-vi">Lựa chọn của bạn sẽ điều chỉnh công cụ và kết quả trên toàn nền tảng.</span></p>
             <div class="v2-persona-grid">
                 <button class="v2-persona-card" data-persona="supplier" type="button">
                     <div class="v2-persona-tag"><span class="lang-en">I am a</span><span class="lang-zh">我是</span><span class="lang-de">Ich bin</span><span class="lang-vi">Tôi là</span></div>
                     <h3><span class="lang-en">Supplier / Manufacturer</span><span class="lang-zh">供应商 / 制造商</span><span class="lang-de">Lieferant / Hersteller</span><span class="lang-vi">Nhà cung cấp / Nhà sản xuất</span></h3>
-                    <p><span class="lang-en">Check which EU rules apply to your products, what they mean, and what your buyer will ask for next.</span><span class="lang-zh">查看哪些欧盟法规适用于您的产品、这些法规意味着什么、以及买家接下来会要求什么。</span><span class="lang-de">Prüfen Sie, welche EU-Vorschriften für Ihre Produkte gelten und was Ihr Abnehmer als Nächstes verlangen wird.</span><span class="lang-vi">Kiểm tra quy định EU nào áp dụng cho sản phẩm của bạn và người mua sẽ yêu cầu gì tiếp theo.</span></p>
+                    <p><span class="lang-en">Understand how EU sustainability requirements impact your products, operations, and access to the EU market.</span><span class="lang-zh">了解欧盟可持续发展要求如何影响您的产品、运营以及进入欧盟市场的资格。</span><span class="lang-de">Verstehen Sie, wie sich die EU-Nachhaltigkeitsanforderungen auf Ihre Produkte, Abl&auml;ufe und Ihren Zugang zum EU-Markt auswirken.</span><span class="lang-vi">Hiểu cách các yêu cầu phát triển bền vững của EU ảnh hưởng đến sản phẩm, hoạt động và khả năng tiếp cận thị trường EU của bạn.</span></p>
                     <span class="v2-persona-cta"><span class="lang-en">Check my product &rarr;</span><span class="lang-zh">检查我的产品 &rarr;</span><span class="lang-de">Mein Produkt pr&uuml;fen &rarr;</span><span class="lang-vi">Kiểm tra sản phẩm &rarr;</span></span>
                 </button>
                 <button class="v2-persona-card" data-persona="merchandiser" type="button">
                     <div class="v2-persona-tag"><span class="lang-en">I am a</span><span class="lang-zh">我是</span><span class="lang-de">Ich bin</span><span class="lang-vi">Tôi là</span></div>
-                    <h3><span class="lang-en">Merchandiser / Sourcing Office</span><span class="lang-zh">采购专员 / 采购办公室</span><span class="lang-de">Merchandiser / Einkaufsb&uuml;ro</span><span class="lang-vi">Merchandiser / Văn phòng thu mua</span></h3>
-                    <p><span class="lang-en">Get a fast ESG overview for the product on your desk — and export it as a CSV to attach to your buyer or supplier email.</span><span class="lang-zh">快速获取您手头产品的ESG法规概览——并导出CSV文件，附在给买家或供应商的邮件中。</span><span class="lang-de">Schneller ESG-&Uuml;berblick f&uuml;r Ihr aktuelles Produkt — als CSV exportieren und per E-Mail weiterleiten.</span><span class="lang-vi">Xem nhanh tổng quan ESG cho sản phẩm — xuất CSV để đính kèm email gửi người mua hoặc nhà cung cấp.</span></p>
+                    <h3><span class="lang-en">Sourcing Office / Importer / Brand</span><span class="lang-zh">采购办公室 / 进口商 / 品牌</span><span class="lang-de">Einkaufsb&uuml;ro / Importeur / Marke</span><span class="lang-vi">Văn phòng thu mua / Nhà nhập khẩu / Thương hiệu</span></h3>
+                    <p><span class="lang-en">Manage sustainability requirements across your supply chain, engage suppliers, and prepare for regulatory obligations — with a CSV export for your emails.</span><span class="lang-zh">管理供应链中的可持续发展要求、与供应商协作并为监管义务做好准备——并可导出CSV附在邮件中。</span><span class="lang-de">Managen Sie Nachhaltigkeitsanforderungen entlang Ihrer Lieferkette, binden Sie Lieferanten ein und bereiten Sie sich auf regulatorische Pflichten vor &mdash; mit CSV-Export.</span><span class="lang-vi">Quản lý các yêu cầu bền vững trong chuỗi cung ứng, phối hợp với nhà cung cấp và chuẩn bị cho các nghĩa vụ pháp lý &mdash; kèm xuất CSV.</span></p>
                     <span class="v2-persona-cta"><span class="lang-en">Product overview + CSV &rarr;</span><span class="lang-zh">产品概览 + CSV &rarr;</span><span class="lang-de">Produkt&uuml;bersicht + CSV &rarr;</span><span class="lang-vi">Tổng quan + CSV &rarr;</span></span>
                 </button>
             </div>
@@ -116,39 +116,42 @@
     <!-- V2 hub: tool cards + live previews (hub page only) -->
     <section class="v2-hub" id="v2hub">
         <div class="container">
+            <div class="v2-step-chip"><span class="lang-en">STEP 2 &middot; PICK YOUR TOOL</span><span class="lang-zh">第2步 &middot; 选择工具</span><span class="lang-de">SCHRITT 2 &middot; TOOL W&Auml;HLEN</span><span class="lang-vi">BƯỚC 2 &middot; CHỌN CÔNG CỤ</span></div>
             <div class="v2-hub-tools">
                 <a class="v2-tool-card" href="v2-compass.html">
-                    <h3><span class="lang-en">Sustainability Regulations</span><span class="lang-zh">可持续发展法规</span><span class="lang-de">Nachhaltigkeitsvorschriften</span><span class="lang-vi">Quy định bền vững</span></h3>
-                    <p><span class="lang-en">Which EU rules apply to your product? 3 questions — or the express table — plus a CSV you can email.</span><span class="lang-zh">哪些欧盟法规适用于您的产品？3个问题——或快速概览表——并可导出CSV随邮件发送。</span><span class="lang-de">Welche EU-Vorschriften gelten? 3 Fragen — oder die Express-Tabelle — plus CSV-Export.</span><span class="lang-vi">Quy định EU nào áp dụng? 3 câu hỏi — hoặc bảng nhanh — kèm CSV để gửi email.</span></p>
+                    <h3><span class="lang-en">Sustainability Requirements</span><span class="lang-zh">可持续发展要求</span><span class="lang-de">Nachhaltigkeitsanforderungen</span><span class="lang-vi">Yêu cầu bền vững</span></h3>
+                    <p><span class="lang-en">Which EU requirements apply to your product? 3 questions — or the express table — plus a CSV you can email.</span><span class="lang-zh">哪些欧盟要求适用于您的产品？3个问题——或快速概览表——并可导出CSV随邮件发送。</span><span class="lang-de">Welche EU-Anforderungen gelten? 3 Fragen — oder die Express-Tabelle — plus CSV-Export.</span><span class="lang-vi">Yêu cầu EU nào áp dụng? 3 câu hỏi — hoặc bảng nhanh — kèm CSV để gửi email.</span></p>
                     <span class="v2-tool-cta"><span class="lang-en">Check a product &rarr;</span><span class="lang-zh">检查产品 &rarr;</span><span class="lang-de">Produkt pr&uuml;fen &rarr;</span><span class="lang-vi">Kiểm tra sản phẩm &rarr;</span></span>
                 </a>
-                <a class="v2-tool-card" href="v2-cbam.html">
+                <div class="v2-tool-card v2-tool-locked" id="v2CbamToolCard">
+                    <span class="v2-lock-badge"><span class="lang-en">Under committee verification &mdash; coming soon</span><span class="lang-zh">委员会核验中——即将上线</span><span class="lang-de">In Pr&uuml;fung durch den Ausschuss &mdash; bald verf&uuml;gbar</span><span class="lang-vi">Đang được Ủy ban thẩm định &mdash; sắp ra mắt</span></span>
                     <h3><span class="lang-en">CBAM Calculator</span><span class="lang-zh">CBAM计算器</span><span class="lang-de">CBAM-Rechner</span><span class="lang-vi">Máy tính CBAM</span></h3>
-                    <p><span class="lang-en">Estimate the EU carbon border cost of your steel, aluminium, cement or fertiliser exports — official Q2 2026 price.</span><span class="lang-zh">估算钢铁、铝、水泥或化肥出口的欧盟碳边境成本——采用2026年第二季度官方价格。</span><span class="lang-de">CO&#8322;-Grenzkosten f&uuml;r Stahl, Aluminium, Zement oder D&uuml;ngemittel sch&auml;tzen — offizieller Preis Q2 2026.</span><span class="lang-vi">Ước tính chi phí carbon biên giới EU cho thép, nhôm, xi măng, phân bón — giá chính thức Q2 2026.</span></p>
-                    <span class="v2-tool-cta"><span class="lang-en">Calculate &rarr;</span><span class="lang-zh">开始计算 &rarr;</span><span class="lang-de">Berechnen &rarr;</span><span class="lang-vi">Tính toán &rarr;</span></span>
-                </a>
+                    <p><span class="lang-en">Estimate the EU carbon border cost of your steel, aluminium, cement or fertiliser exports — with official EU values.</span><span class="lang-zh">估算钢铁、铝、水泥或化肥出口的欧盟碳边境成本——采用欧盟官方数值。</span><span class="lang-de">CO&#8322;-Grenzkosten f&uuml;r Stahl, Aluminium, Zement oder D&uuml;ngemittel sch&auml;tzen — mit offiziellen EU-Werten.</span><span class="lang-vi">Ước tính chi phí carbon biên giới EU cho thép, nhôm, xi măng, phân bón — theo giá trị chính thức của EU.</span></p>
+                    <span class="v2-tool-cta v2-tool-cta-muted"><span class="lang-en">Available soon</span><span class="lang-zh">即将推出</span><span class="lang-de">Bald verf&uuml;gbar</span><span class="lang-vi">Sắp ra mắt</span></span>
+                </div>
                 <a class="v2-tool-card" href="v2-briefing.html">
-                    <h3><span class="lang-en">Important News</span><span class="lang-zh">重要新闻</span><span class="lang-de">Wichtige Nachrichten</span><span class="lang-vi">Tin tức quan trọng</span></h3>
+                    <h3><span class="lang-en">Latest News</span><span class="lang-zh">最新新闻</span><span class="lang-de">Aktuelle Nachrichten</span><span class="lang-vi">Tin mới nhất</span></h3>
                     <p><span class="lang-en">What changed this month, why it matters, what to do — verified against official sources.</span><span class="lang-zh">本月有何变化、为何重要、该做什么——均经官方来源核实。</span><span class="lang-de">Was sich ge&auml;ndert hat, warum es z&auml;hlt, was zu tun ist — gepr&uuml;ft an offiziellen Quellen.</span><span class="lang-vi">Điều gì thay đổi, vì sao quan trọng, cần làm gì — đã đối chiếu nguồn chính thức.</span></p>
                     <span class="v2-tool-cta"><span class="lang-en">Read the news &rarr;</span><span class="lang-zh">阅读新闻 &rarr;</span><span class="lang-de">Zu den Nachrichten &rarr;</span><span class="lang-vi">Đọc tin tức &rarr;</span></span>
                 </a>
-                <a class="v2-tool-card" href="v2-guides.html">
+                <a class="v2-tool-card v2-tool-member" href="v2-guides.html">
+                    <span class="v2-lock-badge v2-lock-badge-member"><span class="lang-en">Members &mdash; launching soon</span><span class="lang-zh">会员专区——即将推出</span><span class="lang-de">F&uuml;r Mitglieder &mdash; startet bald</span><span class="lang-vi">Dành cho thành viên &mdash; sắp ra mắt</span></span>
                     <h3><span class="lang-en">Member Resource Library</span><span class="lang-zh">会员资源库</span><span class="lang-de">Mitglieder-Bibliothek</span><span class="lang-vi">Thư viện Thành viên</span></h3>
                     <p><span class="lang-en">Step-by-step guides: CBAM data pack, GPSR responsible person, product screening — for member companies.</span><span class="lang-zh">分步指南：CBAM数据包、GPSR责任人、产品筛查——面向会员企业。</span><span class="lang-de">Schritt-f&uuml;r-Schritt-Leitf&auml;den f&uuml;r Mitgliedsunternehmen.</span><span class="lang-vi">Hướng dẫn từng bước dành cho công ty thành viên.</span></p>
-                    <span class="v2-tool-cta"><span class="lang-en">Open the library &rarr;</span><span class="lang-zh">打开资源库 &rarr;</span><span class="lang-de">Zur Bibliothek &rarr;</span><span class="lang-vi">Mở thư viện &rarr;</span></span>
+                    <span class="v2-tool-cta"><span class="lang-en">Preview the library &rarr;</span><span class="lang-zh">预览资源库 &rarr;</span><span class="lang-de">Bibliothek ansehen &rarr;</span><span class="lang-vi">Xem trước thư viện &rarr;</span></span>
                 </a>
             </div>
             <div class="v2-hub-minis">
                 <div class="v2-hub-mini">
                     <div class="v2-hub-mini-head">
-                        <h3><span class="lang-en">Next deadlines</span><span class="lang-zh">近期合规期限</span><span class="lang-de">N&auml;chste Fristen</span><span class="lang-vi">Thời hạn sắp tới</span></h3>
+                        <h3><span class="lang-en">Next regulatory deadlines</span><span class="lang-zh">近期法规期限</span><span class="lang-de">N&auml;chste regulatorische Fristen</span><span class="lang-vi">Thời hạn quy định sắp tới</span></h3>
                         <a href="v2-compass.html#radar"><span class="lang-en">All deadlines &rarr;</span><span class="lang-zh">全部期限 &rarr;</span><span class="lang-de">Alle Fristen &rarr;</span><span class="lang-vi">Tất cả &rarr;</span></a>
                     </div>
                     <div id="v2MiniDeadlines"></div>
                 </div>
                 <div class="v2-hub-mini">
                     <div class="v2-hub-mini-head">
-                        <h3><span class="lang-en">Latest news</span><span class="lang-zh">最新新闻</span><span class="lang-de">Aktuelle Nachrichten</span><span class="lang-vi">Tin mới nhất</span></h3>
+                        <h3><span class="lang-en">Latest News</span><span class="lang-zh">最新新闻</span><span class="lang-de">Aktuelle Nachrichten</span><span class="lang-vi">Tin mới nhất</span></h3>
                         <a href="v2-briefing.html"><span class="lang-en">All posts &rarr;</span><span class="lang-zh">全部文章 &rarr;</span><span class="lang-de">Alle Beitr&auml;ge &rarr;</span><span class="lang-vi">Tất cả &rarr;</span></a>
                     </div>
                     <div id="v2MiniNews"></div>
@@ -167,8 +170,8 @@
                     <div class="start-icon">
                         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
                     </div>
-                    <h3><span class="lang-en">"Which EU rules apply to my products?"</span><span class="lang-zh">"哪些欧盟法规适用于我的产品？"</span><span class="lang-de">"Welche EU-Vorschriften gelten für meine Produkte?"</span><span class="lang-vi">"Quy định EU nào áp dụng cho sản phẩm của tôi?"</span></h3>
-                    <p><span class="lang-en">Answer 3 quick questions and get your personal regulation list.</span><span class="lang-zh">回答3个简单问题，获取您的专属法规清单。</span><span class="lang-de">Beantworten Sie 3 kurze Fragen und erhalten Sie Ihre persönliche Vorschriftenliste.</span><span class="lang-vi">Trả lời 3 câu hỏi nhanh và nhận danh sách quy định dành riêng cho bạn.</span></p>
+                    <h3><span class="lang-en">"Which EU requirements apply to my products?"</span><span class="lang-zh">"哪些欧盟要求适用于我的产品？"</span><span class="lang-de">"Welche EU-Anforderungen gelten für meine Produkte?"</span><span class="lang-vi">"Yêu cầu EU nào áp dụng cho sản phẩm của tôi?"</span></h3>
+                    <p><span class="lang-en">Answer 3 quick questions and get your personal requirements list.</span><span class="lang-zh">回答3个简单问题，获取您的专属要求清单。</span><span class="lang-de">Beantworten Sie 3 kurze Fragen und erhalten Sie Ihre persönliche Anforderungsliste.</span><span class="lang-vi">Trả lời 3 câu hỏi nhanh và nhận danh sách yêu cầu dành riêng cho bạn.</span></p>
                     <span class="start-arrow">&rarr;</span>
                 </a>
                 <a href="#cbam" class="start-card start-card-cbam">
@@ -207,8 +210,8 @@
                 <img class="section-graphic" src="assets/img/graphic-compass.svg" alt="">
                 <div class="section-head-text">
                     <div class="atlas-label"><span class="lang-en">GREEN SOURCING COMPASS</span><span class="lang-zh">绿色采购指南针</span><span class="lang-de">GREEN SOURCING COMPASS</span><span class="lang-vi">GREEN SOURCING COMPASS</span></div>
-                    <h2 class="section-title"><span class="lang-en">Find the EU Regulations That Apply to Your Products</span><span class="lang-zh">查找适用于您产品的欧盟法规</span><span class="lang-de">Finden Sie die EU-Vorschriften, die für Ihre Produkte gelten</span><span class="lang-vi">Tìm các quy định EU áp dụng cho sản phẩm của bạn</span></h2>
-                    <p class="section-subtitle"><span class="lang-en">Select your product category and target markets to see applicable regulations.</span><span class="lang-zh">选择您的产品类别和目标市场，查看适用的法规。</span><span class="lang-de">Wählen Sie Ihre Produktkategorie und Zielmärkte, um die geltenden Vorschriften zu sehen.</span><span class="lang-vi">Chọn danh mục sản phẩm và thị trường mục tiêu để xem các quy định áp dụng.</span></p>
+                    <h2 class="section-title"><span class="lang-en">Find the EU Requirements That Apply to Your Products</span><span class="lang-zh">查找适用于您产品的欧盟要求</span><span class="lang-de">Finden Sie die EU-Anforderungen, die für Ihre Produkte gelten</span><span class="lang-vi">Tìm các yêu cầu EU áp dụng cho sản phẩm của bạn</span></h2>
+                    <p class="section-subtitle"><span class="lang-en">Select your product category and target markets to see the applicable requirements.</span><span class="lang-zh">选择您的产品类别和目标市场，查看适用的要求。</span><span class="lang-de">Wählen Sie Ihre Produktkategorie und Zielmärkte, um die geltenden Anforderungen zu sehen.</span><span class="lang-vi">Chọn danh mục sản phẩm và thị trường mục tiêu để xem các yêu cầu áp dụng.</span></p>
                 </div>
             </div>
 
@@ -258,12 +261,12 @@
 
                     <!-- HS Code Lookup -->
                     <div class="hs-code-section">
-                        <label><span class="lang-en">Not sure? Enter your HS Code instead</span><span class="lang-zh">不确定？可输入您的HS编码</span><span class="lang-de">Nicht sicher? Geben Sie stattdessen Ihren HS-Code ein</span><span class="lang-vi">Không chắc chắn? Hãy nhập mã HS của bạn</span></label>
+                        <label><span class="lang-en">Not sure? Enter your HS or CN code instead</span><span class="lang-zh">不确定？可输入您的HS或CN编码</span><span class="lang-de">Nicht sicher? Geben Sie stattdessen Ihren HS- oder CN-Code ein</span><span class="lang-vi">Không chắc chắn? Hãy nhập mã HS hoặc CN của bạn</span></label>
                         <div class="hs-input-row">
-                            <input type="text" id="hsCodeInput" maxlength="6" inputmode="numeric" autocomplete="off" placeholder="e.g. 8507">
+                            <input type="text" id="hsCodeInput" maxlength="8" inputmode="numeric" autocomplete="off" placeholder="e.g. 8507 or 85076000">
                             <button type="button" id="hsLookupBtn" class="btn btn-hs-lookup"><span class="lang-en">Look Up</span><span class="lang-zh">查询</span><span class="lang-de">Nachschlagen</span><span class="lang-vi">Tra cứu</span></button>
                         </div>
-                        <p class="hs-help-text"><span class="lang-en">Enter the first 2–6 digits of your HS code. We'll identify the applicable product category.</span><span class="lang-zh">输入您的HS编码前2至6位，我们将自动识别适用的产品类别。</span><span class="lang-de">Geben Sie die ersten 2–6 Stellen Ihres HS-Codes ein. Wir ermitteln die passende Produktkategorie.</span><span class="lang-vi">Nhập 2–6 chữ số đầu của mã HS. Chúng tôi sẽ xác định danh mục sản phẩm phù hợp.</span></p>
+                        <p class="hs-help-text"><span class="lang-en">Enter the first 2–8 digits. The EU's 8-digit CN code starts with the same digits as the international HS code — either works. We'll identify the applicable product category.</span><span class="lang-zh">输入前2至8位数字。欧盟8位CN编码与国际HS编码前几位相同——两者均可。我们将自动识别适用的产品类别。</span><span class="lang-de">Geben Sie die ersten 2–8 Stellen ein. Der 8-stellige CN-Code der EU beginnt mit denselben Ziffern wie der internationale HS-Code — beides funktioniert. Wir ermitteln die passende Produktkategorie.</span><span class="lang-vi">Nhập 2–8 chữ số đầu. Mã CN 8 chữ số của EU bắt đầu bằng cùng các chữ số với mã HS quốc tế — dùng mã nào cũng được. Chúng tôi sẽ xác định danh mục sản phẩm phù hợp.</span></p>
                         <div id="hsResult"></div>
                     </div>
 
@@ -285,9 +288,6 @@
                         </label>
                         <label class="checkbox-label">
                             <input type="checkbox" name="market" value="uk"> <span class="lang-en">United Kingdom</span><span class="lang-zh">英国</span><span class="lang-de">Vereinigtes Königreich</span><span class="lang-vi">Vương quốc Anh</span>
-                        </label>
-                        <label class="checkbox-label">
-                            <input type="checkbox" name="market" value="us"> <span class="lang-en">United States</span><span class="lang-zh">美国</span><span class="lang-de">USA</span><span class="lang-vi">Hoa Kỳ</span>
                         </label>
                     </div>
                     <div class="wizard-nav">
@@ -322,7 +322,7 @@
                     </div>
                     <div class="wizard-nav">
                         <button type="button" class="btn btn-outline wizard-back" data-back="2"><span class="lang-en">&larr; Back</span><span class="lang-zh">&larr; 上一步</span><span class="lang-de">&larr; Zurück</span><span class="lang-vi">&larr; Quay lại</span></button>
-                        <button class="btn btn-atlas" id="atlasSubmit"><span class="lang-en">Show My Regulations</span><span class="lang-zh">显示适用法规</span><span class="lang-de">Meine Vorschriften anzeigen</span><span class="lang-vi">Hiển thị quy định của tôi</span></button>
+                        <button class="btn btn-atlas" id="atlasSubmit"><span class="lang-en">Show Applicable Requirements</span><span class="lang-zh">显示适用要求</span><span class="lang-de">Geltende Anforderungen anzeigen</span><span class="lang-vi">Hiển thị yêu cầu áp dụng</span></button>
                     </div>
                 </div>
             </div>
@@ -333,33 +333,6 @@
                 <div class="atlas-cards" id="atlasCards"></div>
             </div>
 
-            <!-- Voluntary Certifications -->
-            <div class="atlas-voluntary" id="atlasVoluntary">
-                <h3><span class="lang-en">Voluntary Certifications</span><span class="lang-zh">自愿性认证</span><span class="lang-de">Freiwillige Zertifizierungen</span><span class="lang-vi">Chứng nhận tự nguyện</span></h3>
-                <p class="voluntary-subtitle"><span class="lang-en">Widely recognized frameworks that strengthen your compliance posture</span><span class="lang-zh">广泛认可的框架，增强您的合规能力</span><span class="lang-de">Weithin anerkannte Rahmenwerke, die Ihre Compliance-Position stärken</span><span class="lang-vi">Các khuôn khổ được công nhận rộng rãi giúp củng cố năng lực tuân thủ của bạn</span></p>
-                <div class="voluntary-grid">
-                    <a href="https://www.iso.org/standard/60857.html" target="_blank" rel="noopener" class="voluntary-card">
-                        <div class="voluntary-name">ISO 14001</div>
-                        <div class="voluntary-desc"><span class="lang-en">Environmental Management</span><span class="lang-zh">环境管理</span><span class="lang-de">Umweltmanagement</span><span class="lang-vi">Quản lý môi trường</span></div>
-                    </a>
-                    <a href="https://sa-intl.org/programs/sa8000/" target="_blank" rel="noopener" class="voluntary-card">
-                        <div class="voluntary-name">SA8000</div>
-                        <div class="voluntary-desc"><span class="lang-en">Social Accountability / Labour Rights</span><span class="lang-zh">社会责任/劳工权益</span><span class="lang-de">Soziale Verantwortung / Arbeitsrechte</span><span class="lang-vi">Trách nhiệm xã hội / Quyền lao động</span></div>
-                    </a>
-                    <a href="https://www.iso.org/standard/42546.html" target="_blank" rel="noopener" class="voluntary-card">
-                        <div class="voluntary-name">ISO 26000</div>
-                        <div class="voluntary-desc"><span class="lang-en">Social Responsibility Guidance</span><span class="lang-zh">社会责任指南</span><span class="lang-de">Leitfaden zur gesellschaftlichen Verantwortung</span><span class="lang-vi">Hướng dẫn trách nhiệm xã hội</span></div>
-                    </a>
-                    <a href="https://www.iso.org/standard/69426.html" target="_blank" rel="noopener" class="voluntary-card">
-                        <div class="voluntary-name">ISO 50001</div>
-                        <div class="voluntary-desc"><span class="lang-en">Energy Management</span><span class="lang-zh">能源管理</span><span class="lang-de">Energiemanagement</span><span class="lang-vi">Quản lý năng lượng</span></div>
-                    </a>
-                    <a href="https://sdgs.un.org/" target="_blank" rel="noopener" class="voluntary-card">
-                        <div class="voluntary-name">UN SDG Framework</div>
-                        <div class="voluntary-desc"><span class="lang-en">Sustainable Development Goals</span><span class="lang-zh">可持续发展目标</span><span class="lang-de">Ziele für nachhaltige Entwicklung</span><span class="lang-vi">Các Mục tiêu Phát triển Bền vững</span></div>
-                    </a>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -383,7 +356,7 @@
     <section class="briefing" id="briefing" style="display: none;">
         <div class="container">
             <header class="briefing-masthead">
-                <div class="briefing-masthead-kicker"><span class="lang-en">REGULAR UPDATES FOR THE HONG KONG SOURCING COMMUNITY</span><span class="lang-zh">面向香港采购业界的定期动态</span><span class="lang-de">REGELMÄSSIGE UPDATES FÜR DIE HONGKONGER SOURCING-COMMUNITY</span><span class="lang-vi">CẬP NHẬT ĐỊNH KỲ CHO CỘNG ĐỒNG THU MUA HỒNG KÔNG</span></div>
+                <div class="briefing-masthead-kicker"><span class="lang-en">LATEST NEWS ABOUT THE EU REGULATORY LANDSCAPE</span><span class="lang-zh">欧盟监管动态最新新闻</span><span class="lang-de">AKTUELLE NACHRICHTEN ZUR EU-REGULIERUNGSLANDSCHAFT</span><span class="lang-vi">TIN MỚI NHẤT VỀ MÔI TRƯỜNG PHÁP LÝ CỦA EU</span></div>
                 <h2 class="briefing-title"><span class="lang-en">The Green Sourcing Briefing</span><span class="lang-zh">绿色采购简报</span><span class="lang-de">The Green Sourcing Briefing</span><span class="lang-vi">The Green Sourcing Briefing</span></h2>
                 <div class="briefing-dateline" id="briefingDateline"></div>
             </header>
@@ -415,6 +388,7 @@
                     <div class="atlas-label"><span class="lang-en">CBAM &middot; CARBON BORDER ADJUSTMENT</span><span class="lang-zh">CBAM · 碳边境调节机制</span><span class="lang-de">CBAM &middot; CO₂-GRENZAUSGLEICH</span><span class="lang-vi">CBAM &middot; CƠ CHẾ ĐIỀU CHỈNH CARBON BIÊN GIỚI</span></div>
                     <h2 class="section-title"><span class="lang-en">CBAM Calculator</span><span class="lang-zh">CBAM 计算器</span><span class="lang-de">CBAM-Rechner</span><span class="lang-vi">Máy tính CBAM</span></h2>
                     <p class="section-subtitle"><span class="lang-en">What will the EU carbon border levy cost you? Estimate your exposure with the official Q2 2026 certificate price (€75.28/tCO₂e).</span><span class="lang-zh">欧盟碳边境税将让您付出多少成本？基于2026年第二季度官方证书价格（€75.28/tCO₂e）进行估算。</span><span class="lang-de">Was kostet Sie die CO₂-Grenzabgabe der EU? Schätzen Sie Ihre Belastung mit dem offiziellen Zertifikatspreis für Q2 2026 (€75.28/tCO₂e).</span><span class="lang-vi">Thuế carbon biên giới của EU sẽ khiến bạn tốn bao nhiêu? Ước tính mức chi phí với giá chứng chỉ chính thức Q2 2026 (€75.28/tCO₂e).</span></p>
+                    <p class="cbam-price-basis"><span class="lang-en">Price basis: in 2026, certificate prices are set as official quarterly averages; from 2027, the weekly average EU ETS auction price applies. The legal obligation to buy certificates sits with the EU importer — supplier results are indicative for pricing discussions.</span><span class="lang-zh">价格基础：2026年证书价格按官方季度平均值确定；自2027年起按欧盟ETS拍卖周平均价。购买证书的法律义务由欧盟进口商承担——供应商视角的结果仅供定价谈判参考。</span><span class="lang-de">Preisbasis: 2026 gelten offizielle Quartalsdurchschnitte; ab 2027 der wöchentliche Durchschnitt der EU-ETS-Auktionen. Die Kaufpflicht liegt beim EU-Importeur — Lieferanten-Ergebnisse sind indikativ für Preisgespräche.</span><span class="lang-vi">Cơ sở giá: năm 2026 giá chứng chỉ theo trung bình quý chính thức; từ 2027 theo trung bình tuần của giá đấu giá EU ETS. Nghĩa vụ mua chứng chỉ thuộc về nhà nhập khẩu EU — kết quả cho nhà cung cấp chỉ mang tính tham khảo định giá.</span></p>
                 </div>
             </div>
 
@@ -425,14 +399,14 @@
                         <label class="cbam-role-option">
                             <input type="radio" name="cbamRole" value="supplier" checked>
                             <span class="cbam-role-label">
-                                <strong><span class="lang-en">Non-EU Supplier</span><span class="lang-zh">非欧盟供应商</span><span class="lang-de">Lieferant außerhalb der EU</span><span class="lang-vi">Nhà cung cấp ngoài EU</span></strong>
+                                <strong><span class="lang-en">CBAM Supplier</span><span class="lang-zh">CBAM供应商</span><span class="lang-de">CBAM-Lieferant</span><span class="lang-vi">Nhà cung cấp CBAM</span></strong>
                                 <span class="cbam-role-desc"><span class="lang-en">Show me the CBAM cost per tonne for pricing</span><span class="lang-zh">显示每公吨CBAM成本，用于定价参考</span><span class="lang-de">CBAM-Kosten pro Tonne für die Preisgestaltung anzeigen</span><span class="lang-vi">Hiển thị chi phí CBAM trên mỗi tấn để tham khảo định giá</span></span>
                             </span>
                         </label>
                         <label class="cbam-role-option">
                             <input type="radio" name="cbamRole" value="importer">
                             <span class="cbam-role-label">
-                                <strong><span class="lang-en">EU Importing Company</span><span class="lang-zh">欧盟进口公司</span><span class="lang-de">EU-Importunternehmen</span><span class="lang-vi">Công ty nhập khẩu tại EU</span></strong>
+                                <strong><span class="lang-en">EU Importer</span><span class="lang-zh">欧盟进口商</span><span class="lang-de">EU-Importeur</span><span class="lang-vi">Nhà nhập khẩu EU</span></strong>
                                 <span class="cbam-role-desc"><span class="lang-en">Show me total annual CBAM cost exposure</span><span class="lang-zh">显示年度CBAM总成本</span><span class="lang-de">Jährliche CBAM-Gesamtkosten anzeigen</span><span class="lang-vi">Hiển thị tổng chi phí CBAM hàng năm</span></span>
                             </span>
                         </label>
@@ -496,10 +470,12 @@
                             <label for="v2PricePaid"><span class="lang-en">Carbon price actually paid at origin (€/tCO&#8322;e, optional)</span><span class="lang-zh">在原产国实际支付的碳价（€/tCO&#8322;e，可选）</span><span class="lang-de">Tats&auml;chlich gezahlter CO&#8322;-Preis (€/t, optional)</span><span class="lang-vi">Gi&aacute; carbon thực trả tại xuất xứ (€/tCO&#8322;e, t&ugrave;y chọn)</span></label>
                             <input type="number" id="v2PricePaid" min="0" step="0.1" placeholder="">
                             <div class="cbam-default-value" id="v2PricePaidHint"></div>
+                            <p class="cbam-small-note"><span class="lang-en">Note: deductions and verified values are only usable if the EU's CBAM requirements can be fulfilled and the respective evidence is available as part of official verification.</span><span class="lang-zh">注意：只有在能够满足欧盟CBAM要求、且相关证明可通过官方核证程序提供的情况下，才能使用抵扣和核实数值。</span><span class="lang-de">Hinweis: Abzüge und verifizierte Werte sind nur nutzbar, wenn die EU-CBAM-Anforderungen erfüllt werden können und die Nachweise im Rahmen der offiziellen Verifizierung vorliegen.</span><span class="lang-vi">Lưu ý: các khoản khấu trừ và giá trị đã xác minh chỉ dùng được nếu đáp ứng yêu cầu CBAM của EU và có bằng chứng qua quy trình thẩm định chính thức.</span></p>
                         </div>
                         <div class="filter-group">
-                            <label for="cbamCnCode"><span class="lang-en">CN Code (optional)</span><span class="lang-zh">CN编码（选填）</span><span class="lang-de">CN-Code (optional)</span><span class="lang-vi">Mã CN (tùy chọn)</span></label>
-                            <input type="text" id="cbamCnCode" maxlength="8" inputmode="numeric" autocomplete="off" placeholder="e.g. 72061000">
+                            <label for="cbamCnCode"><span class="lang-en">CN Code (required)</span><span class="lang-zh">CN编码（必填）</span><span class="lang-de">CN-Code (erforderlich)</span><span class="lang-vi">Mã CN (bắt buộc)</span></label>
+                            <input type="text" id="cbamCnCode" maxlength="8" inputmode="numeric" autocomplete="off" placeholder="e.g. 72061000" required>
+                            <p class="cbam-small-note"><span class="lang-en">CBAM scope is defined by CN code — only with it can we confirm your product actually falls under CBAM. You find it on your customs or export documents.</span><span class="lang-zh">CBAM适用范围由CN编码界定——只有提供编码才能确认您的产品确实属于CBAM范围。编码可在报关或出口单据中找到。</span><span class="lang-de">Der CBAM-Anwendungsbereich ist über CN-Codes definiert — nur damit lässt sich bestätigen, dass Ihr Produkt tatsächlich unter CBAM fällt. Sie finden ihn in Ihren Zoll- oder Exportdokumenten.</span><span class="lang-vi">Phạm vi CBAM được xác định theo mã CN — chỉ khi có mã mới xác nhận được sản phẩm của bạn thuộc CBAM. Mã có trong chứng từ hải quan hoặc xuất khẩu.</span></p>
                         </div>
                         <div class="filter-group">
                             <label for="cbamVolume"><span class="lang-en">Annual Export Volume to EU (metric tonnes)</span><span class="lang-zh">每年向欧盟出口量（公吨）</span><span class="lang-de">Jährliches Exportvolumen in die EU (Tonnen)</span><span class="lang-vi">Sản lượng xuất khẩu hàng năm sang EU (tấn)</span></label>
@@ -521,6 +497,7 @@
                             </div>
                             <div id="cbamEmissionsCustom" style="display: none;">
                                 <input type="number" id="cbamCustomEmissions" min="0" step="0.01" placeholder="e.g. 1.8">
+                                <p class="cbam-small-note"><span class="lang-en">Actual values can only be used if they are verified per the EU's CBAM methodology and the evidence is available in official verification.</span><span class="lang-zh">实际值仅在按欧盟CBAM方法学核实、且证明材料可用于官方核证时方可使用。</span><span class="lang-de">Ist-Werte sind nur nutzbar, wenn sie nach der EU-CBAM-Methodik verifiziert sind und die Nachweise für die offizielle Verifizierung vorliegen.</span><span class="lang-vi">Giá trị thực tế chỉ dùng được nếu đã được thẩm định theo phương pháp CBAM của EU và có bằng chứng cho quy trình chính thức.</span></p>
                             </div>
                         </div>
                     </div>
@@ -544,7 +521,7 @@
                     </div>
                 </div>
 
-                <button class="btn btn-atlas" id="cbamCalculate"><span class="lang-en">Calculate My CBAM Exposure</span><span class="lang-zh">计算我的CBAM合规成本</span><span class="lang-de">Meine CBAM-Kosten berechnen</span><span class="lang-vi">Tính chi phí CBAM của tôi</span></button>
+                <button class="btn btn-atlas" id="cbamCalculate"><span class="lang-en">Estimate CBAM Costs</span><span class="lang-zh">估算CBAM成本</span><span class="lang-de">CBAM-Kosten schätzen</span><span class="lang-vi">Ước tính chi phí CBAM</span></button>
 
                 <div id="cbamResult"></div>
                 <div class="cbam-info-note">
@@ -561,7 +538,7 @@
         <div class="container">
             <div class="v2-gd-eyebrow"><span class="lang-en">GUIDANCE &amp; BACKGROUND</span><span class="lang-zh">指导与背景</span><span class="lang-de">ORIENTIERUNG &amp; HINTERGRUND</span><span class="lang-vi">HƯỚNG DẪN &amp; BỐI CẢNH</span></div>
             <h2><span class="lang-en">Understand &amp; Plan</span><span class="lang-zh">理解与规划</span><span class="lang-de">Verstehen &amp; Planen</span><span class="lang-vi">Hiểu &amp; Lập kế hoạch</span></h2>
-            <p><span class="lang-en">These sections are educational background: why compliance pays off, what happens if you wait, and how to get started. The live regulation data and tools are on the Regulations, CBAM and News pages.</span><span class="lang-zh">以下部分为教育性内容：合规为何值得投入、拖延的后果，以及如何着手。实时法规数据和工具请见"法规"、"CBAM"和"新闻"页面。</span><span class="lang-de">Diese Abschnitte sind edukativer Hintergrund: warum sich Compliance lohnt, was bei Abwarten passiert und wie Sie starten. Die aktuellen Regulierungsdaten und Tools finden Sie auf den Seiten Vorschriften, CBAM und Nachrichten.</span><span class="lang-vi">Các phần dưới đây mang tính giáo dục: vì sao tuân thủ có lợi, điều gì xảy ra nếu chờ đợi, và cách bắt đầu. Dữ liệu quy định trực tiếp và công cụ nằm tại các trang Quy định, CBAM và Tin tức.</span></p>
+            <p><span class="lang-en">These sections are educational background: why compliance pays off, what happens if you wait, and how to get started. The live requirements data and tools are on the Regulations and News pages.</span><span class="lang-zh">以下部分为教育性内容：合规为何值得投入、拖延的后果，以及如何着手。实时要求数据和工具请见"法规"和"新闻"页面。</span><span class="lang-de">Diese Abschnitte sind edukativer Hintergrund: warum sich Compliance lohnt, was bei Abwarten passiert und wie Sie starten. Die aktuellen Anforderungsdaten und Tools finden Sie auf den Seiten Vorschriften und Nachrichten.</span><span class="lang-vi">Các phần dưới đây mang tính giáo dục: vì sao tuân thủ có lợi, điều gì xảy ra nếu chờ đợi, và cách bắt đầu. Dữ liệu yêu cầu trực tiếp và công cụ nằm tại các trang Quy định và Tin tức.</span></p>
             <div class="v2-gd-chips">
                 <a href="#benefits"><span class="lang-en">The business case</span><span class="lang-zh">商业价值</span><span class="lang-de">Der Business Case</span><span class="lang-vi">Lợi ích kinh doanh</span></a>
                 <a href="#risks-incentives"><span class="lang-en">Risks &amp; incentives</span><span class="lang-zh">风险与激励</span><span class="lang-de">Risiken &amp; Anreize</span><span class="lang-vi">Rủi ro &amp; ưu đãi</span></a>
@@ -682,7 +659,7 @@
         <div class="container">
             <div class="atlas-china-esg">
                 <h3><span class="lang-en">Your Home Market: China ESG</span><span class="lang-zh">您的本土市场：中国ESG要求</span><span class="lang-de">Ihr Heimatmarkt: ESG in China</span><span class="lang-vi">Thị trường quê nhà của bạn: ESG Trung Quốc</span></h3>
-                <p><span class="lang-en">Since 30 April 2026, major listed companies in China (SSE 180, STAR 50, SZSE 100 and ChiNext index constituents, plus dual-listed companies) must publish annual sustainability reports, with national CSDS standards rolling out to 2030. If you are listed on the Shanghai, Shenzhen or Beijing exchanges, you have parallel obligations at home. The GCC Sustainability Committee can help you navigate both EU and China ESG requirements.</span><span class="lang-zh">自2026年4月30日起，中国主要上市公司（上证180、科创50、深证100及创业板指数成分股，以及境内外同时上市的公司）须发布年度可持续发展报告，全国性CSDS准则将于2030年前逐步推行。若您在沪、深、北交所上市，您同时面临两个市场的合规义务。德国商会可持续发展委员会可协助您同时满足欧盟及中国ESG要求。</span><span class="lang-de">Seit dem 30. April 2026 müssen große börsennotierte Unternehmen in China (Indexwerte von SSE 180, STAR 50, SZSE 100 und ChiNext sowie doppelt notierte Unternehmen) jährliche Nachhaltigkeitsberichte veröffentlichen; die nationalen CSDS-Standards werden bis 2030 schrittweise eingeführt. Sind Sie an den Börsen Shanghai, Shenzhen oder Peking notiert, haben Sie parallele Pflichten im Heimatmarkt. Der GCC-Nachhaltigkeitsausschuss unterstützt Sie bei den ESG-Anforderungen der EU und Chinas.</span><span class="lang-vi">Kể từ ngày 30 tháng 4 năm 2026, các công ty niêm yết lớn tại Trung Quốc (thành phần các chỉ số SSE 180, STAR 50, SZSE 100 và ChiNext, cùng các công ty niêm yết kép) phải công bố báo cáo phát triển bền vững hàng năm, với các chuẩn mực CSDS quốc gia được triển khai đến năm 2030. Nếu công ty của bạn niêm yết tại Thượng Hải, Thâm Quyến hoặc Bắc Kinh, bạn có các nghĩa vụ song song tại thị trường trong nước. Ủy ban Phát triển Bền vững GCC có thể giúp bạn đáp ứng cả yêu cầu ESG của EU và Trung Quốc.</span></p>
+                <p><span class="lang-en">Since 30 April 2026, major listed companies in China (SSE 180, STAR 50, SZSE 100 and ChiNext index constituents, plus dual-listed companies) must publish annual sustainability reports, with national CSDS standards rolling out to 2030. If you are listed on the Shanghai, Shenzhen or Beijing exchanges, you have parallel obligations at home. The GCC ESG Committee can help you navigate both EU and China ESG requirements.</span><span class="lang-zh">自2026年4月30日起，中国主要上市公司（上证180、科创50、深证100及创业板指数成分股，以及境内外同时上市的公司）须发布年度可持续发展报告，全国性CSDS准则将于2030年前逐步推行。若您在沪、深、北交所上市，您同时面临两个市场的合规义务。德国商会ESG委员会可协助您同时满足欧盟及中国ESG要求。</span><span class="lang-de">Seit dem 30. April 2026 müssen große börsennotierte Unternehmen in China (Indexwerte von SSE 180, STAR 50, SZSE 100 und ChiNext sowie doppelt notierte Unternehmen) jährliche Nachhaltigkeitsberichte veröffentlichen; die nationalen CSDS-Standards werden bis 2030 schrittweise eingeführt. Sind Sie an den Börsen Shanghai, Shenzhen oder Peking notiert, haben Sie parallele Pflichten im Heimatmarkt. Der GCC-ESG-Ausschuss unterstützt Sie bei den ESG-Anforderungen der EU und Chinas.</span><span class="lang-vi">Kể từ ngày 30 tháng 4 năm 2026, các công ty niêm yết lớn tại Trung Quốc (thành phần các chỉ số SSE 180, STAR 50, SZSE 100 và ChiNext, cùng các công ty niêm yết kép) phải công bố báo cáo phát triển bền vững hàng năm, với các chuẩn mực CSDS quốc gia được triển khai đến năm 2030. Nếu công ty của bạn niêm yết tại Thượng Hải, Thâm Quyến hoặc Bắc Kinh, bạn có các nghĩa vụ song song tại thị trường trong nước. Ủy ban ESG GCC có thể giúp bạn đáp ứng cả yêu cầu ESG của EU và Trung Quốc.</span></p>
                 <a href="mailto:info@hongkong.ahk.de" class="china-esg-link"><span class="lang-en">Contact the Committee &rarr;</span><span class="lang-zh">联系委员会了解更多 &rarr;</span><span class="lang-de">Ausschuss kontaktieren &rarr;</span><span class="lang-vi">Liên hệ Ủy ban &rarr;</span></a>
             </div>
         </div>
@@ -714,22 +691,58 @@
         </div>
     </section>
 
+    <!-- Voluntary Certifications (V2: moved from the Compass results to the Learn page —
+         they are not legal requirements and would muddy the requirements answer) -->
+    <section class="v2-voluntary v2-guidance" id="voluntary">
+        <div class="container">
+            <div class="atlas-voluntary" id="atlasVoluntary">
+                <h3><span class="lang-en">Voluntary Certifications</span><span class="lang-zh">自愿性认证</span><span class="lang-de">Freiwillige Zertifizierungen</span><span class="lang-vi">Chứng nhận tự nguyện</span></h3>
+                <p class="voluntary-subtitle"><span class="lang-en">Widely recognized frameworks that strengthen your compliance posture. Important: these are voluntary — they support, but never replace, the legal EU requirements.</span><span class="lang-zh">广泛认可的框架，增强您的合规能力。请注意：这些均为自愿性认证——它们可以辅助、但绝不能替代欧盟法定要求。</span><span class="lang-de">Weithin anerkannte Rahmenwerke, die Ihre Compliance-Position stärken. Wichtig: Sie sind freiwillig — sie ergänzen die gesetzlichen EU-Anforderungen, ersetzen sie aber nie.</span><span class="lang-vi">Các khuôn khổ được công nhận rộng rãi giúp củng cố năng lực tuân thủ của bạn. Lưu ý: đây là các chứng nhận tự nguyện — chúng hỗ trợ nhưng không bao giờ thay thế các yêu cầu pháp lý của EU.</span></p>
+                <div class="voluntary-grid">
+                    <a href="https://www.iso.org/standard/60857.html" target="_blank" rel="noopener" class="voluntary-card">
+                        <div class="voluntary-name">ISO 14001</div>
+                        <div class="voluntary-desc"><span class="lang-en">Environmental Management</span><span class="lang-zh">环境管理</span><span class="lang-de">Umweltmanagement</span><span class="lang-vi">Quản lý môi trường</span></div>
+                    </a>
+                    <a href="https://sa-intl.org/programs/sa8000/" target="_blank" rel="noopener" class="voluntary-card">
+                        <div class="voluntary-name">SA8000</div>
+                        <div class="voluntary-desc"><span class="lang-en">Social Accountability / Labour Rights</span><span class="lang-zh">社会责任/劳工权益</span><span class="lang-de">Soziale Verantwortung / Arbeitsrechte</span><span class="lang-vi">Trách nhiệm xã hội / Quyền lao động</span></div>
+                    </a>
+                    <a href="https://www.iso.org/standard/42546.html" target="_blank" rel="noopener" class="voluntary-card">
+                        <div class="voluntary-name">ISO 26000</div>
+                        <div class="voluntary-desc"><span class="lang-en">Social Responsibility Guidance</span><span class="lang-zh">社会责任指南</span><span class="lang-de">Leitfaden zur gesellschaftlichen Verantwortung</span><span class="lang-vi">Hướng dẫn trách nhiệm xã hội</span></div>
+                    </a>
+                    <a href="https://www.iso.org/standard/69426.html" target="_blank" rel="noopener" class="voluntary-card">
+                        <div class="voluntary-name">ISO 50001</div>
+                        <div class="voluntary-desc"><span class="lang-en">Energy Management</span><span class="lang-zh">能源管理</span><span class="lang-de">Energiemanagement</span><span class="lang-vi">Quản lý năng lượng</span></div>
+                    </a>
+                    <a href="https://sdgs.un.org/" target="_blank" rel="noopener" class="voluntary-card">
+                        <div class="voluntary-name">UN SDG Framework</div>
+                        <div class="voluntary-desc"><span class="lang-en">Sustainable Development Goals</span><span class="lang-zh">可持续发展目标</span><span class="lang-de">Ziele für nachhaltige Entwicklung</span><span class="lang-vi">Các Mục tiêu Phát triển Bền vững</span></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- About the Committee -->
     <section class="about" id="about">
         <div class="container">
             <div class="section-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
             <div class="atlas-label"><span class="lang-en">ABOUT US</span><span class="lang-zh">关于我们</span><span class="lang-de">ÜBER UNS</span><span class="lang-vi">VỀ CHÚNG TÔI</span></div>
-            <h2 class="section-title"><span class="lang-en">The GCC Sustainability Committee</span><span class="lang-zh">德国商会可持续发展委员会</span><span class="lang-de">Der GCC-Nachhaltigkeitsausschuss</span><span class="lang-vi">Ủy ban Phát triển Bền vững GCC</span></h2>
+            <h2 class="section-title"><span class="lang-en">The GCC ESG Committee</span><span class="lang-zh">德国商会ESG委员会</span><span class="lang-de">Der GCC-ESG-Ausschuss</span><span class="lang-vi">Ủy ban ESG GCC</span></h2>
             <p class="section-subtitle"><span class="lang-en">The official sustainability body of the German Chamber of Commerce, Hong Kong</span><span class="lang-zh">香港德国商会官方可持续发展机构</span><span class="lang-de">Das offizielle Nachhaltigkeitsgremium der Deutschen Handelskammer Hongkong</span><span class="lang-vi">Cơ quan chính thức về phát triển bền vững của Phòng Thương mại Đức tại Hồng Kông</span></p>
             <div class="about-grid">
                 <figure class="about-photo">
-                    <img src="assets/img/committee-team.jpg" width="1400" height="786" loading="lazy" alt="Members of the GCC Sustainability Committee in Hong Kong">
-                    <figcaption><span class="lang-en">Members of the Sustainability Committee at the German Chamber of Commerce, Hong Kong</span><span class="lang-zh">香港德国商会可持续发展委员会成员</span><span class="lang-de">Mitglieder des Nachhaltigkeitsausschusses der Deutschen Handelskammer Hongkong</span><span class="lang-vi">Các thành viên Ủy ban Phát triển Bền vững của Phòng Thương mại Đức tại Hồng Kông</span></figcaption>
+                    <img src="assets/img/committee-team.jpg" width="1400" height="786" loading="lazy" alt="Members of the GCC ESG Committee in Hong Kong">
+                    <figcaption><span class="lang-en">Members of the ESG Committee at the German Chamber of Commerce, Hong Kong</span><span class="lang-zh">香港德国商会ESG委员会成员</span><span class="lang-de">Mitglieder des ESG-Ausschusses der Deutschen Handelskammer Hongkong</span><span class="lang-vi">Các thành viên Ủy ban ESG của Phòng Thương mại Đức tại Hồng Kông</span></figcaption>
                 </figure>
                 <div class="about-text">
-                    <p><span class="lang-en">We are the official <strong>Sustainability Committee of the German Chamber of Commerce, Hong Kong</strong> &mdash; sourcing offices of major German and European retail organizations and their partners. As new sustainability regulations reshape trade between Europe and Asia, we understand the challenges suppliers face and support your journey towards compliance and growth.</span><span class="lang-zh">我们是<strong>香港德国商会官方可持续发展委员会</strong>——由主要德国及欧洲零售企业的采购办公室及其合作伙伴组成。随着新的可持续发展法规重塑欧亚贸易，我们深知供应商面临的挑战，并支持您走向合规与增长。</span><span class="lang-de">Wir sind der offizielle <strong>Nachhaltigkeitsausschuss der Deutschen Handelskammer Hongkong</strong> &mdash; Einkaufsbüros führender deutscher und europäischer Handelsorganisationen und ihre Partner. Während neue Nachhaltigkeitsvorschriften den Handel zwischen Europa und Asien neu ordnen, verstehen wir die Herausforderungen der Lieferanten und begleiten Sie auf Ihrem Weg zu Compliance und Wachstum.</span><span class="lang-vi">Chúng tôi là <strong>Ủy ban Phát triển Bền vững của Phòng Thương mại Đức tại Hồng Kông</strong> chính thức &mdash; gồm các văn phòng thu mua của các tập đoàn bán lẻ lớn của Đức và châu Âu cùng các đối tác. Khi các quy định phát triển bền vững mới đang định hình lại thương mại giữa châu Âu và châu Á, chúng tôi thấu hiểu những thách thức mà nhà cung cấp phải đối mặt và đồng hành cùng bạn trên hành trình tuân thủ và tăng trưởng.</span></p>
+                    <p><span class="lang-en">We are the official <strong>ESG Committee of the German Chamber of Commerce, Hong Kong</strong> &mdash; sourcing offices of major German and European retail organizations and their partners. As new sustainability regulations reshape trade between Europe and Asia, we understand the challenges suppliers face and support your journey towards compliance and growth.</span><span class="lang-zh">我们是<strong>香港德国商会官方ESG委员会</strong>——由主要德国及欧洲零售企业的采购办公室及其合作伙伴组成。随着新的可持续发展法规重塑欧亚贸易，我们深知供应商面临的挑战，并支持您走向合规与增长。</span><span class="lang-de">Wir sind der offizielle <strong>ESG-Ausschuss der Deutschen Handelskammer Hongkong</strong> &mdash; Einkaufsbüros führender deutscher und europäischer Handelsorganisationen und ihre Partner. Während neue Nachhaltigkeitsvorschriften den Handel zwischen Europa und Asien neu ordnen, verstehen wir die Herausforderungen der Lieferanten und begleiten Sie auf Ihrem Weg zu Compliance und Wachstum.</span><span class="lang-vi">Chúng tôi là <strong>Ủy ban ESG của Phòng Thương mại Đức tại Hồng Kông</strong> chính thức &mdash; gồm các văn phòng thu mua của các tập đoàn bán lẻ lớn của Đức và châu Âu cùng các đối tác. Khi các quy định phát triển bền vững mới đang định hình lại thương mại giữa châu Âu và châu Á, chúng tôi thấu hiểu những thách thức mà nhà cung cấp phải đối mặt và đồng hành cùng bạn trên hành trình tuân thủ và tăng trưởng.</span></p>
                     <p><span class="lang-en">We provide practical guidance: this platform's free tools in four languages, regulatory briefings in English and Chinese, workshops and trainings, and a direct line to compliance experts (in English, Chinese and German).</span><span class="lang-zh">我们提供切实可行的指导：本平台四种语言的免费工具、中英双语法规简报、研讨会和培训，以及直接对接合规专家的渠道（提供英文、中文和德文服务）。</span><span class="lang-de">Wir bieten praxisnahe Orientierung: die kostenlosen Tools dieser Plattform in vier Sprachen, Regulierungs-Briefings auf Englisch und Chinesisch, Workshops und Schulungen sowie einen direkten Draht zu Compliance-Experten (auf Englisch, Chinesisch und Deutsch).</span><span class="lang-vi">Chúng tôi cung cấp hướng dẫn thiết thực: các công cụ miễn phí của nền tảng này bằng bốn ngôn ngữ, bản tin quy định bằng tiếng Anh và tiếng Trung, hội thảo và đào tạo, cùng kênh liên hệ trực tiếp với các chuyên gia tuân thủ (bằng tiếng Anh, tiếng Trung và tiếng Đức).</span></p>
-                    <a href="mailto:info@hongkong.ahk.de?subject=Sustainability Committee Membership" class="btn btn-primary"><span class="lang-en">Join the Committee</span><span class="lang-zh">加入委员会</span><span class="lang-de">Dem Ausschuss beitreten</span><span class="lang-vi">Tham gia Ủy ban</span></a>
+                    <div class="about-cta-row">
+                        <a href="mailto:info@hongkong.ahk.de?subject=Green Sourcing Hub — ESG Committee" class="btn btn-primary"><span class="lang-en">Get in touch</span><span class="lang-zh">联系我们</span><span class="lang-de">Kontakt aufnehmen</span><span class="lang-vi">Liên hệ với chúng tôi</span></a>
+                        <a href="https://hongkong.ahk.de/en" target="_blank" rel="noopener" class="btn btn-outline"><span class="lang-en">More on the Chamber website &rarr;</span><span class="lang-zh">商会官网了解更多 &rarr;</span><span class="lang-de">Mehr auf der Kammer-Website &rarr;</span><span class="lang-vi">Xem thêm trên website Phòng Thương mại &rarr;</span></a>
+                    </div>
                 </div>
             </div>
             <div class="about-members">
@@ -762,21 +775,21 @@
                         <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
                     </button>
                     <div class="faq-answer">
-                        <p><span class="lang-en">Various EU and national funding programs support companies in their sustainability transition. These include grants for green technology adoption, subsidized consulting services, tax incentives for sustainable investments, and access to green finance instruments. The GCC Sustainability Committee can help identify relevant programs for your business.</span><span class="lang-zh">欧盟和各国政府提供多种资金支持计划，包括绿色技术采纳补贴、咨询服务补助、可持续投资税收优惠，以及绿色金融工具。德国商会可持续发展委员会可协助您识别适用的支持项目。</span><span class="lang-de">Verschiedene EU- und nationale Förderprogramme unterstützen Unternehmen bei ihrer Nachhaltigkeitstransformation. Dazu gehören Zuschüsse für grüne Technologien, geförderte Beratungsleistungen, Steueranreize für nachhaltige Investitionen und Zugang zu grünen Finanzierungsinstrumenten. Der GCC-Nachhaltigkeitsausschuss hilft Ihnen, relevante Programme für Ihr Unternehmen zu identifizieren.</span><span class="lang-vi">Nhiều chương trình tài trợ của EU và các quốc gia hỗ trợ doanh nghiệp trong quá trình chuyển đổi phát triển bền vững, bao gồm trợ cấp áp dụng công nghệ xanh, dịch vụ tư vấn được trợ giá, ưu đãi thuế cho đầu tư bền vững và tiếp cận các công cụ tài chính xanh. Ủy ban Phát triển Bền vững GCC có thể giúp bạn xác định các chương trình phù hợp với doanh nghiệp.</span></p>
+                        <p><span class="lang-en">Some support programs exist at EU and national level — for example grants for green technology, subsidised consulting, or green finance instruments. Availability depends heavily on your country, sector and company size, and support is not guaranteed; many programs are open only to companies established in the EU. Check official channels first, and feel free to ask the Committee where to look — we can point to publicly listed programs, but cannot promise funding.</span><span class="lang-zh">欧盟及部分国家层面存在一些支持计划——如绿色技术补贴、咨询补助或绿色金融工具。可获得性高度取决于所在国家、行业和公司规模，且不保证获得支持；许多计划仅面向在欧盟设立的企业。请首先查询官方渠道；也欢迎向委员会咨询查找方向——我们可以指出公开列出的项目，但无法承诺资金。</span><span class="lang-de">Auf EU- und nationaler Ebene gibt es einzelne Förderprogramme — etwa Zuschüsse für grüne Technologien, geförderte Beratung oder grüne Finanzierungsinstrumente. Die Verfügbarkeit hängt stark von Land, Branche und Unternehmensgröße ab; eine Förderung ist nicht garantiert, und viele Programme stehen nur in der EU ansässigen Unternehmen offen. Prüfen Sie zuerst die offiziellen Kanäle — der Ausschuss kann auf öffentlich gelistete Programme hinweisen, aber keine Förderung zusagen.</span><span class="lang-vi">Có một số chương trình hỗ trợ ở cấp EU và quốc gia — ví dụ trợ cấp công nghệ xanh, tư vấn được trợ giá hoặc công cụ tài chính xanh. Khả năng tiếp cận phụ thuộc nhiều vào quốc gia, ngành và quy mô công ty, và không được bảo đảm; nhiều chương trình chỉ dành cho công ty thành lập tại EU. Hãy kiểm tra các kênh chính thức trước; Ủy ban có thể chỉ ra các chương trình được công bố công khai nhưng không thể hứa hẹn tài trợ.</span></p>
                     </div>
                 </div>
                 <div class="faq-item">
                     <button class="faq-question">
-                        <span><span class="lang-en">Are there transition periods for new regulations?</span><span class="lang-zh">新法规是否有过渡期？</span><span class="lang-de">Gibt es Übergangsfristen für neue Vorschriften?</span><span class="lang-vi">Các quy định mới có thời gian chuyển tiếp không?</span></span>
+                        <span><span class="lang-en">Are there transition periods for new requirements?</span><span class="lang-zh">新要求是否有过渡期？</span><span class="lang-de">Gibt es Übergangsfristen für neue Anforderungen?</span><span class="lang-vi">Các yêu cầu mới có thời gian chuyển tiếp không?</span></span>
                         <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
                     </button>
                     <div class="faq-answer">
-                        <p><span class="lang-en">Yes, most EU regulations include transition periods to allow companies time to adapt. These typically range from 12 to 36 months after publication. However, early preparation is strongly recommended as compliance requirements can be complex and implementation takes time. Phased enforcement often applies based on company size.</span><span class="lang-zh">是的，大多数欧盟法规设有过渡期，通常为公布后12至36个月。但强烈建议提前准备，因为合规要求复杂，实施需要时间。分阶段执法通常按公司规模实施。</span><span class="lang-de">Ja, die meisten EU-Vorschriften sehen Übergangsfristen vor, damit Unternehmen Zeit zur Anpassung haben. Diese betragen in der Regel 12 bis 36 Monate nach Veröffentlichung. Eine frühzeitige Vorbereitung wird jedoch dringend empfohlen, da Compliance-Anforderungen komplex sein können und die Umsetzung Zeit braucht. Die gestaffelte Durchsetzung richtet sich häufig nach der Unternehmensgröße.</span><span class="lang-vi">Có, hầu hết các quy định của EU đều có thời gian chuyển tiếp để doanh nghiệp thích ứng, thường từ 12 đến 36 tháng sau khi ban hành. Tuy nhiên, doanh nghiệp nên chuẩn bị sớm vì các yêu cầu tuân thủ có thể phức tạp và việc triển khai cần thời gian. Việc thực thi theo giai đoạn thường dựa trên quy mô công ty.</span></p>
+                        <p><span class="lang-en">Yes, most EU requirements include transition periods to allow companies time to adapt, typically 12 to 36 months after publication. Important for the supplier perspective: the legal deadlines usually bind the EU importer or the company selling in the EU — not the Asian supplier directly. In practice your effective deadline is much earlier: goods must comply by the time they are shipped or even ordered, so subtract production and transit lead times, and changes to product design or production processes need to start well before the legal date.</span><span class="lang-zh">是的，大多数欧盟要求设有过渡期，通常为公布后12至36个月。供应商视角需特别注意：法定期限通常约束的是欧盟进口商或在欧盟销售的企业——而非亚洲供应商本身。实际上您的有效期限要早得多：货物在发运甚至下单时就须合规，因此需扣除生产和运输周期；产品设计或生产工艺的调整更须在法定日期之前尽早启动。</span><span class="lang-de">Ja, die meisten EU-Anforderungen sehen Übergangsfristen von in der Regel 12 bis 36 Monaten vor. Wichtig aus Lieferantensicht: Die gesetzlichen Fristen binden meist den EU-Importeur oder den Verkäufer in der EU — nicht direkt den asiatischen Lieferanten. Ihre effektive Frist liegt deutlich früher: Die Ware muss bei Verschiffung oder schon bei Bestellung konform sein. Ziehen Sie Produktions- und Transitzeiten ab; Änderungen an Produktdesign oder Prozessen müssen lange vor dem Stichtag beginnen.</span><span class="lang-vi">Có, hầu hết các yêu cầu của EU đều có thời gian chuyển tiếp, thường từ 12 đến 36 tháng. Quan trọng với nhà cung cấp: thời hạn pháp lý thường ràng buộc nhà nhập khẩu EU hoặc bên bán tại EU — không trực tiếp là nhà cung cấp châu Á. Trên thực tế, thời hạn hiệu quả của bạn sớm hơn nhiều: hàng hóa phải tuân thủ khi xuất xưởng hoặc thậm chí khi đặt hàng, nên cần trừ thời gian sản xuất và vận chuyển; thay đổi thiết kế sản phẩm hoặc quy trình cần bắt đầu từ rất sớm.</span></p>
                     </div>
                 </div>
                 <div class="faq-item">
                     <button class="faq-question">
-                        <span><span class="lang-en">Do regulations vary by country within the EU?</span><span class="lang-zh">欧盟内部各国法规是否有差异？</span><span class="lang-de">Unterscheiden sich die Vorschriften innerhalb der EU von Land zu Land?</span><span class="lang-vi">Quy định có khác nhau giữa các nước trong EU không?</span></span>
+                        <span><span class="lang-en">Do requirements vary by country within the EU?</span><span class="lang-zh">欧盟内部各国要求是否有差异？</span><span class="lang-de">Unterscheiden sich die Anforderungen innerhalb der EU von Land zu Land?</span><span class="lang-vi">Yêu cầu có khác nhau giữa các nước trong EU không?</span></span>
                         <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
                     </button>
                     <div class="faq-answer">
@@ -789,18 +802,39 @@
                         <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
                     </button>
                     <div class="faq-answer">
-                        <p><span class="lang-en">Official regulatory texts are available on EUR-Lex (the official EU law database). For practical guidance, the European Commission publishes implementation guides and FAQs. The GCC Sustainability Committee also provides tailored briefings and can connect you with regulatory experts.</span><span class="lang-zh">官方法规文本可在EUR-Lex（欧盟官方法律数据库）上查阅。欧盟委员会发布实施指南和FAQ供参考。德国商会可持续发展委员会也提供定制简报，并可为您对接监管专家。</span><span class="lang-de">Die offiziellen Rechtstexte finden Sie auf EUR-Lex (der offiziellen EU-Rechtsdatenbank). Für die Praxis veröffentlicht die Europäische Kommission Umsetzungsleitfäden und FAQs. Der GCC-Nachhaltigkeitsausschuss bietet zudem maßgeschneiderte Briefings und vermittelt Kontakte zu Regulierungsexperten.</span><span class="lang-vi">Văn bản pháp quy chính thức có trên EUR-Lex (cơ sở dữ liệu luật chính thức của EU). Về hướng dẫn thực tiễn, Ủy ban châu Âu công bố các tài liệu hướng dẫn triển khai và FAQ. Ủy ban Phát triển Bền vững GCC cũng cung cấp các bản tin chuyên sâu và có thể kết nối bạn với các chuyên gia pháp quy.</span></p>
+                        <p><span class="lang-en">Official legal texts are available on <a href="https://eur-lex.europa.eu" target="_blank" rel="noopener">EUR-Lex</a>, the official EU law database. For practical guidance, the <a href="https://commission.europa.eu" target="_blank" rel="noopener">European Commission</a> publishes implementation guides and FAQs. Every entry in this platform's requirements finder links to its official source. The GCC ESG Committee also provides tailored briefings and can connect you with regulatory experts.</span><span class="lang-zh">官方法律文本可在欧盟官方法律数据库<a href="https://eur-lex.europa.eu" target="_blank" rel="noopener">EUR-Lex</a>上查阅。实务指导方面，<a href="https://commission.europa.eu" target="_blank" rel="noopener">欧盟委员会</a>发布实施指南和FAQ。本平台要求查找工具中的每个条目均链接至官方来源。德国商会ESG委员会也提供定制简报，并可为您对接监管专家。</span><span class="lang-de">Die offiziellen Rechtstexte finden Sie auf <a href="https://eur-lex.europa.eu" target="_blank" rel="noopener">EUR-Lex</a>, der offiziellen EU-Rechtsdatenbank. Für die Praxis veröffentlicht die <a href="https://commission.europa.eu" target="_blank" rel="noopener">Europäische Kommission</a> Umsetzungsleitfäden und FAQs. Jeder Eintrag im Anforderungs-Finder dieser Plattform verlinkt auf die offizielle Quelle. Der GCC-ESG-Ausschuss bietet zudem maßgeschneiderte Briefings und vermittelt Kontakte zu Regulierungsexperten.</span><span class="lang-vi">Văn bản pháp lý chính thức có trên <a href="https://eur-lex.europa.eu" target="_blank" rel="noopener">EUR-Lex</a>, cơ sở dữ liệu luật chính thức của EU. Về hướng dẫn thực tiễn, <a href="https://commission.europa.eu" target="_blank" rel="noopener">Ủy ban châu Âu</a> công bố tài liệu hướng dẫn và FAQ. Mỗi mục trong công cụ tra cứu yêu cầu của nền tảng này đều liên kết đến nguồn chính thức. Ủy ban ESG GCC cũng cung cấp bản tin chuyên sâu và kết nối bạn với chuyên gia pháp quy.</span></p>
                     </div>
                 </div>
                 <div class="faq-item">
                     <button class="faq-question">
-                        <span><span class="lang-en">What certifications are required to demonstrate compliance?</span><span class="lang-zh">需要哪些认证来证明合规？</span><span class="lang-de">Welche Zertifizierungen sind erforderlich, um Compliance nachzuweisen?</span><span class="lang-vi">Cần những chứng nhận nào để chứng minh sự tuân thủ?</span></span>
+                        <span><span class="lang-en">Are certifications enough to demonstrate compliance?</span><span class="lang-zh">有认证就足以证明合规吗？</span><span class="lang-de">Reichen Zertifizierungen aus, um Compliance nachzuweisen?</span><span class="lang-vi">Chứng nhận có đủ để chứng minh tuân thủ không?</span></span>
                         <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
                     </button>
                     <div class="faq-answer">
-                        <p><span class="lang-en">Required certifications vary by regulation and industry. Common frameworks include ISO 14001 (Environmental Management), ISO 50001 (Energy Management), and product-specific certifications like CE marking. Some regulations require third-party verification of sustainability reports. Contact us for guidance specific to your sector.</span><span class="lang-zh">所需认证因法规和行业而异。常见框架包括ISO 14001（环境管理）、ISO 50001（能源管理）以及CE标志等产品认证。部分法规要求第三方验证可持续发展报告。请联系我们获取针对您行业的指导。</span><span class="lang-de">Die erforderlichen Zertifizierungen variieren je nach Vorschrift und Branche. Gängige Rahmenwerke sind ISO 14001 (Umweltmanagement), ISO 50001 (Energiemanagement) sowie produktspezifische Zertifizierungen wie die CE-Kennzeichnung. Einige Vorschriften verlangen eine unabhängige Prüfung von Nachhaltigkeitsberichten. Kontaktieren Sie uns für branchenspezifische Beratung.</span><span class="lang-vi">Các chứng nhận cần thiết khác nhau tùy theo quy định và ngành hàng. Các khuôn khổ phổ biến gồm ISO 14001 (Quản lý môi trường), ISO 50001 (Quản lý năng lượng) và các chứng nhận theo sản phẩm như dấu CE. Một số quy định yêu cầu thẩm định độc lập báo cáo phát triển bền vững. Hãy liên hệ với chúng tôi để được tư vấn theo ngành của bạn.</span></p>
+                        <p><span class="lang-en"><strong>No — today, certifications alone are not enough to be compliant.</strong> Voluntary frameworks like ISO 14001 or ISO 50001 can support your compliance story, but each EU requirement defines its own evidence: technical documentation, verified emissions or supply-chain data, due-diligence processes, product-specific conformity such as CE marking, and in some cases third-party verification. Always check what the specific requirement demands — certificates complement, but never replace, that evidence. Contact us for guidance specific to your sector.</span><span class="lang-zh"><strong>不——如今仅有认证并不足以合规。</strong>ISO 14001、ISO 50001等自愿性框架可以辅助您的合规工作，但每项欧盟要求都规定了各自的证明材料：技术文件、经核实的排放或供应链数据、尽职调查流程、CE标志等产品合规要求，部分还需第三方核证。请务必核查具体要求的规定——证书只能补充、绝不能替代这些证明。欢迎联系我们获取行业指导。</span><span class="lang-de"><strong>Nein — Zertifizierungen allein reichen heute nicht aus, um compliant zu sein.</strong> Freiwillige Rahmenwerke wie ISO 14001 oder ISO 50001 können Ihre Compliance stützen, aber jede EU-Anforderung definiert eigene Nachweise: technische Dokumentation, verifizierte Emissions- oder Lieferkettendaten, Due-Diligence-Prozesse, produktspezifische Konformität wie CE-Kennzeichnung, teils unabhängige Prüfungen. Prüfen Sie stets die konkrete Anforderung — Zertifikate ergänzen diese Nachweise, ersetzen sie aber nie. Kontaktieren Sie uns für branchenspezifische Beratung.</span><span class="lang-vi"><strong>Không — hiện nay chỉ có chứng nhận là chưa đủ để tuân thủ.</strong> Các khuôn khổ tự nguyện như ISO 14001, ISO 50001 có thể hỗ trợ, nhưng mỗi yêu cầu của EU quy định bằng chứng riêng: hồ sơ kỹ thuật, dữ liệu phát thải hoặc chuỗi cung ứng đã xác minh, quy trình thẩm định, hợp chuẩn sản phẩm như dấu CE, đôi khi cần thẩm định độc lập. Luôn kiểm tra yêu cầu cụ thể — chứng chỉ bổ sung nhưng không bao giờ thay thế các bằng chứng đó. Hãy liên hệ chúng tôi để được tư vấn theo ngành.</span></p>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Glossary of key terms (V2, committee request) -->
+    <section class="v2-glossary v2-guidance" id="glossary">
+        <div class="container">
+            <div class="section-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="M9 7h6M9 11h6"/></svg></div>
+            <h2 class="section-title"><span class="lang-en">Key Terms Explained</span><span class="lang-zh">关键术语解释</span><span class="lang-de">Wichtige Begriffe erklärt</span><span class="lang-vi">Giải thích thuật ngữ chính</span></h2>
+            <p class="section-subtitle"><span class="lang-en">The vocabulary you will meet in EU sustainability requirements — in plain language.</span><span class="lang-zh">欧盟可持续发展要求中的常见词汇——通俗解释。</span><span class="lang-de">Das Vokabular der EU-Nachhaltigkeitsanforderungen — verständlich erklärt.</span><span class="lang-vi">Từ vựng bạn sẽ gặp trong các yêu cầu bền vững của EU — bằng ngôn ngữ dễ hiểu.</span></p>
+            <div class="v2-glossary-grid">
+                <div class="v2-glossary-card"><h4>ESG</h4><p><span class="lang-en">Environmental, Social, Governance — the three pillars used to assess how a company manages its environmental impact, treatment of people, and business conduct.</span><span class="lang-zh">环境、社会、治理——评估企业环境影响、员工待遇及商业操守的三大支柱。</span><span class="lang-de">Environmental, Social, Governance — die drei Säulen zur Bewertung von Umweltwirkung, Umgang mit Menschen und Unternehmensführung.</span><span class="lang-vi">Môi trường, Xã hội, Quản trị — ba trụ cột đánh giá cách doanh nghiệp quản lý tác động môi trường, đối xử với con người và đạo đức kinh doanh.</span></p></div>
+                <div class="v2-glossary-card"><h4><span class="lang-en">Sustainability</span><span class="lang-zh">可持续发展</span><span class="lang-de">Nachhaltigkeit</span><span class="lang-vi">Phát triển bền vững</span></h4><p><span class="lang-en">Doing business in a way that meets today's needs without compromising future generations — environmentally, socially and economically.</span><span class="lang-zh">在环境、社会和经济层面上，以不损害后代利益的方式满足当下需求的经营方式。</span><span class="lang-de">Wirtschaften, das heutige Bedürfnisse erfüllt, ohne künftige Generationen zu beeinträchtigen — ökologisch, sozial und ökonomisch.</span><span class="lang-vi">Kinh doanh đáp ứng nhu cầu hiện tại mà không làm tổn hại thế hệ tương lai — về môi trường, xã hội và kinh tế.</span></p></div>
+                <div class="v2-glossary-card"><h4><span class="lang-en">EU Regulation</span><span class="lang-zh">欧盟条例（Regulation）</span><span class="lang-de">EU-Verordnung</span><span class="lang-vi">Quy định (Regulation) của EU</span></h4><p><span class="lang-en">An EU law that applies directly and identically in every member state, without national implementation. Example: the EU Deforestation Regulation.</span><span class="lang-zh">在所有成员国直接、统一适用的欧盟法律，无需转化为国内法。例如：欧盟零毁林条例。</span><span class="lang-de">Ein EU-Gesetz, das unmittelbar und einheitlich in allen Mitgliedstaaten gilt — ohne nationale Umsetzung. Beispiel: EU-Entwaldungsverordnung.</span><span class="lang-vi">Luật của EU áp dụng trực tiếp và giống nhau tại mọi quốc gia thành viên, không cần chuyển hóa vào luật quốc gia. Ví dụ: Quy định chống phá rừng của EU.</span></p></div>
+                <div class="v2-glossary-card"><h4><span class="lang-en">EU Directive</span><span class="lang-zh">欧盟指令（Directive）</span><span class="lang-de">EU-Richtlinie</span><span class="lang-vi">Chỉ thị (Directive) của EU</span></h4><p><span class="lang-en">An EU law that sets a goal which each member state must write into its own national law ("transposition"). Timelines and details can differ by country. Example: the CSRD reporting directive.</span><span class="lang-zh">设定目标、需各成员国转化为本国法律（"转化"）的欧盟法律。各国的时间表和细节可能不同。例如：CSRD报告指令。</span><span class="lang-de">Ein EU-Gesetz, das ein Ziel vorgibt, das jeder Mitgliedstaat in nationales Recht umsetzen muss („Umsetzung"). Fristen und Details können je Land abweichen. Beispiel: CSRD-Berichtsrichtlinie.</span><span class="lang-vi">Luật của EU đặt ra mục tiêu mà mỗi quốc gia thành viên phải đưa vào luật quốc gia ("chuyển hóa"). Lộ trình và chi tiết có thể khác nhau theo nước. Ví dụ: Chỉ thị báo cáo CSRD.</span></p></div>
+                <div class="v2-glossary-card"><h4><span class="lang-en">Transposition into national law</span><span class="lang-zh">转化为国内法</span><span class="lang-de">Umsetzung in nationales Recht</span><span class="lang-vi">Chuyển hóa vào luật quốc gia</span></h4><p><span class="lang-en">The process by which an EU directive becomes binding national law in each member state — the reason the same directive can bite earlier in Germany than elsewhere.</span><span class="lang-zh">欧盟指令在各成员国转化为具有约束力的国内法的过程——这也是同一指令在德国可能比其他国家更早生效的原因。</span><span class="lang-de">Der Prozess, durch den eine EU-Richtlinie in jedem Mitgliedstaat verbindliches nationales Recht wird — deshalb kann dieselbe Richtlinie in Deutschland früher greifen als anderswo.</span><span class="lang-vi">Quá trình một chỉ thị EU trở thành luật quốc gia ràng buộc tại mỗi nước thành viên — lý do cùng một chỉ thị có thể có hiệu lực sớm hơn ở Đức so với nơi khác.</span></p></div>
+                <div class="v2-glossary-card"><h4><span class="lang-en">Circularity / Circular economy</span><span class="lang-zh">循环性 / 循环经济</span><span class="lang-de">Zirkularität / Kreislaufwirtschaft</span><span class="lang-vi">Tính tuần hoàn / Kinh tế tuần hoàn</span></h4><p><span class="lang-en">Designing products so materials stay in use — durable, repairable, recyclable — instead of being made, used and thrown away. Central to the EU's Ecodesign rules.</span><span class="lang-zh">通过耐用、可维修、可回收的设计让材料持续使用，而非"生产—使用—丢弃"。是欧盟生态设计规则的核心。</span><span class="lang-de">Produkte so gestalten, dass Materialien im Kreislauf bleiben — langlebig, reparierbar, recycelbar — statt produziert, genutzt, weggeworfen. Kern der EU-Ökodesign-Regeln.</span><span class="lang-vi">Thiết kế sản phẩm để vật liệu được sử dụng lâu dài — bền, sửa được, tái chế được — thay vì sản xuất, dùng rồi vứt bỏ. Trọng tâm của quy tắc Thiết kế sinh thái của EU.</span></p></div>
+                <div class="v2-glossary-card"><h4><span class="lang-en">Greenhouse gas (GHG) emissions</span><span class="lang-zh">温室气体（GHG）排放</span><span class="lang-de">Treibhausgas-Emissionen (THG)</span><span class="lang-vi">Phát thải khí nhà kính (GHG)</span></h4><p><span class="lang-en">Gases that trap heat in the atmosphere — CO₂, methane, nitrous oxide and others. Reporting often splits them into Scope 1 (own operations), Scope 2 (purchased energy) and Scope 3 (supply chain).</span><span class="lang-zh">在大气中吸热的气体——二氧化碳、甲烷、一氧化二氮等。报告通常分为范围1（自身运营）、范围2（外购能源）和范围3（供应链）。</span><span class="lang-de">Gase, die Wärme in der Atmosphäre binden — CO₂, Methan, Lachgas u. a. Berichte unterscheiden oft Scope 1 (eigener Betrieb), Scope 2 (eingekaufte Energie) und Scope 3 (Lieferkette).</span><span class="lang-vi">Các khí giữ nhiệt trong khí quyển — CO₂, mê-tan, N₂O và các khí khác. Báo cáo thường chia thành Phạm vi 1 (vận hành), Phạm vi 2 (năng lượng mua) và Phạm vi 3 (chuỗi cung ứng).</span></p></div>
+                <div class="v2-glossary-card"><h4>CO₂e</h4><p><span class="lang-en">"CO₂ equivalent" — a common unit that converts all greenhouse gases into the amount of CO₂ with the same warming effect, so different gases can be added up and compared.</span><span class="lang-zh">"二氧化碳当量"——将所有温室气体折算为具有相同升温效应的CO₂数量的通用单位，便于加总和比较。</span><span class="lang-de">„CO₂-Äquivalent" — eine Einheit, die alle Treibhausgase in die CO₂-Menge mit gleicher Klimawirkung umrechnet, damit sie addierbar und vergleichbar sind.</span><span class="lang-vi">"Đương lượng CO₂" — đơn vị quy đổi mọi khí nhà kính về lượng CO₂ có cùng hiệu ứng nóng lên, để có thể cộng và so sánh.</span></p></div>
+                <div class="v2-glossary-card"><h4><span class="lang-en">Due diligence</span><span class="lang-zh">尽职调查</span><span class="lang-de">Sorgfaltspflicht (Due Diligence)</span><span class="lang-vi">Thẩm định (Due diligence)</span></h4><p><span class="lang-en">A documented, ongoing process of identifying, preventing and addressing risks — for example human-rights or environmental harm — in a company's own operations and supply chain.</span><span class="lang-zh">识别、预防并处理企业自身运营及供应链中风险（如人权或环境损害）的持续性书面流程。</span><span class="lang-de">Ein dokumentierter, fortlaufender Prozess zur Ermittlung, Vermeidung und Behebung von Risiken — etwa Menschenrechts- oder Umweltschäden — im eigenen Betrieb und in der Lieferkette.</span><span class="lang-vi">Quy trình liên tục, có hồ sơ, nhằm nhận diện, ngăn ngừa và xử lý rủi ro — ví dụ vi phạm nhân quyền hoặc tổn hại môi trường — trong vận hành và chuỗi cung ứng.</span></p></div>
+                <div class="v2-glossary-card"><h4>CBAM</h4><p><span class="lang-en">The EU's Carbon Border Adjustment Mechanism: importers of certain carbon-intensive goods (iron &amp; steel, aluminium, cement, fertilisers, electricity, hydrogen) must buy certificates reflecting the embedded emissions. Whether a product is covered is defined by its CN code.</span><span class="lang-zh">欧盟碳边境调节机制：特定高碳产品（钢铁、铝、水泥、化肥、电力、氢）的进口商须购买与产品隐含排放相应的证书。产品是否受管辖由CN编码决定。</span><span class="lang-de">Der CO₂-Grenzausgleichsmechanismus der EU: Importeure bestimmter emissionsintensiver Waren (Eisen &amp; Stahl, Aluminium, Zement, Düngemittel, Strom, Wasserstoff) müssen Zertifikate für die eingebetteten Emissionen kaufen. Ob ein Produkt erfasst ist, bestimmt der CN-Code.</span><span class="lang-vi">Cơ chế điều chỉnh carbon biên giới của EU: nhà nhập khẩu một số hàng hóa phát thải cao (sắt thép, nhôm, xi măng, phân bón, điện, hydro) phải mua chứng chỉ tương ứng lượng phát thải hàm chứa. Sản phẩm có thuộc phạm vi hay không do mã CN quyết định.</span></p></div>
             </div>
         </div>
     </section>
@@ -810,10 +844,10 @@
         <div class="container">
             <div class="atlas-trust" id="atlasTrust">
                 <h3><span class="lang-en">How the Green Sourcing Compass Knows What It Knows</span><span class="lang-zh">关于本工具的数据来源</span><span class="lang-de">Woher der Green Sourcing Compass seine Daten bezieht</span><span class="lang-vi">Nguồn dữ liệu của Green Sourcing Compass</span></h3>
-                <p><span class="lang-en">Curated by the <strong>GCC Sustainability Committee</strong>. Regulation data is reviewed quarterly and sourced directly from EUR-Lex, the official EU law database.</span><span class="lang-zh">本工具由<strong>香港德国商会可持续发展委员会</strong>策划整理。所有法规条目均链接至EUR-Lex官方来源，每季度更新一次。</span><span class="lang-de">Kuratiert vom <strong>GCC-Nachhaltigkeitsausschuss</strong>. Die Vorschriftendaten werden vierteljährlich überprüft und stammen direkt aus EUR-Lex, der offiziellen EU-Rechtsdatenbank.</span><span class="lang-vi">Được biên soạn bởi <strong>Ủy ban Phát triển Bền vững GCC</strong>. Dữ liệu quy định được rà soát hàng quý và lấy trực tiếp từ EUR-Lex, cơ sở dữ liệu luật chính thức của EU.</span></p>
+                <p><span class="lang-en">Curated by the <strong>GCC ESG Committee</strong>. Regulation data is reviewed quarterly and sourced directly from EUR-Lex, the official EU law database.</span><span class="lang-zh">本工具由<strong>香港德国商会ESG委员会</strong>策划整理。所有法规条目均链接至EUR-Lex官方来源，每季度更新一次。</span><span class="lang-de">Kuratiert vom <strong>GCC-ESG-Ausschuss</strong>. Die Vorschriftendaten werden vierteljährlich überprüft und stammen direkt aus EUR-Lex, der offiziellen EU-Rechtsdatenbank.</span><span class="lang-vi">Được biên soạn bởi <strong>Ủy ban ESG GCC</strong>. Dữ liệu quy định được rà soát hàng quý và lấy trực tiếp từ EUR-Lex, cơ sở dữ liệu luật chính thức của EU.</span></p>
             </div>
             <div class="atlas-disclaimer" id="atlasDisclaimer">
-                <p><span class="lang-en"><strong>Disclaimer:</strong> The Green Sourcing Compass is informational. It surfaces the regulations most likely to apply so you start in the right place, not the final word on conformity. For binding compliance assessment, work with your testing lab, certification institute, or the GCC Sustainability Committee.</span><span class="lang-zh"><strong>免责声明：</strong>本工具仅供参考。它帮助您缩小适用法规的范围，不构成最终合规认定。如需具体合规评估，请咨询您的检测机构或德国商会可持续发展委员会。</span><span class="lang-de"><strong>Haftungsausschluss:</strong> Der Green Sourcing Compass dient der Information. Er zeigt die Vorschriften, die am wahrscheinlichsten gelten, damit Sie an der richtigen Stelle beginnen; er ist keine abschließende Konformitätsaussage. Für eine verbindliche Compliance-Bewertung wenden Sie sich an Ihr Prüflabor, Ihr Zertifizierungsinstitut oder den GCC-Nachhaltigkeitsausschuss.</span><span class="lang-vi"><strong>Tuyên bố miễn trừ trách nhiệm:</strong> Green Sourcing Compass chỉ mang tính thông tin. Công cụ này chỉ ra các quy định có khả năng áp dụng cao nhất để bạn bắt đầu đúng hướng, không phải là kết luận cuối cùng về tính hợp chuẩn. Để được đánh giá tuân thủ có tính ràng buộc, hãy làm việc với phòng thử nghiệm, tổ chức chứng nhận của bạn hoặc Ủy ban Phát triển Bền vững GCC.</span></p>
+                <p><span class="lang-en"><strong>Disclaimer:</strong> The Green Sourcing Compass is informational. It surfaces the regulations most likely to apply so you start in the right place, not the final word on conformity. For binding compliance assessment, work with your testing lab, certification institute, or the GCC ESG Committee.</span><span class="lang-zh"><strong>免责声明：</strong>本工具仅供参考。它帮助您缩小适用法规的范围，不构成最终合规认定。如需具体合规评估，请咨询您的检测机构或德国商会ESG委员会。</span><span class="lang-de"><strong>Haftungsausschluss:</strong> Der Green Sourcing Compass dient der Information. Er zeigt die Vorschriften, die am wahrscheinlichsten gelten, damit Sie an der richtigen Stelle beginnen; er ist keine abschließende Konformitätsaussage. Für eine verbindliche Compliance-Bewertung wenden Sie sich an Ihr Prüflabor, Ihr Zertifizierungsinstitut oder den GCC-ESG-Ausschuss.</span><span class="lang-vi"><strong>Tuyên bố miễn trừ trách nhiệm:</strong> Green Sourcing Compass chỉ mang tính thông tin. Công cụ này chỉ ra các quy định có khả năng áp dụng cao nhất để bạn bắt đầu đúng hướng, không phải là kết luận cuối cùng về tính hợp chuẩn. Để được đánh giá tuân thủ có tính ràng buộc, hãy làm việc với phòng thử nghiệm, tổ chức chứng nhận của bạn hoặc Ủy ban ESG GCC.</span></p>
             </div>
         </div>
     </section>
@@ -827,15 +861,15 @@
                     <span class="v2-cta-sub"><span class="lang-en">Sourcing offices and suppliers shaping sustainable trade — together.</span><span class="lang-zh">采购办公室与供应商携手塑造可持续贸易。</span><span class="lang-de">Einkaufsb&uuml;ros und Lieferanten gestalten nachhaltigen Handel gemeinsam.</span><span class="lang-vi">Văn phòng thu mua và nhà cung cấp cùng định hình thương mại bền vững.</span></span>
                 </div>
                 <div class="v2-cta-actions">
-                    <a href="mailto:info@hongkong.ahk.de?subject=GREEN FUTURE — Sustainability Committee" class="btn btn-outline btn-sm"><span class="lang-en">Join the Committee</span><span class="lang-zh">加入委员会</span><span class="lang-de">Dem Ausschuss beitreten</span><span class="lang-vi">Gia nhập Ủy ban</span></a>
+                    <a href="https://hongkong.ahk.de/en" target="_blank" rel="noopener" class="btn btn-outline btn-sm"><span class="lang-en">More about the Committee &rarr;</span><span class="lang-zh">了解更多委员会信息 &rarr;</span><span class="lang-de">Mehr &uuml;ber den Ausschuss &rarr;</span><span class="lang-vi">Tìm hiểu về Ủy ban &rarr;</span></a>
                     <a href="https://hongkong.ahk.de/membership" target="_blank" rel="noopener" class="btn btn-primary btn-sm"><span class="lang-en">Become a Chamber member &rarr;</span><span class="lang-zh">成为商会会员 &rarr;</span><span class="lang-de">Kammermitglied werden &rarr;</span><span class="lang-vi">Trở thành hội viên &rarr;</span></a>
                 </div>
             </div>
 
             <div class="footer-grid v2-footer-grid">
                 <div class="footer-info">
-                    <h3>GREEN FUTURE</h3>
-                    <p class="v2-affiliation"><span class="lang-en">A platform of the Sustainability Committee of the German Chamber of Commerce Hong Kong.</span><span class="lang-zh">香港德国商会可持续发展委员会旗下平台。</span><span class="lang-de">Eine Plattform des Nachhaltigkeitsausschusses der Deutschen Handelskammer Hongkong.</span><span class="lang-vi">Một nền tảng của Ủy ban Phát triển Bền vững thuộc Phòng Thương mại Đức tại Hồng Kông.</span></p>
+                    <h3>Green Sourcing Hub</h3>
+                    <p class="v2-affiliation"><span class="lang-en">A platform of the ESG Committee of the German Chamber of Commerce Hong Kong.</span><span class="lang-zh">香港德国商会ESG委员会旗下平台。</span><span class="lang-de">Eine Plattform des ESG-Ausschusses der Deutschen Handelskammer Hongkong.</span><span class="lang-vi">Một nền tảng của Ủy ban ESG thuộc Phòng Thương mại Đức tại Hồng Kông.</span></p>
                     <address>2302, 23/F COFCO Tower, 262 Gloucester Road,<br>Causeway Bay, Hong Kong SAR</address>
                 </div>
                 <div class="footer-links">
@@ -855,7 +889,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 Sustainability Committee &middot; German Chamber of Commerce Hong Kong &middot; <span class="lang-en">GREEN FUTURE is a Committee platform, not the Chamber's official website.</span><span class="lang-zh">GREEN FUTURE为委员会平台，并非商会官方网站。</span><span class="lang-de">GREEN FUTURE ist eine Plattform des Ausschusses, nicht die offizielle Website der Kammer.</span><span class="lang-vi">GREEN FUTURE là nền tảng của Ủy ban, không phải website chính thức của Phòng Thương mại.</span></p>
+                <p>&copy; 2026 ESG Committee &middot; German Chamber of Commerce Hong Kong &middot; <span class="lang-en">Green Sourcing Hub is a Committee platform, not the Chamber's official website.</span><span class="lang-zh">Green Sourcing Hub为委员会平台，并非商会官方网站。</span><span class="lang-de">Green Sourcing Hub ist eine Plattform des Ausschusses, nicht die offizielle Website der Kammer.</span><span class="lang-vi">Green Sourcing Hub là nền tảng của Ủy ban, không phải website chính thức của Phòng Thương mại.</span></p>
             </div>
         </footer>
 
