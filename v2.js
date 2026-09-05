@@ -649,6 +649,15 @@
             const cols = bl.querySelector('.briefing-columns');
             const lead = cols?.querySelector('.briefing-lead');
             if (lead) bl.insertBefore(lead, cols);
+            // committee: simple table format, no column masonry. Flatten the
+            // balanced columns into one uniform list (document order matches
+            // the original post order: primary items first, then secondary).
+            if (cols && !bl.querySelector('.v2-brief-list')) {
+                const flat = document.createElement('div');
+                flat.className = 'v2-brief-list';
+                cols.querySelectorAll('.briefing-item').forEach(it => flat.appendChild(it));
+                cols.replaceWith(flat);
+            }
         }
         if (pending && attempt < 10) setTimeout(() => v2Overrides(attempt + 1), 700);
     }
