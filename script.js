@@ -176,7 +176,7 @@ let regulations = [
         status: 'phasing',
         statusLabel: 'PHASING IN',
         inForce: '29 June 2023 (application postponed twice)',
-        complianceDeadline: '30 December 2026 (large & medium), 30 June 2027 (micro & small) — per Reg. (EU) 2025/2650',
+        complianceDeadline: '30 December 2026 (large & medium), 30 June 2027 (micro & small), per Reg. (EU) 2025/2650',
         lastReviewed: 'July 2026',
         eurlex: 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1115',
         sections: [
@@ -191,11 +191,11 @@ let regulations = [
         },
         reason: (cat, markets, role, size) => {
             const catName = { furniture: 'Furniture & Home Goods (wood-based)', food: 'Food & Packaging' }[cat] || cat;
-            return `${catName} products may contain commodities covered by the EU Deforestation Regulation (cattle, cocoa, coffee, oil palm, rubber, soya, wood — cotton and other textile fibres are NOT in scope).`;
+            return `${catName} products may contain commodities covered by the EU Deforestation Regulation (cattle, cocoa, coffee, oil palm, rubber, soya, wood, cotton and other textile fibres are NOT in scope).`;
         },
         reasonZh: (cat, markets, role, size) => {
             const catName = { furniture: '家具与家居用品（木制品）', food: '食品与包装' }[cat] || cat;
-            return `${catName}可能含有欧盟零毁林法规覆盖的原料（牛、可可、咖啡、油棕、橡胶、大豆、木材——棉花及其他纺织纤维不在范围内）。`;
+            return `${catName}可能含有欧盟零毁林法规覆盖的原料（牛、可可、咖啡、油棕、橡胶、大豆、木材，棉花及其他纺织纤维不在范围内）。`;
         }
     },
     {
@@ -210,8 +210,8 @@ let regulations = [
         eurlex: 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1542',
         sections: [
             { title: 'PRODUCT DESIGN', text: 'Minimum recycled content thresholds. Removability and replaceability requirements for portable batteries.' },
-            { title: 'DOCUMENTATION', text: 'Battery passport (digital) required for EV, LMT and industrial >2 kWh batteries from 18 February 2027; QR-code marking applies from the same date. The general harmonised label applies from 18 August 2026 or 18 months after the labelling implementing act enters into force, whichever is later — expect late 2027/2028. The carbon footprint declaration awaits its delegated act.' },
-            { title: 'SUPPLY CHAIN', text: 'Due diligence for cobalt, lithium, nickel, and natural graphite sourcing — postponed to 18 August 2027 by Reg. (EU) 2025/1561. Collection and recycling targets.' }
+            { title: 'DOCUMENTATION', text: 'Battery passport (digital) required for EV, LMT and industrial >2 kWh batteries from 18 February 2027; QR-code marking applies from the same date. The general harmonised label applies from 18 August 2026 or 18 months after the labelling implementing act enters into force, whichever is later, expect late 2027/2028. The carbon footprint declaration awaits its delegated act.' },
+            { title: 'SUPPLY CHAIN', text: 'Due diligence for cobalt, lithium, nickel, and natural graphite sourcing, postponed to 18 August 2027 by Reg. (EU) 2025/1561. Collection and recycling targets.' }
         ],
         applies: (cat, markets, role, size) => {
             const euMarket = markets.includes('eu') || markets.includes('germany');
@@ -236,7 +236,7 @@ let regulations = [
         eurlex: 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R2055',
         sections: [
             { title: 'PRODUCT DESIGN', text: 'Ban on intentionally added microplastics (synthetic polymers <5mm). Reformulation required for restricted products.' },
-            { title: 'DOCUMENTATION', text: 'Instructions for use to minimize microplastic release — mandatory since 17 October 2025. Reporting obligations on quantities placed on the market (first annual reports were due 31 May 2026).' },
+            { title: 'DOCUMENTATION', text: 'Instructions for use to minimize microplastic release, mandatory since 17 October 2025. Reporting obligations on quantities placed on the market (first annual reports were due 31 May 2026).' },
             { title: 'PENALTIES', text: 'Product withdrawal from market. National enforcement penalties apply based on member state implementation.' }
         ],
         applies: (cat, markets, role, size) => {
@@ -260,7 +260,7 @@ let regulations = [
         status: 'prepare',
         statusLabel: 'PREPARE NOW',
         inForce: '18 July 2024',
-        complianceDeadline: 'First delegated acts expected 2026–2027 (indicative — none adopted as of mid-2026); obligations apply ~18 months after each act',
+        complianceDeadline: 'First delegated acts expected 2026 to 2027 (indicative, none adopted as of mid-2026); obligations apply ~18 months after each act',
         lastReviewed: 'July 2026',
         eurlex: 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1781',
         sections: [
@@ -288,7 +288,7 @@ let regulations = [
         status: 'prepare',
         statusLabel: 'PREPARE NOW',
         inForce: '30 July 2024',
-        complianceDeadline: 'Transposition deadline passed 31 July 2026 — Germany adopted its Reparaturgesetz (Bundesrat approval 10 July 2026); many member states still pending',
+        complianceDeadline: 'Transposition deadline passed 31 July 2026, Germany adopted its Reparaturgesetz (Bundesrat approval 10 July 2026); many member states still pending',
         lastReviewed: 'July 2026',
         eurlex: 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024L1799',
         sections: [
@@ -303,11 +303,11 @@ let regulations = [
         },
         reason: (cat, markets, role, size) => {
             const catName = cat === 'electronics' ? 'Electronics' : 'Furniture & Home Goods';
-            return `${catName} in the covered product groups (household appliances, phones, tablets, displays) must be repairable with spare parts available — Germany's implementing law was adopted in July 2026.`;
+            return `${catName} in the covered product groups (household appliances, phones, tablets, displays) must be repairable with spare parts available, Germany's implementing law was adopted in July 2026.`;
         },
         reasonZh: (cat, markets, role, size) => {
             const catName = cat === 'electronics' ? '电子产品' : '家具与家居用品';
-            return `${catName}中属于覆盖产品组的品类（家用电器、手机、平板电脑、显示器）必须可维修并提供备件——德国实施法已于2026年7月通过。`;
+            return `${catName}中属于覆盖产品组的品类（家用电器、手机、平板电脑、显示器）必须可维修并提供备件，德国实施法已于2026年7月通过。`;
         }
     },
     {
@@ -316,8 +316,8 @@ let regulations = [
         ref: 'COM/2023/166',
         status: 'prepare',
         statusLabel: 'PREPARE NOW',
-        inForce: 'Proposed March 2023 — negotiations suspended',
-        complianceDeadline: 'Stalled: Commission announced intended withdrawal (June 2025) but has not formally withdrawn it — still listed in the 2026 work programme; adoption not currently expected',
+        inForce: 'Proposed March 2023, negotiations suspended',
+        complianceDeadline: 'Stalled: Commission announced intended withdrawal (June 2025) but has not formally withdrawn it, still listed in the 2026 work programme; adoption not currently expected',
         lastReviewed: 'July 2026',
         eurlex: 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=COM:2023:166:FIN',
         sections: [
@@ -332,11 +332,11 @@ let regulations = [
         },
         reason: (cat, markets, role, size) => {
             const roleText = role === 'brand' ? 'a Brand/Retailer' : 'an EU-based importer';
-            return `As ${roleText}, note this proposal is currently stalled — but environmental claims are already regulated by the Empowering Consumers Directive (EU) 2024/825, applying from 27 September 2026.`;
+            return `As ${roleText}, note this proposal is currently stalled, but environmental claims are already regulated by the Empowering Consumers Directive (EU) 2024/825, applying from 27 September 2026.`;
         },
         reasonZh: (cat, markets, role, size) => {
             const roleText = role === 'brand' ? '品牌/零售商' : '欧盟进口商';
-            return `作为${roleText}，请注意该提案目前处于停滞状态——但环保声明已受《赋能消费者绿色转型指令》(EU) 2024/825监管，该指令自2026年9月27日起适用。`;
+            return `作为${roleText}，请注意该提案目前处于停滞状态，但环保声明已受《赋能消费者绿色转型指令》(EU) 2024/825监管，该指令自2026年9月27日起适用。`;
         }
     },
     {
@@ -388,10 +388,10 @@ let regulations = [
             return euMarket && cat === 'textiles';
         },
         reason: (cat, markets, role, size) => {
-            return 'Textiles & Apparel producers selling into the EU will pay eco-modulated EPR fees in every member state — design for durability and recyclability directly lowers the fee.';
+            return 'Textiles & Apparel producers selling into the EU will pay eco-modulated EPR fees in every member state, design for durability and recyclability directly lowers the fee.';
         },
         reasonZh: (cat, markets, role, size) => {
-            return '向欧盟销售的纺织品与服装生产商将在每个成员国缴纳按生态标准调节的生产者责任延伸（EPR）费用——耐用性和可回收性设计可直接降低费用。';
+            return '向欧盟销售的纺织品与服装生产商将在每个成员国缴纳按生态标准调节的生产者责任延伸（EPR）费用，耐用性和可回收性设计可直接降低费用。';
         }
     },
     {
@@ -405,7 +405,7 @@ let regulations = [
         lastReviewed: 'July 2026',
         eurlex: 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32011L0065',
         sections: [
-            { title: 'PRODUCT DESIGN', text: 'Maximum concentration limits for ten substances in electrical/electronic equipment: lead, mercury, cadmium, hexavalent chromium, PBB, PBDE, and the phthalates DEHP, BBP, DBP and DIBP. Annex III lead/cadmium exemptions were restructured in late 2025 (applicable from 1 July 2026) — re-check any exemption your products rely on.' },
+            { title: 'PRODUCT DESIGN', text: 'Maximum concentration limits for ten substances in electrical/electronic equipment: lead, mercury, cadmium, hexavalent chromium, PBB, PBDE, and the phthalates DEHP, BBP, DBP and DIBP. Annex III lead/cadmium exemptions were restructured in late 2025 (applicable from 1 July 2026), re-check any exemption your products rely on.' },
             { title: 'DOCUMENTATION', text: 'EU Declaration of Conformity. Technical file with material composition evidence. CE marking required.' },
             { title: 'PENALTIES', text: 'Non-compliant products barred from EU market. Product recalls, fines, and potential criminal liability in member states.' }
         ],
@@ -441,11 +441,11 @@ let regulations = [
         },
         reason: (cat, markets, role, size) => {
             const catNames = { electronics: 'Electronics & Batteries', textiles: 'Textiles & Apparel', cosmetics: 'Cosmetics & Personal Care', toys: 'Toys', furniture: 'Furniture & Home Goods', food: 'Food & Packaging', construction: 'Construction Products', other: 'your product category' };
-            return `All ${catNames[cat] || 'products'} sold in the EU use packaging — the PPWR sets recyclability, recycled content, and labelling requirements for all packaging types.`;
+            return `All ${catNames[cat] || 'products'} sold in the EU use packaging, the PPWR sets recyclability, recycled content, and labelling requirements for all packaging types.`;
         },
         reasonZh: (cat, markets, role, size) => {
             const catNames = { electronics: '电子产品与电池', textiles: '纺织品与服装', cosmetics: '化妆品与个人护理', toys: '玩具', furniture: '家具与家居用品', food: '食品与包装', construction: '建筑材料', other: '您的产品类别' };
-            return `所有在欧盟销售的${catNames[cat] || '产品'}均使用包装——PPWR对所有包装类型设定了可回收性、再生含量和标签要求。`;
+            return `所有在欧盟销售的${catNames[cat] || '产品'}均使用包装，PPWR对所有包装类型设定了可回收性、再生含量和标签要求。`;
         }
     },
     {
@@ -468,10 +468,10 @@ let regulations = [
             return euMarket && cat !== '';
         },
         reason: (cat, markets, role, size) => {
-            return 'All products placed on the EU market — regardless of category or origin — must be free from forced labour at any stage of the supply chain.';
+            return 'All products placed on the EU market, regardless of category or origin, must be free from forced labour at any stage of the supply chain.';
         },
         reasonZh: (cat, markets, role, size) => {
-            return '所有投放欧盟市场的产品——不论类别或原产地——在供应链的任何阶段均不得涉及强迫劳动。';
+            return '所有投放欧盟市场的产品，不论类别或原产地，在供应链的任何阶段均不得涉及强迫劳动。';
         }
     },
     {
@@ -481,7 +481,7 @@ let regulations = [
         status: 'phasing',
         statusLabel: 'PHASING IN',
         inForce: '18 July 2024 (ESPR framework)',
-        complianceDeadline: 'First delegated acts expected from 2026 (indicative — none adopted yet); DPP obligations expected 2028–2030 (steel first, then textiles, furniture)',
+        complianceDeadline: 'First delegated acts expected from 2026 (indicative, none adopted yet); DPP obligations expected 2028 to 2030 (steel first, then textiles, furniture)',
         lastReviewed: 'July 2026',
         eurlex: 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1781',
         sections: [
@@ -496,11 +496,11 @@ let regulations = [
         },
         reason: (cat, markets, role, size) => {
             const catName = { textiles: 'Textiles & Apparel', furniture: 'Furniture & Home Goods', construction: 'Construction Products (iron & steel, aluminium)' }[cat] || cat;
-            return `${catName} are among the first product categories in the ESPR Working Plan (April 2025) requiring a Digital Product Passport with lifecycle data accessible via QR code — obligations expected 2028–2030 (no delegated act adopted yet).`;
+            return `${catName} are among the first product categories in the ESPR Working Plan (April 2025) requiring a Digital Product Passport with lifecycle data accessible via QR code, obligations expected 2028 to 2030 (no delegated act adopted yet).`;
         },
         reasonZh: (cat, markets, role, size) => {
             const catName = { textiles: '纺织品与服装', furniture: '家具与家居用品', construction: '建筑材料（钢铁、铝）' }[cat] || cat;
-            return `根据ESPR工作计划（2025年4月），${catName}是首批需要数字产品护照的产品类别，须通过二维码提供生命周期数据——义务预计于2028至2030年生效（授权法案尚未通过）。`;
+            return `根据ESPR工作计划（2025年4月），${catName}是首批需要数字产品护照的产品类别，须通过二维码提供生命周期数据，义务预计于2028至2030年生效（授权法案尚未通过）。`;
         }
     }
 ];
@@ -676,9 +676,9 @@ atlasSubmit.addEventListener('click', () => {
     };
 
     const compassGroups = [
-        { statuses: ['inforce'], en: 'ACT NOW', zh: '立即行动', de: 'JETZT HANDELN', vi: 'HÀNH ĐỘNG NGAY', descEn: 'Already in force — these rules apply to your products today.', descZh: '已生效——这些规则现已适用于您的产品。', descDe: 'Bereits in Kraft — diese Regeln gelten heute für Ihre Produkte.', descVi: 'Đã có hiệu lực — các quy định này áp dụng cho sản phẩm của bạn ngay hôm nay.' },
-        { statuses: ['phasing'], en: 'PREPARE', zh: '提前准备', de: 'VORBEREITEN', vi: 'CHUẨN BỊ', descEn: 'Phasing in — compliance deadlines within the next 1–2 years.', descZh: '逐步实施——合规期限在未来1至2年内。', descDe: 'Stufenweise Einführung — Fristen innerhalb der nächsten 1–2 Jahre.', descVi: 'Đang triển khai — thời hạn tuân thủ trong 1–2 năm tới.' },
-        { statuses: ['prepare'], en: 'WATCH', zh: '持续关注', de: 'BEOBACHTEN', vi: 'THEO DÕI', descEn: 'Adopted or proposed — start building readiness now.', descZh: '已通过或拟议中——请立即开始准备。', descDe: 'Verabschiedet oder vorgeschlagen — beginnen Sie jetzt mit der Vorbereitung.', descVi: 'Đã thông qua hoặc đang đề xuất — hãy bắt đầu chuẩn bị ngay.' }
+        { statuses: ['inforce'], en: 'ACT NOW', zh: '立即行动', de: 'JETZT HANDELN', vi: 'HÀNH ĐỘNG NGAY', descEn: 'Already in force, these rules apply to your products today.', descZh: '已生效，这些规则现已适用于您的产品。', descDe: 'Bereits in Kraft, diese Regeln gelten heute für Ihre Produkte.', descVi: 'Đã có hiệu lực, các quy định này áp dụng cho sản phẩm của bạn ngay hôm nay.' },
+        { statuses: ['phasing'], en: 'PREPARE', zh: '提前准备', de: 'VORBEREITEN', vi: 'CHUẨN BỊ', descEn: 'Phasing in, compliance deadlines within the next 1 to 2 years.', descZh: '逐步实施，合规期限在未来1至2年内。', descDe: 'Stufenweise Einführung, Fristen innerhalb der nächsten 1 bis 2 Jahre.', descVi: 'Đang triển khai, thời hạn tuân thủ trong 1 đến 2 năm tới.' },
+        { statuses: ['prepare'], en: 'WATCH', zh: '持续关注', de: 'BEOBACHTEN', vi: 'THEO DÕI', descEn: 'Adopted or proposed, start building readiness now.', descZh: '已通过或拟议中，请立即开始准备。', descDe: 'Verabschiedet oder vorgeschlagen, beginnen Sie jetzt mit der Vorbereitung.', descVi: 'Đã thông qua hoặc đang đề xuất, hãy bắt đầu chuẩn bị ngay.' }
     ];
 
     atlasCards.innerHTML = compassGroups.map(g => {
@@ -962,7 +962,7 @@ if (cbamVolumeInput) {
     cbamVolumeInput.addEventListener('input', function() {
         const v = parseFloat(this.value);
         if (!isNaN(v) && v > 0 && v < 50) {
-            hint.innerHTML = '<span class="lang-en">Below 50 t/year: you are likely exempt from CBAM (Reg. (EU) 2025/2083) — unless your company\'s combined CBAM-goods imports exceed 50 t.</span><span class="lang-zh">低于每年50公吨：您很可能获得CBAM豁免（法规 (EU) 2025/2083）——除非贵公司全部CBAM产品进口合计超过50公吨。</span>';
+            hint.innerHTML = '<span class="lang-en">Below 50 t/year: you are likely exempt from CBAM (Reg. (EU) 2025/2083), unless your company\'s combined CBAM-goods imports exceed 50 t.</span><span class="lang-zh">低于每年50公吨：您很可能获得CBAM豁免（法规 (EU) 2025/2083），除非贵公司全部CBAM产品进口合计超过50公吨。</span>';
             hint.style.display = '';
             applyLang(hint);
         } else {
@@ -1186,7 +1186,7 @@ document.getElementById('cbamCalculate').addEventListener('click', function() {
                 : `<a href="account.html" class="member-locked-btn">
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                     <span class="lang-en">Member feature: PDF export</span><span class="lang-zh">会员功能：PDF导出</span><span class="lang-de">Mitgliederfunktion: PDF-Export</span><span class="lang-vi">Tính năng hội viên: xuất PDF</span></a>`}
-            <a href="mailto:gcc-sustainability@hongkong.ahk.de" class="cbam-cta"><span class="lang-en">Get Expert CBAM Guidance \u2192</span><span class="lang-zh">\u83b7\u53d6\u4e13\u4e1aCBAM\u6307\u5bfc \u2192</span><span class="lang-de">CBAM-Expertenberatung anfragen \u2192</span><span class="lang-vi">Nhận tư vấn chuyên gia CBAM \u2192</span></a>
+            <a href="mailto:info@hongkong.ahk.de" class="cbam-cta"><span class="lang-en">Get Expert CBAM Guidance \u2192</span><span class="lang-zh">\u83b7\u53d6\u4e13\u4e1aCBAM\u6307\u5bfc \u2192</span><span class="lang-de">CBAM-Expertenberatung anfragen \u2192</span><span class="lang-vi">Nhận tư vấn chuyên gia CBAM \u2192</span></a>
         </div>
     </div>`;
 
@@ -1226,7 +1226,7 @@ if (briefForm) {
 
         const msgs = {
             ok:   { en: `Thank you! A confirmation has been sent to ${email}.`, zh: `谢谢！确认邮件已发送至 ${email}。` },
-            soon: { en: 'Sign-up opens soon — in the meantime, email us at gcc-sustainability@hongkong.ahk.de.', zh: '订阅功能即将开放——请暂时发送邮件至 gcc-sustainability@hongkong.ahk.de。' },
+            soon: { en: 'Sign-up opens soon, in the meantime, email us at info@hongkong.ahk.de.', zh: '订阅功能即将开放，请暂时发送邮件至 info@hongkong.ahk.de。' },
             err:  { en: 'Something went wrong. Please try again or email us directly.', zh: '出现错误，请重试或直接给我们发送邮件。' }
         };
         const finish = (m) => {
@@ -1365,7 +1365,7 @@ loadContent('regulations').then(list => {
     if (Array.isArray(list) && list.length) {
         regulations = list.map(regFromSanity);
     }
-}).catch(() => { /* CMS unavailable — keep built-in fallback data */ });
+}).catch(() => { /* CMS unavailable, keep built-in fallback data */ });
 
 // ----- Deadline Radar -----
 function renderRadar(deadlines) {
@@ -1378,9 +1378,9 @@ function renderRadar(deadlines) {
     if (!upcoming.length) return;
 
     const groups = [
-        { key: 'soon', en: 'NEXT 6 MONTHS', zh: '未来6个月', de: 'NÄCHSTE 6 MONATE', vi: '6 THÁNG TỚI', descEn: 'Act now — these dates are imminent.', descZh: '立即行动——期限迫近。', descDe: 'Jetzt handeln — diese Termine stehen unmittelbar bevor.', descVi: 'Hành động ngay — các thời hạn đã cận kề.' },
-        { key: 'near', en: '6–14 MONTHS', zh: '6至14个月', de: '6–14 MONATE', vi: '6–14 THÁNG', descEn: 'Plan and budget for these this year.', descZh: '请于今年内规划和预算。', descDe: 'Dieses Jahr planen und budgetieren.', descVi: 'Lên kế hoạch và ngân sách trong năm nay.' },
-        { key: 'far', en: 'ON THE HORIZON', zh: '中长期', de: 'AM HORIZONT', vi: 'TRUNG–DÀI HẠN', descEn: 'Monitor and prepare early.', descZh: '持续关注，提前准备。', descDe: 'Beobachten und früh vorbereiten.', descVi: 'Theo dõi và chuẩn bị sớm.' }
+        { key: 'soon', en: 'NEXT 6 MONTHS', zh: '未来6个月', de: 'NÄCHSTE 6 MONATE', vi: '6 THÁNG TỚI', descEn: 'Act now, these dates are imminent.', descZh: '立即行动，期限迫近。', descDe: 'Jetzt handeln, diese Termine stehen unmittelbar bevor.', descVi: 'Hành động ngay, các thời hạn đã cận kề.' },
+        { key: 'near', en: '6 TO 14 MONTHS', zh: '6至14个月', de: '6 BIS 14 MONATE', vi: '6 ĐẾN 14 THÁNG', descEn: 'Plan and budget for these this year.', descZh: '请于今年内规划和预算。', descDe: 'Dieses Jahr planen und budgetieren.', descVi: 'Lên kế hoạch và ngân sách trong năm nay.' },
+        { key: 'far', en: 'ON THE HORIZON', zh: '中长期', de: 'AM HORIZONT', vi: 'TRUNG VÀ DÀI HẠN', descEn: 'Monitor and prepare early.', descZh: '持续关注，提前准备。', descDe: 'Beobachten und früh vorbereiten.', descVi: 'Theo dõi và chuẩn bị sớm.' }
     ];
 
     const byGroup = { soon: [], near: [], far: [] };
@@ -1491,7 +1491,7 @@ function renderLibrary(guides) {
         const cta = p.locked
             ? `<a class="briefing-lock-cta briefing-lock-premium" href="account.html">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                <span class="lang-en">Members only &mdash; sign in</span><span class="lang-zh">仅限会员——请登录</span><span class="lang-de">Nur für Mitglieder &mdash; anmelden</span><span class="lang-vi">Chỉ dành cho hội viên &mdash; đăng nhập</span> &rarr;</a>`
+                <span class="lang-en">Members only, sign in</span><span class="lang-zh">仅限会员，请登录</span><span class="lang-de">Nur für Mitglieder, anmelden</span><span class="lang-vi">Chỉ dành cho hội viên, đăng nhập</span> &rarr;</a>`
             : `<a class="library-read" href="/article?slug=${p.slug || ''}"><span class="lang-en">Read the guide &rarr;</span><span class="lang-zh">阅读指南 &rarr;</span><span class="lang-de">Leitfaden lesen &rarr;</span><span class="lang-vi">Đọc cẩm nang &rarr;</span></a>`;
         return `
         <article class="library-card ${p.locked ? 'library-locked' : ''}">
@@ -1549,7 +1549,7 @@ function renderBriefing(allPosts) {
     const lockCta = p => {
         const premium = p.accessLevel === 'premium';
         const label = premium
-            ? '<span class="lang-en">Member content &mdash; sign in</span><span class="lang-zh">会员内容——请登录</span><span class="lang-de">Mitgliederinhalt &mdash; anmelden</span><span class="lang-vi">Nội dung hội viên &mdash; đăng nhập</span>'
+            ? '<span class="lang-en">Member content, sign in</span><span class="lang-zh">会员内容，请登录</span><span class="lang-de">Mitgliederinhalt, anmelden</span><span class="lang-vi">Nội dung hội viên, đăng nhập</span>'
             : '<span class="lang-en">Sign in free to read</span><span class="lang-zh">免费登录阅读全文</span><span class="lang-de">Kostenlos anmelden und lesen</span><span class="lang-vi">Đăng nhập miễn phí để đọc</span>';
         return `<a class="briefing-lock-cta ${premium ? 'briefing-lock-premium' : ''}" href="account.html">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>

@@ -33,9 +33,11 @@ function boot(file) {
 }
 
 const PAGES = {
-    'index.html':       { page: 'hub',      shown: ['hero', 'v2hub'],      hidden: ['compass', 'cbam', 'faq'] },
-    'v2.html':          { page: 'hub',      shown: ['hero', 'v2hub'],      hidden: ['compass', 'cbam', 'faq'] },
-    'v2-compass.html':  { page: 'compass',  shown: ['compass', 'radar'],   hidden: ['hero', 'cbam', 'benefits'] },
+    'index.html':       { page: 'hub',      shown: ['hero', 'v2hub'],      hidden: ['compass', 'cbam', 'faq', 'trust', 'tools'] },
+    'v2.html':          { page: 'hub',      shown: ['hero', 'v2hub'],      hidden: ['compass', 'cbam', 'faq', 'trust', 'tools'] },
+    'v2-tools.html':    { page: 'tools',    shown: ['tools'],              hidden: ['hero', 'compass', 'cbam'] },
+    'v2-deadlines.html':{ page: 'deadlines',shown: ['radar'],              hidden: ['hero', 'compass', 'cbam'] },
+    'v2-compass.html':  { page: 'compass',  shown: ['compass'],            hidden: ['hero', 'cbam', 'benefits', 'radar'] },
     'v2-cbam.html':     { page: 'cbam',     shown: ['cbam'],               hidden: ['hero', 'compass', 'briefing'] },
     'v2-briefing.html': { page: 'briefing', shown: ['briefing'],           hidden: ['hero', 'cbam', 'library'] },
     'v2-guides.html':   { page: 'guides',   shown: ['library'],            hidden: ['hero', 'briefing'] },
@@ -63,9 +65,11 @@ const PAGES = {
         check(`${file}: always-on legal topline`, !!doc.getElementById('v2Topline'));
         check(`${file}: no sign-in in nav`, !doc.getElementById('navSignin') && !doc.querySelector('.nav-signin-mobile'));
         check(`${file}: Vietnamese hidden from language selector`, !doc.querySelector('#langSelect option[value="vi"]'));
-        check(`${file}: nav has Tools, not CBAM`, !!doc.querySelector('.nav-links a[href="index.html#v2hub"]') && !doc.querySelector('.nav-links a[href="v2-cbam.html"]'));
+        check(`${file}: nav Tools dropdown with CBAM + coming soon`, !!doc.querySelector('.nav-dropdown > a[href="v2-tools.html"]') && !!doc.querySelector('.nav-dropdown-menu a[href="v2-cbam.html"]'));
+        check(`${file}: nav has Deadlines + Glossary entries`, !!doc.querySelector('.nav-links a[href="v2-deadlines.html"]') && !!doc.querySelector('.nav-links a[href="v2-learn.html#glossary"]'));
         check(`${file}: US market removed from wizard`, !doc.querySelector('#wizardMarkets input[value="us"]'));
-        check(`${file}: CBAM tool card locked`, !doc.querySelector('a.v2-tool-card[href="v2-cbam.html"]') && !!doc.getElementById('v2CbamToolCard'));
+        check(`${file}: CBAM tool card clickable again`, !!doc.querySelector('#v2hub a.v2-tool-card[href="v2-cbam.html"]'));
+        check(`${file}: no dash punctuation in visible copy`, !/[\u2013\u2014]/.test(doc.body.textContent));
         check(`${file}: member library announced as launching soon`, !!doc.querySelector('.v2-tool-member .v2-lock-badge'));
         check(`${file}: hub CTA has no Join-the-Committee mailto`, !doc.querySelector('.v2-cta-band a[href^="mailto"]'));
     }
@@ -173,7 +177,7 @@ const PAGES = {
         // expected); assert the handler ran by its localStorage side effect.
         doc.querySelector('.v2-persona-card[data-persona="merchandiser"]').click();
         check('hub: persona door click stores persona (navigates in browser)', window.localStorage.getItem('gcc-persona') === 'merchandiser');
-        check('hub: mini containers exist', !!doc.getElementById('v2MiniDeadlines') && !!doc.getElementById('v2MiniNews'));
+        check('hub: deadlines mini exists, news mini removed', !!doc.getElementById('v2MiniDeadlines') && !doc.getElementById('v2MiniNews'));
     }
 
 

@@ -8,7 +8,7 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
-const SECTIONS = ['hero', 'personas', 'v2hub', 'start', 'compass', 'radar', 'briefing',
+const SECTIONS = ['hero', 'personas', 'v2hub', 'tools', 'start', 'compass', 'radar', 'briefing',
     'library', 'cbam', 'guidance', 'benefits', 'risks-incentives', 'china-esg',
     'actions', 'voluntary', 'about', 'faq', 'glossary', 'trust'];
 
@@ -16,12 +16,14 @@ const SECTIONS = ['hero', 'personas', 'v2hub', 'start', 'compass', 'radar', 'bri
 // written to index.html; v2.html is kept as an alias so shared /v2 links and
 // the v2-branch preview URL keep working.
 const PAGES = {
-    hub: { file: 'index.html', alias: 'v2.html', title: 'Green Sourcing Hub — EU Sustainability Compliance | GCC ESG Committee', show: ['hero', 'personas', 'v2hub', 'trust'] },
-    compass: { file: 'v2-compass.html', title: 'Regulations — Green Sourcing Compass | Green Sourcing Hub', show: ['compass', 'radar'] },
+    hub: { file: 'index.html', alias: 'v2.html', title: 'Green Sourcing Hub | EU Sustainability Compliance | GCC ESG Committee', show: ['hero', 'personas', 'v2hub'] },
+    tools: { file: 'v2-tools.html', title: 'Tools | Green Sourcing Hub', show: ['tools'] },
+    deadlines: { file: 'v2-deadlines.html', title: 'Deadlines | Green Sourcing Hub', show: ['radar'] },
+    compass: { file: 'v2-compass.html', title: 'Regulations | Green Sourcing Compass | Green Sourcing Hub', show: ['compass'] },
     cbam: { file: 'v2-cbam.html', title: 'CBAM Cost Calculator | Green Sourcing Hub', show: ['cbam'] },
-    briefing: { file: 'v2-briefing.html', title: 'News — The Green Sourcing Briefing | Green Sourcing Hub', show: ['briefing'] },
+    briefing: { file: 'v2-briefing.html', title: 'News | The Green Sourcing Briefing | Green Sourcing Hub', show: ['briefing'] },
     guides: { file: 'v2-guides.html', title: 'Member Resource Library | Green Sourcing Hub', show: ['library'] },
-    learn: { file: 'v2-learn.html', title: 'Learn — Why Compliance Matters | Green Sourcing Hub', show: ['guidance', 'benefits', 'risks-incentives', 'actions', 'voluntary', 'faq', 'glossary'] },
+    learn: { file: 'v2-learn.html', title: 'Learn | Why Compliance Matters | Green Sourcing Hub', show: ['guidance', 'benefits', 'risks-incentives', 'actions', 'voluntary', 'faq', 'glossary'] },
     about: { file: 'v2-about.html', title: 'About the GCC ESG Committee | Green Sourcing Hub', show: ['about', 'trust'] }
 };
 
