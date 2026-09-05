@@ -353,9 +353,8 @@ body[data-v2page="glossary"] #glossary, body[data-v2page="certifications"] #volu
 body[data-v2page="briefing"] #briefingList > .briefing-lead { display: grid; grid-template-columns: minmax(300px, 420px) 1fr; column-gap: 28px; align-items: start; }
 body[data-v2page="briefing"] #briefingList > .briefing-lead > * { grid-column: 2; }
 body[data-v2page="briefing"] #briefingList > .briefing-lead { border-bottom: 2px solid #e4e7e4; padding-bottom: 26px; margin-bottom: 26px; }
-body[data-v2page="briefing"] #briefingList > .briefing-lead .briefing-lead-img { grid-column: 1; grid-row: 1 / span 8; margin: 0; }
-body[data-v2page="briefing"] #briefingList > .briefing-lead .briefing-lead-img { align-self: stretch; }
-body[data-v2page="briefing"] #briefingList > .briefing-lead .briefing-lead-img img { width: 100%; height: 100%; min-height: 320px; object-fit: cover; border-radius: 10px; display: block; }
+body[data-v2page="briefing"] #briefingList > .briefing-lead .briefing-lead-img { grid-column: 1 / 2; grid-row: 1 / 9; align-self: stretch; justify-self: stretch; position: relative; overflow: hidden; margin: 0; min-height: 320px; max-width: 420px; border-radius: 10px; float: none; display: block; }
+body[data-v2page="briefing"] #briefingList > .briefing-lead .briefing-lead-img img { position: absolute; inset: 0; width: 100%; height: 100%; max-height: none; object-fit: cover; display: block; }
 @media (max-width: 800px) {
     body[data-v2page="briefing"] #briefingList > .briefing-lead { grid-template-columns: 1fr; }
     body[data-v2page="briefing"] .briefing-lead > *, body[data-v2page="briefing"] #briefingList > .briefing-lead .briefing-lead-img { grid-column: 1; grid-row: auto; }
