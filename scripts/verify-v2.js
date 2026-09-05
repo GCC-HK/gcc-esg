@@ -69,6 +69,7 @@ const PAGES = {
         check(`${file}: no sign-in in nav`, !doc.getElementById('navSignin') && !doc.querySelector('.nav-signin-mobile'));
         check(`${file}: Vietnamese hidden from language selector`, !doc.querySelector('#langSelect option[value="vi"]'));
         check(`${file}: nav Tools dropdown with CBAM + coming soon`, !!doc.querySelector('.nav-dropdown > a[href="v2-tools.html"]') && !!doc.querySelector('.nav-dropdown-menu a[href="v2-cbam.html"]'));
+        check(`${file}: Regulations dropdown splits supplier/sourcing office`, !!doc.querySelector('.nav-dropdown-menu a[href="v2-compass.html?persona=supplier"]') && !!doc.querySelector('.nav-dropdown-menu a[href="v2-compass.html?persona=merchandiser"]'));
         check(`${file}: nav has Deadlines + Glossary entries`, !!doc.querySelector('.nav-links a[href="v2-deadlines.html"]') && !!doc.querySelector('.nav-links a[href="v2-glossary.html"]'));
         check(`${file}: Learn dropdown with FAQ + certifications`, !!doc.querySelector('.nav-dropdown-menu a[href="v2-faq.html"]') && !!doc.querySelector('.nav-dropdown-menu a[href="v2-certifications.html"]'));
         check(`${file}: US market removed from wizard`, !doc.querySelector('#wizardMarkets input[value="us"]'));
@@ -167,10 +168,11 @@ const PAGES = {
         const { doc } = boot('v2-glossary.html');
         check('glossary page: term/definition rows (14 incl. law types)', doc.querySelectorAll('.v2-gl-row').length === 14);
         check('glossary page: law-types group present', doc.body.innerHTML.includes('Types of EU rules'));
+        check('glossary page: what-it-means-for-you column', doc.querySelectorAll('.v2-gl-you').length === 14);
     }
     {
         const { doc } = boot('v2-certifications.html');
-        check('certifications page: voluntary grid shown standalone', !!doc.querySelector('#voluntary .voluntary-grid'));
+        check('certifications page: name/explanation rows', doc.querySelectorAll('#voluntary .v2-cert-row').length === 5);
     }
 
     // Wizard multi-select -> comparison matrix in the results area

@@ -251,7 +251,6 @@ body[data-v2page="compass"] #radar { padding-top: 28px; }
 .v2-personas-title { text-align: center; margin: 0 0 6px; font-size: clamp(22px, 3vw, 30px); }
 .v2-personas-sub { text-align: center; color: #667; margin: 0 0 22px; }
 .v2-persona-card:nth-child(2) { animation-delay: 1.4s; }
-.v2-persona-card.active { outline: 2px solid var(--primary, #1a5c38); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { .v2-persona-card { animation: none !important; } }
 
 /* #17: date next to the day-countdown chip in the hub deadline preview */
@@ -269,7 +268,7 @@ span.member-locked-btn.v2-locked-soon, span.briefing-lock-cta.v2-locked-soon {
 
 /* #23-#25: CBAM notes */
 .cbam-small-note { margin: 6px 0 0; font-size: 12.5px; line-height: 1.45; color: #667; }
-.cbam-price-basis { margin: 10px 0 0; font-size: 13px; color: #556; }
+.cbam-price-basis { margin: 10px 0 0; font-size: 13px; color: rgba(255,255,255,.88); }
 .cbam-cn-warn { border-left: 4px solid #C34343; }
 
 /* #28: express category chips + comparison matrix */
@@ -323,7 +322,7 @@ body[data-v2page="deadlines"] #radar { padding-top: 34px; }
 /* real glossary: term left, definition right */
 .v2-glossary-list { max-width: 980px; margin: 30px auto 0; text-align: left; }
 .v2-gl-group { margin: 26px 0 10px; font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--primary, #1a5c38); }
-.v2-gl-row { display: grid; grid-template-columns: 240px 1fr; gap: 18px; padding: 14px 4px; border-bottom: 1px solid #e7eae7; }
+.v2-gl-row { display: grid; grid-template-columns: 210px 1fr 250px; gap: 18px; padding: 14px 4px; border-bottom: 1px solid #e7eae7; }
 .v2-gl-term { font-weight: 700; color: var(--text, #222); font-size: 15px; }
 .v2-gl-def { color: #555; font-size: 14px; line-height: 1.6; }
 @media (max-width: 640px) { .v2-gl-row { grid-template-columns: 1fr; gap: 4px; } }
@@ -338,3 +337,28 @@ body[data-v2page="glossary"] #glossary, body[data-v2page="certifications"] #volu
 .cbam-volume-row { display: flex; gap: 8px; }
 .cbam-volume-row input { flex: 1; }
 .cbam-volume-row select { width: auto; }
+
+/* Design round 4 (Sep 2026) */
+/* glossary action column */
+.v2-gl-you { font-size: 13px; line-height: 1.55; color: #1a5c38; background: #f2f7f3; border-radius: 8px; padding: 10px 12px; align-self: start; }
+.v2-gl-head { display: grid; grid-template-columns: 210px 1fr 250px; gap: 18px; padding: 0 4px 8px; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #778; }
+@media (max-width: 760px) { .v2-gl-row, .v2-gl-head { grid-template-columns: 1fr; gap: 6px; } .v2-gl-head { display: none; } }
+/* certifications: name left, explanation right */
+.v2-cert-list { max-width: 980px; margin: 26px auto 0; text-align: left; }
+.v2-cert-row { display: grid; grid-template-columns: 210px 1fr; gap: 18px; padding: 16px 4px; border-bottom: 1px solid #e7eae7; }
+.v2-cert-row .v2-cert-name { font-weight: 700; font-size: 15px; }
+.v2-cert-row .v2-cert-name a { color: var(--primary, #1a5c38); }
+.v2-cert-row p { margin: 0; font-size: 14px; line-height: 1.6; color: #555; }
+@media (max-width: 640px) { .v2-cert-row { grid-template-columns: 1fr; gap: 4px; } }
+/* briefing: full-width lead with image left / text right; other posts two-up */
+body[data-v2page="briefing"] #briefingList > .briefing-lead { display: grid; grid-template-columns: minmax(300px, 420px) 1fr; column-gap: 28px; align-items: start; }
+body[data-v2page="briefing"] #briefingList > .briefing-lead > * { grid-column: 2; }
+body[data-v2page="briefing"] #briefingList > .briefing-lead { border-bottom: 2px solid #e4e7e4; padding-bottom: 26px; margin-bottom: 26px; }
+body[data-v2page="briefing"] #briefingList > .briefing-lead .briefing-lead-img { grid-column: 1; grid-row: 1 / span 8; margin: 0; }
+body[data-v2page="briefing"] #briefingList > .briefing-lead .briefing-lead-img img { width: 100%; height: auto; border-radius: 10px; }
+@media (max-width: 800px) {
+    body[data-v2page="briefing"] #briefingList > .briefing-lead { grid-template-columns: 1fr; }
+    body[data-v2page="briefing"] .briefing-lead > *, body[data-v2page="briefing"] #briefingList > .briefing-lead .briefing-lead-img { grid-column: 1; grid-row: auto; }
+}
+.v2-mode-switch { text-align: right; font-size: 13px; margin: 0 0 10px; }
+.v2-mode-switch a { color: var(--primary, #1a5c38); font-weight: 600; }
