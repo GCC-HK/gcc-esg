@@ -80,6 +80,11 @@
             .map(o => `<option value="${o.value}">${o.textContent}</option>`).join('');
         const sizeOptions = Array.from(document.querySelectorAll('#filterSize option'))
             .map(o => `<option value="${o.value}">${o.textContent}</option>`).join('');
+        // committee request: compare several product categories side by side —
+        // the category control is a multi-select chip row, not a dropdown
+        const catChips = Array.from(document.querySelectorAll('#filterCategory option'))
+            .filter(o => o.value)
+            .map(o => `<button type="button" class="v2-ex-cat" data-value="${o.value}">${o.textContent}</button>`).join('');
 
         const el = document.createElement('div');
         el.className = 'v2-express';
@@ -87,17 +92,18 @@
         el.style.display = 'none';
         el.innerHTML = `
             <div class="v2-express-head">
-                <h3><span class="lang-en">Express check &mdash; product overview table</span><span class="lang-zh">快速检查——产品法规概览表</span><span class="lang-de">Express-Check &mdash; Produkt&uuml;bersicht</span><span class="lang-vi">Kiểm tra nhanh &mdash; bảng tổng quan sản phẩm</span></h3>
-                <a href="#compass"><span class="lang-en">New to these rules? Use the guided check below &darr;</span><span class="lang-zh">不熟悉这些法规？请使用下方的引导式检查 &darr;</span><span class="lang-de">Neu im Thema? Nutzen Sie den gef&uuml;hrten Check unten &darr;</span><span class="lang-vi">Chưa quen? D&ugrave;ng kiểm tra c&oacute; hướng dẫn b&ecirc;n dưới &darr;</span></a>
+                <h3><span class="lang-en">Express check &mdash; product overview table</span><span class="lang-zh">快速检查——产品要求概览表</span><span class="lang-de">Express-Check &mdash; Produkt&uuml;bersicht</span><span class="lang-vi">Kiểm tra nhanh &mdash; bảng tổng quan sản phẩm</span></h3>
+                <a href="#compass"><span class="lang-en">New to these requirements? Use the guided check below &darr;</span><span class="lang-zh">不熟悉这些要求？请使用下方的引导式检查 &darr;</span><span class="lang-de">Neu im Thema? Nutzen Sie den gef&uuml;hrten Check unten &darr;</span><span class="lang-vi">Chưa quen? D&ugrave;ng kiểm tra c&oacute; hướng dẫn b&ecirc;n dưới &darr;</span></a>
             </div>
+            <p class="v2-ex-hint"><span class="lang-en">Pick one category for the overview table &mdash; or several to compare them side by side.</span><span class="lang-zh">选择一个类别查看概览表——或选择多个类别进行并排比较。</span><span class="lang-de">W&auml;hlen Sie eine Kategorie f&uuml;r die &Uuml;bersicht &mdash; oder mehrere f&uuml;r den direkten Vergleich.</span><span class="lang-vi">Chọn một danh mục để xem bảng tổng quan &mdash; hoặc nhiều danh mục để so s&aacute;nh song song.</span></p>
+            <div class="v2-ex-cats" id="v2ExCats">${catChips}</div>
+            <select id="v2ExCat" aria-hidden="true" tabindex="-1" style="display:none">${catOptions}</select>
             <div class="v2-express-row">
-                <select id="v2ExCat" aria-label="Product category">${catOptions}</select>
                 <select id="v2ExSize" aria-label="Supplier size">${sizeOptions}</select>
                 <span class="v2-express-markets">
                     <label><input type="checkbox" name="v2exmarket" value="eu" checked> EU</label>
                     <label><input type="checkbox" name="v2exmarket" value="germany" checked> <span class="lang-en">Germany</span><span class="lang-zh">德国</span><span class="lang-de">Deutschland</span><span class="lang-vi">Đức</span></label>
                     <label><input type="checkbox" name="v2exmarket" value="uk"> UK</label>
-                    <label><input type="checkbox" name="v2exmarket" value="us"> US</label>
                 </span>
                 <button type="button" class="btn-express" id="v2ExRun"><span class="lang-en">Show overview</span><span class="lang-zh">显示概览</span><span class="lang-de">&Uuml;bersicht anzeigen</span><span class="lang-vi">Xem tổng quan</span></button>
             </div>
@@ -107,6 +113,12 @@
         // any scrolling.
         anchor.insertBefore(el, anchor.children[1] || null);
         applyLang(el);
+        el.querySelectorAll('.v2-ex-cat').forEach(chip => chip.addEventListener('click', () => {
+            chip.classList.toggle('on');
+            // keep the hidden single-select in sync (CSV export + wizard reuse)
+            const first = el.querySelector('.v2-ex-cat.on');
+            document.getElementById('v2ExCat').value = first ? first.dataset.value : '';
+        }));
         document.getElementById('v2ExRun').addEventListener('click', runExpress);
         // "use the guided check below" — #compass points at the section top
         // (where the user already is), so scroll to the wizard block instead
@@ -121,8 +133,9 @@
     }
 
     function runExpress() {
+        const cats = Array.from(document.querySelectorAll('#v2ExCats .v2-ex-cat.on')).map(b => b.dataset.value);
         const sel = {
-            category: document.getElementById('v2ExCat').value,
+            category: cats[0] || document.getElementById('v2ExCat').value,
             size: document.getElementById('v2ExSize').value,
             markets: Array.from(document.querySelectorAll('input[name="v2exmarket"]:checked')).map(cb => cb.value),
             role: 'brand'
@@ -133,6 +146,7 @@
             applyLang(out);
             return;
         }
+        if (cats.length > 1) { runComparison(cats, sel); return; }
 
         // Sync the main wizard inputs so the CSV export shares this selection
         document.getElementById('filterCategory').value = sel.category;
@@ -178,6 +192,89 @@
         document.getElementById('v2ExCsvBtn').addEventListener('click', exportCsv);
     }
 
+    // ===== Category comparison matrix (committee request #28) =====
+    // Several selected categories → one table: rows are the union of
+    // matched requirements, one check-mark column per category.
+    function catLabel(value) {
+        return document.querySelector(`#filterCategory option[value="${value}"]`)?.dataset.en || value;
+    }
+
+    let lastComparison = null;
+
+    function runComparison(cats, sel) {
+        const out = document.getElementById('v2ExResult');
+        const perCat = cats.map(c => ({
+            cat: c,
+            regs: matchedRegs({ ...sel, category: c })
+        }));
+        const union = [];
+        const seen = new Set();
+        perCat.forEach(pc => pc.regs.forEach(reg => { if (!seen.has(reg.id)) { seen.add(reg.id); union.push(reg); } }));
+        if (!union.length) {
+            out.innerHTML = '<p style="margin:12px 0 0;"><span class="lang-en">No requirements matched — try selecting EU or Germany as a market.</span><span class="lang-zh">没有匹配的要求——请尝试选择欧盟或德国作为市场。</span><span class="lang-de">Keine Treffer &mdash; w&auml;hlen Sie EU oder Deutschland als Markt.</span><span class="lang-vi">Kh&ocirc;ng c&oacute; y&ecirc;u cầu n&agrave;o khớp &mdash; h&atilde;y chọn EU hoặc Đức.</span></p>';
+            applyLang(out);
+            return;
+        }
+        const idSets = perCat.map(pc => new Set(pc.regs.map(r => r.id)));
+        lastComparison = { cats, union, idSets, sel };
+
+        const headCols = cats.map(c => `<th class="v2-cmp-cat">${catLabel(c)}</th>`).join('');
+        const rows = union.map(reg => {
+            const marks = idSets.map(s => `<td class="v2-cmp-mark">${s.has(reg.id) ? '<span class="v2-cmp-yes">&#10004;</span>' : '<span class="v2-cmp-no">&mdash;</span>'}</td>`).join('');
+            return `<tr>
+                <td>${reg.name}<br><small style="font-weight:400;color:#667">${reg.ref || ''}</small></td>
+                <td>${reg.complianceDeadline || '-'}</td>
+                ${marks}
+                <td><a href="regulation.html?id=${reg.id}" target="_blank"><span class="lang-en">Details</span><span class="lang-zh">详情</span><span class="lang-de">Details</span><span class="lang-vi">Chi tiết</span></a></td>
+            </tr>`;
+        }).join('');
+
+        out.innerHTML = DISCLAIMER_HTML + `
+            <div class="v2-export-bar">
+                <button type="button" class="btn-csv" id="v2CmpCsvBtn"><span class="lang-en">&darr; Export comparison as CSV</span><span class="lang-zh">&darr; 导出比较表CSV</span><span class="lang-de">&darr; Vergleich als CSV exportieren</span><span class="lang-vi">&darr; Xuất CSV so s&aacute;nh</span></button>
+                <span class="v2-export-note"><span class="lang-en">${union.length} requirements across ${cats.length} categories &middot; generated in your browser, no data is sent anywhere.</span><span class="lang-zh">${cats.length}个类别共${union.length}项要求 &middot; 在您的浏览器中生成，不会向任何服务器发送数据。</span><span class="lang-de">${union.length} Anforderungen in ${cats.length} Kategorien &middot; lokal im Browser erzeugt.</span><span class="lang-vi">${union.length} y&ecirc;u cầu cho ${cats.length} danh mục &middot; tạo trong tr&igrave;nh duyệt.</span></span>
+            </div>
+            <div class="v2-table-wrap"><table class="v2-table v2-cmp-table">
+                <thead><tr>
+                    <th><span class="lang-en">Requirement</span><span class="lang-zh">要求</span><span class="lang-de">Anforderung</span><span class="lang-vi">Y&ecirc;u cầu</span></th>
+                    <th><span class="lang-en">Key deadline</span><span class="lang-zh">关键期限</span><span class="lang-de">Frist</span><span class="lang-vi">Thời hạn</span></th>
+                    ${headCols}
+                    <th><span class="lang-en">Links</span><span class="lang-zh">链接</span><span class="lang-de">Links</span><span class="lang-vi">Li&ecirc;n kết</span></th>
+                </tr></thead>
+                <tbody>${rows}</tbody>
+            </table></div>`;
+        applyLang(out);
+        document.getElementById('v2CmpCsvBtn').addEventListener('click', exportComparisonCsv);
+    }
+
+    function exportComparisonCsv() {
+        if (!lastComparison) return;
+        const { cats, union, idSets, sel } = lastComparison;
+        const today = new Date().toISOString().slice(0, 10);
+        const head = [
+            ['Green Sourcing Compass - Category Comparison'],
+            ['GCC ESG Committee, German Chamber of Commerce Hong Kong'],
+            ['Categories', cats.map(catLabel).join(' | ')],
+            ['Target markets', sel.markets.join(', ').toUpperCase() || '-'],
+            ['Generated', today],
+            ['Disclaimer', 'Indicative screening result, not legal advice. Verify each requirement against the official source link before business decisions. The Chamber accepts no liability for decisions based on this overview.'],
+            []
+        ];
+        const cols = ['Requirement', 'Legal reference', 'Key deadline', ...cats.map(catLabel), 'Official source'];
+        const rows = union.map(reg => [
+            reg.name, reg.ref || '', reg.complianceDeadline || '',
+            ...idSets.map(s => s.has(reg.id) ? 'YES' : '-'),
+            reg.eurlex || ''
+        ]);
+        const csv = '\uFEFF' + head.concat([cols], rows).map(r => r.map(csvCell).join(',')).join('\r\n');
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+        a.download = `requirements-comparison-${today}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 0);
+    }
+
     // ===== Persona-specific "what to do next" =====
     const NEXT_STEPS = {
         supplier: `
@@ -196,7 +293,7 @@
             <ol>
                 <li><span class="lang-en">Export the CSV and attach it to your order or supplier email — it names each regulation, deadline and official source.</span><span class="lang-zh">导出CSV并附在订单或供应商邮件中——其中列明每条法规、期限和官方来源。</span><span class="lang-de">Exportieren Sie die CSV und h&auml;ngen Sie sie an Ihre Bestellung oder Lieferanten-E-Mail an.</span><span class="lang-vi">Xuất CSV v&agrave; đ&iacute;nh k&egrave;m email đơn h&agrave;ng hoặc nh&agrave; cung cấp.</span></li>
                 <li><span class="lang-en">Ask your supplier for the documents named in "Key requirements" — before order placement, not at shipment.</span><span class="lang-zh">在下单前（而非发货时）就向供应商索取"关键要求"中列明的文件。</span><span class="lang-de">Fordern Sie die Dokumente der Kernanforderungen vor der Bestellung an &mdash; nicht erst bei Verschiffung.</span><span class="lang-vi">Y&ecirc;u cầu nh&agrave; cung cấp gửi t&agrave;i liệu trong &quot;Y&ecirc;u cầu ch&iacute;nh&quot; trước khi đặt h&agrave;ng.</span></li>
-                <li><span class="lang-en">Cross-check the deadlines against your order and shipping calendar — a rule that applies at arrival matters for orders placed today.</span><span class="lang-zh">将期限与您的订单和船期日历核对——货物到港时适用的规则，对今天下的订单同样重要。</span><span class="lang-de">Gleichen Sie Fristen mit Ihrem Order- und Verschiffungskalender ab.</span><span class="lang-vi">Đối chiếu thời hạn với lịch đặt h&agrave;ng v&agrave; giao h&agrave;ng của bạn.</span></li>
+                <li><span class="lang-en">Cross-check the deadlines against your order and shipping calendar — a requirement that applies at arrival matters for orders placed today.</span><span class="lang-zh">将期限与您的订单和船期日历核对——货物到港时适用的规则，对今天下的订单同样重要。</span><span class="lang-de">Gleichen Sie Fristen mit Ihrem Order- und Verschiffungskalender ab.</span><span class="lang-vi">Đối chiếu thời hạn với lịch đặt h&agrave;ng v&agrave; giao h&agrave;ng của bạn.</span></li>
                 <li><span class="lang-en">Follow the Briefing for changes to these rules — or ask the Committee to walk your team through a specific regulation.</span><span class="lang-zh">通过简报跟踪法规变化——或请委员会为您的团队讲解某项具体法规。</span><span class="lang-de">Verfolgen Sie &Auml;nderungen im Briefing &mdash; oder bitten Sie das Komitee um eine Einf&uuml;hrung.</span><span class="lang-vi">Theo d&otilde;i Bản tin để cập nhật thay đổi &mdash; hoặc nhờ Ủy ban hướng dẫn.</span></li>
             </ol>
         </div>`
@@ -213,6 +310,11 @@
             if (h3 && !h3.querySelector('.v2-g-count')) {
                 h3.insertAdjacentHTML('beforeend', `<span class="v2-g-count">${g.querySelectorAll('.reg-result').length}</span>`);
             }
+            // V2 terminology (committee decision): "requirements", not "rules"
+            // — script.js stays untouched because V1 is the frozen baseline.
+            g.querySelectorAll('.compass-group-header p .lang-en').forEach(s => { s.textContent = s.textContent.replace(/\brules\b/g, 'requirements'); });
+            g.querySelectorAll('.compass-group-header p .lang-de').forEach(s => { s.textContent = s.textContent.replace(/\bRegeln\b/g, 'Anforderungen'); });
+            g.querySelectorAll('.compass-group-header p .lang-zh').forEach(s => { s.textContent = s.textContent.replace(/规则/g, '要求'); });
         });
     }
 
@@ -262,7 +364,7 @@
 
         const head = [
             ['Green Sourcing Compass - Regulatory Sheet'],
-            ['GCC Sustainability Committee, German Chamber of Commerce Hong Kong'],
+            ['GCC ESG Committee, German Chamber of Commerce Hong Kong'],
             ['Product category', labels.category],
             ['Role', labels.role],
             ['Target markets', sel.markets.join(', ').toUpperCase() || '-'],
@@ -364,7 +466,10 @@
                 dl.innerHTML = Array.from(cards).slice(0, 4).map(chip => {
                     const label = chip.parentElement.querySelector('.radar-label');
                     const href = chip.closest('a.radar-item-link')?.getAttribute('href');
-                    const inner = `<span class="v2-mini-chip">${chip.querySelector('strong')?.textContent || ''}<small>d</small></span><span>${label ? label.innerHTML : ''}</span>`;
+                    // committee feedback: a bare "25d" chip reads as cryptic —
+                    // show the actual date next to the countdown
+                    const dateStr = (chip.parentElement.querySelector('.radar-meta')?.textContent || '').trim().split(/\s{2,}|expected|预期/)[0].trim();
+                    const inner = `<span class="v2-mini-chip">${chip.querySelector('strong')?.textContent || ''}<small>d</small></span><span>${label ? label.innerHTML : ''}${dateStr ? `<small class="v2-mini-date">${dateStr}</small>` : ''}</span>`;
                     return href ? `<a class="v2-mini-row" href="${href}">${inner}</a>` : `<div class="v2-mini-row">${inner}</div>`;
                 }).join('');
                 applyLang(dl);
@@ -392,9 +497,10 @@
     }
 
     // ===== Guides page: member gate =====
-    // The guide bodies are already protected server-side; this gate replaces
-    // the public teaser view with an explicit sign-in ask, per committee
-    // decision: the library is a member benefit, not a shop window.
+    // Committee decision (Sep 2026): the member area is announced from day
+    // one but inaccessible until the membership model goes live — so the
+    // gate is a "launching soon" notice, not a sign-in ask. Signed-in demo
+    // members still pass through (server-side gating stays authoritative).
     function gateGuides() {
         if (PAGE !== 'guides') return;
         const signedIn = (typeof authToken === 'function' && authToken()) || (typeof demoTier === 'function' && demoTier());
@@ -406,10 +512,10 @@
         if (grid) grid.style.display = 'none';
         grid?.insertAdjacentHTML('beforebegin', `
             <div class="v2-gate">
-                <h3><span class="lang-en">Member area</span><span class="lang-zh">会员专区</span><span class="lang-de">Mitgliederbereich</span><span class="lang-vi">Khu vực thành viên</span></h3>
-                <p><span class="lang-en">The in-depth guides are reserved for member companies. Sign in to access the library.</span><span class="lang-zh">深度指南仅面向会员企业。请登录以访问资源库。</span><span class="lang-de">Die Leitf&auml;den sind Mitgliedsunternehmen vorbehalten. Melden Sie sich an, um auf die Bibliothek zuzugreifen.</span><span class="lang-vi">Cẩm nang chuy&ecirc;n s&acirc;u d&agrave;nh ri&ecirc;ng cho c&ocirc;ng ty th&agrave;nh vi&ecirc;n. Đăng nhập để truy cập thư viện.</span></p>
-                <a class="btn-gate" href="account.html"><span class="lang-en">Sign in</span><span class="lang-zh">登录</span><span class="lang-de">Anmelden</span><span class="lang-vi">Đăng nhập</span></a>
-                <p class="v2-gate-sub"><span class="lang-en">Not a member yet? <a href="https://hongkong.ahk.de/membership" target="_blank" rel="noopener">Join the German Chamber of Commerce Hong Kong</a>.</span><span class="lang-zh">还不是会员？<a href="https://hongkong.ahk.de/membership" target="_blank" rel="noopener">加入香港德国商会</a>。</span><span class="lang-de">Noch kein Mitglied? <a href="https://hongkong.ahk.de/membership" target="_blank" rel="noopener">Werden Sie Mitglied der Deutschen Handelskammer Hongkong</a>.</span><span class="lang-vi">Chưa l&agrave; hội vi&ecirc;n? <a href="https://hongkong.ahk.de/membership" target="_blank" rel="noopener">Gia nhập Ph&ograve;ng Thương mại Đức tại Hồng K&ocirc;ng</a>.</span></p>
+                <h3><span class="lang-en">Member area &mdash; launching soon</span><span class="lang-zh">会员专区——即将推出</span><span class="lang-de">Mitgliederbereich &mdash; startet bald</span><span class="lang-vi">Khu vực th&agrave;nh vi&ecirc;n &mdash; sắp ra mắt</span></h3>
+                <p><span class="lang-en">The in-depth guides will be available to member companies once the member area launches. The Committee is preparing this section now.</span><span class="lang-zh">会员专区上线后，深度指南将向会员企业开放。委员会目前正在筹备该板块。</span><span class="lang-de">Die Leitf&auml;den stehen Mitgliedsunternehmen zur Verf&uuml;gung, sobald der Mitgliederbereich startet. Der Ausschuss bereitet diesen Bereich derzeit vor.</span><span class="lang-vi">Cẩm nang chuy&ecirc;n s&acirc;u sẽ d&agrave;nh cho c&ocirc;ng ty th&agrave;nh vi&ecirc;n khi khu vực th&agrave;nh vi&ecirc;n ra mắt. Ủy ban đang chuẩn bị phần n&agrave;y.</span></p>
+                <a class="btn-gate" href="mailto:info@hongkong.ahk.de?subject=Green Sourcing Hub — Member area"><span class="lang-en">Get notified / work with the Committee</span><span class="lang-zh">获取通知 / 与委员会合作</span><span class="lang-de">Benachrichtigen lassen / mit dem Ausschuss arbeiten</span><span class="lang-vi">Nhận th&ocirc;ng b&aacute;o / hợp t&aacute;c với Ủy ban</span></a>
+                <p class="v2-gate-sub"><span class="lang-en">Interested in the Committee itself? <a href="https://hongkong.ahk.de/en" target="_blank" rel="noopener">Learn more on the Chamber website</a> &mdash; or <a href="https://hongkong.ahk.de/membership" target="_blank" rel="noopener">become a Chamber member</a>.</span><span class="lang-zh">想了解委员会？<a href="https://hongkong.ahk.de/en" target="_blank" rel="noopener">请访问商会官网</a>——或<a href="https://hongkong.ahk.de/membership" target="_blank" rel="noopener">成为商会会员</a>。</span><span class="lang-de">Interesse am Ausschuss? <a href="https://hongkong.ahk.de/en" target="_blank" rel="noopener">Mehr auf der Kammer-Website</a> &mdash; oder <a href="https://hongkong.ahk.de/membership" target="_blank" rel="noopener">Kammermitglied werden</a>.</span><span class="lang-vi">Quan t&acirc;m đến Ủy ban? <a href="https://hongkong.ahk.de/en" target="_blank" rel="noopener">Xem th&ecirc;m tr&ecirc;n website Ph&ograve;ng Thương mại</a> &mdash; hoặc <a href="https://hongkong.ahk.de/membership" target="_blank" rel="noopener">trở th&agrave;nh hội vi&ecirc;n</a>.</span></p>
             </div>`);
         applyLang(lib);
     }
@@ -458,6 +564,63 @@
         }, true);
     }
 
+    // ===== V2-only post-render overrides =====
+    // The radar and briefing are rendered by shared script.js from the CMS.
+    // V1 is the frozen committee baseline, so all V2 copy decisions are
+    // applied here after render instead of editing script.js. Retries until
+    // the async CMS render lands.
+    function v2Overrides(attempt) {
+        let pending = false;
+
+        // #radar: supplier lead-time note (committee: "deadlines bind the
+        // importer — suppliers must act earlier") + horizon column rewording
+        const radarList = document.getElementById('radarList');
+        if (radarList && radarList.childElementCount) {
+            if (!document.querySelector('.v2-radar-note')) {
+                document.querySelector('#radar .section-head')?.insertAdjacentHTML('afterend', `
+                    <div class="v2-radar-note"><span aria-hidden="true">&#9432;</span><div><span class="lang-en"><strong>Reading these dates as a supplier:</strong> the legal deadlines usually bind the EU importer or seller. Your goods must comply by the time they ship — or are ordered — so act well before each date and add lead time for changes to product design and production processes.</span><span class="lang-zh"><strong>供应商如何解读这些日期：</strong>法定期限通常约束欧盟进口商或销售方。您的货物在发运（甚至下单）时就须合规——请在每个日期之前尽早行动，并为产品设计和生产工艺的调整预留额外时间。</span><span class="lang-de"><strong>Diese Termine aus Lieferantensicht:</strong> Die gesetzlichen Fristen binden meist den EU-Importeur oder Verk&auml;ufer. Ihre Ware muss bei Verschiffung &mdash; oder Bestellung &mdash; konform sein: Handeln Sie deutlich vor jedem Termin und planen Sie Vorlauf f&uuml;r Produkt- und Prozess&auml;nderungen ein.</span><span class="lang-vi"><strong>Đọc c&aacute;c mốc n&agrave;y từ g&oacute;c nh&igrave;n nh&agrave; cung cấp:</strong> thời hạn ph&aacute;p l&yacute; thường r&agrave;ng buộc nh&agrave; nhập khẩu hoặc b&ecirc;n b&aacute;n tại EU. H&agrave;ng của bạn phải tu&acirc;n thủ khi xuất xưởng &mdash; hoặc khi đặt h&agrave;ng &mdash; n&ecirc;n h&atilde;y h&agrave;nh động sớm v&agrave; dự tr&ugrave; thời gian cho thay đổi thiết kế v&agrave; quy tr&igrave;nh.</span></div></div>`);
+                applyLang(document.querySelector('.v2-radar-note'));
+            }
+            const farP = document.querySelector('.radar-col-far .radar-col-header p');
+            if (farP && farP.querySelector('.lang-en')?.textContent.startsWith('Monitor')) {
+                farP.innerHTML = '<span class="lang-en">Change is coming — start preparing: supplier-side changes need the longest lead time.</span><span class="lang-zh">变化将至——请开始准备：供应商侧的调整需要最长的前置时间。</span><span class="lang-de">Änderungen kommen — beginnen Sie mit der Vorbereitung: lieferantenseitige Umstellungen brauchen den längsten Vorlauf.</span><span class="lang-vi">Thay đổi đang đến — hãy bắt đầu chuẩn bị: các điều chỉnh phía nhà cung cấp cần thời gian dài nhất.</span>';
+                applyLang(farP);
+            }
+        } else if (document.getElementById('radarList')) pending = true;
+
+        // Member features are announced but not accessible yet: neutralise
+        // sign-in CTAs rendered by script.js (calendar download, locked posts)
+        document.querySelectorAll('a.member-locked-btn, a.briefing-lock-cta').forEach(a => {
+            const span = document.createElement('span');
+            span.className = a.className + ' v2-locked-soon';
+            span.innerHTML = '<span class="lang-en">Member content — available when the member area launches</span><span class="lang-zh">会员内容——会员专区上线后开放</span><span class="lang-de">Mitgliederinhalt — verfügbar mit Start des Mitgliederbereichs</span><span class="lang-vi">Nội dung thành viên — mở khi khu vực thành viên ra mắt</span>';
+            a.replaceWith(span);
+            applyLang(span);
+        });
+
+        if (pending && attempt < 10) setTimeout(() => v2Overrides(attempt + 1), 700);
+    }
+
+    // Vietnamese is parked until native review: the option is gone from the
+    // selector, so a stored 'vi' preference must fall back to English.
+    if (localStorage.getItem('gcc-lang') === 'vi') {
+        localStorage.setItem('gcc-lang', 'en');
+        const ls = document.getElementById('langSelect');
+        if (ls) { ls.value = 'en'; ls.dispatchEvent(new Event('change')); }
+    }
+
+    // Guided-navigation state: persona cards pulse gently until a
+    // perspective is chosen (CSS keys off this class; reduced-motion safe)
+    function markPersona() {
+        const saved = localStorage.getItem('gcc-persona');
+        if (!saved) return;
+        document.body.classList.add('v2-persona-chosen');
+        document.querySelectorAll('.v2-persona-card').forEach(c =>
+            c.classList.toggle('active', c.dataset.persona === saved));
+    }
+    document.querySelectorAll('.v2-persona-card').forEach(card =>
+        card.addEventListener('click', () => { document.body.classList.add('v2-persona-chosen'); }));
+
     // ===== Deferred hash jump =====
     // CMS-rendered targets (briefing cards) do not exist when the browser
     // resolves the URL hash on load — retry until the target renders.
@@ -474,6 +637,8 @@
     cdnFallback();
     fillMinis(0);
     gateGuides();
+    v2Overrides(0);
+    markPersona();
     jumpToHash(0);
     const urlPersona = new URLSearchParams(window.location.search).get('persona');
     if (urlPersona && PAGE !== 'hub') {
