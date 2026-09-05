@@ -128,7 +128,7 @@ const server = http.createServer(async (req, res) => {
                     const esc = x => String(x || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
                     const title = esc(post.titleEn);
                     const desc = esc((post.whatHappenedEn || '').slice(0, 180));
-                    html = html.replace(/<title>[^<]*<\/title>/, `<title>${title} – GREEN FUTURE</title>`);
+                    html = html.replace(/<title>[^<]*<\/title>/, `<title>${title} | Green Sourcing Hub</title>`);
                     html = html.replace('</head>', `<meta property="og:title" content="${title}"><meta property="og:description" content="${desc}"></head>`);
                 }
             }
@@ -151,5 +151,5 @@ const server = http.createServer(async (req, res) => {
 });
 
 server.listen(PORT, () => {
-    console.log(`GCC Green Future review server → http://localhost:${PORT}`);
+    console.log(`GCC Green Sourcing Hub review server → http://localhost:${PORT}`);
 });

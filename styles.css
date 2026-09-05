@@ -3241,7 +3241,7 @@ a.radar-item-link:hover .radar-arrow { opacity: 1; }
     #cbamResult, #cbamResult * { visibility: visible; }
     #cbamResult { position: absolute; top: 60px; left: 0; width: 100%; }
     #cbamResult::before {
-        content: "GREEN FUTURE · GCC Sustainability Committee · CBAM Cost Estimate · gcc-sustainability@hongkong.ahk.de";
+        content: "Green Sourcing Hub · GCC ESG Committee · CBAM Cost Estimate · info@hongkong.ahk.de";
         visibility: visible;
         display: block;
         font-weight: 700;

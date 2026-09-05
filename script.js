@@ -1449,7 +1449,7 @@ function renderRadar(deadlines) {
 let radarDeadlines = [];
 
 function downloadRadarIcs() {
-    const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//GCC Green Future//EU Deadlines//EN'];
+    const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//GCC Green Sourcing Hub//EU Deadlines//EN'];
     radarDeadlines.forEach((d, i) => {
         const dt = String(d.date).replace(/-/g, '');
         lines.push('BEGIN:VEVENT',
