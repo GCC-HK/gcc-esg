@@ -49,6 +49,12 @@
         });
         const express = document.getElementById('v2Express');
         if (express) express.style.display = name === 'merchandiser' ? '' : 'none';
+        // committee feedback: two finder variants on one page confused
+        // visitors, so each perspective now sees exactly one of them
+        const wizard = document.querySelector('.compass-wizard');
+        if (wizard) wizard.style.display = name === 'merchandiser' ? 'none' : '';
+        const toExpress = document.getElementById('v2ToExpress');
+        if (toExpress) toExpress.style.display = name === 'merchandiser' ? 'none' : '';
         if (scroll) {
             const target = (name === 'merchandiser' && express) ? express : document.getElementById('compass');
             target?.scrollIntoView({ behavior: 'smooth' });
@@ -93,7 +99,7 @@
         el.innerHTML = `
             <div class="v2-express-head">
                 <h3><span class="lang-en">Express check: product overview table</span><span class="lang-zh">快速检查：产品要求概览表</span><span class="lang-de">Express-Check: Produkt&uuml;bersicht</span><span class="lang-vi">Kiểm tra nhanh: bảng tổng quan sản phẩm</span></h3>
-                <a href="#compass"><span class="lang-en">New to these requirements? Use the guided check below &darr;</span><span class="lang-zh">不熟悉这些要求？请使用下方的引导式检查 &darr;</span><span class="lang-de">Neu im Thema? Nutzen Sie den gef&uuml;hrten Check unten &darr;</span><span class="lang-vi">Chưa quen? D&ugrave;ng kiểm tra c&oacute; hướng dẫn b&ecirc;n dưới &darr;</span></a>
+                <a href="#compass" id="v2ToWizard"><span class="lang-en">Supplier? Switch to the guided check &rarr;</span><span class="lang-zh">供应商？切换到引导式检查 &rarr;</span><span class="lang-de">Lieferant? Zum gef&uuml;hrten Check wechseln &rarr;</span><span class="lang-vi">Nh&agrave; cung cấp? Chuyển sang kiểm tra c&oacute; hướng dẫn &rarr;</span></a>
             </div>
             <p class="v2-ex-hint"><span class="lang-en">Pick one category for the overview table, or several to compare them side by side.</span><span class="lang-zh">选择一个类别查看概览表，或选择多个类别进行并排比较。</span><span class="lang-de">W&auml;hlen Sie eine Kategorie f&uuml;r die &Uuml;bersicht, oder mehrere f&uuml;r den direkten Vergleich.</span><span class="lang-vi">Chọn một danh mục để xem bảng tổng quan, hoặc nhiều danh mục để so s&aacute;nh song song.</span></p>
             <div class="v2-ex-cats" id="v2ExCats">${catChips}</div>
@@ -120,11 +126,22 @@
             document.getElementById('v2ExCat').value = first ? first.dataset.value : '';
         }));
         document.getElementById('v2ExRun').addEventListener('click', runExpress);
-        // "use the guided check below" — #compass points at the section top
-        // (where the user already is), so scroll to the wizard block instead
-        el.querySelector('.v2-express-head a').addEventListener('click', (ev) => {
+        // mode switch: express (sourcing office) <-> guided wizard (supplier)
+        el.querySelector('#v2ToWizard').addEventListener('click', (ev) => {
             ev.preventDefault();
-            el.nextElementSibling?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            applyPersona('supplier', false);
+            document.querySelector('.compass-wizard')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+        const sw = document.createElement('p');
+        sw.className = 'v2-mode-switch';
+        sw.id = 'v2ToExpress';
+        sw.innerHTML = '<a href="#compass"><span class="lang-en">Sourcing office? Switch to the express table &rarr;</span><span class="lang-zh">采购办公室？切换到快速概览表 &rarr;</span><span class="lang-de">Einkaufsb&uuml;ro? Zur Express-Tabelle wechseln &rarr;</span><span class="lang-vi">Văn ph&ograve;ng thu mua? Chuyển sang bảng nhanh &rarr;</span></a>';
+        el.insertAdjacentElement('afterend', sw);
+        applyLang(sw);
+        sw.querySelector('a').addEventListener('click', (ev) => {
+            ev.preventDefault();
+            applyPersona('merchandiser', false);
+            document.getElementById('v2Express')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
     }
 
@@ -625,6 +642,14 @@
 
         const bl = document.getElementById('briefingList');
         if (bl && !bl.childElementCount) pending = true;
+
+        // briefing layout (committee): the lead story spans full width with
+        // image left / text right; the smaller posts flow two-up below it
+        if (PAGE === 'briefing' && bl && bl.childElementCount) {
+            const cols = bl.querySelector('.briefing-columns');
+            const lead = cols?.querySelector('.briefing-lead');
+            if (lead) bl.insertBefore(lead, cols);
+        }
         if (pending && attempt < 10) setTimeout(() => v2Overrides(attempt + 1), 700);
     }
 
