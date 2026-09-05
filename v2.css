@@ -89,7 +89,7 @@
 .v2-tool-card h3 { font-family: 'Source Sans 3', sans-serif; color: #1a5c38; margin: 0; font-size: 18px; }
 .v2-tool-card p { margin: 0; color: #3d4a43; font-size: 13.5px; flex: 1; }
 .v2-tool-cta { color: #1a5c38; font-weight: 600; font-size: 13.5px; }
-.v2-hub-minis { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.v2-hub-minis { display: grid; grid-template-columns: 1fr; gap: 16px; }
 @media (max-width: 800px) { .v2-hub-minis { grid-template-columns: 1fr; } }
 .v2-hub-mini { border: 1px solid #dde6e0; border-radius: 12px; padding: 18px 20px; background: #fff; }
 .v2-hub-mini-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
@@ -113,7 +113,7 @@ body[data-v2page="cbam"] #cbam .section-graphic { display: none; }
 body[data-v2page="compass"] #compass .section-head,
 body[data-v2page="cbam"] #cbam .section-head { margin-bottom: 18px; }
 body[data-v2page="compass"] #compass .section-title,
-body[data-v2page="cbam"] #cbam .section-title { font-size: 1.45rem; margin: 2px 0 4px; }
+body[data-v2page="cbam"] #cbam .section-title { margin: 2px 0 4px; }
 body[data-v2page="compass"] #compass .section-subtitle,
 body[data-v2page="cbam"] #cbam .section-subtitle { font-size: 0.92rem; margin: 0; }
 
@@ -153,7 +153,7 @@ section.library { background: #fff; }
    matching Home / Regulations / CBAM. */
 /* centred page-top pattern (committee decision): pill, headline, subtitle */
 body[data-v2page="guides"] #library .section-title,
-body[data-v2page="about"] #about .section-title { font-size: 1.45rem; margin: 10px 0 4px; }
+body[data-v2page="about"] #about .section-title { margin: 10px 0 4px; }
 body[data-v2page="guides"] #library .section-subtitle,
 body[data-v2page="about"] #about .section-subtitle { font-size: 0.92rem; margin: 0 0 26px; }
 
@@ -225,11 +225,10 @@ body[data-v2page="compass"] #radar { padding-top: 28px; }
 
 /* #29: slim always-on legal line above the nav */
 :root { --topline-h: 27px; }
-.v2-topline { position: fixed; top: 0; left: 0; right: 0; height: var(--topline-h); z-index: 1001;
+.v2-topline { position: fixed; top: var(--nav-height); left: 0; right: 0; height: var(--topline-h); z-index: 1001;
     background: #f2efe8; color: #5a5a52; font-size: 11.5px; line-height: 1.2; letter-spacing: .01em;
     display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 12px;
     border-bottom: 1px solid #e3dfd4; }
-.nav { top: var(--topline-h); }
 .ticker { top: calc(var(--nav-height) + var(--topline-h)); }
 .hero { padding-top: calc(150px + var(--topline-h)); }
 @media (max-width: 640px) { .v2-topline { font-size: 10px; } }
@@ -237,20 +236,13 @@ body[data-v2page="compass"] #radar { padding-top: 28px; }
 /* #13/#14: tool cards announced but not yet accessible */
 .v2-tool-locked { cursor: default; opacity: .92; }
 .v2-tool-locked:hover { transform: none; }
-.v2-lock-badge { display: inline-block; margin-bottom: 10px; padding: 3px 10px; border-radius: 999px;
+.v2-tool-card { position: relative; overflow: visible; }
+.v2-lock-badge { position: absolute; top: -11px; left: 18px; z-index: 2; display: inline-block; padding: 3px 10px; border-radius: 999px;
     font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
     background: #f6ede0; color: #a05f03; border: 1px solid #ecd9bd; }
 .v2-lock-badge-member { background: #e8eef5; color: #003366; border-color: #ccd9e6; }
 .v2-tool-cta-muted { color: #8a8a82; }
 
-/* Guided navigation: step chips + persona pulse until a choice is made */
-.v2-step-chip { display: inline-block; margin-bottom: 14px; padding: 4px 12px; border-radius: 999px;
-    font-size: 11.5px; font-weight: 700; letter-spacing: .08em;
-    background: #eaf3ed; color: var(--primary, #1a5c38); border: 1px solid #d4e5da; }
-.v2-personas-title { text-align: center; margin: 0 0 6px; font-size: clamp(22px, 3vw, 30px); }
-.v2-personas-sub { text-align: center; color: #667; margin: 0 0 22px; }
-.v2-personas .v2-step-chip { display: block; width: fit-content; margin: 0 auto 14px; }
-.v2-hub .v2-step-chip { display: block; width: fit-content; margin: 0 auto 18px; }
 @keyframes v2pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(26, 92, 56, .28); } 55% { box-shadow: 0 0 0 10px rgba(26, 92, 56, 0); } }
 body:not(.v2-persona-chosen) .v2-persona-card { animation: v2pulse 2.8s ease-in-out infinite; }
 .v2-persona-card:nth-child(2) { animation-delay: 1.4s; }
@@ -294,3 +286,30 @@ span.member-locked-btn.v2-locked-soon, span.briefing-lock-cta.v2-locked-soon {
 
 /* #49: about CTAs side by side */
 .about-cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* Design round 2 (Sep 2026): nav dropdown, tools page, unified page tops */
+.nav-dropdown { position: relative; }
+.nav-caret { font-size: 9px; opacity: .6; }
+.nav-dropdown-menu { display: none; position: absolute; top: 100%; left: -6px; margin: 0; padding: 6px 0;
+    background: #fff; border: 1px solid #e2e6e2; border-radius: 10px; min-width: 200px;
+    box-shadow: 0 10px 28px rgba(0,0,0,.10); z-index: 1200; list-style: none; }
+.nav-dropdown:hover .nav-dropdown-menu, .nav-dropdown:focus-within .nav-dropdown-menu { display: block; }
+.nav-dropdown-menu li { display: block; }
+.nav-dropdown-menu a { display: block; padding: 9px 18px; white-space: nowrap; }
+@media (max-width: 900px) {
+    .nav-dropdown-menu { position: static; display: block; border: 0; box-shadow: none; padding: 0 0 0 16px; min-width: 0; }
+}
+
+/* same headline size + centered page tops on every page except the hub hero */
+body:not([data-v2page="hub"]) .section-title { font-size: clamp(1.6rem, 2.6vw, 2.05rem); }
+body:not([data-v2page="hub"]) .section-head-text, body:not([data-v2page="hub"]) .section-head { text-align: center; }
+.briefing-title { font-size: clamp(1.6rem, 2.6vw, 2.05rem); }
+
+/* tools + deadlines pages: clear the fixed nav, centered top */
+body[data-v2page="tools"] #tools { padding-top: 40px; text-align: center; }
+body[data-v2page="tools"] .v2-tools-grid { text-align: left; margin-top: 28px; }
+body[data-v2page="deadlines"] #radar { padding-top: 34px; }
+.v2-tool-pipeline { cursor: default; opacity: .93; }
+.v2-tool-pipeline:hover { transform: none; }
+/* dropdown must layer above the topline (nav creates the stacking context) */
+.nav { z-index: 1010; }

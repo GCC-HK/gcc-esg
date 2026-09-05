@@ -24,7 +24,7 @@
         <div class="v2-disclaimer">
             <span aria-hidden="true">&#9888;</span>
             <div>
-                <span class="lang-en"><strong>Indicative screening &mdash; not legal advice.</strong> This overview is generated from your inputs and simplified matching rules. Before business decisions, verify each regulation against the official text linked in its card, or consult a qualified advisor. The Chamber accepts no liability for decisions based on this tool.</span><span class="lang-zh"><strong>指示性筛查——不构成法律意见。</strong>本概览基于您的输入和简化的匹配规则生成。在做出商业决策前，请对照各卡片中链接的官方文本核实每条法规，或咨询专业顾问。商会对基于本工具的决策不承担任何责任。</span><span class="lang-de"><strong>Indikative Ersteinsch&auml;tzung &mdash; keine Rechtsberatung.</strong> Diese &Uuml;bersicht basiert auf Ihren Angaben und vereinfachten Zuordnungsregeln. Pr&uuml;fen Sie vor Gesch&auml;ftsentscheidungen jede Vorschrift anhand des verlinkten Amtstextes oder ziehen Sie qualifizierte Berater hinzu. Die Kammer &uuml;bernimmt keine Haftung.</span><span class="lang-vi"><strong>S&agrave;ng lọc mang t&iacute;nh tham khảo &mdash; kh&ocirc;ng phải tư vấn ph&aacute;p l&yacute;.</strong> Tổng quan n&agrave;y được tạo từ th&ocirc;ng tin bạn nhập v&agrave; c&aacute;c quy tắc đối chiếu đơn giản h&oacute;a. Trước khi ra quyết định kinh doanh, h&atilde;y kiểm tra từng quy định theo văn bản ch&iacute;nh thức được li&ecirc;n kết hoặc tham vấn chuy&ecirc;n gia. Ph&ograve;ng Thương mại kh&ocirc;ng chịu tr&aacute;ch nhiệm ph&aacute;p l&yacute;.</span>
+                <span class="lang-en"><strong>Indicative screening, not legal advice.</strong> This overview is generated from your inputs and simplified matching rules. Before business decisions, verify each regulation against the official text linked in its card, or consult a qualified advisor. The Chamber accepts no liability for decisions based on this tool.</span><span class="lang-zh"><strong>指示性筛查，不构成法律意见。</strong>本概览基于您的输入和简化的匹配规则生成。在做出商业决策前，请对照各卡片中链接的官方文本核实每条法规，或咨询专业顾问。商会对基于本工具的决策不承担任何责任。</span><span class="lang-de"><strong>Indikative Ersteinsch&auml;tzung, keine Rechtsberatung.</strong> Diese &Uuml;bersicht basiert auf Ihren Angaben und vereinfachten Zuordnungsregeln. Pr&uuml;fen Sie vor Gesch&auml;ftsentscheidungen jede Vorschrift anhand des verlinkten Amtstextes oder ziehen Sie qualifizierte Berater hinzu. Die Kammer &uuml;bernimmt keine Haftung.</span><span class="lang-vi"><strong>S&agrave;ng lọc mang t&iacute;nh tham khảo, kh&ocirc;ng phải tư vấn ph&aacute;p l&yacute;.</strong> Tổng quan n&agrave;y được tạo từ th&ocirc;ng tin bạn nhập v&agrave; c&aacute;c quy tắc đối chiếu đơn giản h&oacute;a. Trước khi ra quyết định kinh doanh, h&atilde;y kiểm tra từng quy định theo văn bản ch&iacute;nh thức được li&ecirc;n kết hoặc tham vấn chuy&ecirc;n gia. Ph&ograve;ng Thương mại kh&ocirc;ng chịu tr&aacute;ch nhiệm ph&aacute;p l&yacute;.</span>
             </div>
         </div>`;
 
@@ -92,10 +92,10 @@
         el.style.display = 'none';
         el.innerHTML = `
             <div class="v2-express-head">
-                <h3><span class="lang-en">Express check &mdash; product overview table</span><span class="lang-zh">快速检查——产品要求概览表</span><span class="lang-de">Express-Check &mdash; Produkt&uuml;bersicht</span><span class="lang-vi">Kiểm tra nhanh &mdash; bảng tổng quan sản phẩm</span></h3>
+                <h3><span class="lang-en">Express check: product overview table</span><span class="lang-zh">快速检查：产品要求概览表</span><span class="lang-de">Express-Check: Produkt&uuml;bersicht</span><span class="lang-vi">Kiểm tra nhanh: bảng tổng quan sản phẩm</span></h3>
                 <a href="#compass"><span class="lang-en">New to these requirements? Use the guided check below &darr;</span><span class="lang-zh">不熟悉这些要求？请使用下方的引导式检查 &darr;</span><span class="lang-de">Neu im Thema? Nutzen Sie den gef&uuml;hrten Check unten &darr;</span><span class="lang-vi">Chưa quen? D&ugrave;ng kiểm tra c&oacute; hướng dẫn b&ecirc;n dưới &darr;</span></a>
             </div>
-            <p class="v2-ex-hint"><span class="lang-en">Pick one category for the overview table &mdash; or several to compare them side by side.</span><span class="lang-zh">选择一个类别查看概览表——或选择多个类别进行并排比较。</span><span class="lang-de">W&auml;hlen Sie eine Kategorie f&uuml;r die &Uuml;bersicht &mdash; oder mehrere f&uuml;r den direkten Vergleich.</span><span class="lang-vi">Chọn một danh mục để xem bảng tổng quan &mdash; hoặc nhiều danh mục để so s&aacute;nh song song.</span></p>
+            <p class="v2-ex-hint"><span class="lang-en">Pick one category for the overview table, or several to compare them side by side.</span><span class="lang-zh">选择一个类别查看概览表，或选择多个类别进行并排比较。</span><span class="lang-de">W&auml;hlen Sie eine Kategorie f&uuml;r die &Uuml;bersicht, oder mehrere f&uuml;r den direkten Vergleich.</span><span class="lang-vi">Chọn một danh mục để xem bảng tổng quan, hoặc nhiều danh mục để so s&aacute;nh song song.</span></p>
             <div class="v2-ex-cats" id="v2ExCats">${catChips}</div>
             <select id="v2ExCat" aria-hidden="true" tabindex="-1" style="display:none">${catOptions}</select>
             <div class="v2-express-row">
@@ -156,7 +156,7 @@
 
         const regs = matchedRegs(sel);
         if (!regs.length) {
-            out.innerHTML = '<p style="margin:12px 0 0;"><span class="lang-en">No regulations matched — try selecting EU or Germany as a market.</span><span class="lang-zh">没有匹配的法规——请尝试选择欧盟或德国作为市场。</span><span class="lang-de">Keine Treffer &mdash; w&auml;hlen Sie EU oder Deutschland als Markt.</span><span class="lang-vi">Kh&ocirc;ng c&oacute; quy định n&agrave;o khớp &mdash; h&atilde;y chọn EU hoặc Đức.</span></p>';
+            out.innerHTML = '<p style="margin:12px 0 0;"><span class="lang-en">No regulations matched, try selecting EU or Germany as a market.</span><span class="lang-zh">没有匹配的法规，请尝试选择欧盟或德国作为市场。</span><span class="lang-de">Keine Treffer, w&auml;hlen Sie EU oder Deutschland als Markt.</span><span class="lang-vi">Kh&ocirc;ng c&oacute; quy định n&agrave;o khớp, h&atilde;y chọn EU hoặc Đức.</span></p>';
             applyLang(out);
             return;
         }
@@ -211,7 +211,7 @@
         const seen = new Set();
         perCat.forEach(pc => pc.regs.forEach(reg => { if (!seen.has(reg.id)) { seen.add(reg.id); union.push(reg); } }));
         if (!union.length) {
-            out.innerHTML = '<p style="margin:12px 0 0;"><span class="lang-en">No requirements matched — try selecting EU or Germany as a market.</span><span class="lang-zh">没有匹配的要求——请尝试选择欧盟或德国作为市场。</span><span class="lang-de">Keine Treffer &mdash; w&auml;hlen Sie EU oder Deutschland als Markt.</span><span class="lang-vi">Kh&ocirc;ng c&oacute; y&ecirc;u cầu n&agrave;o khớp &mdash; h&atilde;y chọn EU hoặc Đức.</span></p>';
+            out.innerHTML = '<p style="margin:12px 0 0;"><span class="lang-en">No requirements matched, try selecting EU or Germany as a market.</span><span class="lang-zh">没有匹配的要求，请尝试选择欧盟或德国作为市场。</span><span class="lang-de">Keine Treffer, w&auml;hlen Sie EU oder Deutschland als Markt.</span><span class="lang-vi">Kh&ocirc;ng c&oacute; y&ecirc;u cầu n&agrave;o khớp, h&atilde;y chọn EU hoặc Đức.</span></p>';
             applyLang(out);
             return;
         }
@@ -220,7 +220,7 @@
 
         const headCols = cats.map(c => `<th class="v2-cmp-cat">${catLabel(c)}</th>`).join('');
         const rows = union.map(reg => {
-            const marks = idSets.map(s => `<td class="v2-cmp-mark">${s.has(reg.id) ? '<span class="v2-cmp-yes">&#10004;</span>' : '<span class="v2-cmp-no">&mdash;</span>'}</td>`).join('');
+            const marks = idSets.map(s => `<td class="v2-cmp-mark">${s.has(reg.id) ? '<span class="v2-cmp-yes">&#10004;</span>' : '<span class="v2-cmp-no">&middot;</span>'}</td>`).join('');
             return `<tr>
                 <td>${reg.name}<br><small style="font-weight:400;color:#667">${reg.ref || ''}</small></td>
                 <td>${reg.complianceDeadline || '-'}</td>
@@ -282,19 +282,19 @@
             <h4><span class="lang-en">What to do next (supplier)</span><span class="lang-zh">下一步该做什么（供应商）</span><span class="lang-de">Die n&auml;chsten Schritte (Lieferant)</span><span class="lang-vi">C&aacute;c bước tiếp theo (nh&agrave; cung cấp)</span></h4>
             <ol>
                 <li><span class="lang-en">Read each card's key requirements and start collecting what is named there: technical files, emissions data, geolocation coordinates, declarations.</span><span class="lang-zh">阅读各卡片的关键要求，开始收集其中列明的材料：技术文件、排放数据、地理坐标、各类声明。</span><span class="lang-de">Lesen Sie die Kernanforderungen jeder Karte und sammeln Sie die genannten Unterlagen.</span><span class="lang-vi">Đọc y&ecirc;u cầu ch&iacute;nh của từng thẻ v&agrave; bắt đầu thu thập t&agrave;i liệu được n&ecirc;u.</span></li>
-                <li><span class="lang-en">Expect these topics in your buyer's next questionnaire — answer with documents, not promises. Export the CSV so your team works from the same list.</span><span class="lang-zh">买家的下一份问卷很可能涉及这些主题——请用文件而非承诺作答。导出CSV，让团队基于同一份清单工作。</span><span class="lang-de">Diese Themen kommen im n&auml;chsten Fragebogen Ihres Abnehmers &mdash; antworten Sie mit Dokumenten. Exportieren Sie die CSV f&uuml;r Ihr Team.</span><span class="lang-vi">C&aacute;c chủ đề n&agrave;y sẽ xuất hiện trong bảng c&acirc;u hỏi của người mua &mdash; h&atilde;y trả lời bằng t&agrave;i liệu. Xuất CSV cho nh&oacute;m của bạn.</span></li>
-                <li><span class="lang-en">Check the Deadline Radar for the dates that bind you — earliest first.</span><span class="lang-zh">查看法规期限雷达，了解对您有约束力的日期——最早的优先。</span><span class="lang-de">Pr&uuml;fen Sie den Fristen-Radar &mdash; fr&uuml;heste Termine zuerst.</span><span class="lang-vi">Kiểm tra Radar Thời hạn &mdash; thời hạn sớm nhất trước.</span></li>
-                <li><span class="lang-en">Use the step-by-step guides in the Briefing and Resource Library — or contact the Committee for accredited providers in Asia.</span><span class="lang-zh">参考简报和资源库中的分步指南——或联系委员会获取亚洲地区认可服务机构的信息。</span><span class="lang-de">Nutzen Sie die Leitf&auml;den in Briefing und Bibliothek &mdash; oder kontaktieren Sie das Komitee.</span><span class="lang-vi">D&ugrave;ng hướng dẫn trong Bản tin v&agrave; Thư viện &mdash; hoặc li&ecirc;n hệ Ủy ban.</span></li>
+                <li><span class="lang-en">Expect these topics in your buyer's next questionnaire, answer with documents, not promises. Export the CSV so your team works from the same list.</span><span class="lang-zh">买家的下一份问卷很可能涉及这些主题，请用文件而非承诺作答。导出CSV，让团队基于同一份清单工作。</span><span class="lang-de">Diese Themen kommen im n&auml;chsten Fragebogen Ihres Abnehmers, antworten Sie mit Dokumenten. Exportieren Sie die CSV f&uuml;r Ihr Team.</span><span class="lang-vi">C&aacute;c chủ đề n&agrave;y sẽ xuất hiện trong bảng c&acirc;u hỏi của người mua, h&atilde;y trả lời bằng t&agrave;i liệu. Xuất CSV cho nh&oacute;m của bạn.</span></li>
+                <li><span class="lang-en">Check the Deadline Radar for the dates that bind you, earliest first.</span><span class="lang-zh">查看法规期限雷达，了解对您有约束力的日期，最早的优先。</span><span class="lang-de">Pr&uuml;fen Sie den Fristen-Radar, fr&uuml;heste Termine zuerst.</span><span class="lang-vi">Kiểm tra Radar Thời hạn, thời hạn sớm nhất trước.</span></li>
+                <li><span class="lang-en">Use the step-by-step guides in the Briefing and Resource Library, or contact the Committee for accredited providers in Asia.</span><span class="lang-zh">参考简报和资源库中的分步指南，或联系委员会获取亚洲地区认可服务机构的信息。</span><span class="lang-de">Nutzen Sie die Leitf&auml;den in Briefing und Bibliothek, oder kontaktieren Sie das Komitee.</span><span class="lang-vi">D&ugrave;ng hướng dẫn trong Bản tin v&agrave; Thư viện, hoặc li&ecirc;n hệ Ủy ban.</span></li>
             </ol>
         </div>`,
         merchandiser: `
         <div class="v2-next">
             <h4><span class="lang-en">What to do next (merchandiser)</span><span class="lang-zh">下一步该做什么（采购专员）</span><span class="lang-de">Die n&auml;chsten Schritte (Merchandiser)</span><span class="lang-vi">C&aacute;c bước tiếp theo (merchandiser)</span></h4>
             <ol>
-                <li><span class="lang-en">Export the CSV and attach it to your order or supplier email — it names each regulation, deadline and official source.</span><span class="lang-zh">导出CSV并附在订单或供应商邮件中——其中列明每条法规、期限和官方来源。</span><span class="lang-de">Exportieren Sie die CSV und h&auml;ngen Sie sie an Ihre Bestellung oder Lieferanten-E-Mail an.</span><span class="lang-vi">Xuất CSV v&agrave; đ&iacute;nh k&egrave;m email đơn h&agrave;ng hoặc nh&agrave; cung cấp.</span></li>
-                <li><span class="lang-en">Ask your supplier for the documents named in "Key requirements" — before order placement, not at shipment.</span><span class="lang-zh">在下单前（而非发货时）就向供应商索取"关键要求"中列明的文件。</span><span class="lang-de">Fordern Sie die Dokumente der Kernanforderungen vor der Bestellung an &mdash; nicht erst bei Verschiffung.</span><span class="lang-vi">Y&ecirc;u cầu nh&agrave; cung cấp gửi t&agrave;i liệu trong &quot;Y&ecirc;u cầu ch&iacute;nh&quot; trước khi đặt h&agrave;ng.</span></li>
-                <li><span class="lang-en">Cross-check the deadlines against your order and shipping calendar — a requirement that applies at arrival matters for orders placed today.</span><span class="lang-zh">将期限与您的订单和船期日历核对——货物到港时适用的规则，对今天下的订单同样重要。</span><span class="lang-de">Gleichen Sie Fristen mit Ihrem Order- und Verschiffungskalender ab.</span><span class="lang-vi">Đối chiếu thời hạn với lịch đặt h&agrave;ng v&agrave; giao h&agrave;ng của bạn.</span></li>
-                <li><span class="lang-en">Follow the Briefing for changes to these rules — or ask the Committee to walk your team through a specific regulation.</span><span class="lang-zh">通过简报跟踪法规变化——或请委员会为您的团队讲解某项具体法规。</span><span class="lang-de">Verfolgen Sie &Auml;nderungen im Briefing &mdash; oder bitten Sie das Komitee um eine Einf&uuml;hrung.</span><span class="lang-vi">Theo d&otilde;i Bản tin để cập nhật thay đổi &mdash; hoặc nhờ Ủy ban hướng dẫn.</span></li>
+                <li><span class="lang-en">Export the CSV and attach it to your order or supplier email, it names each regulation, deadline and official source.</span><span class="lang-zh">导出CSV并附在订单或供应商邮件中，其中列明每条法规、期限和官方来源。</span><span class="lang-de">Exportieren Sie die CSV und h&auml;ngen Sie sie an Ihre Bestellung oder Lieferanten-E-Mail an.</span><span class="lang-vi">Xuất CSV v&agrave; đ&iacute;nh k&egrave;m email đơn h&agrave;ng hoặc nh&agrave; cung cấp.</span></li>
+                <li><span class="lang-en">Ask your supplier for the documents named in "Key requirements", before order placement, not at shipment.</span><span class="lang-zh">在下单前（而非发货时）就向供应商索取"关键要求"中列明的文件。</span><span class="lang-de">Fordern Sie die Dokumente der Kernanforderungen vor der Bestellung an, nicht erst bei Verschiffung.</span><span class="lang-vi">Y&ecirc;u cầu nh&agrave; cung cấp gửi t&agrave;i liệu trong &quot;Y&ecirc;u cầu ch&iacute;nh&quot; trước khi đặt h&agrave;ng.</span></li>
+                <li><span class="lang-en">Cross-check the deadlines against your order and shipping calendar, a requirement that applies at arrival matters for orders placed today.</span><span class="lang-zh">将期限与您的订单和船期日历核对，货物到港时适用的规则，对今天下的订单同样重要。</span><span class="lang-de">Gleichen Sie Fristen mit Ihrem Order- und Verschiffungskalender ab.</span><span class="lang-vi">Đối chiếu thời hạn với lịch đặt h&agrave;ng v&agrave; giao h&agrave;ng của bạn.</span></li>
+                <li><span class="lang-en">Follow the Briefing for changes to these rules, or ask the Committee to walk your team through a specific regulation.</span><span class="lang-zh">通过简报跟踪法规变化，或请委员会为您的团队讲解某项具体法规。</span><span class="lang-de">Verfolgen Sie &Auml;nderungen im Briefing, oder bitten Sie das Komitee um eine Einf&uuml;hrung.</span><span class="lang-vi">Theo d&otilde;i Bản tin để cập nhật thay đổi, hoặc nhờ Ủy ban hướng dẫn.</span></li>
             </ol>
         </div>`
     };
@@ -331,7 +331,7 @@
         wrap.innerHTML = DISCLAIMER_HTML + `
             <div class="v2-export-bar">
                 <button type="button" class="btn-csv" id="v2CsvBtn"><span class="lang-en">&darr; Export as CSV (Regulatory Sheet)</span><span class="lang-zh">&darr; 导出CSV（法规概览表）</span><span class="lang-de">&darr; Als CSV exportieren</span><span class="lang-vi">&darr; Xuất CSV</span></button>
-                <span class="v2-export-note"><span class="lang-en">One row per regulation — deadlines, reasons, official sources. Opens in Excel; attach it to your buyer or supplier email. Generated in your browser, no data is sent anywhere.</span><span class="lang-zh">每条法规一行——含期限、适用原因和官方来源。可在Excel中打开，附在给买家或供应商的邮件中。文件在您的浏览器中生成，不会向任何服务器发送数据。</span><span class="lang-de">Eine Zeile pro Vorschrift &mdash; Fristen, Gr&uuml;nde, offizielle Quellen. Wird lokal im Browser erzeugt.</span><span class="lang-vi">Mỗi quy định một d&ograve;ng &mdash; thời hạn, l&yacute; do, nguồn ch&iacute;nh thức. Tạo ngay trong tr&igrave;nh duyệt của bạn.</span></span>
+                <span class="v2-export-note"><span class="lang-en">One row per regulation, deadlines, reasons, official sources. Opens in Excel; attach it to your buyer or supplier email. Generated in your browser, no data is sent anywhere.</span><span class="lang-zh">每条法规一行，含期限、适用原因和官方来源。可在Excel中打开，附在给买家或供应商的邮件中。文件在您的浏览器中生成，不会向任何服务器发送数据。</span><span class="lang-de">Eine Zeile pro Vorschrift, Fristen, Gr&uuml;nde, offizielle Quellen. Wird lokal im Browser erzeugt.</span><span class="lang-vi">Mỗi quy định một d&ograve;ng, thời hạn, l&yacute; do, nguồn ch&iacute;nh thức. Tạo ngay trong tr&igrave;nh duyệt của bạn.</span></span>
             </div>`;
         cards.insertAdjacentElement('beforebegin', wrap);
         const next = document.createElement('div');
@@ -424,8 +424,8 @@
     async function cdnFallback() {
         try {
             const probe = await fetch('/api/content?type=deadlines');
-            if (probe.ok) return; // API available — script.js already rendered
-        } catch (e) { /* no API — fall through */ }
+            if (probe.ok) return; // API available, script.js already rendered
+        } catch (e) { /* no API, fall through */ }
 
         const q = async (groq) => {
             const r = await fetch(SANITY_Q + encodeURIComponent(groq));
@@ -491,7 +491,7 @@
         else {
             for (const [, dstId] of pairs) {
                 const dst = document.getElementById(dstId);
-                if (dst && !dst.childElementCount) dst.innerHTML = '<p class="v2-mini-empty"><span class="lang-en">Live content unavailable in this preview — open the full page.</span><span class="lang-zh">预览中暂无实时内容——请打开完整页面。</span><span class="lang-de">Live-Inhalte in dieser Vorschau nicht verf&uuml;gbar.</span><span class="lang-vi">Nội dung trực tiếp không khả dụng trong bản xem trước.</span></p>';
+                if (dst && !dst.childElementCount) dst.innerHTML = '<p class="v2-mini-empty"><span class="lang-en">Live content unavailable in this preview, open the full page.</span><span class="lang-zh">预览中暂无实时内容，请打开完整页面。</span><span class="lang-de">Live-Inhalte in dieser Vorschau nicht verf&uuml;gbar.</span><span class="lang-vi">Nội dung trực tiếp không khả dụng trong bản xem trước.</span></p>';
             }
         }
     }
@@ -512,10 +512,10 @@
         if (grid) grid.style.display = 'none';
         grid?.insertAdjacentHTML('beforebegin', `
             <div class="v2-gate">
-                <h3><span class="lang-en">Member area &mdash; launching soon</span><span class="lang-zh">会员专区——即将推出</span><span class="lang-de">Mitgliederbereich &mdash; startet bald</span><span class="lang-vi">Khu vực th&agrave;nh vi&ecirc;n &mdash; sắp ra mắt</span></h3>
+                <h3><span class="lang-en">Member area: launching soon</span><span class="lang-zh">会员专区：即将推出</span><span class="lang-de">Mitgliederbereich: startet bald</span><span class="lang-vi">Khu vực th&agrave;nh vi&ecirc;n: sắp ra mắt</span></h3>
                 <p><span class="lang-en">The in-depth guides will be available to member companies once the member area launches. The Committee is preparing this section now.</span><span class="lang-zh">会员专区上线后，深度指南将向会员企业开放。委员会目前正在筹备该板块。</span><span class="lang-de">Die Leitf&auml;den stehen Mitgliedsunternehmen zur Verf&uuml;gung, sobald der Mitgliederbereich startet. Der Ausschuss bereitet diesen Bereich derzeit vor.</span><span class="lang-vi">Cẩm nang chuy&ecirc;n s&acirc;u sẽ d&agrave;nh cho c&ocirc;ng ty th&agrave;nh vi&ecirc;n khi khu vực th&agrave;nh vi&ecirc;n ra mắt. Ủy ban đang chuẩn bị phần n&agrave;y.</span></p>
-                <a class="btn-gate" href="mailto:info@hongkong.ahk.de?subject=Green Sourcing Hub — Member area"><span class="lang-en">Get notified / work with the Committee</span><span class="lang-zh">获取通知 / 与委员会合作</span><span class="lang-de">Benachrichtigen lassen / mit dem Ausschuss arbeiten</span><span class="lang-vi">Nhận th&ocirc;ng b&aacute;o / hợp t&aacute;c với Ủy ban</span></a>
-                <p class="v2-gate-sub"><span class="lang-en">Interested in the Committee itself? <a href="https://hongkong.ahk.de/en" target="_blank" rel="noopener">Learn more on the Chamber website</a> &mdash; or <a href="https://hongkong.ahk.de/membership" target="_blank" rel="noopener">become a Chamber member</a>.</span><span class="lang-zh">想了解委员会？<a href="https://hongkong.ahk.de/en" target="_blank" rel="noopener">请访问商会官网</a>——或<a href="https://hongkong.ahk.de/membership" target="_blank" rel="noopener">成为商会会员</a>。</span><span class="lang-de">Interesse am Ausschuss? <a href="https://hongkong.ahk.de/en" target="_blank" rel="noopener">Mehr auf der Kammer-Website</a> &mdash; oder <a href="https://hongkong.ahk.de/membership" target="_blank" rel="noopener">Kammermitglied werden</a>.</span><span class="lang-vi">Quan t&acirc;m đến Ủy ban? <a href="https://hongkong.ahk.de/en" target="_blank" rel="noopener">Xem th&ecirc;m tr&ecirc;n website Ph&ograve;ng Thương mại</a> &mdash; hoặc <a href="https://hongkong.ahk.de/membership" target="_blank" rel="noopener">trở th&agrave;nh hội vi&ecirc;n</a>.</span></p>
+                <a class="btn-gate" href="mailto:info@hongkong.ahk.de?subject=Green Sourcing Hub Member area"><span class="lang-en">Get notified / work with the Committee</span><span class="lang-zh">获取通知 / 与委员会合作</span><span class="lang-de">Benachrichtigen lassen / mit dem Ausschuss arbeiten</span><span class="lang-vi">Nhận th&ocirc;ng b&aacute;o / hợp t&aacute;c với Ủy ban</span></a>
+                <p class="v2-gate-sub"><span class="lang-en">Interested in the Committee itself? <a href="https://hongkong.ahk.de/en" target="_blank" rel="noopener">Learn more on the Chamber website</a>, or <a href="https://hongkong.ahk.de/membership" target="_blank" rel="noopener">become a Chamber member</a>.</span><span class="lang-zh">想了解委员会？<a href="https://hongkong.ahk.de/en" target="_blank" rel="noopener">请访问商会官网</a>，或<a href="https://hongkong.ahk.de/membership" target="_blank" rel="noopener">成为商会会员</a>。</span><span class="lang-de">Interesse am Ausschuss? <a href="https://hongkong.ahk.de/en" target="_blank" rel="noopener">Mehr auf der Kammer-Website</a>, oder <a href="https://hongkong.ahk.de/membership" target="_blank" rel="noopener">Kammermitglied werden</a>.</span><span class="lang-vi">Quan t&acirc;m đến Ủy ban? <a href="https://hongkong.ahk.de/en" target="_blank" rel="noopener">Xem th&ecirc;m tr&ecirc;n website Ph&ograve;ng Thương mại</a>, hoặc <a href="https://hongkong.ahk.de/membership" target="_blank" rel="noopener">trở th&agrave;nh hội vi&ecirc;n</a>.</span></p>
             </div>`);
         applyLang(lib);
     }
@@ -578,12 +578,12 @@
         if (radarList && radarList.childElementCount) {
             if (!document.querySelector('.v2-radar-note')) {
                 document.querySelector('#radar .section-head')?.insertAdjacentHTML('afterend', `
-                    <div class="v2-radar-note"><span aria-hidden="true">&#9432;</span><div><span class="lang-en"><strong>Reading these dates as a supplier:</strong> the legal deadlines usually bind the EU importer or seller. Your goods must comply by the time they ship — or are ordered — so act well before each date and add lead time for changes to product design and production processes.</span><span class="lang-zh"><strong>供应商如何解读这些日期：</strong>法定期限通常约束欧盟进口商或销售方。您的货物在发运（甚至下单）时就须合规——请在每个日期之前尽早行动，并为产品设计和生产工艺的调整预留额外时间。</span><span class="lang-de"><strong>Diese Termine aus Lieferantensicht:</strong> Die gesetzlichen Fristen binden meist den EU-Importeur oder Verk&auml;ufer. Ihre Ware muss bei Verschiffung &mdash; oder Bestellung &mdash; konform sein: Handeln Sie deutlich vor jedem Termin und planen Sie Vorlauf f&uuml;r Produkt- und Prozess&auml;nderungen ein.</span><span class="lang-vi"><strong>Đọc c&aacute;c mốc n&agrave;y từ g&oacute;c nh&igrave;n nh&agrave; cung cấp:</strong> thời hạn ph&aacute;p l&yacute; thường r&agrave;ng buộc nh&agrave; nhập khẩu hoặc b&ecirc;n b&aacute;n tại EU. H&agrave;ng của bạn phải tu&acirc;n thủ khi xuất xưởng &mdash; hoặc khi đặt h&agrave;ng &mdash; n&ecirc;n h&atilde;y h&agrave;nh động sớm v&agrave; dự tr&ugrave; thời gian cho thay đổi thiết kế v&agrave; quy tr&igrave;nh.</span></div></div>`);
+                    <div class="v2-radar-note"><span aria-hidden="true">&#9432;</span><div><span class="lang-en"><strong>Reading these dates as a supplier:</strong> the legal deadlines usually bind the EU importer or seller. Your goods must comply by the time they ship, or are ordered, so act well before each date and add lead time for changes to product design and production processes.</span><span class="lang-zh"><strong>供应商如何解读这些日期：</strong>法定期限通常约束欧盟进口商或销售方。您的货物在发运（甚至下单）时就须合规，请在每个日期之前尽早行动，并为产品设计和生产工艺的调整预留额外时间。</span><span class="lang-de"><strong>Diese Termine aus Lieferantensicht:</strong> Die gesetzlichen Fristen binden meist den EU-Importeur oder Verk&auml;ufer. Ihre Ware muss bei Verschiffung, oder Bestellung, konform sein: Handeln Sie deutlich vor jedem Termin und planen Sie Vorlauf f&uuml;r Produkt- und Prozess&auml;nderungen ein.</span><span class="lang-vi"><strong>Đọc c&aacute;c mốc n&agrave;y từ g&oacute;c nh&igrave;n nh&agrave; cung cấp:</strong> thời hạn ph&aacute;p l&yacute; thường r&agrave;ng buộc nh&agrave; nhập khẩu hoặc b&ecirc;n b&aacute;n tại EU. H&agrave;ng của bạn phải tu&acirc;n thủ khi xuất xưởng, hoặc khi đặt h&agrave;ng, n&ecirc;n h&atilde;y h&agrave;nh động sớm v&agrave; dự tr&ugrave; thời gian cho thay đổi thiết kế v&agrave; quy tr&igrave;nh.</span></div></div>`);
                 applyLang(document.querySelector('.v2-radar-note'));
             }
             const farP = document.querySelector('.radar-col-far .radar-col-header p');
             if (farP && farP.querySelector('.lang-en')?.textContent.startsWith('Monitor')) {
-                farP.innerHTML = '<span class="lang-en">Change is coming — start preparing: supplier-side changes need the longest lead time.</span><span class="lang-zh">变化将至——请开始准备：供应商侧的调整需要最长的前置时间。</span><span class="lang-de">Änderungen kommen — beginnen Sie mit der Vorbereitung: lieferantenseitige Umstellungen brauchen den längsten Vorlauf.</span><span class="lang-vi">Thay đổi đang đến — hãy bắt đầu chuẩn bị: các điều chỉnh phía nhà cung cấp cần thời gian dài nhất.</span>';
+                farP.innerHTML = '<span class="lang-en">Change is coming, start preparing: supplier-side changes need the longest lead time.</span><span class="lang-zh">变化将至，请开始准备：供应商侧的调整需要最长的前置时间。</span><span class="lang-de">Änderungen kommen, beginnen Sie mit der Vorbereitung: lieferantenseitige Umstellungen brauchen den längsten Vorlauf.</span><span class="lang-vi">Thay đổi đang đến, hãy bắt đầu chuẩn bị: các điều chỉnh phía nhà cung cấp cần thời gian dài nhất.</span>';
                 applyLang(farP);
             }
         } else if (document.getElementById('radarList')) pending = true;
@@ -593,11 +593,13 @@
         document.querySelectorAll('a.member-locked-btn, a.briefing-lock-cta').forEach(a => {
             const span = document.createElement('span');
             span.className = a.className + ' v2-locked-soon';
-            span.innerHTML = '<span class="lang-en">Member content — available when the member area launches</span><span class="lang-zh">会员内容——会员专区上线后开放</span><span class="lang-de">Mitgliederinhalt — verfügbar mit Start des Mitgliederbereichs</span><span class="lang-vi">Nội dung thành viên — mở khi khu vực thành viên ra mắt</span>';
+            span.innerHTML = '<span class="lang-en">Member content: available when the member area launches</span><span class="lang-zh">会员内容：会员专区上线后开放</span><span class="lang-de">Mitgliederinhalt: verfügbar mit Start des Mitgliederbereichs</span><span class="lang-vi">Nội dung thành viên: mở khi khu vực thành viên ra mắt</span>';
             a.replaceWith(span);
             applyLang(span);
         });
 
+        const bl = document.getElementById('briefingList');
+        if (bl && !bl.childElementCount) pending = true;
         if (pending && attempt < 10) setTimeout(() => v2Overrides(attempt + 1), 700);
     }
 
