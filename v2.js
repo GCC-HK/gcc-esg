@@ -201,8 +201,8 @@
 
     let lastComparison = null;
 
-    function runComparison(cats, sel) {
-        const out = document.getElementById('v2ExResult');
+    function runComparison(cats, sel, outEl) {
+        const out = outEl || document.getElementById('v2ExResult');
         const perCat = cats.map(c => ({
             cat: c,
             regs: matchedRegs({ ...sel, category: c })
@@ -342,7 +342,17 @@
         document.getElementById('v2CsvBtn').addEventListener('click', exportCsv);
     }
 
-    document.getElementById('atlasSubmit')?.addEventListener('click', () => setTimeout(injectAddons, 0));
+    document.getElementById('atlasSubmit')?.addEventListener('click', () => setTimeout(() => {
+        if (wizardCats.size > 1) {
+            const sel = currentSelection();
+            document.querySelectorAll('.v2-wizard-addon, .v2-wizard-next').forEach(el => el.remove());
+            const empty = document.getElementById('atlasEmpty');
+            if (empty) empty.style.display = 'none';
+            runComparison(Array.from(wizardCats), sel, document.getElementById('atlasCards'));
+        } else {
+            injectAddons();
+        }
+    }, 0));
 
     // ===== CSV "Regulatory Sheet" export =====
     function csvCell(v) {
@@ -399,15 +409,30 @@
         setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 0);
     }
 
-    // ===== Wizard auto-advance: picking a category moves to step 2 =====
-    // Registered after script.js's own .wizard-cat handlers, so the category
-    // is already set when this fires; clicking the pane-1 Next button reuses
-    // script.js's validation and pane logic. The markets step stays manual
-    // (multi-select cannot auto-advance).
-    document.querySelectorAll('.wizard-cat').forEach(btn => {
+    // ===== Wizard multi-select (committee request): several categories can
+    // be active at once; the hidden single select keeps script.js validation
+    // and the CSV export working via the first selection. Auto-advance was
+    // removed, multi-selection needs the explicit Next button.
+    const wizardCats = new Set();
+    const wizCatSelect = document.getElementById('filterCategory');
+    document.querySelectorAll('#wizardCatGrid .wizard-cat').forEach(btn => {
         btn.addEventListener('click', () => setTimeout(() => {
-            document.querySelector('.wizard-next[data-next="2"]')?.click();
-        }, 150));
+            const v = btn.dataset.value;
+            if (wizardCats.has(v)) wizardCats.delete(v); else wizardCats.add(v);
+            const first = wizardCats.values().next().value || '';
+            if (wizCatSelect) wizCatSelect.value = first;
+            document.querySelectorAll('#wizardCatGrid .wizard-cat').forEach(b =>
+                b.classList.toggle('active', wizardCats.has(b.dataset.value)));
+        }, 0));
+    });
+    if (wizCatSelect) wizCatSelect.addEventListener('change', () => {
+        // HS lookup or express sync set the select directly: mirror it into the set
+        if (wizCatSelect.value && !wizardCats.has(wizCatSelect.value)) {
+            wizardCats.clear();
+            wizardCats.add(wizCatSelect.value);
+            document.querySelectorAll('#wizardCatGrid .wizard-cat').forEach(b =>
+                b.classList.toggle('active', wizardCats.has(b.dataset.value)));
+        }
     });
 
     // ===== Content fallback for API-less viewing =====

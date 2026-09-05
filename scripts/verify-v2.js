@@ -41,7 +41,10 @@ const PAGES = {
     'v2-cbam.html':     { page: 'cbam',     shown: ['cbam'],               hidden: ['hero', 'compass', 'briefing'] },
     'v2-briefing.html': { page: 'briefing', shown: ['briefing'],           hidden: ['hero', 'cbam', 'library'] },
     'v2-guides.html':   { page: 'guides',   shown: ['library'],            hidden: ['hero', 'briefing'] },
-    'v2-learn.html':    { page: 'learn',    shown: ['guidance', 'faq'],    hidden: ['hero', 'compass', 'about', 'trust', 'china-esg'] },
+    'v2-learn.html':    { page: 'learn',    shown: ['guidance', 'actions'], hidden: ['hero', 'compass', 'about', 'trust', 'china-esg', 'faq', 'glossary', 'voluntary'] },
+    'v2-faq.html':      { page: 'faq',      shown: ['faq'],                hidden: ['hero', 'guidance', 'glossary'] },
+    'v2-glossary.html': { page: 'glossary', shown: ['glossary'],           hidden: ['hero', 'faq', 'guidance'] },
+    'v2-certifications.html': { page: 'certifications', shown: ['voluntary'], hidden: ['hero', 'faq', 'glossary'] },
     'v2-about.html':    { page: 'about',    shown: ['about', 'trust'],     hidden: ['hero', 'compass', 'guidance', 'faq'] }
 };
 
@@ -66,7 +69,8 @@ const PAGES = {
         check(`${file}: no sign-in in nav`, !doc.getElementById('navSignin') && !doc.querySelector('.nav-signin-mobile'));
         check(`${file}: Vietnamese hidden from language selector`, !doc.querySelector('#langSelect option[value="vi"]'));
         check(`${file}: nav Tools dropdown with CBAM + coming soon`, !!doc.querySelector('.nav-dropdown > a[href="v2-tools.html"]') && !!doc.querySelector('.nav-dropdown-menu a[href="v2-cbam.html"]'));
-        check(`${file}: nav has Deadlines + Glossary entries`, !!doc.querySelector('.nav-links a[href="v2-deadlines.html"]') && !!doc.querySelector('.nav-links a[href="v2-learn.html#glossary"]'));
+        check(`${file}: nav has Deadlines + Glossary entries`, !!doc.querySelector('.nav-links a[href="v2-deadlines.html"]') && !!doc.querySelector('.nav-links a[href="v2-glossary.html"]'));
+        check(`${file}: Learn dropdown with FAQ + certifications`, !!doc.querySelector('.nav-dropdown-menu a[href="v2-faq.html"]') && !!doc.querySelector('.nav-dropdown-menu a[href="v2-certifications.html"]'));
         check(`${file}: US market removed from wizard`, !doc.querySelector('#wizardMarkets input[value="us"]'));
         check(`${file}: CBAM tool card clickable again`, !!doc.querySelector('#v2hub a.v2-tool-card[href="v2-cbam.html"]'));
         check(`${file}: no dash punctuation in visible copy`, !/[\u2013\u2014]/.test(doc.body.textContent));
@@ -158,12 +162,30 @@ const PAGES = {
         check('compass page: per-category columns + checkmarks', doc.querySelectorAll('#v2ExResult .v2-cmp-cat').length === 2 && doc.querySelectorAll('#v2ExResult .v2-cmp-yes').length > 0);
     }
 
-    // Learn page: voluntary certifications + glossary live here now
+    // Focused subpages: glossary as term/definition rows, certifications standalone
     {
-        const { doc } = boot('v2-learn.html');
-        const hiddenList = doc.getElementById('v2PageStyle').textContent.split('{')[0];
-        check('learn page: glossary + voluntary sections visible', !hiddenList.includes('#glossary') && !hiddenList.includes('#voluntary'));
-        check('learn page: glossary has 10 terms', doc.querySelectorAll('.v2-glossary-card').length === 10);
+        const { doc } = boot('v2-glossary.html');
+        check('glossary page: term/definition rows (14 incl. law types)', doc.querySelectorAll('.v2-gl-row').length === 14);
+        check('glossary page: law-types group present', doc.body.innerHTML.includes('Types of EU rules'));
+    }
+    {
+        const { doc } = boot('v2-certifications.html');
+        check('certifications page: voluntary grid shown standalone', !!doc.querySelector('#voluntary .voluntary-grid'));
+    }
+
+    // Wizard multi-select -> comparison matrix in the results area
+    {
+        const { doc } = boot('v2-compass.html');
+        await new Promise(r => setTimeout(r, 10));
+        doc.querySelector('#wizardCatGrid .wizard-cat[data-value="textiles"]').click();
+        doc.querySelector('#wizardCatGrid .wizard-cat[data-value="toys"]').click();
+        await new Promise(r => setTimeout(r, 10));
+        check('wizard: two categories toggled active', doc.querySelectorAll('#wizardCatGrid .wizard-cat.active').length === 2);
+        doc.getElementById('filterRole').value = 'supplier';
+        doc.querySelectorAll('#compass input[name="market"]').forEach(cb => { cb.checked = cb.value === 'eu'; });
+        doc.getElementById('atlasSubmit').click();
+        await new Promise(r => setTimeout(r, 10));
+        check('wizard: multi-select renders comparison matrix', doc.getElementById('atlasCards').innerHTML.includes('v2-cmp-table'));
     }
     {
         const { doc } = boot('v2-compass.html');

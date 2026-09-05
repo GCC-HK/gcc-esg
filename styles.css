@@ -14,7 +14,7 @@
     --ahk-blue: #003366;
     --ahk-lightblue: #CCD7E6;
     --ci-green: #28AD84;
-    --font-serif: 'Source Serif 4', Georgia, 'Songti SC', serif;
+    --font-serif: 'Source Sans 3', 'PingFang SC', 'Microsoft YaHei', sans-serif; /* CI: sans only, serif retired Sep 2026 */
     --bg: #f9f9f7;
     --text: #1a1a1a;
     --white: #ffffff;

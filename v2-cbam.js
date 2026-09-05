@@ -35,6 +35,7 @@
             year: parseInt($('v2CbamYear')?.value || '2026', 10),
             aluForm: $('v2AluForm')?.value || 'unwrought',
             volume: parseFloat($('cbamVolume').value),
+            volumePeriod: $('cbamVolumePeriod')?.value || 'year',
             emMode: document.querySelector('input[name="cbamEmissionsMode"]:checked')?.value || 'default',
             bmMode: document.querySelector('input[name="cbamBenchmarkMode"]:checked')?.value || 'default',
             role: document.querySelector('input[name="cbamRole"]:checked')?.value || 'supplier',
@@ -162,6 +163,14 @@
         const paid = !isNaN(s.pricePaidInput) ? s.pricePaidInput : (D.carbonPrices[s.country] || 0);
         const r = costPerTonne(E, B, s.year, paid);
         const total = r.cost * s.volume;
+        // Jill's point: not every exporter thinks in annual volumes, the
+        // period is user-chosen and the 50 t exemption test is annualised
+        const periodLabel = {
+            year: ['per year', '每年', 'pro Jahr', 'mỗi năm'],
+            quarter: ['per quarter', '每季度', 'pro Quartal', 'mỗi quý'],
+            shipment: ['per shipment', '每批货', 'pro Lieferung', 'mỗi lô hàng']
+        }[s.volumePeriod];
+        const annualised = s.volumePeriod === 'year' ? s.volume : s.volumePeriod === 'quarter' ? s.volume * 4 : null;
 
         const badge = total < 10000 ? ['cbam-badge-low', 'LOW EXPOSURE', '低风险'] : total <= 100000 ? ['cbam-badge-medium', 'MEDIUM EXPOSURE', '中等风险'] : ['cbam-badge-high', 'HIGH EXPOSURE', '高风险'];
         const emissionsLabel = s.emMode === 'custom'
@@ -198,14 +207,15 @@
             <div class="cbam-result-card">
                 <span class="badge ${badge[0]}"><span class="lang-en">${badge[1]}</span><span class="lang-zh">${badge[2]}</span><span class="lang-de">${badge[1]}</span><span class="lang-vi">${badge[1]}</span></span>
                 <h3>${span4(`Estimated CBAM cost, ${s.year}`, `CBAM成本估算（${s.year}年）`, `Geschätzte CBAM-Kosten, ${s.year}`, `Chi phí CBAM ước tính, ${s.year}`)}</h3>
-                <p class="v2-cbam-headline"><strong>€${fmt(r.cost, 2)}</strong> ${span4('per tonne', '每公吨', 'pro Tonne', 'mỗi tấn')} · <strong>≈ €${fmt(total)}</strong> ${span4(`per year at ${fmt(s.volume)} t`, `每年（按${fmt(s.volume)}公吨计）`, `pro Jahr bei ${fmt(s.volume)} t`, `mỗi năm với ${fmt(s.volume)} tấn`)}</p>
+                <p class="v2-cbam-headline"><strong>€${fmt(r.cost, 2)}</strong> ${span4('per tonne', '每公吨', 'pro Tonne', 'mỗi tấn')} · <strong>≈ €${fmt(total)}</strong> ${span4(`${periodLabel[0]} at ${fmt(s.volume)} t`, `${periodLabel[1]}（按${fmt(s.volume)}公吨计）`, `${periodLabel[2]} bei ${fmt(s.volume)} t`, `${periodLabel[3]} với ${fmt(s.volume)} tấn`)}</p>
                 <ul class="v2-cbam-lines">
                     <li>${span4(`Emissions intensity: ${fmt(E, 3)} tCO₂e/t, `, `排放强度：${fmt(E, 3)} tCO₂e/t，`, `Emissionsintensität: ${fmt(E, 3)} tCO₂e/t, `, `Cường độ phát thải: ${fmt(E, 3)} tCO₂e/t, `)}${emissionsLabel}</li>
                     <li>${span4(`Benchmark deduction: ${fmt(B, 3)} × ${fmt(r.factor * 100, 1)}% CBAM factor (${s.year})`, `基准扣减：${fmt(B, 3)} × ${fmt(r.factor * 100, 1)}%（${s.year}年CBAM因子）`, `Benchmark-Abzug: ${fmt(B, 3)} × ${fmt(r.factor * 100, 1)}%`, `Khấu trừ chuẩn: ${fmt(B, 3)} × ${fmt(r.factor * 100, 1)}%`)}${(s.emMode !== 'custom' && deInfo0.official && bmBucket !== s.sector) ? ' ' + span4(`(Annex I assumes the ${bmBucket.includes('bof') ? 'BF-BOF' : bmBucket.includes('dri') ? 'DRI-EAF' : bmBucket.includes('eaf') ? 'scrap-EAF' : bmBucket.includes('primary') ? 'primary' : 'secondary'} route for this origin)`, '（附件I按该原产国假定的生产路线取基准）', '(Annex I legt die Route für dieses Ursprungsland fest)', '(Phụ lục I ấn định tuyến sản xuất theo xuất xứ)') : ''}</li>
                     <li>${span4(`Carbon price credited: €${fmt(paid, 2)}/t (${!isNaN(s.pricePaidInput) ? 'as entered' : 'headline estimate'})`, `碳价抵扣：€${fmt(paid, 2)}/t（${!isNaN(s.pricePaidInput) ? '按输入值' : '按标价估算'}）`, `Angerechneter CO₂-Preis: €${fmt(paid, 2)}/t`, `Giá carbon được khấu trừ: €${fmt(paid, 2)}/t`)}</li>
                     <li>${span4(`Certificate price: €${D.meta.price}/tCO₂e (official ${D.meta.priceLabel})`, `证书价格：€${D.meta.price}/tCO₂e（${D.meta.priceLabel}官方价）`, `Zertifikatspreis: €${D.meta.price}/tCO₂e`, `Giá chứng chỉ: €${D.meta.price}/tCO₂e`)}</li>
                 </ul>
-                ${s.volume < 50 ? `<div class="cbam-callout">${span4('Below 50 t/year cumulative you are likely exempt (Reg. (EU) 2025/2083), threshold does not apply to hydrogen.', '年累计低于50公吨很可能豁免（法规 (EU) 2025/2083），该门槛不适用于氢。', 'Unter 50 t/Jahr kumuliert voraussichtlich befreit (VO (EU) 2025/2083).', 'Dưới 50 tấn/năm cộng dồn có thể được miễn (QĐ (EU) 2025/2083).')}</div>` : ''}
+                ${annualised !== null && annualised < 50 ? `<div class="cbam-callout">${span4(`Below 50 t/year cumulative (here ≈ ${fmt(annualised)} t/year) the importer is likely exempt (Reg. (EU) 2025/2083), threshold does not apply to hydrogen.`, `年累计低于50公吨（此处约${fmt(annualised)}公吨/年）进口商很可能豁免（法规 (EU) 2025/2083），该门槛不适用于氢。`, `Unter 50 t/Jahr kumuliert (hier ≈ ${fmt(annualised)} t/Jahr) voraussichtlich befreit (VO (EU) 2025/2083).`, `Dưới 50 tấn/năm cộng dồn (ở đây ≈ ${fmt(annualised)} tấn/năm) có thể được miễn (QĐ (EU) 2025/2083).`)}</div>` : ''}
+                ${s.volumePeriod === 'shipment' ? `<div class="cbam-callout">${span4('Per-shipment view: the 50 t/year exemption depends on the importer\'s cumulative annual CBAM imports, check the full-year picture.', '按批次查看：50公吨/年豁免取决于进口商全年累计CBAM进口量，请核对全年情况。', 'Pro Lieferung: Die 50-t-Befreiung hängt von den kumulierten Jahresimporten des Importeurs ab.', 'Theo lô hàng: mức miễn 50 tấn/năm phụ thuộc tổng nhập khẩu CBAM cả năm của nhà nhập khẩu.')}</div>` : ''}
             </div>
             <div class="v2-proj">
                 <h4>${span4('Cost per tonne through 2034 (same inputs, official phase-in)', '至2034年每吨成本（相同输入，按官方过渡时间表）', 'Kosten pro Tonne bis 2034', 'Chi phí mỗi tấn đến 2034')}</h4>

@@ -23,7 +23,10 @@ const PAGES = {
     cbam: { file: 'v2-cbam.html', title: 'CBAM Cost Calculator | Green Sourcing Hub', show: ['cbam'] },
     briefing: { file: 'v2-briefing.html', title: 'News | The Green Sourcing Briefing | Green Sourcing Hub', show: ['briefing'] },
     guides: { file: 'v2-guides.html', title: 'Member Resource Library | Green Sourcing Hub', show: ['library'] },
-    learn: { file: 'v2-learn.html', title: 'Learn | Why Compliance Matters | Green Sourcing Hub', show: ['guidance', 'benefits', 'risks-incentives', 'actions', 'voluntary', 'faq', 'glossary'] },
+    learn: { file: 'v2-learn.html', title: 'Learn | Why Compliance Matters | Green Sourcing Hub', show: ['guidance', 'benefits', 'risks-incentives', 'actions'] },
+    faq: { file: 'v2-faq.html', title: 'FAQ | Green Sourcing Hub', show: ['faq'] },
+    glossary: { file: 'v2-glossary.html', title: 'Glossary | Green Sourcing Hub', show: ['glossary'] },
+    certifications: { file: 'v2-certifications.html', title: 'Voluntary Certifications | Green Sourcing Hub', show: ['voluntary'] },
     about: { file: 'v2-about.html', title: 'About the GCC ESG Committee | Green Sourcing Hub', show: ['about', 'trust'] }
 };
 

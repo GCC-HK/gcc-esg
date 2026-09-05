@@ -84,6 +84,10 @@ Jill Dessel (REWE Far East) left 50 Webvizio comments on the V2 preview (project
 
 **V2 replaces V1 (owner decision 5 Sep 2026):** hub now generated to `index.html` (+`v2.html` alias), "[V2 Preview]" titles and ribbon dropped, dev server got cleanUrls parity. V1 one-pager retired to git history; `verify-site.js` repointed at the new index (V1 subscribe-form checks retired, stale fixture date made dynamic). Both suites green (~70 + ~190 assertions).
 
+## Phase 14 — Design rounds 2+3 (5 Sep 2026)
+
+Owner iterations after go-live: Tools nav dropdown + tools overview page (CBAM live again, CN-gated; 3 pipeline tools) · Regulations/Deadlines split into dedicated pages · focused subpages for FAQ, Glossary (term/definition rows incl. EU law-types explainer) and Voluntary Certifications; Learn nav is a dropdown · legal topline moved below header · hub decluttered (no step chips, badges as pills on card frames, deadlines mini full width, trust/disclaimer boxes off the hub) · wizard multi-category selection → comparison matrix (auto-advance removed, pane-1 Next restored) · CBAM volume period selector (year/quarter/shipment; annualised 50 t check) per Jill's #25 · persona glow always on · serif retired platform-wide (`--font-serif` → sans) · no dash punctuation in platform copy (test-enforced; CMS content still pending re-seed).
+
 ## Standing operational notes
 
 - **Sanity editor token was shared via chat during setup and again on 11 Aug 2026 — rotate it now** (sanity.io/manage → API → Tokens) and use env vars only.
