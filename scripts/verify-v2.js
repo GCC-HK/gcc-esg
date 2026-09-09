@@ -172,7 +172,17 @@ const PAGES = {
     }
     {
         const { doc } = boot('v2-certifications.html');
-        check('certifications page: name/explanation rows', doc.querySelectorAll('#voluntary .v2-cert-row').length === 5);
+        // Sep 2026 review round 2 (Jill Dessel): 34 verified schemes in 8 topic
+        // groups with an EU-requirement filter
+        const rows = doc.querySelectorAll('#voluntary .v2-cert-row');
+        check('certifications page: name/explanation rows', rows.length === 34);
+        check('certifications page: 8 topic group headings', doc.querySelectorAll('#voluntary .v2-cert-group').length === 8);
+        check('certifications page: every row tagged with EU requirements', Array.from(rows).every(r => (r.dataset.reqs || '').trim().length > 0));
+        const chips = Array.from(doc.querySelectorAll('#certFilter .v2-cert-chip'));
+        check('certifications page: filter bar with All + 8 requirement chips', chips.length === 9 && chips[0].dataset.req === '');
+        const reqs = new Set(Array.from(rows).flatMap(r => r.dataset.reqs.split(' ')));
+        check('certifications page: every filter chip matches at least one row', chips.slice(1).every(c => reqs.has(c.dataset.req)));
+        check('certifications page: non-certifications carry a type label', Array.from(rows).filter(r => r.querySelector('.v2-cert-type')).length >= 7);
     }
 
     // Wizard multi-select -> comparison matrix in the results area

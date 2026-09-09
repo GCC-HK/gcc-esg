@@ -682,6 +682,32 @@
     document.querySelectorAll('.v2-persona-card').forEach(card =>
         card.addEventListener('click', () => { document.body.classList.add('v2-persona-chosen'); }));
 
+    // ===== Certification filter (Sep 2026 review, Jill Dessel) =====
+    // Chip row filters the voluntary-certification rows by the EU requirement
+    // each scheme supports (data-reqs on the row); group headings with no
+    // visible rows hide along with their rows.
+    function certFilter() {
+        const bar = document.getElementById('certFilter');
+        if (!bar) return;
+        bar.addEventListener('click', (ev) => {
+            const chip = ev.target.closest('.v2-cert-chip');
+            if (!chip) return;
+            bar.querySelectorAll('.v2-cert-chip').forEach(c => c.classList.toggle('on', c === chip));
+            const req = chip.dataset.req || '';
+            document.querySelectorAll('.v2-cert-row').forEach(row => {
+                row.style.display = (!req || (row.dataset.reqs || '').split(' ').includes(req)) ? '' : 'none';
+            });
+            document.querySelectorAll('.v2-cert-group').forEach(h => {
+                let el = h.nextElementSibling, any = false;
+                while (el && el.classList.contains('v2-cert-row')) {
+                    if (el.style.display !== 'none') { any = true; break; }
+                    el = el.nextElementSibling;
+                }
+                h.style.display = any ? '' : 'none';
+            });
+        });
+    }
+
     // ===== Deferred hash jump =====
     // CMS-rendered targets (briefing cards) do not exist when the browser
     // resolves the URL hash on load — retry until the target renders.
@@ -700,6 +726,7 @@
     gateGuides();
     v2Overrides(0);
     markPersona();
+    certFilter();
     jumpToHash(0);
     const urlPersona = new URLSearchParams(window.location.search).get('persona');
     if (urlPersona && PAGE !== 'hub') {

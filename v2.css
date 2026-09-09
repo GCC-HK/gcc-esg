@@ -205,6 +205,7 @@ body[data-v2page="cbam"] #cbam .atlas-label { margin-left: auto; margin-right: a
 .v2-cta-sub { font-size: 13.5px; opacity: .75; }
 .v2-cta-actions { display: flex; gap: 10px; flex-wrap: wrap; }
 .v2-footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 28px; padding-bottom: 22px; }
+.footer-bottom .v2-footer-disclaimer { font-size: 0.78rem; color: rgba(255, 255, 255, 0.35); max-width: 860px; margin: 0 auto 14px; line-height: 1.55; }
 @media (max-width: 760px) { .v2-footer-grid { grid-template-columns: 1fr; } }
 .v2-affiliation { font-size: 13.5px; opacity: .85; max-width: 340px; }
 .footer .v2-footer-grid h4 { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; opacity: .7; }
@@ -343,7 +344,18 @@ body[data-v2page="glossary"] #glossary, body[data-v2page="certifications"] #volu
 .v2-gl-head { display: grid; grid-template-columns: 210px 1fr 250px; gap: 18px; padding: 0 4px 8px; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #778; }
 @media (max-width: 760px) { .v2-gl-row, .v2-gl-head { grid-template-columns: 1fr; gap: 6px; } .v2-gl-head { display: none; } }
 /* certifications: name left, explanation right */
+.v2-cert-filter { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; max-width: 980px; margin: 22px auto 0; }
+.v2-cert-chip { padding: 6px 14px; border-radius: 999px; border: 1px solid #cdd6d0; background: #fff;
+    font-size: 13px; font-weight: 600; color: #444; cursor: pointer; }
+.v2-cert-chip.on { background: var(--primary, #1a5c38); border-color: var(--primary, #1a5c38); color: #fff; }
+.v2-cert-filter-hint { max-width: 980px; margin: 8px auto 0; font-size: 12.5px; color: #777; }
 .v2-cert-list { max-width: 980px; margin: 26px auto 0; text-align: left; }
+.v2-cert-group { max-width: 980px; margin: 30px auto 0; text-align: left; font-size: 13px; letter-spacing: .08em;
+    text-transform: uppercase; color: #555; border-bottom: 2px solid #e7eae7; padding-bottom: 8px; }
+.v2-cert-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 7px; }
+.v2-cert-tags span { font-size: 10.5px; font-weight: 600; letter-spacing: .04em; padding: 2px 8px;
+    border-radius: 999px; background: #eef3ef; color: #3c5a49; white-space: nowrap; }
+.v2-cert-type { display: inline-block; margin-top: 6px; font-size: 11px; font-weight: 600; color: #8a5a00; }
 .v2-cert-row { display: grid; grid-template-columns: 210px 1fr; gap: 18px; padding: 16px 4px; border-bottom: 1px solid #e7eae7; }
 .v2-cert-row .v2-cert-name { font-weight: 700; font-size: 15px; }
 .v2-cert-row .v2-cert-name a { color: var(--primary, #1a5c38); }
