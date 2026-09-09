@@ -27,7 +27,7 @@ const PAGES = {
     learn: { file: 'v2-learn.html', title: 'Learn | Understand and Plan | ESG Sourcing Hub', show: ['guidance', 'benefits', 'risks-incentives', 'actions'] },
     faq: { file: 'v2-faq.html', title: 'FAQ | ESG Sourcing Hub', show: ['faq'] },
     glossary: { file: 'v2-glossary.html', title: 'Glossary | ESG Sourcing Hub', show: ['glossary'] },
-    certifications: { file: 'v2-certifications.html', title: 'Voluntary Certifications | ESG Sourcing Hub', show: ['voluntary'] },
+    certifications: { file: 'v2-certifications.html', title: 'Recognized Certifications | ESG Sourcing Hub', show: ['voluntary'] },
     about: { file: 'v2-about.html', title: 'Our Team | GCC ESG Committee | ESG Sourcing Hub', show: ['about', 'trust'] }
 };
 
