@@ -53,19 +53,19 @@ export default async function handler(req, res) {
         const zh = lang === 'zh';
         const from = process.env.RESEND_FROM || 'GCC ESG Sourcing Hub <onboarding@resend.dev>';
         const subject = zh
-            ? '订阅确认 — GCC绿色未来可持续采购简报'
+            ? '订阅确认 | ESG采购简报'
             : 'Subscription confirmed | The ESG Sourcing Briefing';
         const html = zh
             ? `<p>您好，</p>
-               <p>感谢您订阅德国工商总会香港（GCC）ESG委员会的<strong>绿色采购简报</strong>。</p>
+               <p>感谢您订阅德国工商总会香港（GCC）ESG委员会的<strong>ESG采购简报</strong>。</p>
                <p>您将收到与香港采购办公室及其中国制造商相关的欧盟法规动态：CBAM、EUDR、包装法规、电池法规等。</p>
                <p>如需退订，回复本邮件即可。</p>
-               <p>GCCESG委员会<br>gcc-sustainability@hongkong.ahk.de</p>`
+               <p>GCC ESG委员会<br>info@hongkong.ahk.de</p>`
             : `<p>Hello,</p>
                <p>Thank you for subscribing to the <strong>ESG Sourcing Briefing</strong> by the GCC ESG Committee (German Chamber of Commerce, Hong Kong).</p>
                <p>You will receive updates on EU regulations relevant to Hong Kong sourcing offices and their manufacturers in China: CBAM, EUDR, packaging rules, the Batteries Regulation and more.</p>
                <p>To unsubscribe, simply reply to this email.</p>
-               <p>GCC ESG Committee<br>gcc-sustainability@hongkong.ahk.de</p>`;
+               <p>GCC ESG Committee<br>info@hongkong.ahk.de</p>`;
 
         const emailRes = await fetch('https://api.resend.com/emails', {
             method: 'POST',

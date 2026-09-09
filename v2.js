@@ -98,7 +98,7 @@
         el.style.display = 'none';
         el.innerHTML = `
             <div class="v2-express-head">
-                <h3><span class="lang-en">Express check: product overview table</span><span class="lang-zh">快速检查：产品要求概览表</span><span class="lang-de">Express-Check: Produkt&uuml;bersicht</span><span class="lang-vi">Kiểm tra nhanh: bảng tổng quan sản phẩm</span></h3>
+                <h3><span class="lang-en">Quick Check: product overview table</span><span class="lang-zh">快速查询：产品要求概览表</span><span class="lang-de">Schnell-Check: Produkt&uuml;bersicht</span><span class="lang-vi">Tra cứu nhanh: bảng tổng quan sản phẩm</span></h3>
                 <a href="#compass" id="v2ToWizard"><span class="lang-en">Supplier? Switch to the guided check &rarr;</span><span class="lang-zh">供应商？切换到引导式检查 &rarr;</span><span class="lang-de">Lieferant? Zum gef&uuml;hrten Check wechseln &rarr;</span><span class="lang-vi">Nh&agrave; cung cấp? Chuyển sang kiểm tra c&oacute; hướng dẫn &rarr;</span></a>
             </div>
             <p class="v2-ex-hint"><span class="lang-en">Pick one category for the overview table, or several to compare them side by side.</span><span class="lang-zh">选择一个类别查看概览表，或选择多个类别进行并排比较。</span><span class="lang-de">W&auml;hlen Sie eine Kategorie f&uuml;r die &Uuml;bersicht, oder mehrere f&uuml;r den direkten Vergleich.</span><span class="lang-vi">Chọn một danh mục để xem bảng tổng quan, hoặc nhiều danh mục để so s&aacute;nh song song.</span></p>
@@ -135,7 +135,7 @@
         const sw = document.createElement('p');
         sw.className = 'v2-mode-switch';
         sw.id = 'v2ToExpress';
-        sw.innerHTML = '<a href="#compass"><span class="lang-en">Sourcing office? Switch to the express table &rarr;</span><span class="lang-zh">采购办公室？切换到快速概览表 &rarr;</span><span class="lang-de">Einkaufsb&uuml;ro? Zur Express-Tabelle wechseln &rarr;</span><span class="lang-vi">Văn ph&ograve;ng thu mua? Chuyển sang bảng nhanh &rarr;</span></a>';
+        sw.innerHTML = '<a href="#compass"><span class="lang-en">Sourcing office? Switch to the Quick Check table &rarr;</span><span class="lang-zh">采购办公室？切换到快速查询表 &rarr;</span><span class="lang-de">Einkaufsb&uuml;ro? Zum Schnell-Check wechseln &rarr;</span><span class="lang-vi">Văn ph&ograve;ng thu mua? Chuyển sang Tra cứu nhanh &rarr;</span></a>';
         el.insertAdjacentElement('afterend', sw);
         applyLang(sw);
         sw.querySelector('a').addEventListener('click', (ev) => {

@@ -68,15 +68,19 @@ const PAGES = {
         check(`${file}: always-on legal topline`, !!doc.getElementById('v2Topline'));
         check(`${file}: no sign-in in nav`, !doc.getElementById('navSignin') && !doc.querySelector('.nav-signin-mobile'));
         check(`${file}: Vietnamese hidden from language selector`, !doc.querySelector('#langSelect option[value="vi"]'));
-        check(`${file}: nav Tools dropdown with CBAM + coming soon`, !!doc.querySelector('.nav-dropdown > a[href="v2-tools.html"]') && !!doc.querySelector('.nav-dropdown-menu a[href="v2-cbam.html"]'));
-        check(`${file}: Regulations dropdown splits supplier/sourcing office`, !!doc.querySelector('.nav-dropdown-menu a[href="v2-compass.html?persona=supplier"]') && !!doc.querySelector('.nav-dropdown-menu a[href="v2-compass.html?persona=merchandiser"]'));
-        check(`${file}: nav has Deadlines + Glossary entries`, !!doc.querySelector('.nav-links a[href="v2-deadlines.html"]') && !!doc.querySelector('.nav-links a[href="v2-glossary.html"]'));
-        check(`${file}: Learn dropdown with FAQ + certifications`, !!doc.querySelector('.nav-dropdown-menu a[href="v2-faq.html"]') && !!doc.querySelector('.nav-dropdown-menu a[href="v2-certifications.html"]'));
+        // owner decisions 2026-09-09: Regulations mega menu, checks under Tools (member-tagged), Knowledge group
+        check(`${file}: Regulations mega menu with key regulations`, !!doc.querySelector('.nav-mega a[href="regulation.html?id=cbam"]') && !!doc.querySelector('.nav-mega a[href="regulation.html?id=ppwr"]') && !!doc.querySelector('.nav-mega a[href="regulation.html?id=ukcbam"]'));
+        check(`${file}: nav Tools dropdown = Quick/Guided/CBAM, no coming soon`, !!doc.querySelector('.nav-dropdown-menu a[href="v2-compass.html?persona=merchandiser"]') && !!doc.querySelector('.nav-dropdown-menu a[href="v2-compass.html?persona=supplier"]') && !!doc.querySelector('.nav-dropdown-menu a[href="v2-cbam.html"]') && !Array.from(doc.querySelectorAll('.nav-dropdown-menu a')).some(a => a.textContent.includes('Coming soon')));
+        check(`${file}: tools in nav carry Members tag`, doc.querySelectorAll('.nav-dropdown-menu a .nav-member-tag').length >= 4);
+        check(`${file}: nav has Deadlines + Knowledge holds Glossary/FAQ/certifications/guides`, !!doc.querySelector('.nav-links a[href="v2-deadlines.html"]') && !!doc.querySelector('.nav-dropdown-menu a[href="v2-glossary.html"]') && !!doc.querySelector('.nav-dropdown-menu a[href="v2-faq.html"]') && !!doc.querySelector('.nav-dropdown-menu a[href="v2-certifications.html"]') && !!doc.querySelector('.nav-dropdown-menu a[href="v2-guides.html"]'));
+        check(`${file}: Guides/Glossary no longer top-level nav items`, !doc.querySelector('#navLinks > li > a[href="v2-guides.html"]') && !doc.querySelector('#navLinks > li > a[href="v2-glossary.html"]'));
         check(`${file}: US market removed from wizard`, !doc.querySelector('#wizardMarkets input[value="us"]'));
         check(`${file}: CBAM tool card clickable again`, !!doc.querySelector('#v2hub a.v2-tool-card[href="v2-cbam.html"]'));
         check(`${file}: no dash punctuation in visible copy`, !/[\u2013\u2014]/.test(doc.body.textContent));
         check(`${file}: member library announced as launching soon`, !!doc.querySelector('.v2-tool-member .v2-lock-badge'));
         check(`${file}: hub CTA has no Join-the-Committee mailto`, !doc.querySelector('.v2-cta-band a[href^="mailto"]'));
+        // committee decision Sep 2026 (task 40): briefing headline is Jill's plain title, no product-name masthead
+        check(`${file}: briefing title is the plain news headline`, doc.querySelector('.briefing-title .lang-en')?.textContent === 'Latest news about the EU regulatory landscape' && !doc.querySelector('.briefing-masthead-kicker'));
     }
 
     // Functional: calculator works on the CBAM page
@@ -99,6 +103,9 @@ const PAGES = {
         check('cbam page: projection chart to 2034', doc.querySelectorAll('#cbamResult .v2-proj-col').length === 9);
         check('cbam page: source note cites corrected IR', doc.getElementById('cbamResult').innerHTML.includes('IR 2026/1740'));
         check('cbam page: disclaimer prepended to result', doc.getElementById('cbamResult').firstElementChild?.classList.contains('v2-disclaimer'));
+        // committee decision Sep 2026 (Jill, task 25): the formula is shown as explanatory text
+        check('cbam page: formula explainer present', doc.querySelectorAll('.v2-formula-note .v2-formula > div').length === 3);
+        check('cbam page: formula flagged as rough estimate', !!doc.querySelector('.v2-formula-note')?.textContent.includes('rough screening estimate'));
         // 2030: E=3.187×1.30, B×0.515 → €224.40/t
         doc.getElementById('v2CbamYear').value = '2030';
         doc.getElementById('cbamCalculate').click();
