@@ -416,3 +416,33 @@ body[data-v2page="briefing"] .v2-brief-list .briefing-item-action { display: non
     .nav-mega { position: static; display: grid; grid-template-columns: 1fr; border: 0; box-shadow: none;
         padding: 0 0 0 16px; }
 }
+
+/* Detailed regulation page (owner decision 2026-09-09) */
+body[data-v2page="regulation"] #regdetail { padding: 40px 0 80px; }
+.v2-regdetail > .container > div { max-width: 880px; margin: 0 auto; }
+.v2-regdetail-back { display: inline-block; font-size: .85rem; font-weight: 600; color: var(--primary, #1a5c38); margin-bottom: 24px; }
+.v2-regdetail-back:hover { text-decoration: underline; }
+.v2-regdetail-head h1 { font-size: clamp(1.8rem, 3.4vw, 2.5rem); margin: 12px 0 4px; }
+.v2-regdetail-ref { color: #6b756c; font-size: .95rem; margin-bottom: 18px; }
+.v2-regdetail-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px 26px;
+    border: 1px solid #e7eae7; border-radius: 12px; padding: 16px 20px; margin: 18px 0 22px; font-size: .92rem; }
+.v2-rd-label { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #6b756c; margin-bottom: 3px; }
+.v2-regdetail-block { margin-top: 34px; }
+.v2-regdetail-block h2 { font-size: 1.15rem; margin-bottom: 12px; }
+.v2-rd-timeline { list-style: none; margin: 0; padding: 0; }
+.v2-rd-timeline li { display: flex; gap: 16px; padding: 9px 0; border-bottom: 1px solid #eef1ee; font-size: .95rem; }
+.v2-rd-timeline .v2-rd-date { flex: 0 0 110px; font-weight: 700; }
+.v2-rd-timeline .v2-rd-past { opacity: .55; }
+.v2-rd-timeline em { color: #a05f03; font-style: normal; font-size: .85em; }
+.v2-rd-roles { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.v2-rd-role { border: 1px solid #e7eae7; border-radius: 12px; padding: 18px 20px; }
+.v2-rd-role h3 { font-size: .95rem; margin-bottom: 10px; }
+.v2-rd-role ul { margin: 0; padding-left: 18px; }
+.v2-rd-role li, .v2-rd-actions li, .v2-rd-docs li { padding: 3px 0; font-size: .93rem; }
+.v2-rd-actions { padding-left: 20px; }
+.v2-rd-docs { padding-left: 18px; }
+.v2-rd-tools { margin-top: 6px; }
+.v2-rd-sources { list-style: none; margin: 0; padding: 0; font-size: .9rem; }
+.v2-rd-sources li { padding: 3px 0; }
+.v2-rd-sources a { color: var(--primary, #1a5c38); word-break: break-all; }
+@media (max-width: 700px) { .v2-rd-roles { grid-template-columns: 1fr; } }

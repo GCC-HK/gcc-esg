@@ -12,13 +12,14 @@ const js = fs.readFileSync(path.join(ROOT, 'script.js'), 'utf8');
 const v2js = fs.readFileSync(path.join(ROOT, 'v2.js'), 'utf8');
 const cbamData = fs.readFileSync(path.join(ROOT, 'v2-cbam-data.js'), 'utf8');
 const cbamJs = fs.readFileSync(path.join(ROOT, 'v2-cbam.js'), 'utf8');
+const regDetails = fs.readFileSync(path.join(ROOT, 'v2-reg-details.js'), 'utf8');
 
 let failures = 0;
 const check = (name, cond) => { console.log((cond ? 'PASS' : 'FAIL') + '  ' + name); if (!cond) failures++; };
 
-function boot(file) {
+function boot(file, query) {
     const html = fs.readFileSync(path.join(ROOT, file), 'utf8');
-    const dom = new JSDOM(html, { url: 'http://localhost/' + file, runScripts: 'outside-only', pretendToBeVisual: true });
+    const dom = new JSDOM(html, { url: 'http://localhost/' + file + (query || ''), runScripts: 'outside-only', pretendToBeVisual: true });
     const { window } = dom;
     window.IntersectionObserver = class { observe(){} unobserve(){} disconnect(){} };
     window.fetch = () => Promise.reject(new Error('offline'));
@@ -28,7 +29,7 @@ function boot(file) {
     window.URL.revokeObjectURL = () => {};
     const errors = [];
     window.addEventListener('error', e => errors.push(e.message));
-    try { window.eval(cbamData + '\n;\n' + js + '\n;\n' + v2js + '\n;\n' + cbamJs); } catch (e) { errors.push(e.message); }
+    try { window.eval(cbamData + '\n;\n' + regDetails + '\n;\n' + js + '\n;\n' + v2js + '\n;\n' + cbamJs); } catch (e) { errors.push(e.message); }
     return { doc: window.document, window, errors };
 }
 
@@ -39,6 +40,7 @@ const PAGES = {
     'v2-deadlines.html':{ page: 'deadlines',shown: ['radar'],              hidden: ['hero', 'compass', 'cbam'] },
     'v2-compass.html':  { page: 'compass',  shown: ['compass'],            hidden: ['hero', 'cbam', 'benefits', 'radar'] },
     'v2-cbam.html':     { page: 'cbam',     shown: ['cbam'],               hidden: ['hero', 'compass', 'briefing'] },
+    'v2-regulation.html': { page: 'regulation', shown: ['regdetail'],      hidden: ['hero', 'compass', 'cbam', 'radar'] },
     'v2-briefing.html': { page: 'briefing', shown: ['briefing'],           hidden: ['hero', 'cbam', 'library'] },
     'v2-guides.html':   { page: 'guides',   shown: ['library'],            hidden: ['hero', 'briefing'] },
     'v2-learn.html':    { page: 'learn',    shown: ['guidance', 'actions'], hidden: ['hero', 'compass', 'about', 'trust', 'china-esg', 'faq', 'glossary', 'voluntary'] },
@@ -69,7 +71,7 @@ const PAGES = {
         check(`${file}: no sign-in in nav`, !doc.getElementById('navSignin') && !doc.querySelector('.nav-signin-mobile'));
         check(`${file}: Vietnamese hidden from language selector`, !doc.querySelector('#langSelect option[value="vi"]'));
         // owner decisions 2026-09-09: Regulations mega menu, checks under Tools (member-tagged), Knowledge group
-        check(`${file}: Regulations mega menu with key regulations`, !!doc.querySelector('.nav-mega a[href="regulation.html?id=cbam"]') && !!doc.querySelector('.nav-mega a[href="regulation.html?id=ppwr"]') && !!doc.querySelector('.nav-mega a[href="regulation.html?id=ukcbam"]'));
+        check(`${file}: Regulations mega menu with key regulations`, !!doc.querySelector('.nav-mega a[href="v2-regulation.html?id=cbam"]') && !!doc.querySelector('.nav-mega a[href="v2-regulation.html?id=ppwr"]') && !!doc.querySelector('.nav-mega a[href="v2-regulation.html?id=ukcbam"]'));
         check(`${file}: nav Tools dropdown = Quick/Guided/CBAM, no coming soon`, !!doc.querySelector('.nav-dropdown-menu a[href="v2-compass.html?persona=merchandiser"]') && !!doc.querySelector('.nav-dropdown-menu a[href="v2-compass.html?persona=supplier"]') && !!doc.querySelector('.nav-dropdown-menu a[href="v2-cbam.html"]') && !Array.from(doc.querySelectorAll('.nav-dropdown-menu a')).some(a => a.textContent.includes('Coming soon')));
         check(`${file}: tools in nav carry Members tag`, doc.querySelectorAll('.nav-dropdown-menu a .nav-member-tag').length >= 4);
         check(`${file}: nav has Deadlines + Knowledge holds Glossary/FAQ/certifications/guides`, !!doc.querySelector('.nav-links a[href="v2-deadlines.html"]') && !!doc.querySelector('.nav-dropdown-menu a[href="v2-glossary.html"]') && !!doc.querySelector('.nav-dropdown-menu a[href="v2-faq.html"]') && !!doc.querySelector('.nav-dropdown-menu a[href="v2-certifications.html"]') && !!doc.querySelector('.nav-dropdown-menu a[href="v2-guides.html"]'));
@@ -81,6 +83,30 @@ const PAGES = {
         check(`${file}: hub CTA has no Join-the-Committee mailto`, !doc.querySelector('.v2-cta-band a[href^="mailto"]'));
         // committee decision Sep 2026 (task 40): briefing headline is Jill's plain title, no product-name masthead
         check(`${file}: briefing title is the plain news headline`, doc.querySelector('.briefing-title .lang-en')?.textContent === 'Latest news about the EU regulatory landscape' && !doc.querySelector('.briefing-masthead-kicker'));
+    }
+
+    // Functional: detailed regulation page (owner decision 2026-09-09)
+    {
+        const { doc } = boot('v2-regulation.html', '?id=cbam');
+        await new Promise(r => setTimeout(r, 30));
+        const root = doc.getElementById('regDetailRoot');
+        check('regulation page: renders from fallback data when CMS offline', root.querySelector('h1')?.textContent === 'CBAM');
+        check('regulation page: disclaimer at point of use', !!root.querySelector('.v2-disclaimer'));
+        check('regulation page: obligation sections rendered', root.querySelectorAll('.v2-regdetail-block').length >= 4);
+        check('regulation page: role split from detail file', root.querySelectorAll('.v2-rd-role').length === 2);
+        check('regulation page: action checklist rendered', root.querySelectorAll('.v2-rd-actions li').length >= 3);
+        check('regulation page: tool cards incl. CBAM calculator, member-tagged', root.querySelectorAll('.v2-rd-tools .v2-tool-card').length === 3 && root.querySelectorAll('.v2-rd-tools .v2-lock-badge-member').length === 3);
+        check('regulation page: sources listed', root.querySelectorAll('.v2-rd-sources li').length >= 2);
+        const bad = boot('v2-regulation.html', '?id=doesnotexist');
+        await new Promise(r => setTimeout(r, 30));
+        check('regulation page: unknown id shows error state', !!bad.doc.querySelector('.v2-regdetail-error'));
+        // exemplar detail entries (verified 2026-09-09): EUDR low-risk fact + PPWR quotas
+        const eudr = boot('v2-regulation.html', '?id=eudr');
+        await new Promise(r => setTimeout(r, 30));
+        check('regulation page: EUDR detail carries China/Vietnam low-risk fact', eudr.doc.getElementById('regDetailRoot').textContent.includes('low risk (IR (EU) 2025/1093)'));
+        const ppwr = boot('v2-regulation.html', '?id=ppwr');
+        await new Promise(r => setTimeout(r, 30));
+        check('regulation page: PPWR detail carries recycled-content quotas', ppwr.doc.getElementById('regDetailRoot').textContent.includes('35% for other plastic packaging'));
     }
 
     // Functional: calculator works on the CBAM page
