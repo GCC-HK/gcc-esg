@@ -29,7 +29,7 @@
         </div>`;
 
     // ===== Persona quick-start =====
-    // Supplier → guided wizard (learning mode). Merchandiser → express table
+    // Supplier: Guided Check wizard. Merchandiser: Quick Check table
     // (fast product overview + export), role fixed to Brand/Retailer.
     const PERSONA_PRESETS = {
         supplier:     { role: 'supplier', markets: ['eu', 'germany'] },
@@ -39,6 +39,7 @@
     function applyPersona(name, scroll) {
         const preset = PERSONA_PRESETS[name];
         if (!preset) return;
+        if (PAGE === 'compass' && !memberView) return; // checks are member content
         localStorage.setItem('gcc-persona', name);
         document.querySelectorAll('.v2-persona-card').forEach(c =>
             c.classList.toggle('active', c.dataset.persona === name));
@@ -65,6 +66,7 @@
 
     document.querySelectorAll('.v2-persona-card').forEach(card => {
         card.addEventListener('click', () => {
+            if (!card.dataset.persona) return; // hub member/join cards carry no persona
             if (PAGE === 'hub') {
                 // Hub: the persona doors lead into the finder page
                 localStorage.setItem('gcc-persona', card.dataset.persona);
@@ -719,6 +721,96 @@
         if (attempt < 10) setTimeout(() => jumpToHash(attempt + 1), 500);
     }
 
+    // ===== Member gating (owner decisions 2026-09-09/10) =====
+    // Depth is member content; overviews stay public. Until Supabase goes live
+    // the member state is simulated for board demos: ?demo=member switches the
+    // member preview on (uses the existing gcc-demo-tier mechanism, which the
+    // server-side gating in api/content.js honors too), ?demo=public switches
+    // it off. A floating pill shows when the member preview is active.
+    (function demoSwitch() {
+        const p = new URLSearchParams(window.location.search).get('demo');
+        if (p === 'member') localStorage.setItem('gcc-demo-tier', 'member');
+        if (p === 'public' || p === 'off') localStorage.removeItem('gcc-demo-tier');
+    })();
+    const memberView = !!((typeof authToken === 'function' && authToken()) || (typeof demoTier === 'function' && demoTier() === 'member'));
+
+    function memberPill() {
+        if (!memberView) return;
+        const u = new URL(window.location.href);
+        u.searchParams.set('demo', 'public');
+        document.body.insertAdjacentHTML('beforeend',
+            `<div class="v2-demo-pill"><span class="lang-en">Member preview</span><span class="lang-zh">会员预览</span><span class="lang-de">Mitglieder-Vorschau</span><span class="lang-vi">Xem trước thành viên</span> <a href="${u.pathname}${u.search}">&#10005;</a></div>`);
+        applyLang(document.querySelector('.v2-demo-pill'));
+    }
+
+    const GATE_HTML = `
+        <div class="v2-gate v2-member-gate">
+            <span class="v2-lock-badge v2-lock-badge-member"><span class="lang-en">Members</span><span class="lang-zh">会员</span><span class="lang-de">Mitglieder</span><span class="lang-vi">Thành viên</span></span>
+            <h3><span class="lang-en">Member content</span><span class="lang-zh">会员内容</span><span class="lang-de">Mitglieder-Inhalt</span><span class="lang-vi">Nội dung thành viên</span></h3>
+            <p><span class="lang-en">This part of the platform is for members of the German Chamber of Commerce Hong Kong. Member sign-in launches soon; the Committee is preparing the member area now.</span><span class="lang-zh">平台的这一部分面向德国工商总会香港的会员企业。会员登录即将上线，委员会目前正在筹备会员专区。</span><span class="lang-de">Dieser Teil der Plattform ist Mitgliedern der Deutschen Handelskammer Hongkong vorbehalten. Der Mitglieder-Login startet bald; der Ausschuss bereitet den Mitgliederbereich derzeit vor.</span><span class="lang-vi">Phần này của nền tảng dành cho hội viên Phòng Thương mại Đức tại Hồng Kông. Đăng nhập thành viên sắp ra mắt; Ủy ban đang chuẩn bị khu vực thành viên.</span></p>
+            <a class="btn-gate" href="mailto:info@hongkong.ahk.de?subject=ESG Sourcing Hub Member area"><span class="lang-en">Get notified when it launches</span><span class="lang-zh">上线时获取通知</span><span class="lang-de">Zum Start benachrichtigen lassen</span><span class="lang-vi">Nhận thông báo khi ra mắt</span></a>
+            <p class="v2-gate-sub"><span class="lang-en">Not a member yet? <a href="https://hongkong.ahk.de/membership" target="_blank" rel="noopener">Become a member of the German Chamber of Commerce Hong Kong</a>.</span><span class="lang-zh">还不是会员？<a href="https://hongkong.ahk.de/membership" target="_blank" rel="noopener">成为德国工商总会香港会员</a>。</span><span class="lang-de">Noch kein Mitglied? <a href="https://hongkong.ahk.de/membership" target="_blank" rel="noopener">Werden Sie Mitglied der Deutschen Handelskammer Hongkong</a>.</span><span class="lang-vi">Chưa phải thành viên? <a href="https://hongkong.ahk.de/membership" target="_blank" rel="noopener">Trở thành hội viên Phòng Thương mại Đức tại Hồng Kông</a>.</span></p>
+        </div>`;
+
+    function gateMemberSections() {
+        if (memberView) return;
+        // Tools: the checks (compass) and the CBAM calculator are member-only;
+        // the page intro stays visible so visitors see what the tool does.
+        if (PAGE === 'compass') {
+            const c = document.querySelector('#compass .container');
+            if (c) {
+                Array.from(c.children).forEach((el, i) => { if (i > 0) el.style.display = 'none'; });
+                c.insertAdjacentHTML('beforeend', GATE_HTML);
+                applyLang(c);
+            }
+        }
+        if (PAGE === 'cbam') {
+            const c = document.querySelector('#cbam .container');
+            const panel = c?.querySelector('.cbam-panel');
+            if (panel) {
+                panel.style.display = 'none';
+                panel.insertAdjacentHTML('beforebegin', GATE_HTML);
+                // scope + formula stay public: move the two info notes out of the hidden panel
+                const notes = panel.querySelectorAll('.cbam-info-note');
+                notes.forEach(n => c.appendChild(n));
+                applyLang(c);
+            }
+        }
+        // Knowledge teasers: first entries stay visible, the depth is gated.
+        if (PAGE === 'certifications') {
+            const list = document.querySelector('.v2-cert-list');
+            document.getElementById('certFilter')?.style.setProperty('display', 'none');
+            document.querySelector('.v2-cert-filter-hint')?.style.setProperty('display', 'none');
+            if (list) {
+                let inGroup = 0;
+                Array.from(list.children).forEach(el => {
+                    if (el.classList.contains('v2-cert-group')) { inGroup = 0; return; }
+                    if (el.classList.contains('v2-cert-row') && ++inGroup > 1) el.style.display = 'none';
+                });
+                list.insertAdjacentHTML('beforeend', GATE_HTML);
+                applyLang(list);
+            }
+        }
+        if (PAGE === 'glossary') {
+            const list = document.querySelector('.v2-glossary-list');
+            if (list) {
+                let groups = 0;
+                Array.from(list.children).forEach(el => {
+                    if (el.classList.contains('v2-gl-group')) groups++;
+                    if (groups > 1 && !el.classList.contains('v2-gl-head')) el.style.display = 'none';
+                });
+                list.insertAdjacentHTML('beforeend', GATE_HTML);
+                applyLang(list);
+            }
+        }
+        if (PAGE === 'faq') {
+            const items = document.querySelectorAll('#faq .faq-item');
+            items.forEach((el, i) => { if (i >= 3) el.style.display = 'none'; });
+            const c = document.querySelector('#faq .container');
+            if (c) { c.insertAdjacentHTML('beforeend', GATE_HTML); applyLang(c); }
+        }
+    }
+
     // ===== Detailed regulation page (owner decision 2026-09-09) =====
     // v2-v2-regulation.html?id=<regId>: base data from the shared regulations set
     // (CMS with built-in fallback), depth from v2-reg-details.js, dates from the
@@ -751,7 +843,20 @@
         const dlP = Promise.resolve().then(() => loadContent('deadlines')).catch(() => []);
 
         Promise.all([baseP, dlP]).then(([regs, deadlines]) => {
-            const reg = (regs || []).find(r => r.id === id);
+            let reg = (regs || []).find(r => r.id === id);
+            if (!reg && typeof V2_REG_EXTRA_BASE !== 'undefined' && V2_REG_EXTRA_BASE[id]) {
+                // UK set: built-in base so the pages work before the CMS seed runs
+                const b = V2_REG_EXTRA_BASE[id];
+                reg = {
+                    id, name: b.name, ref: b.ref,
+                    statusLabel: { inforce: 'IN FORCE', phasing: 'PHASING IN', prepare: 'PREPARE NOW' }[b.status] || b.status,
+                    inForce: b.inForce, complianceDeadline: b.complianceDeadline,
+                    lastReviewed: b.lastReviewed ? new Date(b.lastReviewed).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' }) : '',
+                    eurlex: b.eurlex,
+                    sections: (b.sections || []).map(s => ({ title: s.title, text: s.textEn, textZh: s.textZh })),
+                    reason: () => b.reasonEn || '', reasonZh: () => b.reasonZh || '', reasonDe: null
+                };
+            }
             if (!reg) { fail(); return; }
             const det = (typeof V2_REG_DETAILS !== 'undefined' && V2_REG_DETAILS[id]) || null;
             document.title = `${reg.name} | ESG Sourcing Hub`;
@@ -786,6 +891,14 @@
                 const reasonDe = reg.reasonDe ? reg.reasonDe('other', ['eu'], 'supplier', 'sme') : '';
                 why = `<div class="v2-regdetail-block"><h2>${t4('Why it matters', '为什么重要', 'Warum es wichtig ist', 'Vì sao quan trọng')}</h2>
                     <p>${t4(reason, reasonZh || reason, reasonDe || reason)}</p></div>`;
+            }
+
+            if (!memberView) {
+                // public teaser: status, meta and why-it-matters; depth is member content
+                root.innerHTML = `<a class="v2-regdetail-back" href="index.html">${t4('&larr; Back', '&larr; 返回', '&larr; Zurück', '&larr; Quay lại')}</a>` +
+                    head + disclaimer + why + GATE_HTML;
+                applyLang(root);
+                return;
             }
 
             const regDl = (deadlines || []).filter(d => d.regId === id && d.date).sort((a, b) => a.date < b.date ? -1 : 1);
@@ -845,6 +958,8 @@
     // ===== Init =====
     renderRegDetail();
     buildExpress();
+    gateMemberSections();
+    memberPill();
     cdnFallback();
     fillMinis(0);
     gateGuides();
