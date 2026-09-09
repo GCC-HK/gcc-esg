@@ -246,8 +246,8 @@ const PAGES = {
     {
         const { doc } = boot('v2.html');
         check('hub: persona doors replaced by member band', !doc.querySelector('.v2-persona-card[data-persona]') && !!doc.querySelector('.v2-member-door .v2-lock-badge-member'));
-        check('hub: join card links to Chamber membership', !!doc.querySelector('.v2-persona-card[href="https://hongkong.ahk.de/membership"]'));
-        check('hub: member door announces launching-soon sign-in, no sign-in link', !doc.querySelector('#personas a[href*="account"]') && doc.querySelector('.v2-member-cta-soon .lang-en').textContent.includes('launching soon'));
+        check('hub: join card links to Chamber membership', !!doc.querySelector('.v2-persona-card[href="https://hongkong.ahk.de/en/chamber"]'));
+        check('hub: member door offers passcode sign-in, no account link', !doc.querySelector('#personas a[href*="account"]') && !!doc.querySelector('.v2-member-door .v2-signin-btn'));
         check('hub: deadlines mini exists, news mini removed', !!doc.getElementById('v2MiniDeadlines') && !doc.getElementById('v2MiniNews'));
     }
 
@@ -278,6 +278,24 @@ const PAGES = {
         const regPub = boot('v2-regulation.html', '?id=cbam');
         await new Promise(r => setTimeout(r, 30));
         check('regulation page public: teaser (head + why) + gate, no depth', !!regPub.doc.querySelector('#regDetailRoot .v2-member-gate') && !regPub.doc.querySelector('#regDetailRoot .v2-rd-roles') && regPub.doc.querySelector('#regDetailRoot h1')?.textContent === 'CBAM');
+        // interim passcode login: gate button opens the sign-in modal
+        regPub.doc.querySelector('#regDetailRoot .v2-signin-btn').click();
+        check('regulation page public: gate button opens sign-in modal', !!regPub.doc.querySelector('.v2-login-overlay #v2Passcode'));
+        // real member token (signed for the dev passcode) also unlocks the UI
+        const now = Date.now() + 86400000;
+        const crypto2 = require('crypto');
+        const tok = now + '.' + crypto2.createHmac('sha256', 'demo').update('member:' + now).digest('hex');
+        const tokBoot = (() => {
+            const html2 = fs.readFileSync(path.join(ROOT, 'v2-cbam.html'), 'utf8');
+            const dom2 = new JSDOM(html2, { url: 'http://localhost/v2-cbam.html', runScripts: 'outside-only', pretendToBeVisual: true });
+            dom2.window.localStorage.setItem('gcc-member-token', tok);
+            dom2.window.IntersectionObserver = class { observe(){} unobserve(){} disconnect(){} };
+            dom2.window.fetch = () => Promise.reject(new Error('offline'));
+            dom2.window.scrollTo = () => {}; dom2.window.HTMLElement.prototype.scrollIntoView = function(){};
+            dom2.window.eval(cbamData + '\n;\n' + regDetails + '\n;\n' + js + '\n;\n' + v2js + '\n;\n' + cbamJs);
+            return dom2.window.document;
+        })();
+        check('member token unlocks calculator + shows sign-out pill', !tokBoot.querySelector('#cbam .v2-member-gate') && !!tokBoot.querySelector('#v2SignOut'));
     }
 
 
@@ -287,7 +305,7 @@ const PAGES = {
         await new Promise(r => setTimeout(r, 10));
         check('guides page: gate shown when signed out', !!doc.querySelector('.v2-gate'));
         check('guides page: grid hidden behind gate', doc.getElementById('libraryGrid').style.display === 'none');
-        check('guides page: gate is launching-soon, no sign-in', !doc.querySelector('.v2-gate a[href="account.html"]') && doc.querySelector('.v2-gate h3 .lang-en').textContent.includes('launching soon'));
+        check('guides page: gate offers passcode sign-in, no account link', !doc.querySelector('.v2-gate a[href="account.html"]') && !!doc.querySelector('.v2-gate .v2-signin-btn'));
         check('guides page: gate offers committee contact + chamber links', !!doc.querySelector('.v2-gate a[href^="mailto:info@hongkong.ahk.de"]') && !!doc.querySelector('.v2-gate a[href*="hongkong.ahk.de"]'));
     }
     {
