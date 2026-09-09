@@ -1904,6 +1904,330 @@ const V2_REG_DETAILS = {
         sources: [
             { label: 'EU parallel regime: Forced Labour Regulation (EU) 2024/3015, applies from 14 December 2027', url: 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R3015' }
         ]
+    },
+
+    verpackdg: {
+        roles: {
+            office: [
+                { en: 'For your private label products the German retailer is both packaging manufacturer and producer under the PPWR role split, even when an Asian factory produces and fills. Your existing LUCID registration stays valid under the VerpackDG.',
+                  zh: '在自有品牌产品上，根据PPWR的角色划分，德国零售商同时是包装制造者和生产者，即使产品由亚洲工厂生产和灌装。您现有的LUCID注册在VerpackDG下继续有效。',
+                  de: 'Bei Eigenmarken ist der deutsche Händler nach der PPWR-Rollenteilung zugleich Erzeuger und Hersteller der Verpackung, auch wenn eine asiatische Fabrik produziert und befüllt. Bestehende LUCID-Registrierungen gelten unter dem VerpackDG weiter.' },
+                { en: 'Register in LUCID before goods are supplied, participate in a dual system for household packaging and file the completeness declaration by 15 May when you exceed 80,000 kg glass, 50,000 kg paper or 30,000 kg other materials.',
+                  zh: '在供货前完成LUCID注册，为家庭包装加入双元回收系统，玻璃超80,000公斤、纸张超50,000公斤或其他材料超30,000公斤时须在5月15日前提交完整性声明。',
+                  de: 'Vor der Belieferung in LUCID registrieren, sich für Haushaltsverpackungen an einem dualen System beteiligen und ab 80.000 kg Glas, 50.000 kg Papier oder 30.000 kg sonstigen Materialien bis 15. Mai die Vollständigkeitserklärung abgeben.' },
+                { en: 'Marketplaces must verify sellers and fulfilment providers must refuse unregistered producers, so onboarding checks now include the LUCID number of every supplier that sells into Germany directly.',
+                  zh: '线上平台须核验卖家，履约服务商不得服务未注册生产者，因此供应商准入审核现在要包含每个直接向德国销售的供应商的LUCID编号。',
+                  de: 'Marktplätze müssen Anbieter prüfen und Fulfilment-Dienstleister unregistrierte Hersteller ablehnen, Onboarding-Checks umfassen daher die LUCID-Nummer jedes direkt nach Deutschland verkaufenden Lieferanten.' },
+                { en: 'Since 12 August 2026 the PPWR conformity duties (recyclability, recycled content, substance limits) sit on top of the German registration machinery, plan packaging data collection once for both.',
+                  zh: '自2026年8月12日起，PPWR的合规义务（可回收性、再生含量、物质限制）叠加在德国注册机制之上，包装数据收集应一次规划、两边通用。',
+                  de: 'Seit dem 12. August 2026 kommen die PPWR-Konformitätspflichten (Recyclingfähigkeit, Rezyklatanteil, Stoffgrenzen) zur deutschen Registrierungsmechanik hinzu, Verpackungsdaten also einmal für beides erheben.' }
+            ],
+            supplier: [
+                { en: 'Selling packaged goods directly to German end customers makes you the registrable party: you must register in LUCID yourself and now must appoint a German authorised representative first, LUCID blocks foreign registrations without one.',
+                  zh: '直接向德国终端客户销售包装商品即成为须注册方：您必须自行在LUCID注册，且现在必须先委任德国授权代表，没有代表LUCID将拒绝外国注册。',
+                  de: 'Wer verpackte Ware direkt an deutsche Endkunden verkauft, ist selbst registrierungspflichtig: eigene LUCID-Registrierung und neu zwingend vorab ein deutscher Bevollmächtigter, ohne ihn blockiert LUCID ausländische Registrierungen.' },
+                { en: 'In the private label flow you are not the LUCID party, but your buyer needs conformity data from you: material composition, recyclability, recycled content and substance limits per packaging component.',
+                  zh: '在自有品牌模式下您不是LUCID注册方，但买家需要您提供合规数据：每个包装组件的材料构成、可回收性、再生含量和物质限制。',
+                  de: 'Im Eigenmarkenfluss sind Sie nicht die LUCID-Partei, Ihr Abnehmer braucht aber Ihre Konformitätsdaten: Materialzusammensetzung, Recyclingfähigkeit, Rezyklatanteil und Stoffgrenzen je Verpackungskomponente.' },
+                { en: 'Registration is free and personal, it cannot be delegated to an agency, only the authorised representative construction is allowed for foreign companies.',
+                  zh: '注册免费且须本人办理，不能委托代理机构，外国企业只能通过授权代表的方式完成。',
+                  de: 'Die Registrierung ist kostenlos und höchstpersönlich, sie kann nicht an Agenturen delegiert werden, für ausländische Unternehmen ist allein die Bevollmächtigten-Konstruktion zulässig.' },
+                { en: 'Expect German buyers to ask for your packaging weights per material early: their dual system fees and the completeness declaration depend on your data.',
+                  zh: '德国买家会尽早索取您按材料划分的包装重量：他们的双元系统费用和完整性声明都依赖您的数据。',
+                  de: 'Deutsche Abnehmer fragen früh nach Ihren Verpackungsgewichten je Material: Ihre Daten speisen deren Systembeteiligungsentgelte und die Vollständigkeitserklärung.' }
+            ]
+        },
+        actions: [
+            { en: 'Check every sales channel into Germany: private label via the retailer, own brand via an importer, or direct to consumers, the LUCID duty sits with a different party in each flow.',
+              zh: '梳理进入德国的每条销售渠道：零售商自有品牌、经进口商的自有品牌、或直接面向消费者，每种模式下LUCID义务落在不同一方。',
+              de: 'Jeden Vertriebsweg nach Deutschland prüfen: Eigenmarke über den Händler, eigene Marke über einen Importeur oder Direktvertrieb, die LUCID-Pflicht liegt je Fluss bei einer anderen Partei.' },
+            { en: 'If you sell directly, appoint the German authorised representative before anything ships, then register in LUCID and join a dual system.',
+              zh: '如直接销售，请在发货前委任德国授权代表，然后完成LUCID注册并加入双元系统。',
+              de: 'Bei Direktvertrieb zuerst den deutschen Bevollmächtigten bestellen, dann in LUCID registrieren und einem dualen System beitreten.' },
+            { en: 'Build one packaging data sheet per SKU (material, component weight, recyclability, recycled share), it serves LUCID, the PPWR and the UK pEPR at once.',
+              zh: '为每个SKU建立一份包装数据表（材料、组件重量、可回收性、再生比例），可同时满足LUCID、PPWR和英国pEPR的要求。',
+              de: 'Ein Verpackungsdatenblatt je SKU aufbauen (Material, Komponentengewicht, Recyclingfähigkeit, Rezyklatanteil), es bedient LUCID, PPWR und UK pEPR zugleich.' },
+            { en: 'Verify the LUCID numbers of your German customers and of any seller you fulfil for, distribution bans bind the whole chain.',
+              zh: '核验德国客户及您为其履约的任何卖家的LUCID编号，销售禁令约束整条链条。',
+              de: 'LUCID-Nummern der deutschen Kunden und aller Verkäufer prüfen, für die Sie erfüllen, Vertriebsverbote binden die gesamte Kette.' }
+        ],
+        documents: [
+            { en: 'LUCID registration number (own or of the responsible party in your flow)',
+              zh: 'LUCID注册号（自己的或您所在流程中责任方的）',
+              de: 'LUCID-Registrierungsnummer (eigene oder die der verantwortlichen Partei im jeweiligen Fluss)' },
+            { en: 'Authorised representative mandate for direct sales to Germany',
+              zh: '直接向德国销售时的授权代表委任文件',
+              de: 'Bevollmächtigten-Mandat für den Direktvertrieb nach Deutschland' },
+            { en: 'Per component packaging specification: material, weight, recyclability, recycled share',
+              zh: '每个组件的包装规格：材料、重量、可回收性、再生比例',
+              de: 'Verpackungsspezifikation je Komponente: Material, Gewicht, Recyclingfähigkeit, Rezyklatanteil' },
+            { en: 'Dual system participation confirmation and volume reports',
+              zh: '双元系统参与确认及数量申报记录',
+              de: 'Nachweis der Systembeteiligung und Mengenmeldungen' }
+        ],
+        sources: [
+            { label: 'ZSVR: what applies since 12 August 2026', url: 'https://www.verpackungsregister.org/ich-moechte-wissen-was-seit-dem-12-august-2026-gilt' },
+            { label: 'BGBl. 2026 I Nr. 207 (VerpackDG)', url: 'https://www.recht.bund.de/bgbl/1/2026/207/VO.html' }
+        ]
+    },
+
+    elektrog: {
+        roles: {
+            office: [
+                { en: 'When you import electronics into Germany in your own name, you are the producer: register with stiftung ear per brand and device type before placing on the market, with the insolvency proof guarantee for consumer devices.',
+                  zh: '以自己名义向德国进口电子产品即为生产者：在投放市场前按品牌和设备类型向stiftung ear注册，消费类设备须提供防破产担保。',
+                  de: 'Wer Elektronik im eigenen Namen nach Deutschland importiert, ist Hersteller: vor dem Inverkehrbringen je Marke und Geräteart bei der stiftung ear registrieren, für B2C-Geräte mit insolvenzsicherer Garantie.' },
+                { en: 'Selling devices of unregistered producers makes you the producer yourself, with all duties. Check the ear register before listing any new supplier brand.',
+                  zh: '销售未注册生产者的设备将使您自己成为生产者并承担全部义务。上架任何新供应商品牌前请先查询ear登记系统。',
+                  de: 'Wer Geräte unregistrierter Hersteller verkauft, wird selbst zum Hersteller mit allen Pflichten. Vor der Listung jeder neuen Lieferantenmarke das ear-Register prüfen.' },
+                { en: 'The WEEE registration number must appear when offering devices and on invoices; marketplaces may not list unregistered producers and fulfilment providers may not handle their goods.',
+                  zh: '设备报价和发票上须标明WEEE注册号；线上平台不得展示未注册生产者，履约服务商不得处理其货物。',
+                  de: 'Die WEEE-Reg.-Nr. muss beim Anbieten und auf Rechnungen erscheinen; Marktplätze dürfen unregistrierte Hersteller nicht listen, Fulfilment-Dienstleister deren Ware nicht behandeln.' },
+                { en: 'Since 2026: every sales point stocking e-cigarettes takes them back free of charge, and the uniform collection point signage is mandatory in shops and webshops.',
+                  zh: '自2026年起：所有销售电子烟的网点须免费回收，统一回收点标识在实体店和网店均为强制。',
+                  de: 'Seit 2026: Jede Verkaufsstelle mit E-Zigaretten nimmt diese kostenlos zurück, die einheitliche Sammelstellen-Kennzeichnung ist im Laden und im Webshop Pflicht.' }
+            ],
+            supplier: [
+                { en: 'Selling under your own brand or by distance sale into Germany makes you the producer, and you cannot register yourself without a German establishment: appoint exactly one German authorised representative with a written German language mandate before anything ships.',
+                  zh: '以自有品牌或远程销售方式进入德国即为生产者，而没有德国营业机构就无法自行注册：发货前须以德语书面授权委任唯一一名德国授权代表。',
+                  de: 'Wer unter eigener Marke oder im Fernabsatz nach Deutschland verkauft, ist Hersteller und kann sich ohne deutsche Niederlassung nicht selbst registrieren: vor dem Versand genau einen deutschen Bevollmächtigten mit schriftlichem deutschsprachigem Mandat bestellen.' },
+                { en: 'Apply the crossed out wheeled bin mark and the producer identification at the factory, your buyer\'s registration depends on correct marking.',
+                  zh: '在工厂完成打叉带轮垃圾桶标识和生产者标识，买家的注册有效性依赖于正确的标识。',
+                  de: 'Die durchgestrichene Mülltonne und die Herstellerkennzeichnung bereits in der Fabrik anbringen, die Registrierung Ihres Abnehmers hängt an korrekter Kennzeichnung.' },
+                { en: 'Agree in the sourcing contract who registers, who finances the guarantee and who reports volumes, the duties differ by sales flow.',
+                  zh: '在采购合同中约定由谁注册、由谁承担担保费用、由谁申报数量，不同销售模式下义务归属不同。',
+                  de: 'Im Beschaffungsvertrag festlegen, wer registriert, wer die Garantie finanziert und wer Mengen meldet, die Pflichten hängen vom Vertriebsweg ab.' },
+                { en: 'Provide per model data early: device type, weight, battery content, dimensions, it drives your buyer\'s ear registration and the take back logistics.',
+                  zh: '尽早提供每个型号的数据：设备类型、重量、电池情况、尺寸，这些决定买家的ear注册和回收物流。',
+                  de: 'Früh Daten je Modell liefern: Geräteart, Gewicht, Batterieinhalt, Abmessungen, sie steuern die ear-Registrierung des Abnehmers und die Rücknahmelogistik.' }
+            ]
+        },
+        actions: [
+            { en: 'Map which of your electronics flows into Germany run under your brand versus the buyer\'s brand, the producer duty follows the brand and the import.',
+              zh: '梳理您的电子产品进入德国时哪些以您的品牌、哪些以买家品牌销售，生产者义务随品牌和进口方而定。',
+              de: 'Klären, welche Elektronikflüsse nach Deutschland unter Ihrer Marke und welche unter der Marke des Abnehmers laufen, die Herstellerpflicht folgt Marke und Import.' },
+            { en: 'For own brand or direct sales: mandate the German authorised representative and obtain the ear registration before shipping.',
+              zh: '自有品牌或直接销售：先委任德国授权代表并取得ear注册，再行发货。',
+              de: 'Bei eigener Marke oder Direktvertrieb: erst den deutschen Bevollmächtigten mandatieren und die ear-Registrierung einholen, dann versenden.' },
+            { en: 'Verify the WEEE registration numbers of all supplier brands you list, and put the number on offers and invoices.',
+              zh: '核验所上架全部供应商品牌的WEEE注册号，并在报价和发票上标明。',
+              de: 'WEEE-Reg.-Nummern aller gelisteten Lieferantenmarken prüfen und die Nummer in Angebote und Rechnungen aufnehmen.' },
+            { en: 'If you ship battery containing small devices such as vapes, plan for the 2026 take back and signage duties with your German customers.',
+              zh: '如发运电子烟等含电池小型设备，请与德国客户一起规划2026年的回收和标识义务。',
+              de: 'Bei batteriehaltigen Kleingeräten wie Vapes die Rücknahme- und Kennzeichnungspflichten 2026 gemeinsam mit den deutschen Kunden einplanen.' }
+        ],
+        documents: [
+            { en: 'ear registration confirmation (WEEE number) per brand and device type',
+              zh: '按品牌和设备类型的ear注册确认（WEEE编号）',
+              de: 'ear-Registrierungsbestätigung (WEEE-Nummer) je Marke und Geräteart' },
+            { en: 'Written German language mandate for the authorised representative',
+              zh: '授权代表的德语书面委任文件',
+              de: 'Schriftliches deutschsprachiges Mandat des Bevollmächtigten' },
+            { en: 'Insolvency proof guarantee for consumer devices',
+              zh: '消费类设备的防破产担保证明',
+              de: 'Insolvenzsichere Garantie für B2C-Geräte' },
+            { en: 'Per model data sheet: device type, weight, battery content, markings applied',
+              zh: '每个型号的数据表：设备类型、重量、电池情况、已完成的标识',
+              de: 'Datenblatt je Modell: Geräteart, Gewicht, Batterieinhalt, angebrachte Kennzeichnungen' }
+        ],
+        sources: [
+            { label: 'ElektroG (official text)', url: 'https://www.gesetze-im-internet.de/elektrog_2015/BJNR173910015.html' },
+            { label: 'BGBl. 2025 I Nr. 286 (amendment in force 1 Jan 2026)', url: 'https://www.recht.bund.de/bgbl/1/2025/286/regelungstext.pdf' }
+        ]
+    },
+
+    battdg: {
+        roles: {
+            office: [
+                { en: 'Importing batteries or battery containing devices in your own name makes you the producer: register with stiftung ear per brand and per battery category and join an approved producer responsibility organisation for each category.',
+                  zh: '以自己名义进口电池或含电池设备即为生产者：按品牌和电池类别向stiftung ear注册，并按类别加入经批准的生产者责任组织。',
+                  de: 'Wer Batterien oder batteriehaltige Geräte im eigenen Namen importiert, ist Hersteller: je Marke und Batteriekategorie bei der stiftung ear registrieren und je Kategorie einer zugelassenen Organisation für Herstellerverantwortung beitreten.' },
+                { en: 'A distributor selling unregistered batteries inherits the full producer duties, and fulfilment providers may not handle them, so registration checks belong in supplier onboarding.',
+                  zh: '销售未注册电池的分销商将继承全部生产者义务，履约服务商也不得处理，因此注册核查应纳入供应商准入流程。',
+                  de: 'Ein Vertreiber, der unregistrierte Batterien verkauft, erbt die vollen Herstellerpflichten, Fulfilment-Dienstleister dürfen sie nicht behandeln, Registerprüfungen gehören daher ins Lieferanten-Onboarding.' },
+                { en: 'Old registrations of companies without a German establishment were not carried over into the new regime, re-check every battery line against the ear register even if it was compliant under the old BattG.',
+                  zh: '没有德国营业机构的企业的旧注册未被延续到新制度，即使在旧BattG下合规，也请对照ear登记系统重新核查每条电池产品线。',
+                  de: 'Altregistrierungen von Unternehmen ohne deutsche Niederlassung wurden nicht ins neue Regime überführt, jede Batterielinie erneut gegen das ear-Register prüfen, auch wenn sie unter dem alten BattG konform war.' },
+                { en: 'The EU Battery Regulation duties (labelling, due diligence, from 2027 the battery passport and portable battery removability) run in parallel, plan product data once for both layers.',
+                  zh: '欧盟电池法规的义务（标识、尽职调查、2027年起的电池护照和便携式电池可拆卸要求）并行适用，产品数据应一次规划、两层通用。',
+                  de: 'Die Pflichten der EU-Batterieverordnung (Kennzeichnung, Sorgfaltspflichten, ab 2027 Batteriepass und Entnehmbarkeit) laufen parallel, Produktdaten also einmal für beide Ebenen planen.' }
+            ],
+            supplier: [
+                { en: 'Selling batteries or battery containing devices into Germany under your brand or by distance sale makes you the producer; you cannot register yourself and must appoint exactly one German authorised representative who registers in its own name.',
+                  zh: '以自有品牌或远程销售方式向德国销售电池或含电池设备即为生产者；您不能自行注册，必须委任唯一一名以自己名义注册的德国授权代表。',
+                  de: 'Wer Batterien oder batteriehaltige Geräte unter eigener Marke oder im Fernabsatz nach Deutschland verkauft, ist Hersteller; eine Selbstregistrierung ist nicht möglich, es braucht genau einen deutschen Bevollmächtigten, der im eigenen Namen registriert.' },
+                { en: 'Declare the battery category correctly (portable, light means of transport, starter, industrial, electric vehicle), registration and the producer responsibility organisation run per category.',
+                  zh: '正确申报电池类别（便携式、轻型交通工具、启动、工业、电动汽车），注册和生产者责任组织均按类别进行。',
+                  de: 'Die Batteriekategorie korrekt einordnen (Gerätebatterie, LV, Starter, Industrie, E-Fahrzeug), Registrierung und Herstellerverantwortungsorganisation laufen je Kategorie.' },
+                { en: 'For batteries built into devices, the battery duty travels with the device: tell your buyer battery chemistry, weight and capacity per model.',
+                  zh: '内置于设备的电池，其义务随设备而行：请按型号向买家提供电池化学体系、重量和容量。',
+                  de: 'Bei eingebauten Batterien wandert die Batteriepflicht mit dem Gerät: dem Abnehmer je Modell Chemie, Gewicht und Kapazität nennen.' },
+                { en: 'Battery due diligence breaches carry fines up to €500,000 in Germany, expect German buyers to pass the EU battery due diligence requirements through to cell suppliers.',
+                  zh: '电池尽职调查违规在德国最高可罚50万欧元，德国买家将把欧盟电池尽职调查要求传导给电芯供应商。',
+                  de: 'Verstöße gegen die Batterie-Sorgfaltspflichten kosten in Deutschland bis zu 500.000 Euro, deutsche Abnehmer reichen die EU-Sorgfaltsanforderungen an Zelllieferanten weiter.' }
+            ]
+        },
+        actions: [
+            { en: 'List every product containing a battery and map who first places it on the German market in each flow.',
+              zh: '列出所有含电池产品，并梳理每种销售模式下由谁首次将其投放德国市场。',
+              de: 'Alle batteriehaltigen Produkte erfassen und je Vertriebsweg klären, wer sie erstmals in Deutschland in Verkehr bringt.' },
+            { en: 'Check registrations against the ear register per brand AND category, the January 2026 transition wiped old foreign held registrations.',
+              zh: '按品牌和类别对照ear登记系统核查注册状态，2026年1月的过渡已使外国企业的旧注册失效。',
+              de: 'Registrierungen je Marke UND Kategorie gegen das ear-Register prüfen, die Übergangsfrist Januar 2026 hat ausländisch gehaltene Altregistrierungen beendet.' },
+            { en: 'For own brand sales: mandate the German authorised representative and secure producer responsibility organisation membership before shipping.',
+              zh: '自有品牌销售：先委任德国授权代表并落实生产者责任组织会员资格，再行发货。',
+              de: 'Bei Eigenmarkenvertrieb: erst den deutschen Bevollmächtigten mandatieren und die OfH-Mitgliedschaft sichern, dann versenden.' },
+            { en: 'Design new battery products to the EU Battery Regulation timeline (passport, removability from 2027), it covers Germany automatically.',
+              zh: '新电池产品按欧盟电池法规时间表设计（2027年起护照与可拆卸要求），即可自动覆盖德国要求。',
+              de: 'Neue Batterieprodukte auf die EU-Batterieverordnung auslegen (Pass, Entnehmbarkeit ab 2027), Deutschland ist damit automatisch abgedeckt.' }
+        ],
+        documents: [
+            { en: 'ear registration per brand and battery category, held by the authorised representative for foreign producers',
+              zh: '按品牌和电池类别的ear注册（外国生产者由授权代表持有）',
+              de: 'ear-Registrierung je Marke und Batteriekategorie, bei ausländischen Herstellern über den Bevollmächtigten' },
+            { en: 'Producer responsibility organisation membership per category',
+              zh: '按类别的生产者责任组织会员证明',
+              de: 'OfH-Mitgliedschaft je Kategorie' },
+            { en: 'Per model battery data: chemistry, weight, capacity, category',
+              zh: '每个型号的电池数据：化学体系、重量、容量、类别',
+              de: 'Batteriedaten je Modell: Chemie, Gewicht, Kapazität, Kategorie' },
+            { en: 'Due diligence documentation for cell raw materials (EU Battery Regulation)',
+              zh: '电芯原材料的尽职调查文件（欧盟电池法规）',
+              de: 'Sorgfaltspflicht-Dokumentation für Zellrohstoffe (EU-Batterieverordnung)' }
+        ],
+        sources: [
+            { label: 'BattDG (official text)', url: 'https://www.gesetze-im-internet.de/battdg/BJNR0E90B0025.html' },
+            { label: 'stiftung ear: battery producer duties', url: 'https://www.stiftung-ear.de/themenwelten/hersteller/welche-pflichten-haben-hersteller-von-batterien/' }
+        ]
+    },
+
+    ewkfonds: {
+        roles: {
+            office: [
+                { en: 'Importing listed single use plastic products into Germany in your own name makes you the payer: register on the DIVID platform before selling and report quantities annually by 15 May.',
+                  zh: '以自己名义向德国进口清单所列一次性塑料产品即为缴费方：销售前在DIVID平台注册，并于每年5月15日前申报数量。',
+                  de: 'Wer gelistete Einwegkunststoffprodukte im eigenen Namen nach Deutschland einführt, ist abgabepflichtig: vor dem Verkauf auf DIVID registrieren und Mengen jährlich bis 15. Mai melden.' },
+                { en: 'Budget the levy per product group: for example €0.177 per kg for food containers, €1.236 for beverage cups, €3.801 for carrier bags. The rates are under their first scheduled review.',
+                  zh: '按产品组编列征费预算：例如食品容器每公斤0.177欧元，饮料杯1.236欧元，购物袋3.801欧元。费率正处于首次例行评估中。',
+                  de: 'Die Abgabe je Produktgruppe einplanen: z. B. 0,177 Euro/kg für Lebensmittelbehälter, 1,236 Euro für Getränkebecher, 3,801 Euro für Tragetaschen. Die Sätze stehen zur ersten planmäßigen Überprüfung an.' },
+                { en: 'The sales ban for unregistered producers binds retailers, marketplaces and fulfilment providers, so DIVID status belongs in your seller checks.',
+                  zh: '针对未注册生产者的销售禁令约束零售商、线上平台和履约服务商，因此DIVID状态应纳入卖家审核。',
+                  de: 'Das Verkaufsverbot für unregistrierte Hersteller bindet Händler, Marktplätze und Fulfilment-Dienstleister, der DIVID-Status gehört daher in die Anbieterprüfung.' },
+                { en: 'Watch the scope: fireworks join from 2026 with the first levy for 2027, and containers above 500 g content are exempt since late 2025.',
+                  zh: '关注适用范围：烟花自2026年起纳入，2027年首次征费；容量超过500克的容器自2025年底起豁免。',
+                  de: 'Den Anwendungsbereich beobachten: Feuerwerk kommt ab 2026 hinzu (erste Abgabe für 2027), Behälter über 500 g Inhalt sind seit Ende 2025 ausgenommen.' }
+            ],
+            supplier: [
+                { en: 'Selling listed single use plastic products directly into Germany makes you the payer, and you must first appoint a German confirmed authorised representative; registration and the annual report remain your personal duties.',
+                  zh: '直接向德国销售清单所列一次性塑料产品即为缴费方，且须先委任经确认的德国授权代表；注册和年度申报仍是您本人的义务。',
+                  de: 'Wer gelistete Einwegkunststoffprodukte direkt nach Deutschland verkauft, ist selbst abgabepflichtig und muss vorab einen bestätigten deutschen Bevollmächtigten bestellen; Registrierung und Jahresmeldung bleiben höchstpersönlich.' },
+                { en: 'Check your product range against the covered list: food containers, cups, bags and film wrappers, beverage containers, carrier bags, wet wipes, balloons, tobacco filters.',
+                  zh: '对照覆盖清单核查产品线：食品容器、杯子、袋与薄膜包装、饮料容器、购物袋、湿巾、气球、烟草过滤嘴。',
+                  de: 'Das Sortiment gegen die Produktliste prüfen: Lebensmittelbehälter, Becher, Beutel und Folienverpackungen, Getränkebehälter, Tragetaschen, Feuchttücher, Ballons, Tabakfilter.' },
+                { en: 'Weight data per product drives the levy, provide accurate per unit plastic weights to whoever pays in your flow.',
+                  zh: '征费按产品重量计算，请向您所在流程中的缴费方提供准确的单件塑料重量。',
+                  de: 'Die Abgabe folgt dem Gewicht, dem Abgabepflichtigen im jeweiligen Fluss genaue Kunststoffgewichte je Einheit liefern.' },
+                { en: 'Reducing single use plastic content or switching material directly lowers the levy and becomes a price argument with German buyers.',
+                  zh: '减少一次性塑料含量或更换材料可直接降低征费，并成为与德国买家谈价的筹码。',
+                  de: 'Weniger Einwegkunststoff oder ein Materialwechsel senkt die Abgabe direkt und wird zum Preisargument gegenüber deutschen Abnehmern.' }
+            ]
+        },
+        actions: [
+            { en: 'Screen your assortment against Anlage 1 of the EWKFondsG, the product list decides everything.',
+              zh: '对照EWKFondsG附件一排查产品组合，产品清单决定一切。',
+              de: 'Das Sortiment gegen Anlage 1 des EWKFondsG prüfen, die Produktliste entscheidet.' },
+            { en: 'Clarify who registers on DIVID in each sales flow and appoint the authorised representative where you sell directly.',
+              zh: '明确每种销售模式下由谁在DIVID注册，直接销售时委任授权代表。',
+              de: 'Je Vertriebsweg klären, wer auf DIVID registriert, und beim Direktvertrieb den Bevollmächtigten bestellen.' },
+            { en: 'Set up per unit plastic weight records, the annual report by 15 May needs them.',
+              zh: '建立单件塑料重量记录，5月15日前的年度申报需要这些数据。',
+              de: 'Kunststoffgewichte je Einheit erfassen, die Jahresmeldung zum 15. Mai braucht sie.' },
+            { en: 'Model the levy into product costing per group, from €0.061 to €8.972 per kilogram it can move margins.',
+              zh: '将征费按产品组纳入成本核算，每公斤0.061至8.972欧元的费率足以影响利润。',
+              de: 'Die Abgabe je Produktgruppe in die Kalkulation aufnehmen, 0,061 bis 8,972 Euro je Kilogramm können Margen verschieben.' }
+        ],
+        documents: [
+            { en: 'DIVID registration confirmation',
+              zh: 'DIVID注册确认',
+              de: 'DIVID-Registrierungsbestätigung' },
+            { en: 'Authorised representative confirmation for foreign producers',
+              zh: '外国生产者的授权代表确认文件',
+              de: 'Bestätigung des Bevollmächtigten für ausländische Hersteller' },
+            { en: 'Per unit plastic weight records by product group',
+              zh: '按产品组的单件塑料重量记录',
+              de: 'Kunststoffgewichte je Einheit nach Produktgruppe' },
+            { en: 'Annual quantity report (due 15 May)',
+              zh: '年度数量申报（5月15日前）',
+              de: 'Jahresmengenmeldung (bis 15. Mai)' }
+        ],
+        sources: [
+            { label: 'UBA: single use plastics fund (DIVID)', url: 'https://www.umweltbundesamt.de/ewkf' },
+            { label: 'EWKFondsG (official text)', url: 'https://www.gesetze-im-internet.de/ewkfondsg/BJNR07C0B0023.html' }
+        ]
+    },
+
+    uwggreen: {
+        roles: {
+            office: [
+                { en: 'From 27 September 2026 generic environmental claims (climate neutral, eco friendly) on products for the German market are banned unless recognised excellent environmental performance is demonstrated, screen every product, packaging and webshop text now.',
+                  zh: '自2026年9月27日起，面向德国市场的产品不得使用碳中和、环保等泛化环境声明，除非能证明获得认可的卓越环境表现，请立即排查所有产品、包装和网店文案。',
+                  de: 'Ab dem 27. September 2026 sind pauschale Umweltaussagen (klimaneutral, umweltfreundlich) für den deutschen Markt verboten, sofern keine anerkannte hervorragende Umweltleistung nachgewiesen ist, alle Produkt-, Verpackungs- und Webshop-Texte jetzt prüfen.' },
+                { en: 'Self made sustainability labels without a certification scheme are banned, and climate claims based on offsetting are banned, check private label artwork and hang tags.',
+                  zh: '未基于认证体系的自创可持续标签被禁止，基于碳抵消的气候声明也被禁止，请核查自有品牌设计稿和吊牌。',
+                  de: 'Selbstgemachte Nachhaltigkeitslabel ohne Zertifizierungssystem sind verboten, ebenso kompensationsbasierte Klimaaussagen, Eigenmarken-Artwork und Hangtags prüfen.' },
+                { en: 'Enforcement runs through Germany\'s fast competitor warning system (Abmahnung) and consumer associations, contested claims must come off products and shelves quickly.',
+                  zh: '执法通过德国快速的同业警告函制度（Abmahnung）和消费者协会进行，有争议的声明须迅速从产品和货架上撤下。',
+                  de: 'Die Durchsetzung läuft über das schnelle Abmahnwesen und Verbraucherverbände, beanstandete Aussagen müssen zügig von Produkten und aus Regalen verschwinden.' },
+                { en: 'The same EmpCo rules apply EU wide from the same date, one artwork screening covers Germany and the EU together.',
+                  zh: '同样的EmpCo规则自同一日期起在全欧盟适用，一次设计稿排查即可同时覆盖德国和欧盟。',
+                  de: 'Dieselben EmpCo-Regeln gelten ab demselben Datum EU-weit, eine Artwork-Prüfung deckt Deutschland und die EU gemeinsam ab.' }
+            ],
+            supplier: [
+                { en: 'Every recycled, organic or eco claim you print or propose for products headed to Germany needs evidence behind it, generic wording without proof will be rejected by buyers.',
+                  zh: '您为销往德国的产品印制或建议的每一项再生、有机或环保声明都需要证据支撑，没有证明的泛化措辞将被买家拒绝。',
+                  de: 'Jede Recycling-, Bio- oder Öko-Aussage, die Sie für Deutschland-Ware drucken oder vorschlagen, braucht Belege, pauschale Formulierungen ohne Nachweis werden Abnehmer ablehnen.' },
+                { en: 'Expect German buyers to demand claim substantiation files per product (recycled share certificates, organic certification, test reports) before approving artwork.',
+                  zh: '德国买家将在批准设计稿前要求提供每个产品的声明证明档案（再生比例证书、有机认证、测试报告）。',
+                  de: 'Deutsche Abnehmer verlangen vor der Artwork-Freigabe Belegakten je Produkt (Rezyklatanteils-Zertifikate, Bio-Zertifizierung, Prüfberichte).' },
+                { en: 'Only labels backed by a certification scheme may be used, replace in house green logos with recognised schemes or remove them.',
+                  zh: '只能使用有认证体系支撑的标签，请用认可的认证体系替换自创绿色标志，或将其移除。',
+                  de: 'Nur Label mit Zertifizierungssystem sind zulässig, hauseigene Grün-Logos durch anerkannte Systeme ersetzen oder entfernen.' },
+                { en: 'Claims that survive this screening become a sales advantage: substantiated environmental performance is what German retailers can still print.',
+                  zh: '经得起排查的声明将成为销售优势：有据可依的环境表现正是德国零售商仍可印制的内容。',
+                  de: 'Aussagen, die diese Prüfung bestehen, werden zum Verkaufsvorteil: belegte Umweltleistung ist das, was deutsche Händler weiterhin drucken können.' }
+            ]
+        },
+        actions: [
+            { en: 'Inventory all environmental claims on products, packaging and listings for the German market before 27 September 2026.',
+              zh: '在2026年9月27日前盘点面向德国市场的产品、包装和商品页上的所有环境声明。',
+              de: 'Alle Umweltaussagen auf Produkten, Verpackungen und Listings für den deutschen Markt vor dem 27. September 2026 erfassen.' },
+            { en: 'Build one evidence file per claim (certificates, test reports, scheme membership), no file means the claim goes.',
+              zh: '为每项声明建立证据档案（证书、测试报告、认证体系会员资格），没有档案的声明一律撤下。',
+              de: 'Je Aussage eine Belegakte aufbauen (Zertifikate, Prüfberichte, Systemmitgliedschaft), ohne Akte fällt die Aussage.' },
+            { en: 'Replace offsetting based claims (climate neutral through compensation) with reduction based wording or drop them.',
+              zh: '将基于抵消的声明（通过补偿实现碳中和）改为基于减排的措辞，或直接删除。',
+              de: 'Kompensationsbasierte Aussagen (klimaneutral durch Ausgleich) durch reduktionsbasierte Formulierungen ersetzen oder streichen.' },
+            { en: 'Align with the EU EmpCo screening, one pass covers both regimes from the same date.',
+              zh: '与欧盟EmpCo排查同步进行，一次排查即可自同一日期起覆盖两套制度。',
+              de: 'Mit dem EU-EmpCo-Screening zusammenlegen, ein Durchlauf deckt beide Regime ab demselben Datum ab.' }
+        ],
+        documents: [
+            { en: 'Claim inventory per product for the German market',
+              zh: '面向德国市场的每个产品的声明清单',
+              de: 'Aussagen-Inventar je Produkt für den deutschen Markt' },
+            { en: 'Evidence file per claim: certificates, test reports, scheme documentation',
+              zh: '每项声明的证据档案：证书、测试报告、认证体系文件',
+              de: 'Belegakte je Aussage: Zertifikate, Prüfberichte, Systemunterlagen' },
+            { en: 'Certification scheme documentation for any sustainability label used',
+              zh: '所用每个可持续标签的认证体系文件',
+              de: 'Zertifizierungssystem-Unterlagen für jedes verwendete Nachhaltigkeitslabel' },
+            { en: 'Cleared artwork versions for products sold from 27 September 2026',
+              zh: '自2026年9月27日起销售产品的已审定设计稿版本',
+              de: 'Freigegebene Artwork-Stände für ab 27. September 2026 verkaufte Produkte' }
+        ],
+        sources: [
+            { label: 'EmpCo Directive (EU) 2024/825 (implemented by the UWG amendment)', url: 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024L0825' }
+        ]
     }
 };
 
@@ -1911,6 +2235,156 @@ const V2_REG_DETAILS = {
 // the owner runs scripts/seeds/seed-uk-regs.js (generated from that seed, same facts).
 // Once seeded, the CMS version takes precedence in the renderer.
 const V2_REG_EXTRA_BASE = {
+"verpackdg": {
+  "name": "German Packaging Law (VerpackDG + LUCID)",
+  "ref": "VerpackDG (Germany, BGBl. 2026 I Nr. 207)",
+  "status": "inforce",
+  "inForce": "12 August 2026 (replaced the VerpackG of 2017, same day the EU PPWR became applicable)",
+  "complianceDeadline": "Ongoing: LUCID registration before placing packaged goods on the German market",
+  "lastReviewed": "2026-09-10",
+  "eurlex": "https://www.gesetze-im-internet.de/verpackdg/",
+  "sections": [
+    {
+      "title": "REPORTING",
+      "textEn": "The party first making packaged goods available in Germany must register in the LUCID register of the ZSVR (free, cannot be delegated), participate in a dual system for household packaging before supplying, and report volumes. Existing LUCID registrations remain valid under the new law. The annual completeness declaration is due by 15 May above 80,000 kg glass, 50,000 kg paper or 30,000 kg other materials.",
+      "textZh": "首次在德国市场提供包装商品的一方须在ZSVR的LUCID登记系统注册（免费，不可委托他人代办），在供货前加入家庭包装双元回收系统并申报数量。现有LUCID注册在新法下继续有效。玻璃超过80,000公斤、纸张超过50,000公斤或其他材料超过30,000公斤时，须于每年5月15日前提交完整性声明。"
+    },
+    {
+      "title": "SUPPLY CHAIN",
+      "textEn": "Since 12 August 2026 the EU packaging regulation (PPWR) applies directly and the VerpackDG carries the German registration machinery forward. For retail private labels the German retailer counts as both packaging manufacturer and producer, even when an Asian factory produces and fills; suppliers deliver the conformity data (recyclability, recycled content, substance limits) upstream. Foreign companies selling packaged goods directly to German end customers must register themselves and must now appoint a German authorised representative.",
+      "textZh": "自2026年8月12日起，欧盟包装法规（PPWR）直接适用，VerpackDG延续了德国的注册机制。零售商自有品牌的情况下，德国零售商同时承担包装制造者和生产者责任，即使产品由亚洲工厂生产和灌装；供应商须向上游提供合规数据（可回收性、再生含量、物质限制）。直接向德国终端客户销售包装商品的外国企业须自行注册，并且现在必须委任一名德国授权代表。"
+    },
+    {
+      "title": "PENALTIES",
+      "textEn": "Fines up to €200,000 for missing system participation and €100,000 for missing registration; distribution bans apply, marketplaces must verify sellers and fulfilment providers must refuse service to unregistered producers.",
+      "textZh": "未参与回收系统最高罚款20万欧元，未注册最高罚款10万欧元；适用销售禁令，线上平台须核验卖家，履约服务商不得为未注册生产者提供服务。"
+    }
+  ],
+  "reasonEn": "Packaged goods cannot be sold in Germany without LUCID registration and system participation. Direct sellers from Asia now also need a German authorised representative, and marketplaces must block unregistered producers.",
+  "reasonZh": "没有LUCID注册和系统参与，包装商品就无法在德国销售。从亚洲直接销售的企业现在还需要德国授权代表，线上平台必须屏蔽未注册的生产者。"
+},
+"elektrog": {
+  "name": "German WEEE (ElektroG)",
+  "ref": "ElektroG (Germany)",
+  "status": "inforce",
+  "inForce": "24 October 2015; latest amendment in force 1 January 2026 (BGBl. 2025 I Nr. 286)",
+  "complianceDeadline": "Ongoing: stiftung ear registration per brand and device type before placing on the market",
+  "lastReviewed": "2026-09-10",
+  "eurlex": "https://www.stiftung-ear.de/en/guides/applying-for-weee-registration-as-a-foreign-company/",
+  "sections": [
+    {
+      "title": "REPORTING",
+      "textEn": "Producers, a term that includes importers and foreign distance sellers, must register with stiftung ear per brand and device type before placing equipment on the German market, with an insolvency proof guarantee for consumer devices. The WEEE registration number must appear when offering devices and on invoices.",
+      "textZh": "生产者（包括进口商和外国远程销售商）须在设备投放德国市场前，按品牌和设备类型向stiftung ear注册，消费类设备还须提供防破产担保。WEEE注册号须在商品报价和发票上标明。"
+    },
+    {
+      "title": "SUPPLY CHAIN",
+      "textEn": "Foreign producers without a German establishment cannot register themselves: they must appoint exactly one German authorised representative with a written German language mandate. Marketplaces may not list, and fulfilment providers may not handle, devices of unregistered producers. A retailer selling unregistered devices is deemed producer itself.",
+      "textZh": "在德国没有营业机构的外国生产者不能自行注册：必须以德语书面授权委任唯一一名德国授权代表。线上平台不得展示、履约服务商不得处理未注册生产者的设备。销售未注册设备的零售商自身将被视为生产者。"
+    },
+    {
+      "title": "DOCUMENTATION",
+      "textEn": "Retail take back duties apply from 400 m² of electronics sales area (1:1, and 0:1 for devices under 25 cm). Since 2026 every sales point stocking e-cigarettes must take them back free of charge, and uniform collection point signage is mandatory, including in webshops.",
+      "textZh": "电子产品销售面积达400平方米起适用零售回收义务（以旧换新1:1，25厘米以下设备免购回收0:1）。自2026年起，所有销售电子烟的网点须免费回收，并须统一张贴回收点标识，网店同样适用。"
+    },
+    {
+      "title": "PENALTIES",
+      "textEn": "Distribution bans and fines up to €100,000 per case.",
+      "textZh": "适用销售禁令，每案最高罚款10万欧元。"
+    }
+  ],
+  "reasonEn": "Electronics cannot ship to Germany without a stiftung ear registration, and foreign sellers must act through a German authorised representative. Fix in the sourcing contract who registers, who finances the guarantee, and that the crossed out bin mark is applied at the factory.",
+  "reasonZh": "没有stiftung ear注册，电子产品就无法进入德国，外国卖家必须通过德国授权代表行事。请在采购合同中明确由谁注册、由谁承担担保费用，以及在工厂完成打叉垃圾桶标识。"
+},
+"battdg": {
+  "name": "German Battery Law (BattDG)",
+  "ref": "BattDG (Germany, BGBl. 2025 I Nr. 233)",
+  "status": "inforce",
+  "inForce": "7 October 2025 (replaced the BattG of 2009; implements EU Reg. 2023/1542)",
+  "complianceDeadline": "Ongoing: ear registration per brand and battery category plus membership in an approved producer responsibility organisation",
+  "lastReviewed": "2026-09-10",
+  "eurlex": "https://www.stiftung-ear.de/themenwelten/hersteller/welche-pflichten-haben-hersteller-von-batterien/",
+  "sections": [
+    {
+      "title": "REPORTING",
+      "textEn": "Whoever first places batteries on the German market, including batteries built into devices, is the producer and must register with stiftung ear per brand and per battery category (portable, light means of transport, starter, industrial, electric vehicle) and join an approved producer responsibility organisation for each category.",
+      "textZh": "首次将电池（包括内置于设备中的电池）投放德国市场的一方即为生产者，须按品牌和电池类别（便携式、轻型交通工具、启动、工业、电动汽车）向stiftung ear注册，并按类别加入经批准的生产者责任组织。"
+    },
+    {
+      "title": "SUPPLY CHAIN",
+      "textEn": "Foreign producers cannot register themselves and must appoint exactly one German authorised representative; old registrations of companies without a German establishment were not carried over into the new regime. Distributors may not sell and fulfilment providers may not handle unregistered batteries, and a distributor that does inherits the full producer duties.",
+      "textZh": "外国生产者不能自行注册，必须委任唯一一名德国授权代表；没有德国营业机构的企业的旧注册未被延续到新制度。分销商不得销售、履约服务商不得处理未注册电池，违规销售的分销商将继承全部生产者义务。"
+    },
+    {
+      "title": "PENALTIES",
+      "textEn": "Fines up to €100,000 for registration and producer responsibility offences and up to €500,000 for battery due diligence breaches, plus distribution bans.",
+      "textZh": "注册和生产者责任违规最高罚款10万欧元，电池尽职调查违规最高罚款50万欧元，并适用销售禁令。"
+    }
+  ],
+  "reasonEn": "Batteries and battery containing devices need a German ear registration per category via an authorised representative, plus membership in a producer responsibility organisation. Check every battery line against the register, the transition deadline of January 2026 has passed.",
+  "reasonZh": "电池及含电池设备须通过授权代表按类别完成德国ear注册，并加入生产者责任组织。请对照登记系统核查每一条电池产品线，2026年1月的过渡期限已过。"
+},
+"ewkfonds": {
+  "name": "German Single Use Plastics Fund",
+  "ref": "EWKFondsG (Germany)",
+  "status": "inforce",
+  "inForce": "1 January 2024 (levy on quantities from 2024)",
+  "complianceDeadline": "Ongoing: DIVID registration before placing products; annual quantity report by 15 May",
+  "lastReviewed": "2026-09-10",
+  "eurlex": "https://www.umweltbundesamt.de/ewkf",
+  "sections": [
+    {
+      "title": "REPORTING",
+      "textEn": "Producers and first distributors of listed single use plastic products, including importers and foreign distance sellers, must register on the DIVID platform of the Federal Environment Agency before selling, and report quantities annually by 15 May. Covered products include food containers, cups, bags and film wrappers, beverage containers, carrier bags, wet wipes, balloons and tobacco filters; fireworks join from 2026 with the first levy for 2027.",
+      "textZh": "清单所列一次性塑料产品的生产者和首次分销商（包括进口商和外国远程销售商）须在销售前在联邦环境署的DIVID平台注册，并于每年5月15日前申报数量。覆盖产品包括食品容器、杯子、袋与薄膜包装、饮料容器、购物袋、湿巾、气球和烟草过滤嘴；烟花自2026年起纳入，2027年起首次征费。"
+    },
+    {
+      "title": "DOCUMENTATION",
+      "textEn": "The levy is charged per kilogram and product group: for example €0.177 for food containers, €1.236 for beverage cups, €3.801 for carrier bags, €0.876 for bags and film wrappers, up to €8.972 for tobacco filters. The rates are under their first scheduled review.",
+      "textZh": "征费按公斤和产品组收取：例如食品容器每公斤0.177欧元，饮料杯1.236欧元，购物袋3.801欧元，袋与薄膜包装0.876欧元，烟草过滤嘴最高8.972欧元。费率正处于首次例行评估中。"
+    },
+    {
+      "title": "SUPPLY CHAIN",
+      "textEn": "Foreign producers must first appoint a German confirmed authorised representative; registration and the annual report remain personal duties. Unregistered producers face a sales ban that binds retailers, marketplaces and fulfilment providers.",
+      "textZh": "外国生产者须先委任经确认的德国授权代表；注册和年度申报仍是本人义务。未注册生产者面临销售禁令，零售商、线上平台和履约服务商均受其约束。"
+    },
+    {
+      "title": "PENALTIES",
+      "textEn": "Fines up to €100,000.",
+      "textZh": "最高罚款10万欧元。"
+    }
+  ],
+  "reasonEn": "Single use plastic products sold into Germany carry a per kilogram levy and a DIVID registration duty. Direct sellers from Asia need a German authorised representative before they start.",
+  "reasonZh": "销往德国的一次性塑料产品须按公斤缴纳征费并在DIVID注册。从亚洲直接销售的企业须先委任德国授权代表。"
+},
+"uwggreen": {
+  "name": "German Greenwashing Ban (UWG)",
+  "ref": "UWG amendment (Germany, EmpCo implementation)",
+  "status": "phasing",
+  "inForce": "Promulgated 19 February 2026",
+  "complianceDeadline": "Applies from 27 September 2026 (same date as the EU EmpCo rules)",
+  "lastReviewed": "2026-09-10",
+  "eurlex": "https://www.gesetze-im-internet.de/uwg/",
+  "sections": [
+    {
+      "title": "DOCUMENTATION",
+      "textEn": "From 27 September 2026 generic environmental claims such as climate neutral or eco friendly are banned in Germany unless recognised excellent environmental performance can be demonstrated, sustainability labels not based on a certification scheme are banned, and climate claims based on offsetting are banned.",
+      "textZh": "自2026年9月27日起，德国禁止使用碳中和、环保等泛化环境声明，除非能证明获得认可的卓越环境表现；禁止使用未基于认证体系的自创可持续标签；禁止基于碳抵消的气候声明。"
+    },
+    {
+      "title": "SUPPLY CHAIN",
+      "textEn": "The rules hit what German retailers print on products, packaging and web shops, so sourcing offices must screen artwork and supplier claims now. Enforcement runs through Germany's fast competitor warning system (Abmahnung) and consumer associations.",
+      "textZh": "这些规则直接影响德国零售商印在产品、包装和网店上的内容，采购办公室须立即排查设计稿和供应商声明。执法通过德国快速的同业警告函制度（Abmahnung）和消费者协会进行。"
+    },
+    {
+      "title": "PENALTIES",
+      "textEn": "Enforced through cease and desist warnings and court action by competitors and consumer associations; contested claims must come off products and shelves quickly.",
+      "textZh": "通过同业和消费者协会的警告函及法院诉讼执行；有争议的声明须迅速从产品和货架上撤下。"
+    }
+  ],
+  "reasonEn": "From 27 September 2026 generic green claims on products for the German market are banned without recognised proof. Screen packaging artwork and supplier marketing claims before that date.",
+  "reasonZh": "自2026年9月27日起，面向德国市场的产品若无认可的证明，不得使用泛化绿色声明。请在该日期前排查包装设计稿和供应商营销声明。"
+},
 "gpsr": {
   "name": "General Product Safety Regulation (GPSR)",
   "ref": "(EU) 2023/988",
