@@ -446,3 +446,15 @@ body[data-v2page="regulation"] #regdetail { padding: 40px 0 80px; }
 .v2-rd-sources li { padding: 3px 0; }
 .v2-rd-sources a { color: var(--primary, #1a5c38); word-break: break-all; }
 @media (max-width: 700px) { .v2-rd-roles { grid-template-columns: 1fr; } }
+
+/* member/non-member landing band + demo preview pill (owner decision 2026-09-10) */
+.v2-member-door { position: relative; cursor: default; }
+.v2-member-door:hover { transform: none; }
+.v2-member-cta-soon { color: #8a8a82; }
+.v2-member-gate { position: relative; margin-top: 26px; }
+.v2-demo-pill { position: fixed; bottom: 18px; right: 18px; z-index: 3000;
+    background: var(--ahk-blue, #003366); color: #fff; border-radius: 999px;
+    padding: 8px 16px; font-size: 12.5px; font-weight: 700; letter-spacing: .03em;
+    box-shadow: 0 6px 18px rgba(0,0,0,.25); }
+.v2-demo-pill a { color: #fff; margin-left: 8px; opacity: .75; text-decoration: none; }
+.v2-demo-pill a:hover { opacity: 1; }

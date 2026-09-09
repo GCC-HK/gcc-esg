@@ -17,10 +17,11 @@ const regDetails = fs.readFileSync(path.join(ROOT, 'v2-reg-details.js'), 'utf8')
 let failures = 0;
 const check = (name, cond) => { console.log((cond ? 'PASS' : 'FAIL') + '  ' + name); if (!cond) failures++; };
 
-function boot(file, query) {
+function boot(file, query, tier) {
     const html = fs.readFileSync(path.join(ROOT, file), 'utf8');
     const dom = new JSDOM(html, { url: 'http://localhost/' + file + (query || ''), runScripts: 'outside-only', pretendToBeVisual: true });
     const { window } = dom;
+    if (tier) window.localStorage.setItem('gcc-demo-tier', tier);
     window.IntersectionObserver = class { observe(){} unobserve(){} disconnect(){} };
     window.fetch = () => Promise.reject(new Error('offline'));
     window.scrollTo = () => {};
@@ -87,7 +88,7 @@ const PAGES = {
 
     // Functional: detailed regulation page (owner decision 2026-09-09)
     {
-        const { doc } = boot('v2-regulation.html', '?id=cbam');
+        const { doc } = boot('v2-regulation.html', '?id=cbam', 'member');
         await new Promise(r => setTimeout(r, 30));
         const root = doc.getElementById('regDetailRoot');
         check('regulation page: renders from fallback data when CMS offline', root.querySelector('h1')?.textContent === 'CBAM');
@@ -101,12 +102,16 @@ const PAGES = {
         await new Promise(r => setTimeout(r, 30));
         check('regulation page: unknown id shows error state', !!bad.doc.querySelector('.v2-regdetail-error'));
         // exemplar detail entries (verified 2026-09-09): EUDR low-risk fact + PPWR quotas
-        const eudr = boot('v2-regulation.html', '?id=eudr');
+        const eudr = boot('v2-regulation.html', '?id=eudr', 'member');
         await new Promise(r => setTimeout(r, 30));
         check('regulation page: EUDR detail carries China/Vietnam low-risk fact', eudr.doc.getElementById('regDetailRoot').textContent.includes('low risk (IR (EU) 2025/1093)'));
-        const ppwr = boot('v2-regulation.html', '?id=ppwr');
+        const ppwr = boot('v2-regulation.html', '?id=ppwr', 'member');
         await new Promise(r => setTimeout(r, 30));
         check('regulation page: PPWR detail carries recycled-content quotas', ppwr.doc.getElementById('regDetailRoot').textContent.includes('35% for other plastic packaging'));
+        // UK built-in base: page renders before the CMS seed runs
+        const uk = boot('v2-regulation.html', '?id=ukppt', 'member');
+        await new Promise(r => setTimeout(r, 30));
+        check('regulation page: UK reg renders from built-in base (pre-seed)', uk.doc.querySelector('#regDetailRoot h1')?.textContent === 'UK Plastic Packaging Tax');
     }
 
     // Functional: calculator works on the CBAM page
@@ -237,14 +242,42 @@ const PAGES = {
         check('compass page: voluntary certifications moved off results flow', doc.getElementById('v2PageStyle').textContent.split('{')[0].includes('#voluntary'));
     }
 
-    // Functional: hub persona door sets localStorage and navigates
+    // Functional: hub member/non-member band (replaced persona doors, owner 2026-09-10)
     {
-        const { doc, window } = boot('v2.html');
-        // jsdom can't follow the navigation ("Not implemented" warning is
-        // expected); assert the handler ran by its localStorage side effect.
-        doc.querySelector('.v2-persona-card[data-persona="merchandiser"]').click();
-        check('hub: persona door click stores persona (navigates in browser)', window.localStorage.getItem('gcc-persona') === 'merchandiser');
+        const { doc } = boot('v2.html');
+        check('hub: persona doors replaced by member band', !doc.querySelector('.v2-persona-card[data-persona]') && !!doc.querySelector('.v2-member-door .v2-lock-badge-member'));
+        check('hub: join card links to Chamber membership', !!doc.querySelector('.v2-persona-card[href="https://hongkong.ahk.de/membership"]'));
+        check('hub: member door announces launching-soon sign-in, no sign-in link', !doc.querySelector('#personas a[href*="account"]') && doc.querySelector('.v2-member-cta-soon .lang-en').textContent.includes('launching soon'));
         check('hub: deadlines mini exists, news mini removed', !!doc.getElementById('v2MiniDeadlines') && !doc.getElementById('v2MiniNews'));
+    }
+
+    // Functional: member gating (owner 2026-09-10; ?demo=member simulates until Supabase)
+    {
+        const pub = boot('v2-cbam.html');
+        await new Promise(r => setTimeout(r, 10));
+        check('cbam page public: calculator gated', !!pub.doc.querySelector('#cbam .v2-member-gate') && pub.doc.querySelector('.cbam-panel').style.display === 'none');
+        check('cbam page public: scope + formula notes stay visible', pub.doc.querySelectorAll('#cbam .container > .cbam-info-note').length === 2);
+        const mem = boot('v2-cbam.html', '', 'member');
+        await new Promise(r => setTimeout(r, 10));
+        check('cbam page member: no gate, panel visible', !mem.doc.querySelector('#cbam .v2-member-gate') && mem.doc.querySelector('.cbam-panel').style.display !== 'none');
+        check('cbam page member: preview pill shown', !!mem.doc.querySelector('.v2-demo-pill'));
+        const cpub = boot('v2-compass.html');
+        await new Promise(r => setTimeout(r, 10));
+        check('compass public: checks gated, intro visible', !!cpub.doc.querySelector('#compass .v2-member-gate') && cpub.doc.getElementById('v2Express').style.display === 'none');
+        const cmem = boot('v2-compass.html', '?persona=merchandiser', 'member');
+        await new Promise(r => setTimeout(r, 10));
+        check('compass member: express usable', !cmem.doc.querySelector('#compass .v2-member-gate') && cmem.doc.getElementById('v2Express').style.display !== 'none');
+        const certs = boot('v2-certifications.html');
+        check('certifications public: filter hidden, teaser rows + gate', certs.doc.getElementById('certFilter').style.display === 'none' && !!certs.doc.querySelector('.v2-cert-list .v2-member-gate') && certs.doc.querySelectorAll('.v2-cert-list .v2-cert-row:not([style*="none"])').length <= 8);
+        const gl = boot('v2-glossary.html');
+        check('glossary public: first group visible, rest gated', !!gl.doc.querySelector('.v2-glossary-list .v2-member-gate') && gl.doc.querySelectorAll('.v2-gl-row:not([style*="none"])').length >= 3);
+        const fq = boot('v2-faq.html');
+        check('faq public: 3 teaser questions + gate', !!fq.doc.querySelector('#faq .v2-member-gate') && fq.doc.querySelectorAll('#faq .faq-item:not([style*="none"])').length === 3);
+        const certsM = boot('v2-certifications.html', '', 'member');
+        check('certifications member: full list + filter', certsM.doc.getElementById('certFilter').style.display !== 'none' && !certsM.doc.querySelector('.v2-member-gate'));
+        const regPub = boot('v2-regulation.html', '?id=cbam');
+        await new Promise(r => setTimeout(r, 30));
+        check('regulation page public: teaser (head + why) + gate, no depth', !!regPub.doc.querySelector('#regDetailRoot .v2-member-gate') && !regPub.doc.querySelector('#regDetailRoot .v2-rd-roles') && regPub.doc.querySelector('#regDetailRoot h1')?.textContent === 'CBAM');
     }
 
 
