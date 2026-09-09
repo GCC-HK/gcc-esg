@@ -1297,10 +1297,21 @@ function demoTier() {
     return t === 'member' || t === 'registered' ? t : null;
 }
 
+// Interim passcode login (issued by /api/member-login; expiry is client-checked
+// here for UI, the server re-verifies the signature on every request)
+function memberToken() {
+    try {
+        const t = localStorage.getItem('gcc-member-token');
+        if (!t) return null;
+        return Date.now() < Number(t.split('.')[0]) ? t : null;
+    } catch (e) { return null; }
+}
+
 async function loadContent(type) {
     const headers = {};
     const token = authToken();
     if (token) headers['Authorization'] = `Bearer ${token}`;
+    else if (memberToken()) headers['x-member-token'] = memberToken();
     else if (demoTier()) headers['x-demo-tier'] = demoTier();
     const r = await fetch(`/api/content?type=${type}`, { headers });
     if (!r.ok) throw new Error(`content ${type}: ${r.status}`);

@@ -110,6 +110,12 @@ Owner iterations after go-live: Tools nav dropdown + tools overview page (CBAM l
 
 **Quality review:** verify-v2 at ~422 assertions + a 30×2-mode render sweep (0 failures); link check over all pages (internal all valid; EUR-Lex 202s and ISO/amfori 403s are fetch-bot artifacts, links fine in browsers); terminology sweep clean (no Working Group / Compliance Atlas / GREEN FUTURE / Green Sourcing / gcc-sustainability@ / Express Lookup / dash punctuation; last stale ZH 绿色采购指南针 fixed to ESG采购指南针).
 
+## Phase 18 — Real passcode login on Vercel, nav polish round (10 Sep 2026)
+
+**Owner review fixes:** mega menu now 3 columns (EU 16 · Germany 1 · UK 11; EU expanded with Ecodesign/ESPR, DPP split out, Toy Safety, RoHS, Right to Repair, Textiles EPR, Microplastics so EU outweighs UK); Members pills no longer wrap (nowrap heads). Tools renamed for clarity (owner asked for self-explanatory names): **Regulation Finder** (table, ex Quick Check/Express Lookup) and **Product Check** (wizard, ex Guided Check), each with a descriptor sub-line in the menu; hub card renamed too. Knowledge's first entry is now **How to Start**. Chamber-membership links now point to hongkong.ahk.de/en/chamber. Certifications page: type labels ("Guidance, not certifiable") sit on their own line (was glued to the name). Language selector lost its leftover 1px frame (old button-group border).
+
+**Real member login without Supabase (board presentation):** `api/member-login.js` (Vercel function) verifies the passcode against the **MEMBER_PASSCODE env var** (timing-safe, 503 until the owner sets it, never in the code) and issues an HMAC-signed 30-day token. `api/content.js` and the dev server accept it (`x-member-token`) as member tier, so the server-side news gating works with it too. Client: sign-in modal (passcode field, error states incl. not-configured, 4 languages) opened from every gate and the landing member card; pill shows "Member · Sign out"; script.js sends the token with content requests. Gate copy switched from "launching soon" to real sign-in offers (passcode via info@hongkong.ahk.de). `?demo=member` preview retained in parallel. Dev server prints its local passcode (default `demo`). E2E-tested via Playwright: wrong passcode → error, correct → gates open + pill, sign out → gates return. Supabase remains the plan of record for real accounts; this is the bridge.
+
 ## Standing operational notes
 
 - **Sanity editor token was shared via chat during setup and again on 11 Aug 2026 — rotate it now** (sanity.io/manage → API → Tokens) and use env vars only.

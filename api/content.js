@@ -11,6 +11,8 @@
 // < member (user.app_metadata.tier === "member", granted manually by the
 // Committee in the Supabase dashboard).
 
+import { verifyMemberToken } from './member-login.js';
+
 const PROJECT = 'bvmxf21v';
 const DATASET = 'production';
 const API_VERSION = 'v2024-01-01';
@@ -30,6 +32,9 @@ async function viewerTier(req) {
     const url = process.env.SUPABASE_URL;
     const anonKey = process.env.SUPABASE_ANON_KEY;
     const auth = req.headers.authorization;
+    // Interim passcode login (owner 2026-09-10): a valid signed member token
+    // grants member tier, independent of Supabase. Issued by /api/member-login.
+    if (verifyMemberToken(req.headers['x-member-token'], process.env.MEMBER_PASSCODE)) return 'member';
     // DEMO MODE: while Supabase is not configured, honour a preview-tier header
     // so stakeholders can review the member area. Automatically disabled the
     // moment real auth (SUPABASE_URL) is configured.

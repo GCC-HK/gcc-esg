@@ -129,9 +129,11 @@ ul {
 
 .lang-toggle {
     display: flex;
-    border: 1px solid var(--primary);
-    border-radius: 6px;
-    overflow: hidden;
+    /* no frame: the pill-shaped select carries its own styling (the old 1px
+       border came from the retired button-group design) */
+    border: none;
+    border-radius: 0;
+    overflow: visible;
 }
 
 .lang-btn {
