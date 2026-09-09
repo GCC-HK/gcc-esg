@@ -77,6 +77,8 @@ const PAGES = {
         check(`${file}: no dash punctuation in visible copy`, !/[\u2013\u2014]/.test(doc.body.textContent));
         check(`${file}: member library announced as launching soon`, !!doc.querySelector('.v2-tool-member .v2-lock-badge'));
         check(`${file}: hub CTA has no Join-the-Committee mailto`, !doc.querySelector('.v2-cta-band a[href^="mailto"]'));
+        // committee decision Sep 2026 (task 40): briefing headline is Jill's plain title, no product-name masthead
+        check(`${file}: briefing title is the plain news headline`, doc.querySelector('.briefing-title .lang-en')?.textContent === 'Latest news about the EU regulatory landscape' && !doc.querySelector('.briefing-masthead-kicker'));
     }
 
     // Functional: calculator works on the CBAM page
@@ -99,6 +101,9 @@ const PAGES = {
         check('cbam page: projection chart to 2034', doc.querySelectorAll('#cbamResult .v2-proj-col').length === 9);
         check('cbam page: source note cites corrected IR', doc.getElementById('cbamResult').innerHTML.includes('IR 2026/1740'));
         check('cbam page: disclaimer prepended to result', doc.getElementById('cbamResult').firstElementChild?.classList.contains('v2-disclaimer'));
+        // committee decision Sep 2026 (Jill, task 25): the formula is shown as explanatory text
+        check('cbam page: formula explainer present', doc.querySelectorAll('.v2-formula-note .v2-formula > div').length === 3);
+        check('cbam page: formula flagged as rough estimate', !!doc.querySelector('.v2-formula-note')?.textContent.includes('rough screening estimate'));
         // 2030: E=3.187×1.30, B×0.515 → €224.40/t
         doc.getElementById('v2CbamYear').value = '2030';
         doc.getElementById('cbamCalculate').click();
