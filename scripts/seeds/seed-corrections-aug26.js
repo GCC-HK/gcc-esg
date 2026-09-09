@@ -154,7 +154,7 @@ const regPatches = {
     // 31 May 2026.
     microplastics: {
         lastReviewed: REVIEWED,
-        'sections[_key=="s1"].textEn': 'Instructions for use to minimize microplastic release — mandatory since 17 October 2025. Reporting obligations on quantities placed on the market (first annual reports were due 31 May 2026).',
+        'sections[_key=="s1"].textEn': 'Instructions for use to minimise microplastic release — mandatory since 17 October 2025. Reporting obligations on quantities placed on the market (first annual reports were due 31 May 2026).',
         'sections[_key=="s1"].textZh': '须提供减少微塑料释放的使用说明——自2025年10月17日起为强制要求。对投放市场的数量负有报告义务（首份年度报告已于2026年5月31日到期）。',
         'sections[_key=="s1"].textDe': 'Gebrauchsanweisungen zur Minimierung der Mikroplastikfreisetzung — verpflichtend seit dem 17. Oktober 2025. Berichtspflichten über die in Verkehr gebrachten Mengen (erste Jahresberichte waren zum 31. Mai 2026 fällig).',
         'sections[_key=="s1"].textVi': 'Hướng dẫn sử dụng nhằm giảm thiểu phát tán vi nhựa — bắt buộc từ ngày 17 tháng 10 năm 2025. Nghĩa vụ báo cáo về số lượng đưa ra thị trường (báo cáo thường niên đầu tiên đến hạn ngày 31 tháng 5 năm 2026).'

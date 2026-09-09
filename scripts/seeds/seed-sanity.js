@@ -86,7 +86,7 @@ const regulations = [
         categories: ['cosmetics', 'textiles'], roles: [], sizes: [],
         sections: [
             { title: 'PRODUCT DESIGN', textEn: 'Ban on intentionally added microplastics (synthetic polymers <5mm). Reformulation required for restricted products.' },
-            { title: 'DOCUMENTATION', textEn: 'Instructions for use to minimize microplastic release. Reporting obligations on quantities placed on market.' },
+            { title: 'DOCUMENTATION', textEn: 'Instructions for use to minimise microplastic release. Reporting obligations on quantities placed on market.' },
             { title: 'PENALTIES', textEn: 'Product withdrawal from market. National enforcement penalties apply based on member state implementation.' }
         ],
         reasonEn: '{category} products often contain intentionally added microplastics now restricted under REACH Annex XVII.',

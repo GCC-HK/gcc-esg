@@ -5,7 +5,7 @@
 // content marked accessLevel "registered" or "premium" is only returned in
 // full to signed-in viewers (Supabase session token in the Authorization
 // header). Locked items come back as teasers — full text never reaches the
-// browser without authorization.
+// browser without authorisation.
 //
 // Viewer tiers: public (no/invalid session) < registered (any valid session)
 // < member (user.app_metadata.tier === "member", granted manually by the

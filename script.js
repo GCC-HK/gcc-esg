@@ -236,7 +236,7 @@ let regulations = [
         eurlex: 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R2055',
         sections: [
             { title: 'PRODUCT DESIGN', text: 'Ban on intentionally added microplastics (synthetic polymers <5mm). Reformulation required for restricted products.' },
-            { title: 'DOCUMENTATION', text: 'Instructions for use to minimize microplastic release, mandatory since 17 October 2025. Reporting obligations on quantities placed on the market (first annual reports were due 31 May 2026).' },
+            { title: 'DOCUMENTATION', text: 'Instructions for use to minimise microplastic release, mandatory since 17 October 2025. Reporting obligations on quantities placed on the market (first annual reports were due 31 May 2026).' },
             { title: 'PENALTIES', text: 'Product withdrawal from market. National enforcement penalties apply based on member state implementation.' }
         ],
         applies: (cat, markets, role, size) => {
