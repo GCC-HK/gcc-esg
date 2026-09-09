@@ -118,7 +118,7 @@ const R = {
               textDe: 'Verbot von bewusst zugesetztem Mikroplastik (synthetische Polymere <5 mm). Beschränkte Produkte müssen neu formuliert werden.',
               textVi: 'Cấm vi nhựa được cố ý thêm vào (polyme tổng hợp <5mm). Các sản phẩm thuộc diện hạn chế phải được điều chỉnh công thức.' },
             { title: 'DOCUMENTATION',
-              textEn: 'Instructions for use to minimize microplastic release. Reporting obligations on quantities placed on market.',
+              textEn: 'Instructions for use to minimise microplastic release. Reporting obligations on quantities placed on market.',
               textZh: '须提供减少微塑料释放的使用说明。对投放市场的数量负有报告义务。',
               textDe: 'Gebrauchsanweisungen zur Minimierung der Mikroplastikfreisetzung. Berichtspflichten über die in Verkehr gebrachten Mengen.',
               textVi: 'Hướng dẫn sử dụng nhằm giảm thiểu phát tán vi nhựa. Nghĩa vụ báo cáo về số lượng đưa ra thị trường.' },

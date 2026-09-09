@@ -1410,7 +1410,7 @@ const V2_REG_DETAILS = {
                 { en: 'Transition dates vary by product between 2023 and 2035: check the applicable date for each affected product line before placing orders.',
                   zh: '过渡期限因产品而异，介于2023年至2035年之间：下单前请核查每条受影响产品线的适用日期。',
                   de: 'Die Übergangsfristen variieren je Produkt zwischen 2023 und 2035: Vor der Bestellung das anwendbare Datum für jede betroffene Produktlinie prüfen.' },
-                { en: 'Since 17 October 2025 instructions for use to minimize microplastic release are mandatory, and reporting on quantities placed on the market applies (first annual reports were due 31 May 2026).',
+                { en: 'Since 17 October 2025 instructions for use to minimise microplastic release are mandatory, and reporting on quantities placed on the market applies (first annual reports were due 31 May 2026).',
                   zh: '自2025年10月17日起，须强制提供减少微塑料释放的使用说明，并对投放市场的数量负有报告义务（首份年度报告已于2026年5月31日到期）。',
                   de: 'Seit dem 17. Oktober 2025 sind Gebrauchsanweisungen zur Minimierung der Mikroplastikfreisetzung verpflichtend, dazu Berichtspflichten über die in Verkehr gebrachten Mengen (erste Jahresberichte waren zum 31. Mai 2026 fällig).' },
                 { en: 'Non-compliance means product withdrawal from the market, with national enforcement penalties per member state. The shelved REACH revision (April 2026) does not change this: existing restrictions continue unchanged.',

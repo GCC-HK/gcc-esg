@@ -50,7 +50,7 @@ const T = {
     microplastics: [
         ['PRODUCT DESIGN', 'Ban on intentionally added microplastics (synthetic polymers <5mm). Reformulation required for restricted products.',
          '禁止故意添加微塑料（小于5毫米的合成聚合物）。受限产品须重新配方。'],
-        ['DOCUMENTATION', 'Instructions for use to minimize microplastic release. Reporting obligations on quantities placed on market.',
+        ['DOCUMENTATION', 'Instructions for use to minimise microplastic release. Reporting obligations on quantities placed on market.',
          '须提供减少微塑料释放的使用说明。对投放市场的数量负有报告义务。'],
         ['PENALTIES', 'Product withdrawal from market. National enforcement penalties apply based on member state implementation.',
          '产品可能被撤出市场。各成员国按其实施规定执行处罚。']
