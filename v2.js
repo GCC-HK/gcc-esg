@@ -269,7 +269,7 @@
         const { cats, union, idSets, sel } = lastComparison;
         const today = new Date().toISOString().slice(0, 10);
         const head = [
-            ['Green Sourcing Compass - Category Comparison'],
+            ['ESG Sourcing Compass - Category Comparison'],
             ['GCC ESG Committee, German Chamber of Commerce Hong Kong'],
             ['Categories', cats.map(catLabel).join(' | ')],
             ['Target markets', sel.markets.join(', ').toUpperCase() || '-'],
@@ -390,7 +390,7 @@
         const today = new Date().toISOString().slice(0, 10);
 
         const head = [
-            ['Green Sourcing Compass - Regulatory Sheet'],
+            ['ESG Sourcing Compass - Regulatory Sheet'],
             ['GCC ESG Committee, German Chamber of Commerce Hong Kong'],
             ['Product category', labels.category],
             ['Role', labels.role],
@@ -556,7 +556,7 @@
             <div class="v2-gate">
                 <h3><span class="lang-en">Member area: launching soon</span><span class="lang-zh">会员专区：即将推出</span><span class="lang-de">Mitgliederbereich: startet bald</span><span class="lang-vi">Khu vực th&agrave;nh vi&ecirc;n: sắp ra mắt</span></h3>
                 <p><span class="lang-en">The in-depth guides will be available to member companies once the member area launches. The Committee is preparing this section now.</span><span class="lang-zh">会员专区上线后，深度指南将向会员企业开放。委员会目前正在筹备该板块。</span><span class="lang-de">Die Leitf&auml;den stehen Mitgliedsunternehmen zur Verf&uuml;gung, sobald der Mitgliederbereich startet. Der Ausschuss bereitet diesen Bereich derzeit vor.</span><span class="lang-vi">Cẩm nang chuy&ecirc;n s&acirc;u sẽ d&agrave;nh cho c&ocirc;ng ty th&agrave;nh vi&ecirc;n khi khu vực th&agrave;nh vi&ecirc;n ra mắt. Ủy ban đang chuẩn bị phần n&agrave;y.</span></p>
-                <a class="btn-gate" href="mailto:info@hongkong.ahk.de?subject=Green Sourcing Hub Member area"><span class="lang-en">Get notified / work with the Committee</span><span class="lang-zh">获取通知 / 与委员会合作</span><span class="lang-de">Benachrichtigen lassen / mit dem Ausschuss arbeiten</span><span class="lang-vi">Nhận th&ocirc;ng b&aacute;o / hợp t&aacute;c với Ủy ban</span></a>
+                <a class="btn-gate" href="mailto:info@hongkong.ahk.de?subject=ESG Sourcing Hub Member area"><span class="lang-en">Get notified / work with the Committee</span><span class="lang-zh">获取通知 / 与委员会合作</span><span class="lang-de">Benachrichtigen lassen / mit dem Ausschuss arbeiten</span><span class="lang-vi">Nhận th&ocirc;ng b&aacute;o / hợp t&aacute;c với Ủy ban</span></a>
                 <p class="v2-gate-sub"><span class="lang-en">Interested in the Committee itself? <a href="https://hongkong.ahk.de/en" target="_blank" rel="noopener">Learn more on the Chamber website</a>, or <a href="https://hongkong.ahk.de/membership" target="_blank" rel="noopener">become a Chamber member</a>.</span><span class="lang-zh">想了解委员会？<a href="https://hongkong.ahk.de/en" target="_blank" rel="noopener">请访问商会官网</a>，或<a href="https://hongkong.ahk.de/membership" target="_blank" rel="noopener">成为商会会员</a>。</span><span class="lang-de">Interesse am Ausschuss? <a href="https://hongkong.ahk.de/en" target="_blank" rel="noopener">Mehr auf der Kammer-Website</a>, oder <a href="https://hongkong.ahk.de/membership" target="_blank" rel="noopener">Kammermitglied werden</a>.</span><span class="lang-vi">Quan t&acirc;m đến Ủy ban? <a href="https://hongkong.ahk.de/en" target="_blank" rel="noopener">Xem th&ecirc;m tr&ecirc;n website Ph&ograve;ng Thương mại</a>, hoặc <a href="https://hongkong.ahk.de/membership" target="_blank" rel="noopener">trở th&agrave;nh hội vi&ecirc;n</a>.</span></p>
             </div>`);
         applyLang(lib);

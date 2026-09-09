@@ -1,4 +1,4 @@
-// Sanity schema: one document per EU regulation shown in the Green Sourcing Compass.
+// Sanity schema: one document per EU regulation shown in the ESG Sourcing Compass.
 // Replaces the hardcoded `regulations` array in script.js (migration in Step 3).
 // The applies() functions become declarative match fields (categories/roles/sizes).
 

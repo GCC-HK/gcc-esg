@@ -16,18 +16,18 @@ const SECTIONS = ['hero', 'personas', 'v2hub', 'tools', 'start', 'compass', 'rad
 // written to index.html; v2.html is kept as an alias so shared /v2 links and
 // the v2-branch preview URL keep working.
 const PAGES = {
-    hub: { file: 'index.html', alias: 'v2.html', title: 'Green Sourcing Hub | EU Sustainability Compliance | GCC ESG Committee', show: ['hero', 'personas', 'v2hub'] },
-    tools: { file: 'v2-tools.html', title: 'Tools | Green Sourcing Hub', show: ['tools'] },
-    deadlines: { file: 'v2-deadlines.html', title: 'Deadlines | Green Sourcing Hub', show: ['radar'] },
-    compass: { file: 'v2-compass.html', title: 'Regulations | Green Sourcing Compass | Green Sourcing Hub', show: ['compass'] },
-    cbam: { file: 'v2-cbam.html', title: 'CBAM Cost Calculator | Green Sourcing Hub', show: ['cbam'] },
-    briefing: { file: 'v2-briefing.html', title: 'News | The Green Sourcing Briefing | Green Sourcing Hub', show: ['briefing'] },
-    guides: { file: 'v2-guides.html', title: 'Member Resource Library | Green Sourcing Hub', show: ['library'] },
-    learn: { file: 'v2-learn.html', title: 'Learn | Understand and Plan | Green Sourcing Hub', show: ['guidance', 'benefits', 'risks-incentives', 'actions'] },
-    faq: { file: 'v2-faq.html', title: 'FAQ | Green Sourcing Hub', show: ['faq'] },
-    glossary: { file: 'v2-glossary.html', title: 'Glossary | Green Sourcing Hub', show: ['glossary'] },
-    certifications: { file: 'v2-certifications.html', title: 'Voluntary Certifications | Green Sourcing Hub', show: ['voluntary'] },
-    about: { file: 'v2-about.html', title: 'Our Team | GCC ESG Committee | Green Sourcing Hub', show: ['about', 'trust'] }
+    hub: { file: 'index.html', alias: 'v2.html', title: 'ESG Sourcing Hub | EU Sustainability Compliance | GCC ESG Committee', show: ['hero', 'personas', 'v2hub'] },
+    tools: { file: 'v2-tools.html', title: 'Tools | ESG Sourcing Hub', show: ['tools'] },
+    deadlines: { file: 'v2-deadlines.html', title: 'Deadlines | ESG Sourcing Hub', show: ['radar'] },
+    compass: { file: 'v2-compass.html', title: 'Regulations | ESG Sourcing Compass | ESG Sourcing Hub', show: ['compass'] },
+    cbam: { file: 'v2-cbam.html', title: 'CBAM Cost Calculator | ESG Sourcing Hub', show: ['cbam'] },
+    briefing: { file: 'v2-briefing.html', title: 'News | The ESG Sourcing Briefing | ESG Sourcing Hub', show: ['briefing'] },
+    guides: { file: 'v2-guides.html', title: 'Member Resource Library | ESG Sourcing Hub', show: ['library'] },
+    learn: { file: 'v2-learn.html', title: 'Learn | Understand and Plan | ESG Sourcing Hub', show: ['guidance', 'benefits', 'risks-incentives', 'actions'] },
+    faq: { file: 'v2-faq.html', title: 'FAQ | ESG Sourcing Hub', show: ['faq'] },
+    glossary: { file: 'v2-glossary.html', title: 'Glossary | ESG Sourcing Hub', show: ['glossary'] },
+    certifications: { file: 'v2-certifications.html', title: 'Voluntary Certifications | ESG Sourcing Hub', show: ['voluntary'] },
+    about: { file: 'v2-about.html', title: 'Our Team | GCC ESG Committee | ESG Sourcing Hub', show: ['about', 'trust'] }
 };
 
 function pageStyle(key, show) {

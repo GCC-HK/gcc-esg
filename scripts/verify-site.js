@@ -63,7 +63,7 @@ const doc = window.document;
 
 // --- Rename checks ---
 check('no "Compliance Atlas" text remains', !doc.body.textContent.includes('Compliance Atlas'));
-check('"Green Sourcing Compass" present', doc.body.textContent.includes('Green Sourcing Compass'));
+check('"ESG Sourcing Compass" present', doc.body.textContent.includes('ESG Sourcing Compass'));
 check('section id #compass exists', !!doc.getElementById('compass'));
 
 // --- Wizard flow ---
