@@ -8,7 +8,7 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
-const SECTIONS = ['hero', 'personas', 'v2hub', 'tools', 'start', 'compass', 'radar', 'briefing',
+const SECTIONS = ['hero', 'personas', 'v2hub', 'tools', 'start', 'compass', 'regdetail', 'radar', 'briefing',
     'library', 'cbam', 'guidance', 'benefits', 'risks-incentives', 'china-esg',
     'actions', 'voluntary', 'about', 'faq', 'glossary', 'trust'];
 
@@ -20,6 +20,7 @@ const PAGES = {
     tools: { file: 'v2-tools.html', title: 'Tools | ESG Sourcing Hub', show: ['tools'] },
     deadlines: { file: 'v2-deadlines.html', title: 'Deadlines | ESG Sourcing Hub', show: ['radar'] },
     compass: { file: 'v2-compass.html', title: 'Regulations | ESG Sourcing Compass | ESG Sourcing Hub', show: ['compass'] },
+    regulation: { file: 'v2-regulation.html', title: 'Regulation | ESG Sourcing Hub', show: ['regdetail'] },
     cbam: { file: 'v2-cbam.html', title: 'CBAM Cost Calculator | ESG Sourcing Hub', show: ['cbam'] },
     briefing: { file: 'v2-briefing.html', title: 'News | The ESG Sourcing Briefing | ESG Sourcing Hub', show: ['briefing'] },
     guides: { file: 'v2-guides.html', title: 'Member Resource Library | ESG Sourcing Hub', show: ['library'] },

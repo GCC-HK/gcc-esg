@@ -667,7 +667,7 @@ atlasSubmit.addEventListener('click', () => {
                         <span><span class="lang-en">Last reviewed:</span><span class="lang-zh">最近更新:</span><span class="lang-de">Zuletzt geprüft:</span><span class="lang-vi">Kiểm tra lần cuối:</span> ${reg.lastReviewed}</span>
                     </div>
                     <span class="reg-result-links">
-                        <a href="regulation.html?id=${reg.id}" class="reg-result-link"><span class="lang-en">Learn more &rarr;</span><span class="lang-zh">了解更多 &rarr;</span><span class="lang-de">Mehr erfahren &rarr;</span><span class="lang-vi">Tìm hiểu thêm &rarr;</span></a>
+                        <a href="v2-regulation.html?id=${reg.id}" class="reg-result-link"><span class="lang-en">Learn more &rarr;</span><span class="lang-zh">了解更多 &rarr;</span><span class="lang-de">Mehr erfahren &rarr;</span><span class="lang-vi">Tìm hiểu thêm &rarr;</span></a>
                         <a href="${reg.eurlex}" target="_blank" rel="noopener" class="reg-result-link"><span class="lang-en">Official text &rarr;</span><span class="lang-zh">官方原文 &rarr;</span><span class="lang-de">Offizieller Text &rarr;</span><span class="lang-vi">Văn bản chính thức &rarr;</span></a>
                     </span>
                 </div>
@@ -1410,7 +1410,7 @@ function renderRadar(deadlines) {
                     </div>
                     ${d.regId ? '<span class="radar-arrow">&rarr;</span>' : ''}`;
             return d.regId
-                ? `<a class="radar-item radar-item-link" href="regulation.html?id=${d.regId}">${inner}</a>`
+                ? `<a class="radar-item radar-item-link" href="v2-regulation.html?id=${d.regId}">${inner}</a>`
                 : `<div class="radar-item">${inner}</div>`;
         }).join('');
         return `

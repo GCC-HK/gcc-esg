@@ -186,7 +186,7 @@
                 <td class="v2-t-status" style="color:${statusBadgeColor(reg.status)}">${reg.statusLabel || reg.status || ''}</td>
                 <td>${reg.complianceDeadline || '-'}</td>
                 <td><span class="lang-en">${reasonEn}</span><span class="lang-zh">${reasonZh || reasonEn}</span></td>
-                <td><a href="regulation.html?id=${reg.id}" target="_blank"><span class="lang-en">Details</span><span class="lang-zh">详情</span><span class="lang-de">Details</span><span class="lang-vi">Chi tiết</span></a>${reg.eurlex ? ` &middot; <a href="${reg.eurlex}" target="_blank" rel="noopener"><span class="lang-en">Official text</span><span class="lang-zh">官方文本</span><span class="lang-de">Amtstext</span><span class="lang-vi">Văn bản</span></a>` : ''}</td>
+                <td><a href="v2-regulation.html?id=${reg.id}" target="_blank"><span class="lang-en">Details</span><span class="lang-zh">详情</span><span class="lang-de">Details</span><span class="lang-vi">Chi tiết</span></a>${reg.eurlex ? ` &middot; <a href="${reg.eurlex}" target="_blank" rel="noopener"><span class="lang-en">Official text</span><span class="lang-zh">官方文本</span><span class="lang-de">Amtstext</span><span class="lang-vi">Văn bản</span></a>` : ''}</td>
             </tr>`;
         }).join('');
 
@@ -242,7 +242,7 @@
                 <td>${reg.name}<br><small style="font-weight:400;color:#667">${reg.ref || ''}</small></td>
                 <td>${reg.complianceDeadline || '-'}</td>
                 ${marks}
-                <td><a href="regulation.html?id=${reg.id}" target="_blank"><span class="lang-en">Details</span><span class="lang-zh">详情</span><span class="lang-de">Details</span><span class="lang-vi">Chi tiết</span></a></td>
+                <td><a href="v2-regulation.html?id=${reg.id}" target="_blank"><span class="lang-en">Details</span><span class="lang-zh">详情</span><span class="lang-de">Details</span><span class="lang-vi">Chi tiết</span></a></td>
             </tr>`;
         }).join('');
 
@@ -719,7 +719,131 @@
         if (attempt < 10) setTimeout(() => jumpToHash(attempt + 1), 500);
     }
 
+    // ===== Detailed regulation page (owner decision 2026-09-09) =====
+    // v2-v2-regulation.html?id=<regId>: base data from the shared regulations set
+    // (CMS with built-in fallback), depth from v2-reg-details.js, dates from the
+    // CMS deadlines. Replaces the legacy v2-regulation.html?id= as link target.
+    const REG_SECTION_TITLES = {
+        'REPORTING': ['REPORTING', '报告义务', 'Berichtspflichten', 'Nghĩa vụ báo cáo'],
+        'SUPPLY CHAIN': ['SUPPLY CHAIN', '供应链要求', 'Lieferkette', 'Chuỗi cung ứng'],
+        'PRODUCT DESIGN': ['PRODUCT DESIGN', '产品设计', 'Produktdesign', 'Thiết kế sản phẩm'],
+        'DOCUMENTATION': ['DOCUMENTATION', '文件要求', 'Dokumentation', 'Hồ sơ tài liệu'],
+        'PENALTIES': ['PENALTIES', '违规处罚', 'Sanktionen', 'Chế tài xử phạt']
+    };
+    function renderRegDetail() {
+        if (PAGE !== 'regulation') return;
+        const root = document.getElementById('regDetailRoot');
+        if (!root) return;
+        const t4 = (en, zh, de, vi) => `<span class="lang-en">${en}</span><span class="lang-zh">${zh}</span><span class="lang-de">${de}</span>${vi ? `<span class="lang-vi">${vi}</span>` : ''}`;
+        const t3o = o => o ? t4(o.en, o.zh || o.en, o.de || o.en, o.vi) : '';
+        const fail = () => {
+            root.innerHTML = `<p class="v2-regdetail-error">${t4('Regulation not found or content unavailable.', '未找到该法规或内容暂不可用。', 'Verordnung nicht gefunden oder Inhalt nicht verfügbar.', 'Không tìm thấy quy định hoặc nội dung hiện không khả dụng.')}</p>` +
+                `<p><a class="v2-regdetail-back" href="index.html">${t4('&larr; Back to the hub', '&larr; 返回首页', '&larr; Zurück zur Startseite', '&larr; Về trang chủ')}</a></p>`;
+            applyLang(root);
+        };
+        const id = new URLSearchParams(window.location.search).get('id');
+        if (!id) { fail(); return; }
+
+        const baseP = Promise.resolve()
+            .then(() => loadContent('regulations'))
+            .then(list => (Array.isArray(list) && list.length) ? list.map(regFromSanity) : regulations)
+            .catch(() => regulations);
+        const dlP = Promise.resolve().then(() => loadContent('deadlines')).catch(() => []);
+
+        Promise.all([baseP, dlP]).then(([regs, deadlines]) => {
+            const reg = (regs || []).find(r => r.id === id);
+            if (!reg) { fail(); return; }
+            const det = (typeof V2_REG_DETAILS !== 'undefined' && V2_REG_DETAILS[id]) || null;
+            document.title = `${reg.name} | ESG Sourcing Hub`;
+
+            const stZh = statusLabelsZh[reg.statusLabel] || reg.statusLabel;
+            const stDe = statusLabelsDe[reg.statusLabel] || reg.statusLabel;
+            const stVi = statusLabelsVi[reg.statusLabel] || reg.statusLabel;
+            const badgeCls = { 'IN FORCE': 'badge-inforce', 'PHASING IN': 'badge-phasing', 'PREPARE NOW': 'badge-prepare' }[reg.statusLabel] || '';
+
+            const head = `
+                <div class="v2-regdetail-head">
+                    <span class="badge ${badgeCls}">${t4(reg.statusLabel, stZh, stDe, stVi)}</span>
+                    <h1>${reg.name}</h1>
+                    <div class="v2-regdetail-ref">${reg.ref || ''}</div>
+                    <div class="v2-regdetail-meta">
+                        <div><div class="v2-rd-label">${t4('In force from', '生效日期', 'In Kraft seit', 'Có hiệu lực từ')}</div><div>${reg.inForce || ''}</div></div>
+                        <div><div class="v2-rd-label">${t4('Compliance deadline', '合规截止日期', 'Frist zur Einhaltung', 'Thời hạn tuân thủ')}</div><div>${reg.complianceDeadline || ''}</div></div>
+                        <div><div class="v2-rd-label">${t4('Last reviewed', '最近更新', 'Zuletzt geprüft', 'Cập nhật gần nhất')}</div><div>${reg.lastReviewed || ''}</div></div>
+                    </div>
+                </div>`;
+
+            const disclaimer = `<div class="v2-disclaimer"><span aria-hidden="true">&#9888;</span><div>${t4(
+                '<strong>General information, not legal advice.</strong> Verified against official sources; where wording differs, the official texts linked below prevail.',
+                '<strong>一般信息，并非法律意见。</strong>内容已对照官方来源核实；如有出入，以下方链接的官方文本为准。',
+                '<strong>Allgemeine Information, keine Rechtsberatung.</strong> Gegen offizielle Quellen geprüft; im Zweifel gelten die unten verlinkten Amtstexte.',
+                '<strong>Thông tin chung, không phải tư vấn pháp lý.</strong> Đã đối chiếu nguồn chính thức; nếu khác biệt, văn bản chính thức bên dưới được ưu tiên.')}</div></div>`;
+
+            let why = '';
+            const reason = reg.reason ? reg.reason('other', ['eu'], 'supplier', 'sme') : '';
+            if (reason) {
+                const reasonZh = reg.reasonZh ? reg.reasonZh('other', ['eu'], 'supplier', 'sme') : '';
+                const reasonDe = reg.reasonDe ? reg.reasonDe('other', ['eu'], 'supplier', 'sme') : '';
+                why = `<div class="v2-regdetail-block"><h2>${t4('Why it matters', '为什么重要', 'Warum es wichtig ist', 'Vì sao quan trọng')}</h2>
+                    <p>${t4(reason, reasonZh || reason, reasonDe || reason)}</p></div>`;
+            }
+
+            const regDl = (deadlines || []).filter(d => d.regId === id && d.date).sort((a, b) => a.date < b.date ? -1 : 1);
+            const timeline = regDl.length ? `<div class="v2-regdetail-block"><h2>${t4('Timeline', '时间表', 'Zeitplan', 'Lộ trình')}</h2>
+                <ul class="v2-rd-timeline">${regDl.map(d => {
+                    const past = new Date(d.date) < new Date();
+                    const dateStr = new Date(d.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+                    const exp = d.confidence === 'expected' ? ` <em>${t4('expected', '预期', 'erwartet', 'dự kiến')}</em>` : '';
+                    return `<li class="${past ? 'v2-rd-past' : ''}"><span class="v2-rd-date">${dateStr}</span><span>${t4(d.labelEn || '', d.labelZh || d.labelEn || '', d.labelEn || '')}${exp}</span></li>`;
+                }).join('')}</ul></div>` : '';
+
+            const sections = (reg.sections || []).map(s => {
+                const tt = REG_SECTION_TITLES[s.title] || [s.title, s.title, s.title, s.title];
+                return `<div class="v2-regdetail-block"><h2>${t4(tt[0], tt[1], tt[2], tt[3])}</h2>
+                    <p>${t4(s.text || '', s.textZh || s.text || '', s.textDe || s.text || '', s.textVi)}</p></div>`;
+            }).join('');
+
+            const roleCards = det && det.roles ? `<div class="v2-regdetail-block"><h2>${t4('What this means for you', '这对您意味着什么', 'Was das für Sie bedeutet', 'Điều này có nghĩa gì với bạn')}</h2>
+                <div class="v2-rd-roles">
+                    <div class="v2-rd-role"><h3>${t4('Sourcing office / importer', '采购办公室 / 进口商', 'Einkaufsbüro / Importeur', 'Văn phòng thu mua / nhà nhập khẩu')}</h3>
+                        <ul>${det.roles.office.map(b => `<li>${t3o(b)}</li>`).join('')}</ul></div>
+                    <div class="v2-rd-role"><h3>${t4('Supplier / manufacturer', '供应商 / 制造商', 'Lieferant / Hersteller', 'Nhà cung cấp / nhà sản xuất')}</h3>
+                        <ul>${det.roles.supplier.map(b => `<li>${t3o(b)}</li>`).join('')}</ul></div>
+                </div></div>` : '';
+
+            const actions = det && det.actions ? `<div class="v2-regdetail-block"><h2>${t4('What to do now', '现在该做什么', 'Was jetzt zu tun ist', 'Việc cần làm ngay')}</h2>
+                <ol class="v2-rd-actions">${det.actions.map(a => `<li>${t3o(a)}</li>`).join('')}</ol></div>` : '';
+
+            const docs = det && det.documents ? `<div class="v2-regdetail-block"><h2>${t4('Documents your buyers will ask for', '买家会索取的文件', 'Dokumente, die Abnehmer anfragen', 'Tài liệu khách hàng sẽ yêu cầu')}</h2>
+                <ul class="v2-rd-docs">${det.documents.map(a => `<li>${t3o(a)}</li>`).join('')}</ul></div>` : '';
+
+            const memberTag = `<span class="v2-lock-badge v2-lock-badge-member">${t4('Members', '会员', 'Mitglieder', 'Thành viên')}</span>`;
+            const tools = `<div class="v2-regdetail-block"><h2>${t4('Check your exposure', '检查您的适用情况', 'Prüfen Sie Ihre Betroffenheit', 'Kiểm tra mức độ liên quan')}</h2>
+                <div class="v2-hub-tools v2-rd-tools">
+                    <a class="v2-tool-card" href="v2-compass.html?persona=merchandiser">${memberTag}<h3>${t4('Quick Check', '快速查询', 'Schnell-Check', 'Tra cứu nhanh')}</h3><p>${t4('Full requirements table by category, market and role.', '按类别、市场和角色的完整要求概览表。', 'Volle Anforderungstabelle nach Kategorie, Markt und Rolle.', 'Bảng yêu cầu đầy đủ theo danh mục, thị trường và vai trò.')}</p></a>
+                    <a class="v2-tool-card" href="v2-compass.html?persona=supplier">${memberTag}<h3>${t4('Guided Check', '引导式检查', 'Geführter Check', 'Kiểm tra có hướng dẫn')}</h3><p>${t4('Three questions to the requirements that apply to you.', '三个问题找到适用于您的要求。', 'Drei Fragen zu Ihren Anforderungen.', 'Ba câu hỏi đến các yêu cầu áp dụng cho bạn.')}</p></a>
+                    ${id === 'cbam' ? `<a class="v2-tool-card" href="v2-cbam.html">${memberTag}<h3>${t4('CBAM Calculator', 'CBAM计算器', 'CBAM-Rechner', 'Máy tính CBAM')}</h3><p>${t4('Estimate the carbon border cost with official EU values.', '使用欧盟官方数值估算碳边境成本。', 'Kosten mit offiziellen EU-Werten schätzen.', 'Ước tính chi phí với giá trị chính thức của EU.')}</p></a>` : ''}
+                </div></div>`;
+
+            const srcItems = [...(det && det.sources ? det.sources : [])];
+            if (reg.eurlex) srcItems.push({ label: 'Official text', url: reg.eurlex });
+            const sources = srcItems.length ? `<div class="v2-regdetail-block"><h2>${t4('Sources', '资料来源', 'Quellen', 'Nguồn')}</h2>
+                <ul class="v2-rd-sources">${srcItems.map(s => `<li><a href="${s.url}" target="_blank" rel="noopener">${s.label}</a></li>`).join('')}</ul></div>` : '';
+
+            root.innerHTML = `<a class="v2-regdetail-back" href="index.html">${t4('&larr; Back', '&larr; 返回', '&larr; Zurück', '&larr; Quay lại')}</a>` +
+                head + disclaimer + why + timeline + sections + roleCards + actions + docs + tools + sources;
+            const back = root.querySelector('.v2-regdetail-back');
+            back.addEventListener('click', e => {
+                if (document.referrer && new URL(document.referrer, location.href).origin === location.origin && history.length > 1) {
+                    e.preventDefault(); history.back();
+                }
+            });
+            applyLang(root);
+        });
+    }
+
     // ===== Init =====
+    renderRegDetail();
     buildExpress();
     cdnFallback();
     fillMinis(0);
