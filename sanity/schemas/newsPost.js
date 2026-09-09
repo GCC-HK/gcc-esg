@@ -1,4 +1,4 @@
-// Sanity schema: weekly Green Sourcing Briefing items.
+// Sanity schema: weekly ESG Sourcing Briefing items.
 // Fixed editorial structure: what happened → why it matters → supplier action.
 
 export default {

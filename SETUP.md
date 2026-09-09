@@ -1,4 +1,4 @@
-# GCC Green Sourcing Hub — Deployment & Services Setup
+# GCC ESG Sourcing Hub — Deployment & Services Setup
 
 Domain: **gcchk-esg.com** (registered at Hostinger)
 Stack: static site + Vercel serverless functions (`/api`) + Sanity CMS (content) + Resend (email)
@@ -41,7 +41,7 @@ Stack: static site + Vercel serverless functions (`/api`) + Sanity CMS (content)
 | `SUPABASE_ANON_KEY` | from Supabase Settings → API (anon public) |
 | `RESEND_API_KEY` | from Resend |
 | `RESEND_AUDIENCE_ID` | from Resend Audiences |
-| `RESEND_FROM` | `GCC Green Sourcing Hub <briefing@send.gcchk-esg.com>` |
+| `RESEND_FROM` | `GCC ESG Sourcing Hub <briefing@send.gcchk-esg.com>` |
 
 Notes:
 - Until `RESEND_API_KEY` is set, `/api/subscribe` returns 503 and the site shows a friendly "sign-up opens soon" message — safe to deploy at any time.

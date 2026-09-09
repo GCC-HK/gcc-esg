@@ -4,7 +4,7 @@
 //   RESEND_AUDIENCE_ID (optional — contact list for the weekly briefing)
 //   RESEND_FROM        (optional — defaults to Resend's onboarding sender,
 //                       which only delivers to the account owner's inbox;
-//                       set to e.g. "GCC Green Sourcing Hub <briefing@send.gcchk-esg.com>"
+//                       set to e.g. "GCC ESG Sourcing Hub <briefing@send.gcchk-esg.com>"
 //                       once the domain is verified)
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -51,10 +51,10 @@ export default async function handler(req, res) {
         }
 
         const zh = lang === 'zh';
-        const from = process.env.RESEND_FROM || 'GCC Green Sourcing Hub <onboarding@resend.dev>';
+        const from = process.env.RESEND_FROM || 'GCC ESG Sourcing Hub <onboarding@resend.dev>';
         const subject = zh
             ? '订阅确认 — GCC绿色未来可持续采购简报'
-            : 'Subscription confirmed | The Green Sourcing Briefing';
+            : 'Subscription confirmed | The ESG Sourcing Briefing';
         const html = zh
             ? `<p>您好，</p>
                <p>感谢您订阅德国工商总会香港（GCC）ESG委员会的<strong>绿色采购简报</strong>。</p>
@@ -62,7 +62,7 @@ export default async function handler(req, res) {
                <p>如需退订，回复本邮件即可。</p>
                <p>GCCESG委员会<br>gcc-sustainability@hongkong.ahk.de</p>`
             : `<p>Hello,</p>
-               <p>Thank you for subscribing to the <strong>Green Sourcing Briefing</strong> by the GCC ESG Committee (German Chamber of Commerce, Hong Kong).</p>
+               <p>Thank you for subscribing to the <strong>ESG Sourcing Briefing</strong> by the GCC ESG Committee (German Chamber of Commerce, Hong Kong).</p>
                <p>You will receive updates on EU regulations relevant to Hong Kong sourcing offices and their manufacturers in China: CBAM, EUDR, packaging rules, the Batteries Regulation and more.</p>
                <p>To unsubscribe, simply reply to this email.</p>
                <p>GCC ESG Committee<br>gcc-sustainability@hongkong.ahk.de</p>`;

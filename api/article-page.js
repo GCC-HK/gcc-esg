@@ -33,7 +33,7 @@ export default async function handler(req, res) {
                     const proto = req.headers['x-forwarded-proto'] || 'https';
                     const host = req.headers['x-forwarded-host'] || req.headers.host;
                     const img = post.imageUrl ? `${proto}://${host}/${post.imageUrl}` : '';
-                    html = html.replace(/<title>[^<]*<\/title>/, `<title>${title} – Green Sourcing Hub</title>`);
+                    html = html.replace(/<title>[^<]*<\/title>/, `<title>${title} – ESG Sourcing Hub</title>`);
                     const og = [
                         `<meta property="og:title" content="${title}">`,
                         `<meta property="og:description" content="${desc}">`,
