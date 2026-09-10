@@ -31,24 +31,11 @@ const QUERIES = {
 const LEVEL_RANK = { public: 0, registered: 1, premium: 2 };
 const TIER_RANK = { public: 0, registered: 1, member: 2 };
 
-// Interim passcode login (mirrors api/member-login.js). Local default passcode
-// 'demo' unless MEMBER_PASSCODE is set, printed at startup.
-const crypto = require('crypto');
-const MEMBER_PASSCODE = process.env.MEMBER_PASSCODE || 'demo';
-const signMemberToken = (pass, exp) => exp + '.' + crypto.createHmac('sha256', pass).update('member:' + exp).digest('hex');
-function verifyMemberToken(token, pass) {
-    if (!token || !pass) return false;
-    const [exp, sig] = String(token).split('.');
-    if (!exp || !sig || Date.now() > Number(exp)) return false;
-    const good = crypto.createHmac('sha256', pass).update('member:' + exp).digest('hex');
-    try { return crypto.timingSafeEqual(Buffer.from(sig, 'hex'), Buffer.from(good, 'hex')); } catch { return false; }
-}
 
 async function viewerTier(req) {
     const url = process.env.SUPABASE_URL;
     const anonKey = process.env.SUPABASE_ANON_KEY;
     const auth = req.headers.authorization;
-    if (verifyMemberToken(req.headers['x-member-token'], MEMBER_PASSCODE)) return 'member';
     // Demo mode (mirrors api/content.js): only while Supabase is unconfigured
     if (!url || !anonKey) {
         const demo = req.headers['x-demo-tier'];
@@ -126,17 +113,6 @@ const server = http.createServer(async (req, res) => {
         }
     }
 
-    if (url.pathname === '/api/member-login') {
-        if (req.method !== 'POST') return json(res, 405, { error: 'method_not_allowed' });
-        let body = '';
-        for await (const chunk of req) body += chunk;
-        let passcode = '';
-        try { passcode = (JSON.parse(body || '{}').passcode) || ''; } catch {}
-        if (passcode !== MEMBER_PASSCODE) return json(res, 401, { error: 'wrong_passcode' });
-        const exp = Date.now() + 1000 * 60 * 60 * 24 * 30;
-        return json(res, 200, { token: signMemberToken(MEMBER_PASSCODE, exp), tier: 'member', expiresAt: exp });
-    }
-
     if (url.pathname === '/api/subscribe') {
         if (req.method !== 'POST') return json(res, 405, { error: 'method_not_allowed' });
         if (!process.env.RESEND_API_KEY) return json(res, 503, { error: 'not_configured' });
@@ -177,5 +153,4 @@ const server = http.createServer(async (req, res) => {
 
 server.listen(PORT, () => {
     console.log(`GCC ESG Sourcing Hub review server → http://localhost:${PORT}`);
-    console.log(`member passcode (local): ${MEMBER_PASSCODE}`);
 });

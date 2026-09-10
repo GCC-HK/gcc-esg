@@ -74,7 +74,6 @@ const PAGES = {
         // owner decisions 2026-09-09: Regulations mega menu, checks under Tools (member-tagged), Knowledge group
         check(`${file}: Regulations mega menu with key regulations`, !!doc.querySelector('.nav-mega a[href="v2-regulation.html?id=cbam"]') && !!doc.querySelector('.nav-mega a[href="v2-regulation.html?id=ppwr"]') && !!doc.querySelector('.nav-mega a[href="v2-regulation.html?id=ukcbam"]'));
         check(`${file}: nav Tools dropdown = Quick/Guided/CBAM, no coming soon`, !!doc.querySelector('.nav-dropdown-menu a[href="v2-compass.html?persona=merchandiser"]') && !!doc.querySelector('.nav-dropdown-menu a[href="v2-compass.html?persona=supplier"]') && !!doc.querySelector('.nav-dropdown-menu a[href="v2-cbam.html"]') && !Array.from(doc.querySelectorAll('.nav-dropdown-menu a')).some(a => a.textContent.includes('Coming soon')));
-        check(`${file}: tools in nav carry Members tag`, doc.querySelectorAll('.nav-dropdown-menu a .nav-member-tag').length >= 4);
         check(`${file}: nav has Deadlines + Knowledge holds Glossary/FAQ/certifications/guides`, !!doc.querySelector('.nav-links a[href="v2-deadlines.html"]') && !!doc.querySelector('.nav-dropdown-menu a[href="v2-glossary.html"]') && !!doc.querySelector('.nav-dropdown-menu a[href="v2-faq.html"]') && !!doc.querySelector('.nav-dropdown-menu a[href="v2-certifications.html"]') && !!doc.querySelector('.nav-dropdown-menu a[href="v2-guides.html"]'));
         check(`${file}: Guides/Glossary no longer top-level nav items`, !doc.querySelector('#navLinks > li > a[href="v2-guides.html"]') && !doc.querySelector('#navLinks > li > a[href="v2-glossary.html"]'));
         check(`${file}: US market removed from wizard`, !doc.querySelector('#wizardMarkets input[value="us"]'));
@@ -96,7 +95,7 @@ const PAGES = {
         check('regulation page: obligation sections rendered', root.querySelectorAll('.v2-regdetail-block').length >= 4);
         check('regulation page: role split from detail file', root.querySelectorAll('.v2-rd-role').length === 2);
         check('regulation page: action checklist rendered', root.querySelectorAll('.v2-rd-actions li').length >= 3);
-        check('regulation page: tool cards incl. CBAM calculator, member-tagged', root.querySelectorAll('.v2-rd-tools .v2-tool-card').length === 3 && root.querySelectorAll('.v2-rd-tools .v2-lock-badge-member').length === 3);
+        check('regulation page: tool cards incl. CBAM calculator', root.querySelectorAll('.v2-rd-tools .v2-tool-card').length === 3);
         check('regulation page: sources listed', root.querySelectorAll('.v2-rd-sources li').length >= 2);
         const bad = boot('v2-regulation.html', '?id=doesnotexist');
         await new Promise(r => setTimeout(r, 30));
@@ -245,59 +244,11 @@ const PAGES = {
     // Functional: hub member/non-member band (replaced persona doors, owner 2026-09-10)
     {
         const { doc } = boot('v2.html');
-        check('hub: persona doors replaced by member band', !doc.querySelector('.v2-persona-card[data-persona]') && !!doc.querySelector('.v2-member-door .v2-lock-badge-member'));
+        check('hub: persona doors replaced by open-platform band', !doc.querySelector('.v2-persona-card[data-persona]') && !!doc.querySelector('#personas .v2-persona-card[href="v2-about.html"]'));
         check('hub: join card links to Chamber membership', !!doc.querySelector('.v2-persona-card[href="https://hongkong.ahk.de/en/chamber"]'));
-        check('hub: member door offers passcode sign-in, no account link', !doc.querySelector('#personas a[href*="account"]') && !!doc.querySelector('.v2-member-door .v2-signin-btn'));
+        check('hub: no sign-in anywhere on the landing band', !doc.querySelector('#personas a[href*="account"]') && !doc.querySelector('.v2-signin-btn'));
         check('hub: deadlines mini exists, news mini removed', !!doc.getElementById('v2MiniDeadlines') && !doc.getElementById('v2MiniNews'));
     }
-
-    // Functional: member gating (owner 2026-09-10; ?demo=member simulates until Supabase)
-    {
-        const pub = boot('v2-cbam.html');
-        await new Promise(r => setTimeout(r, 10));
-        check('cbam page public: calculator gated', !!pub.doc.querySelector('#cbam .v2-member-gate') && pub.doc.querySelector('.cbam-panel').style.display === 'none');
-        check('cbam page public: scope + formula notes stay visible', pub.doc.querySelectorAll('#cbam .container > .cbam-info-note').length === 2);
-        const mem = boot('v2-cbam.html', '', 'member');
-        await new Promise(r => setTimeout(r, 10));
-        check('cbam page member: no gate, panel visible', !mem.doc.querySelector('#cbam .v2-member-gate') && mem.doc.querySelector('.cbam-panel').style.display !== 'none');
-        check('cbam page member: preview pill shown', !!mem.doc.querySelector('.v2-demo-pill'));
-        const cpub = boot('v2-compass.html');
-        await new Promise(r => setTimeout(r, 10));
-        check('compass public: checks gated, intro visible', !!cpub.doc.querySelector('#compass .v2-member-gate') && cpub.doc.getElementById('v2Express').style.display === 'none');
-        const cmem = boot('v2-compass.html', '?persona=merchandiser', 'member');
-        await new Promise(r => setTimeout(r, 10));
-        check('compass member: express usable', !cmem.doc.querySelector('#compass .v2-member-gate') && cmem.doc.getElementById('v2Express').style.display !== 'none');
-        const certs = boot('v2-certifications.html');
-        check('certifications public: filter hidden, teaser rows + gate', certs.doc.getElementById('certFilter').style.display === 'none' && !!certs.doc.querySelector('.v2-cert-list .v2-member-gate') && certs.doc.querySelectorAll('.v2-cert-list .v2-cert-row:not([style*="none"])').length <= 8);
-        const gl = boot('v2-glossary.html');
-        check('glossary public: first group visible, rest gated', !!gl.doc.querySelector('.v2-glossary-list .v2-member-gate') && gl.doc.querySelectorAll('.v2-gl-row:not([style*="none"])').length >= 3);
-        const fq = boot('v2-faq.html');
-        check('faq public: 3 teaser questions + gate', !!fq.doc.querySelector('#faq .v2-member-gate') && fq.doc.querySelectorAll('#faq .faq-item:not([style*="none"])').length === 3);
-        const certsM = boot('v2-certifications.html', '', 'member');
-        check('certifications member: full list + filter', certsM.doc.getElementById('certFilter').style.display !== 'none' && !certsM.doc.querySelector('.v2-member-gate'));
-        const regPub = boot('v2-regulation.html', '?id=cbam');
-        await new Promise(r => setTimeout(r, 30));
-        check('regulation page public: teaser (head + why) + gate, no depth', !!regPub.doc.querySelector('#regDetailRoot .v2-member-gate') && !regPub.doc.querySelector('#regDetailRoot .v2-rd-roles') && regPub.doc.querySelector('#regDetailRoot h1')?.textContent === 'CBAM');
-        // interim passcode login: gate button opens the sign-in modal
-        regPub.doc.querySelector('#regDetailRoot .v2-signin-btn').click();
-        check('regulation page public: gate button opens sign-in modal', !!regPub.doc.querySelector('.v2-login-overlay #v2Passcode'));
-        // real member token (signed for the dev passcode) also unlocks the UI
-        const now = Date.now() + 86400000;
-        const crypto2 = require('crypto');
-        const tok = now + '.' + crypto2.createHmac('sha256', 'demo').update('member:' + now).digest('hex');
-        const tokBoot = (() => {
-            const html2 = fs.readFileSync(path.join(ROOT, 'v2-cbam.html'), 'utf8');
-            const dom2 = new JSDOM(html2, { url: 'http://localhost/v2-cbam.html', runScripts: 'outside-only', pretendToBeVisual: true });
-            dom2.window.localStorage.setItem('gcc-member-token', tok);
-            dom2.window.IntersectionObserver = class { observe(){} unobserve(){} disconnect(){} };
-            dom2.window.fetch = () => Promise.reject(new Error('offline'));
-            dom2.window.scrollTo = () => {}; dom2.window.HTMLElement.prototype.scrollIntoView = function(){};
-            dom2.window.eval(cbamData + '\n;\n' + regDetails + '\n;\n' + js + '\n;\n' + v2js + '\n;\n' + cbamJs);
-            return dom2.window.document;
-        })();
-        check('member token unlocks calculator + shows sign-out pill', !tokBoot.querySelector('#cbam .v2-member-gate') && !!tokBoot.querySelector('#v2SignOut'));
-    }
-
 
     // Guides gate + white background + balanced CTAs
     {
@@ -305,7 +256,7 @@ const PAGES = {
         await new Promise(r => setTimeout(r, 10));
         check('guides page: gate shown when signed out', !!doc.querySelector('.v2-gate'));
         check('guides page: grid hidden behind gate', doc.getElementById('libraryGrid').style.display === 'none');
-        check('guides page: gate offers passcode sign-in, no account link', !doc.querySelector('.v2-gate a[href="account.html"]') && !!doc.querySelector('.v2-gate .v2-signin-btn'));
+        check('guides page: gate is launching-soon, no sign-in', !doc.querySelector('.v2-gate a[href="account.html"]') && doc.querySelector('.v2-gate h3 .lang-en').textContent.includes('launching soon'));
         check('guides page: gate offers committee contact + chamber links', !!doc.querySelector('.v2-gate a[href^="mailto:info@hongkong.ahk.de"]') && !!doc.querySelector('.v2-gate a[href*="hongkong.ahk.de"]'));
     }
     {
