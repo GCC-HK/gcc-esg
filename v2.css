@@ -367,7 +367,10 @@ body[data-v2page="briefing"] #briefingList > .briefing-lead .briefing-lead-img {
 body[data-v2page="briefing"] #briefingList > .briefing-lead .briefing-lead-img img { position: absolute; inset: 0; width: 100%; height: 100%; max-height: none; object-fit: cover; display: block; }
 @media (max-width: 800px) {
     body[data-v2page="briefing"] #briefingList > .briefing-lead { grid-template-columns: 1fr; }
-    body[data-v2page="briefing"] .briefing-lead > *, body[data-v2page="briefing"] #briefingList > .briefing-lead .briefing-lead-img { grid-column: 1; grid-row: auto; }
+    body[data-v2page="briefing"] #briefingList > .briefing-lead > *, body[data-v2page="briefing"] #briefingList > .briefing-lead .briefing-lead-img { grid-column: 1; grid-row: auto; }
+    /* image becomes a full-width banner above the text: give it real box height
+       (the desktop absolute-fill trick collapses to 0 width in a stacked grid) */
+    body[data-v2page="briefing"] #briefingList > .briefing-lead .briefing-lead-img { grid-row: 1; width: 100%; max-width: 100%; min-height: 0; aspect-ratio: 16 / 9; margin: 0 0 14px; }
 }
 .v2-mode-switch { text-align: right; font-size: 13px; margin: 0 0 10px; }
 .v2-mode-switch a { color: var(--primary, #1a5c38); font-weight: 600; }
@@ -378,7 +381,7 @@ body[data-v2page="briefing"] .v2-brief-list .briefing-item {
     display: grid; grid-template-columns: 180px 1fr; column-gap: 22px; row-gap: 4px;
     align-items: start; padding: 22px 0; margin: 0; border: 0; border-bottom: 1px solid #e7eae7; }
 body[data-v2page="briefing"] .v2-brief-list .briefing-item > * { grid-column: 2; }
-body[data-v2page="briefing"] .v2-brief-list .briefing-thumb { grid-column: 1; grid-row: 1 / span 6; margin: 0; width: 100%; float: none; display: block; }
+body[data-v2page="briefing"] .v2-brief-list .briefing-thumb { grid-column: 1; grid-row: 1 / span 6; margin: 0; width: 100%; height: auto; float: none; display: block; }
 body[data-v2page="briefing"] .v2-brief-list .briefing-thumb img {
     width: 100%; height: 120px; object-fit: cover; border-radius: 8px; display: block; }
 body[data-v2page="briefing"] .v2-brief-list .briefing-item-text {
