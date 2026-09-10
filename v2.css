@@ -409,9 +409,6 @@ body[data-v2page="briefing"] .v2-brief-list .briefing-item-action { display: non
 .nav-mega-head { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
     color: #6b756c; padding: 4px 0 8px; border-bottom: 1px solid #eef1ee; margin-bottom: 6px; }
 .nav-mega-note { font-size: 12px; color: #6b756c; padding-top: 10px; max-width: 200px; white-space: normal; }
-.nav-member-tag { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .04em;
-    color: var(--ahk-blue, #003366); background: #e8eef5; border-radius: 4px;
-    padding: 1px 6px; margin-left: 6px; vertical-align: middle; text-transform: uppercase; }
 @media (max-width: 900px) {
     .nav-mega { position: static; display: grid; grid-template-columns: 1fr; border: 0; box-shadow: none;
         padding: 0 0 0 16px; }
@@ -447,39 +444,11 @@ body[data-v2page="regulation"] #regdetail { padding: 40px 0 80px; }
 .v2-rd-sources a { color: var(--primary, #1a5c38); word-break: break-all; }
 @media (max-width: 700px) { .v2-rd-roles { grid-template-columns: 1fr; } }
 
-/* member/non-member landing band + demo preview pill (owner decision 2026-09-10) */
-.v2-member-door { position: relative; cursor: default; }
-.v2-member-door:hover { transform: none; }
-.v2-member-cta-soon { color: #8a8a82; }
-.v2-member-gate { position: relative; margin-top: 26px; }
-.v2-demo-pill { position: fixed; bottom: 18px; right: 18px; z-index: 3000;
-    background: var(--ahk-blue, #003366); color: #fff; border-radius: 999px;
-    padding: 8px 16px; font-size: 12.5px; font-weight: 700; letter-spacing: .03em;
-    box-shadow: 0 6px 18px rgba(0,0,0,.25); }
-.v2-demo-pill a { color: #fff; margin-left: 8px; opacity: .75; text-decoration: none; }
-.v2-demo-pill a:hover { opacity: 1; }
+
 
 /* mega menu: 3 columns (EU · Germany · UK), heads never wrap under the Members pill */
 .nav-mega { grid-template-columns: auto auto auto; }
 .nav-mega-head { white-space: nowrap; display: flex; align-items: center; gap: 8px; }
-.nav-mega-head .nav-member-tag { margin-left: 0; }
 @media (max-width: 900px) { .nav-mega { grid-template-columns: 1fr; } }
 .nav-drop-sub { display: block; font-size: 11.5px; font-weight: 400; color: #6b756c; white-space: nowrap; margin-top: 1px; }
 
-/* member sign-in modal (interim passcode login, owner 2026-09-10) */
-.v2-login-overlay { position: fixed; inset: 0; z-index: 4000; background: rgba(15, 30, 20, .55);
-    display: flex; align-items: center; justify-content: center; padding: 20px; }
-.v2-login-box { background: #fff; border-radius: 14px; padding: 34px 36px; max-width: 420px; width: 100%;
-    box-shadow: 0 20px 60px rgba(0,0,0,.3); text-align: center; }
-.v2-login-box h3 { color: var(--ahk-blue, #003366); margin: 0 0 10px; font-size: 21px; }
-.v2-login-box p { font-size: 14px; color: #3d4a43; margin: 0 0 16px; }
-.v2-login-box input { width: 100%; padding: 11px 14px; font-size: 15px; border: 1.5px solid #c9d2ca;
-    border-radius: 8px; margin-bottom: 12px; text-align: center; letter-spacing: .08em; }
-.v2-login-box input:focus { outline: 2px solid var(--primary, #1a5c38); border-color: var(--primary, #1a5c38); }
-.v2-login-err { color: #C34343; font-weight: 600; }
-.v2-login-actions { display: flex; gap: 10px; justify-content: center; margin-bottom: 14px; }
-.v2-login-cancel { background: none; border: none; color: #6b756c; font-size: 14px; cursor: pointer; padding: 10px 14px; }
-.v2-login-cancel:hover { text-decoration: underline; }
-.v2-login-box .v2-gate-sub { margin: 0; font-size: 12.5px; }
-button.v2-persona-cta { background: none; border: none; cursor: pointer; font: inherit; padding: 0;
-    color: var(--primary, #1a5c38); font-weight: 700; text-align: left; }

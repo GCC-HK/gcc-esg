@@ -39,7 +39,6 @@
     function applyPersona(name, scroll) {
         const preset = PERSONA_PRESETS[name];
         if (!preset) return;
-        if (PAGE === 'compass' && !memberView) return; // checks are member content
         localStorage.setItem('gcc-persona', name);
         document.querySelectorAll('.v2-persona-card').forEach(c =>
             c.classList.toggle('active', c.dataset.persona === name));
@@ -556,9 +555,9 @@
         if (grid) grid.style.display = 'none';
         grid?.insertAdjacentHTML('beforebegin', `
             <div class="v2-gate">
-                <h3><span class="lang-en">Member guides</span><span class="lang-zh">会员指南</span><span class="lang-de">Mitglieder-Leitf&auml;den</span><span class="lang-vi">Cẩm nang th&agrave;nh vi&ecirc;n</span></h3>
-                <p><span class="lang-en">The in-depth guides are available to member companies. Sign in with your member passcode.</span><span class="lang-zh">深度指南面向会员企业开放。请使用会员通行码登录。</span><span class="lang-de">Die Leitf&auml;den stehen Mitgliedsunternehmen zur Verf&uuml;gung. Melden Sie sich mit Ihrem Mitglieder-Passcode an.</span><span class="lang-vi">Cẩm nang chuy&ecirc;n s&acirc;u d&agrave;nh cho c&ocirc;ng ty th&agrave;nh vi&ecirc;n. Đăng nhập bằng m&atilde; th&agrave;nh vi&ecirc;n của bạn.</span></p>
-                <button type="button" class="btn-gate v2-signin-btn"><span class="lang-en">Member sign-in</span><span class="lang-zh">会员登录</span><span class="lang-de">Mitglieder-Login</span><span class="lang-vi">Đăng nhập th&agrave;nh vi&ecirc;n</span></button>
+                <h3><span class="lang-en">Member area: launching soon</span><span class="lang-zh">会员专区：即将推出</span><span class="lang-de">Mitgliederbereich: startet bald</span><span class="lang-vi">Khu vực th&agrave;nh vi&ecirc;n: sắp ra mắt</span></h3>
+                <p><span class="lang-en">The in-depth guides will be available to member companies once the member area launches. The Committee is preparing this section now.</span><span class="lang-zh">会员专区上线后，深度指南将向会员企业开放。委员会目前正在筹备该板块。</span><span class="lang-de">Die Leitf&auml;den stehen Mitgliedsunternehmen zur Verf&uuml;gung, sobald der Mitgliederbereich startet. Der Ausschuss bereitet diesen Bereich derzeit vor.</span><span class="lang-vi">Cẩm nang chuy&ecirc;n s&acirc;u sẽ d&agrave;nh cho c&ocirc;ng ty th&agrave;nh vi&ecirc;n khi khu vực th&agrave;nh vi&ecirc;n ra mắt. Ủy ban đang chuẩn bị phần n&agrave;y.</span></p>
+                <a class="btn-gate" href="mailto:info@hongkong.ahk.de?subject=ESG Sourcing Hub Member area"><span class="lang-en">Get notified when it launches</span><span class="lang-zh">上线时获取通知</span><span class="lang-de">Zum Start benachrichtigen lassen</span><span class="lang-vi">Nhận th&ocirc;ng b&aacute;o khi ra mắt</span></a>
                 <p class="v2-gate-sub"><span class="lang-en">No passcode yet? Members can request it at <a href="mailto:info@hongkong.ahk.de?subject=ESG Sourcing Hub member passcode">info@hongkong.ahk.de</a>. Not a member? <a href="https://hongkong.ahk.de/en/chamber" target="_blank" rel="noopener">Become a member of the German Chamber of Commerce Hong Kong</a>.</span><span class="lang-zh">还没有通行码？会员可发邮件至<a href="mailto:info@hongkong.ahk.de?subject=ESG Sourcing Hub member passcode">info@hongkong.ahk.de</a>索取。还不是会员？<a href="https://hongkong.ahk.de/en/chamber" target="_blank" rel="noopener">成为德国工商总会香港会员</a>。</span><span class="lang-de">Noch kein Passcode? Mitglieder erhalten ihn &uuml;ber <a href="mailto:info@hongkong.ahk.de?subject=ESG Sourcing Hub member passcode">info@hongkong.ahk.de</a>. Noch kein Mitglied? <a href="https://hongkong.ahk.de/en/chamber" target="_blank" rel="noopener">Werden Sie Mitglied der Deutschen Handelskammer Hongkong</a>.</span><span class="lang-vi">Chưa c&oacute; m&atilde;? Th&agrave;nh vi&ecirc;n c&oacute; thể y&ecirc;u cầu qua <a href="mailto:info@hongkong.ahk.de?subject=ESG Sourcing Hub member passcode">info@hongkong.ahk.de</a>. Chưa l&agrave; th&agrave;nh vi&ecirc;n? <a href="https://hongkong.ahk.de/en/chamber" target="_blank" rel="noopener">Trở th&agrave;nh hội vi&ecirc;n Ph&ograve;ng Thương mại Đức tại Hồng K&ocirc;ng</a>.</span></p>
             </div>`);
         applyLang(lib);
@@ -721,163 +720,7 @@
         if (attempt < 10) setTimeout(() => jumpToHash(attempt + 1), 500);
     }
 
-    // ===== Member gating (owner decisions 2026-09-09/10) =====
-    // Depth is member content; overviews stay public. Until Supabase goes live
-    // the member state is simulated for board demos: ?demo=member switches the
-    // member preview on (uses the existing gcc-demo-tier mechanism, which the
-    // server-side gating in api/content.js honors too), ?demo=public switches
-    // it off. A floating pill shows when the member preview is active.
-    (function demoSwitch() {
-        const p = new URLSearchParams(window.location.search).get('demo');
-        if (p === 'member') localStorage.setItem('gcc-demo-tier', 'member');
-        if (p === 'public' || p === 'off') localStorage.removeItem('gcc-demo-tier');
-    })();
-    const realMember = typeof memberToken === 'function' && !!memberToken();
-    const memberView = !!((typeof authToken === 'function' && authToken()) || realMember || (typeof demoTier === 'function' && demoTier() === 'member'));
 
-    function memberPill() {
-        if (!memberView) return;
-        if (realMember) {
-            // signed in via member passcode: show state + sign out
-            document.body.insertAdjacentHTML('beforeend',
-                `<div class="v2-demo-pill"><span class="lang-en">Member</span><span class="lang-zh">会员</span><span class="lang-de">Mitglied</span><span class="lang-vi">Thành viên</span> <a href="#" id="v2SignOut"><span class="lang-en">Sign out</span><span class="lang-zh">退出</span><span class="lang-de">Abmelden</span><span class="lang-vi">Đăng xuất</span></a></div>`);
-            document.getElementById('v2SignOut').addEventListener('click', e => {
-                e.preventDefault();
-                localStorage.removeItem('gcc-member-token');
-                localStorage.removeItem('gcc-demo-tier');
-                window.location.reload();
-            });
-        } else {
-            const u = new URL(window.location.href);
-            u.searchParams.set('demo', 'public');
-            document.body.insertAdjacentHTML('beforeend',
-                `<div class="v2-demo-pill"><span class="lang-en">Member preview</span><span class="lang-zh">会员预览</span><span class="lang-de">Mitglieder-Vorschau</span><span class="lang-vi">Xem trước thành viên</span> <a href="${u.pathname}${u.search}">&#10005;</a></div>`);
-        }
-        applyLang(document.querySelector('.v2-demo-pill'));
-    }
-
-    // ===== Member sign-in (interim passcode login via /api/member-login) =====
-    function showMemberLogin() {
-        if (document.querySelector('.v2-login-overlay')) { document.querySelector('.v2-login-overlay').hidden = false; return; }
-        document.body.insertAdjacentHTML('beforeend', `
-            <div class="v2-login-overlay">
-                <div class="v2-login-box">
-                    <h3><span class="lang-en">Member sign-in</span><span class="lang-zh">会员登录</span><span class="lang-de">Mitglieder-Login</span><span class="lang-vi">Đăng nhập thành viên</span></h3>
-                    <p><span class="lang-en">Enter the member passcode you received from the Committee.</span><span class="lang-zh">请输入您从委员会获得的会员通行码。</span><span class="lang-de">Geben Sie den Mitglieder-Passcode ein, den Sie vom Ausschuss erhalten haben.</span><span class="lang-vi">Nhập mã thành viên bạn nhận từ Ủy ban.</span></p>
-                    <input type="password" id="v2Passcode" autocomplete="current-password" placeholder="Passcode">
-                    <p class="v2-login-err" style="display:none"></p>
-                    <div class="v2-login-actions">
-                        <button type="button" class="btn btn-primary" id="v2LoginGo"><span class="lang-en">Sign in</span><span class="lang-zh">登录</span><span class="lang-de">Anmelden</span><span class="lang-vi">Đăng nhập</span></button>
-                        <button type="button" class="v2-login-cancel" id="v2LoginCancel"><span class="lang-en">Cancel</span><span class="lang-zh">取消</span><span class="lang-de">Abbrechen</span><span class="lang-vi">Hủy</span></button>
-                    </div>
-                    <p class="v2-gate-sub"><span class="lang-en">No passcode yet? Members can request it at <a href="mailto:info@hongkong.ahk.de?subject=ESG Sourcing Hub member passcode">info@hongkong.ahk.de</a>. Not a member? <a href="https://hongkong.ahk.de/en/chamber" target="_blank" rel="noopener">Join the Chamber</a>.</span><span class="lang-zh">还没有通行码？会员可发邮件至<a href="mailto:info@hongkong.ahk.de?subject=ESG Sourcing Hub member passcode">info@hongkong.ahk.de</a>索取。还不是会员？<a href="https://hongkong.ahk.de/en/chamber" target="_blank" rel="noopener">加入商会</a>。</span><span class="lang-de">Noch kein Passcode? Mitglieder erhalten ihn über <a href="mailto:info@hongkong.ahk.de?subject=ESG Sourcing Hub member passcode">info@hongkong.ahk.de</a>. Kein Mitglied? <a href="https://hongkong.ahk.de/en/chamber" target="_blank" rel="noopener">Der Kammer beitreten</a>.</span><span class="lang-vi">Chưa có mã? Thành viên có thể yêu cầu qua <a href="mailto:info@hongkong.ahk.de?subject=ESG Sourcing Hub member passcode">info@hongkong.ahk.de</a>. Chưa là thành viên? <a href="https://hongkong.ahk.de/en/chamber" target="_blank" rel="noopener">Gia nhập Phòng Thương mại</a>.</span></p>
-                </div>
-            </div>`);
-        const overlay = document.querySelector('.v2-login-overlay');
-        applyLang(overlay);
-        const err = overlay.querySelector('.v2-login-err');
-        const showErr = (en, zh, de, vi) => { err.innerHTML = `<span class="lang-en">${en}</span><span class="lang-zh">${zh}</span><span class="lang-de">${de}</span><span class="lang-vi">${vi}</span>`; err.style.display = ''; applyLang(err); };
-        const submit = async () => {
-            const passcode = overlay.querySelector('#v2Passcode').value.trim();
-            if (!passcode) return;
-            try {
-                const r = await fetch('/api/member-login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ passcode }) });
-                const b = await r.json().catch(() => ({}));
-                if (r.ok && b.token) {
-                    localStorage.setItem('gcc-member-token', b.token);
-                    localStorage.removeItem('gcc-demo-tier');
-                    window.location.reload();
-                } else if (r.status === 401) {
-                    showErr('Wrong passcode, please try again.', '通行码不正确，请重试。', 'Falscher Passcode, bitte erneut versuchen.', 'Sai mã, vui lòng thử lại.');
-                } else if (r.status === 503) {
-                    showErr('Sign-in is not configured on this deployment yet.', '此部署尚未配置登录功能。', 'Der Login ist auf dieser Umgebung noch nicht eingerichtet.', 'Đăng nhập chưa được cấu hình trên bản triển khai này.');
-                } else {
-                    showErr('Sign-in failed, please try again later.', '登录失败，请稍后重试。', 'Anmeldung fehlgeschlagen, bitte später erneut versuchen.', 'Đăng nhập thất bại, vui lòng thử lại sau.');
-                }
-            } catch (e) {
-                showErr('Network error, please try again.', '网络错误，请重试。', 'Netzwerkfehler, bitte erneut versuchen.', 'Lỗi mạng, vui lòng thử lại.');
-            }
-        };
-        overlay.querySelector('#v2LoginGo').addEventListener('click', submit);
-        overlay.querySelector('#v2Passcode').addEventListener('keydown', e => { if (e.key === 'Enter') submit(); });
-        overlay.querySelector('#v2LoginCancel').addEventListener('click', () => { overlay.hidden = true; });
-        overlay.addEventListener('click', e => { if (e.target === overlay) overlay.hidden = true; });
-        overlay.querySelector('#v2Passcode').focus();
-    }
-    document.addEventListener('click', e => {
-        const btn = e.target.closest('.v2-signin-btn');
-        if (btn) { e.preventDefault(); showMemberLogin(); }
-    });
-
-    const GATE_HTML = `
-        <div class="v2-gate v2-member-gate">
-            <span class="v2-lock-badge v2-lock-badge-member"><span class="lang-en">Members</span><span class="lang-zh">会员</span><span class="lang-de">Mitglieder</span><span class="lang-vi">Thành viên</span></span>
-            <h3><span class="lang-en">Member content</span><span class="lang-zh">会员内容</span><span class="lang-de">Mitglieder-Inhalt</span><span class="lang-vi">Nội dung thành viên</span></h3>
-            <p><span class="lang-en">This part of the platform is for members of the German Chamber of Commerce Hong Kong. Sign in with your member passcode.</span><span class="lang-zh">平台的这一部分面向德国工商总会香港的会员企业。请使用会员通行码登录。</span><span class="lang-de">Dieser Teil der Plattform ist Mitgliedern der Deutschen Handelskammer Hongkong vorbehalten. Melden Sie sich mit Ihrem Mitglieder-Passcode an.</span><span class="lang-vi">Phần này của nền tảng dành cho hội viên Phòng Thương mại Đức tại Hồng Kông. Đăng nhập bằng mã thành viên của bạn.</span></p>
-            <button type="button" class="btn-gate v2-signin-btn"><span class="lang-en">Member sign-in</span><span class="lang-zh">会员登录</span><span class="lang-de">Mitglieder-Login</span><span class="lang-vi">Đăng nhập thành viên</span></button>
-            <p class="v2-gate-sub"><span class="lang-en">No passcode yet? Members can request it at <a href="mailto:info@hongkong.ahk.de?subject=ESG Sourcing Hub member passcode">info@hongkong.ahk.de</a>. Not a member? <a href="https://hongkong.ahk.de/en/chamber" target="_blank" rel="noopener">Become a member of the German Chamber of Commerce Hong Kong</a>.</span><span class="lang-zh">还没有通行码？会员可发邮件至<a href="mailto:info@hongkong.ahk.de?subject=ESG Sourcing Hub member passcode">info@hongkong.ahk.de</a>索取。还不是会员？<a href="https://hongkong.ahk.de/en/chamber" target="_blank" rel="noopener">成为德国工商总会香港会员</a>。</span><span class="lang-de">Noch kein Passcode? Mitglieder erhalten ihn über <a href="mailto:info@hongkong.ahk.de?subject=ESG Sourcing Hub member passcode">info@hongkong.ahk.de</a>. Noch kein Mitglied? <a href="https://hongkong.ahk.de/en/chamber" target="_blank" rel="noopener">Werden Sie Mitglied der Deutschen Handelskammer Hongkong</a>.</span><span class="lang-vi">Chưa có mã? Thành viên có thể yêu cầu qua <a href="mailto:info@hongkong.ahk.de?subject=ESG Sourcing Hub member passcode">info@hongkong.ahk.de</a>. Chưa là thành viên? <a href="https://hongkong.ahk.de/en/chamber" target="_blank" rel="noopener">Trở thành hội viên Phòng Thương mại Đức tại Hồng Kông</a>.</span></p>
-        </div>`;
-
-    function gateMemberSections() {
-        if (memberView) return;
-        // Tools: the checks (compass) and the CBAM calculator are member-only;
-        // the page intro stays visible so visitors see what the tool does.
-        if (PAGE === 'compass') {
-            const c = document.querySelector('#compass .container');
-            if (c) {
-                Array.from(c.children).forEach((el, i) => { if (i > 0) el.style.display = 'none'; });
-                c.insertAdjacentHTML('beforeend', GATE_HTML);
-                applyLang(c);
-            }
-        }
-        if (PAGE === 'cbam') {
-            const c = document.querySelector('#cbam .container');
-            const panel = c?.querySelector('.cbam-panel');
-            if (panel) {
-                panel.style.display = 'none';
-                panel.insertAdjacentHTML('beforebegin', GATE_HTML);
-                // scope + formula stay public: move the two info notes out of the hidden panel
-                const notes = panel.querySelectorAll('.cbam-info-note');
-                notes.forEach(n => c.appendChild(n));
-                applyLang(c);
-            }
-        }
-        // Knowledge teasers: first entries stay visible, the depth is gated.
-        if (PAGE === 'certifications') {
-            const list = document.querySelector('.v2-cert-list');
-            document.getElementById('certFilter')?.style.setProperty('display', 'none');
-            document.querySelector('.v2-cert-filter-hint')?.style.setProperty('display', 'none');
-            if (list) {
-                let inGroup = 0;
-                Array.from(list.children).forEach(el => {
-                    if (el.classList.contains('v2-cert-group')) { inGroup = 0; return; }
-                    if (el.classList.contains('v2-cert-row') && ++inGroup > 1) el.style.display = 'none';
-                });
-                list.insertAdjacentHTML('beforeend', GATE_HTML);
-                applyLang(list);
-            }
-        }
-        if (PAGE === 'glossary') {
-            const list = document.querySelector('.v2-glossary-list');
-            if (list) {
-                let groups = 0;
-                Array.from(list.children).forEach(el => {
-                    if (el.classList.contains('v2-gl-group')) groups++;
-                    if (groups > 1 && !el.classList.contains('v2-gl-head')) el.style.display = 'none';
-                });
-                list.insertAdjacentHTML('beforeend', GATE_HTML);
-                applyLang(list);
-            }
-        }
-        if (PAGE === 'faq') {
-            const items = document.querySelectorAll('#faq .faq-item');
-            items.forEach((el, i) => { if (i >= 3) el.style.display = 'none'; });
-            const c = document.querySelector('#faq .container');
-            if (c) { c.insertAdjacentHTML('beforeend', GATE_HTML); applyLang(c); }
-        }
-    }
-
-    // ===== Detailed regulation page (owner decision 2026-09-09) =====
     // v2-v2-regulation.html?id=<regId>: base data from the shared regulations set
     // (CMS with built-in fallback), depth from v2-reg-details.js, dates from the
     // CMS deadlines. Replaces the legacy v2-regulation.html?id= as link target.
@@ -959,14 +802,6 @@
                     <p>${t4(reason, reasonZh || reason, reasonDe || reason)}</p></div>`;
             }
 
-            if (!memberView) {
-                // public teaser: status, meta and why-it-matters; depth is member content
-                root.innerHTML = `<a class="v2-regdetail-back" href="index.html">${t4('&larr; Back', '&larr; 返回', '&larr; Zurück', '&larr; Quay lại')}</a>` +
-                    head + disclaimer + why + GATE_HTML;
-                applyLang(root);
-                return;
-            }
-
             const regDl = (deadlines || []).filter(d => d.regId === id && d.date).sort((a, b) => a.date < b.date ? -1 : 1);
             const timeline = regDl.length ? `<div class="v2-regdetail-block"><h2>${t4('Timeline', '时间表', 'Zeitplan', 'Lộ trình')}</h2>
                 <ul class="v2-rd-timeline">${regDl.map(d => {
@@ -996,12 +831,11 @@
             const docs = det && det.documents ? `<div class="v2-regdetail-block"><h2>${t4('Documents your buyers will ask for', '买家会索取的文件', 'Dokumente, die Abnehmer anfragen', 'Tài liệu khách hàng sẽ yêu cầu')}</h2>
                 <ul class="v2-rd-docs">${det.documents.map(a => `<li>${t3o(a)}</li>`).join('')}</ul></div>` : '';
 
-            const memberTag = `<span class="v2-lock-badge v2-lock-badge-member">${t4('Members', '会员', 'Mitglieder', 'Thành viên')}</span>`;
             const tools = `<div class="v2-regdetail-block"><h2>${t4('Check your exposure', '检查您的适用情况', 'Prüfen Sie Ihre Betroffenheit', 'Kiểm tra mức độ liên quan')}</h2>
                 <div class="v2-hub-tools v2-rd-tools">
-                    <a class="v2-tool-card" href="v2-compass.html?persona=merchandiser">${memberTag}<h3>${t4('Regulation Finder', '法规查找器', 'Vorschriften-Finder', 'Công cụ tìm quy định')}</h3><p>${t4('Full requirements table by category, market and role.', '按类别、市场和角色的完整要求概览表。', 'Volle Anforderungstabelle nach Kategorie, Markt und Rolle.', 'Bảng yêu cầu đầy đủ theo danh mục, thị trường và vai trò.')}</p></a>
-                    <a class="v2-tool-card" href="v2-compass.html?persona=supplier">${memberTag}<h3>${t4('Product Check', '产品检查', 'Produkt-Check', 'Kiểm tra sản phẩm')}</h3><p>${t4('Three questions to the requirements that apply to you.', '三个问题找到适用于您的要求。', 'Drei Fragen zu Ihren Anforderungen.', 'Ba câu hỏi đến các yêu cầu áp dụng cho bạn.')}</p></a>
-                    ${id === 'cbam' ? `<a class="v2-tool-card" href="v2-cbam.html">${memberTag}<h3>${t4('CBAM Calculator', 'CBAM计算器', 'CBAM-Rechner', 'Máy tính CBAM')}</h3><p>${t4('Estimate the carbon border cost with official EU values.', '使用欧盟官方数值估算碳边境成本。', 'Kosten mit offiziellen EU-Werten schätzen.', 'Ước tính chi phí với giá trị chính thức của EU.')}</p></a>` : ''}
+                    <a class="v2-tool-card" href="v2-compass.html?persona=merchandiser"><h3>${t4('Regulation Finder', '法规查找器', 'Vorschriften-Finder', 'Công cụ tìm quy định')}</h3><p>${t4('Full requirements table by category, market and role.', '按类别、市场和角色的完整要求概览表。', 'Volle Anforderungstabelle nach Kategorie, Markt und Rolle.', 'Bảng yêu cầu đầy đủ theo danh mục, thị trường và vai trò.')}</p></a>
+                    <a class="v2-tool-card" href="v2-compass.html?persona=supplier"><h3>${t4('Product Check', '产品检查', 'Produkt-Check', 'Kiểm tra sản phẩm')}</h3><p>${t4('Three questions to the requirements that apply to you.', '三个问题找到适用于您的要求。', 'Drei Fragen zu Ihren Anforderungen.', 'Ba câu hỏi đến các yêu cầu áp dụng cho bạn.')}</p></a>
+                    ${id === 'cbam' ? `<a class="v2-tool-card" href="v2-cbam.html"><h3>${t4('CBAM Calculator', 'CBAM计算器', 'CBAM-Rechner', 'Máy tính CBAM')}</h3><p>${t4('Estimate the carbon border cost with official EU values.', '使用欧盟官方数值估算碳边境成本。', 'Kosten mit offiziellen EU-Werten schätzen.', 'Ước tính chi phí với giá trị chính thức của EU.')}</p></a>` : ''}
                 </div></div>`;
 
             const srcItems = [...(det && det.sources ? det.sources : [])];
@@ -1024,8 +858,6 @@
     // ===== Init =====
     renderRegDetail();
     buildExpress();
-    gateMemberSections();
-    memberPill();
     cdnFallback();
     fillMinis(0);
     gateGuides();
