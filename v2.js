@@ -855,6 +855,22 @@
         });
     }
 
+    // ===== Mobile nav accordion (owner report 2026-09-10) =====
+    // On phones the submenus are collapsed; tapping a parent toggles it open
+    // instead of navigating. Capture phase + stopPropagation so script.js's
+    // close-the-panel-on-any-link-click handler does not fire for parent taps.
+    document.querySelectorAll('.nav-dropdown > a').forEach(a => {
+        a.addEventListener('click', e => {
+            if (window.innerWidth > 768) return;
+            e.preventDefault();
+            e.stopPropagation();
+            const li = a.parentElement;
+            const wasOpen = li.classList.contains('nav-open');
+            document.querySelectorAll('.nav-dropdown.nav-open').forEach(x => x.classList.remove('nav-open'));
+            if (!wasOpen) li.classList.add('nav-open');
+        }, true);
+    });
+
     // ===== Init =====
     renderRegDetail();
     buildExpress();
