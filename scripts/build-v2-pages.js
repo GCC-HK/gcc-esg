@@ -16,7 +16,9 @@ const SECTIONS = ['hero', 'personas', 'v2hub', 'tools', 'start', 'compass', 'reg
 // written to index.html; v2.html is kept as an alias so shared /v2 links and
 // the v2-branch preview URL keep working.
 const PAGES = {
-    hub: { file: 'index.html', alias: 'v2.html', title: 'ESG Sourcing Hub | EU Sustainability Compliance | GCC ESG Committee', show: ['hero', 'personas', 'v2hub'] },
+    // personas band dropped 2026-09-19 (owner: visitors want information and
+    // matchmaking on arrival, not the who-is-behind-this boxes)
+    hub: { file: 'index.html', alias: 'v2.html', title: 'ESG Sourcing Hub | EU Sustainability Compliance | GCC ESG Committee', show: ['hero', 'v2hub'] },
     tools: { file: 'v2-tools.html', title: 'Tools | ESG Sourcing Hub', show: ['tools'] },
     deadlines: { file: 'v2-deadlines.html', title: 'Deadlines | ESG Sourcing Hub', show: ['radar'] },
     compass: { file: 'v2-compass.html', title: 'Regulations | ESG Sourcing Compass | ESG Sourcing Hub', show: ['compass'] },
