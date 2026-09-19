@@ -13,11 +13,20 @@
 //   GROK_MODEL  (optional — defaults to grok-4-fast-non-reasoning)
 
 import { readFileSync } from 'fs';
+import { join } from 'path';
 
-const TAXONOMY = JSON.parse(
-    readFileSync(new URL('./match-taxonomy.json', import.meta.url), 'utf8'));
-const PROVIDERS = JSON.parse(
-    readFileSync(new URL('./chat-providers.json', import.meta.url), 'utf8'));
+// Lazy reads via process.cwd(), same pattern as article-page.js — import-time
+// file access crashes the function on Vercel's bundler.
+let knowledge = null;
+function getKnowledge() {
+    if (!knowledge) {
+        knowledge = {
+            taxonomy: JSON.parse(readFileSync(join(process.cwd(), 'api', 'match-taxonomy.json'), 'utf8')),
+            providers: JSON.parse(readFileSync(join(process.cwd(), 'api', 'chat-providers.json'), 'utf8'))
+        };
+    }
+    return knowledge;
+}
 
 const SITE_MAP = [
     ['index.html', 'Home, platform overview'],
@@ -43,7 +52,7 @@ const REG_IDS = {
     'UK': 'ukcbam, ukmsa (Modern Slavery), ukppt (Plastic Packaging Tax), ukepr (Packaging EPR), ukca (UKCA/CE Marking), ukreach, uktr (Timber), ukfrc (Deforestation), ukgreenclaims (DMCC), ukweee, ukbatteries'
 };
 
-function systemPrompt() {
+function systemPrompt(TAXONOMY, PROVIDERS) {
     const pages = SITE_MAP.map(([p, d]) => `- ${p} : ${d}`).join('\n');
     const cats = TAXONOMY.map(c => `${c.id} (${c.label})`).join('; ');
     const provs = PROVIDERS.map(p =>
@@ -132,7 +141,7 @@ export default async function handler(req, res) {
                 model: process.env.GROK_MODEL || 'grok-4-fast-non-reasoning',
                 temperature: 0.3,
                 max_tokens: 600,
-                messages: [{ role: 'system', content: systemPrompt() }, ...clean]
+                messages: [{ role: 'system', content: systemPrompt(getKnowledge().taxonomy, getKnowledge().providers) }, ...clean]
             })
         });
         if (!upstream.ok) {

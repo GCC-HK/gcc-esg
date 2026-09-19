@@ -185,13 +185,13 @@ const server = http.createServer(async (req, res) => {
         if (!apiKey) return json(res, 503, { error: 'not_configured' });
         try {
             const chatSrc = fs.readFileSync(path.join(ROOT, 'api', 'chat.js'), 'utf8');
-            const promptFn = chatSrc.match(/function systemPrompt\(\) \{[\s\S]*?\n\}/)[0];
+            const promptFn = chatSrc.match(/function systemPrompt\([^)]*\) \{[\s\S]*?\n\}/)[0];
             const taxonomy = JSON.parse(fs.readFileSync(path.join(ROOT, 'api', 'match-taxonomy.json'), 'utf8'));
             const providers = JSON.parse(fs.readFileSync(path.join(ROOT, 'api', 'chat-providers.json'), 'utf8'));
             const siteMap = chatSrc.match(/const SITE_MAP = \[[\s\S]*?\];/)[0];
             const regIds = chatSrc.match(/const REG_IDS = \{[\s\S]*?\};/)[0];
-            const system = new Function('TAXONOMY', 'PROVIDERS',
-                `${siteMap}\n${regIds}\n${promptFn}\nreturn systemPrompt();`)(taxonomy, providers);
+            const system = new Function('taxonomy', 'providers',
+                `${siteMap}\n${regIds}\n${promptFn}\nreturn systemPrompt(taxonomy, providers);`)(taxonomy, providers);
             const upstream = await fetch('https://api.x.ai/v1/chat/completions', {
                 method: 'POST',
                 headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },

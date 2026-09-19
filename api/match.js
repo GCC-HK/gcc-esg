@@ -12,10 +12,15 @@
 //   GROK_MODEL  (optional — defaults to grok-4-fast-non-reasoning)
 
 import { readFileSync } from 'fs';
+import { join } from 'path';
 
-const TAXONOMY = JSON.parse(
-    readFileSync(new URL('./match-taxonomy.json', import.meta.url), 'utf8'));
-const VALID_IDS = new Set(TAXONOMY.map(c => c.id));
+// Lazy read via process.cwd(), same pattern as article-page.js — import-time
+// file access crashes the function on Vercel's bundler.
+let taxonomy = null;
+function getTaxonomy() {
+    if (!taxonomy) taxonomy = JSON.parse(readFileSync(join(process.cwd(), 'api', 'match-taxonomy.json'), 'utf8'));
+    return taxonomy;
+}
 
 // Best-effort per-instance rate limit (serverless instances are short-lived,
 // so this is a brake, not a guarantee)
@@ -53,6 +58,8 @@ export default async function handler(req, res) {
         return res.status(503).json({ error: 'not_configured' });
     }
 
+    const TAXONOMY = getTaxonomy();
+    const VALID_IDS = new Set(TAXONOMY.map(c => c.id));
     const catalogue = TAXONOMY.map(c => `- ${c.id}: ${c.label} (e.g. "${c.example}")`).join('\n');
     const system = [
         'You classify a business support request into service categories for a chamber of commerce matchmaking tool.',
