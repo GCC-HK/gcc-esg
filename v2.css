@@ -612,3 +612,15 @@ body[data-v2page="regulation"] #regdetail { padding: 40px 0 80px; }
 .v2-hub-match-ctas { display: flex; flex-wrap: wrap; gap: 12px; }
 .v2-hub-match-ctas .btn { min-height: 44px; display: inline-flex; align-items: center; }
 @media (max-width: 560px) { .v2-hub-match { padding: 22px 18px; } .v2-hub-match-head h2 { font-size: 22px; } }
+
+/* ===== Merged Regulation Finder: view toggle (quick table vs detailed check) ===== */
+.v2-mode-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 4px 0 22px; }
+@media (max-width: 620px) { .v2-mode-toggle { grid-template-columns: 1fr; } }
+.v2-mode-btn { display: flex; flex-direction: column; gap: 4px; text-align: left; padding: 14px 18px;
+    min-height: 44px; background: #fff; border: 2px solid #dde6e0; border-radius: 12px; cursor: pointer;
+    font-family: inherit; transition: border-color .15s; }
+.v2-mode-btn strong { font-size: 15.5px; color: #24312a; }
+.v2-mode-btn > span { font-size: 12.5px; line-height: 1.45; color: #6b7a72; }
+.v2-mode-btn:hover { border-color: #9ab0a3; }
+.v2-mode-btn.on { border-color: var(--primary, #1a5c38); background: #f0f7f2; }
+.v2-mode-btn.on strong { color: var(--primary, #1a5c38); }

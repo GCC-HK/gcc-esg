@@ -47,14 +47,20 @@
         document.querySelectorAll('#compass input[name="market"]').forEach(cb => {
             if (preset.markets.includes(cb.value)) cb.checked = true;
         });
+        // One merged tool (owner decision 2026-09-19): the visible view toggle
+        // decides which result style shows — quick overview table
+        // (ex Regulation Finder / merchandiser) or detailed 3-question check
+        // (ex Product Check / supplier). Internal persona keys kept so stored
+        // values and old ?persona= links keep working.
         const express = document.getElementById('v2Express');
         if (express) express.style.display = name === 'merchandiser' ? '' : 'none';
-        // committee feedback: two finder variants on one page confused
-        // visitors, so each perspective now sees exactly one of them
         const wizard = document.querySelector('.compass-wizard');
         if (wizard) wizard.style.display = name === 'merchandiser' ? 'none' : '';
-        const toExpress = document.getElementById('v2ToExpress');
-        if (toExpress) toExpress.style.display = name === 'merchandiser' ? 'none' : '';
+        document.querySelectorAll('#v2ModeToggle .v2-mode-btn').forEach(b => {
+            const on = b.dataset.persona === name;
+            b.classList.toggle('on', on);
+            b.setAttribute('aria-pressed', String(on));
+        });
         if (scroll) {
             const target = (name === 'merchandiser' && express) ? express : document.getElementById('compass');
             target?.scrollIntoView({ behavior: 'smooth' });
@@ -93,14 +99,32 @@
             .filter(o => o.value)
             .map(o => `<button type="button" class="v2-ex-cat" data-value="${o.value}">${o.textContent}</button>`).join('');
 
+        // Visible view toggle — the single merged tool's explicit choice
+        // between the quick table and the detailed 3-question check
+        const toggle = document.createElement('div');
+        toggle.className = 'v2-mode-toggle';
+        toggle.id = 'v2ModeToggle';
+        toggle.innerHTML = `
+            <button type="button" class="v2-mode-btn" data-persona="merchandiser" aria-pressed="false">
+                <strong><span class="lang-en">Quick overview</span><span class="lang-zh">快速概览</span><span class="lang-de">Schnell&uuml;bersicht</span><span class="lang-vi">Tổng quan nhanh</span></strong>
+                <span><span class="lang-en">Full table at a glance, compare categories, CSV export</span><span class="lang-zh">一览完整表格，比较类别，导出CSV</span><span class="lang-de">Volle Tabelle auf einen Blick, Kategorien vergleichen, CSV-Export</span><span class="lang-vi">Bảng đầy đủ trong nh&aacute;y mắt, so s&aacute;nh danh mục, xuất CSV</span></span>
+            </button>
+            <button type="button" class="v2-mode-btn" data-persona="supplier" aria-pressed="false">
+                <strong><span class="lang-en">Detailed check</span><span class="lang-zh">详细检查</span><span class="lang-de">Detail-Check</span><span class="lang-vi">Kiểm tra chi tiết</span></strong>
+                <span><span class="lang-en">Answer 3 questions, get explained results with next steps</span><span class="lang-zh">回答3个问题，获得带解释和后续步骤的结果</span><span class="lang-de">3 Fragen beantworten, erkl&auml;rte Ergebnisse mit n&auml;chsten Schritten</span><span class="lang-vi">Trả lời 3 c&acirc;u hỏi, nhận kết quả giải th&iacute;ch k&egrave;m bước tiếp theo</span></span>
+            </button>`;
+        anchor.insertBefore(toggle, anchor.children[1] || null);
+        applyLang(toggle);
+        toggle.querySelectorAll('.v2-mode-btn').forEach(b =>
+            b.addEventListener('click', () => applyPersona(b.dataset.persona, false)));
+
         const el = document.createElement('div');
         el.className = 'v2-express';
         el.id = 'v2Express';
         el.style.display = 'none';
         el.innerHTML = `
             <div class="v2-express-head">
-                <h3><span class="lang-en">Regulation Finder: product overview table</span><span class="lang-zh">法规查找器：产品要求概览表</span><span class="lang-de">Vorschriften-Finder: Produkt&uuml;bersicht</span><span class="lang-vi">Công cụ tìm quy định: bảng tổng quan sản phẩm</span></h3>
-                <a href="#compass" id="v2ToWizard"><span class="lang-en">Supplier? Switch to the Product Check &rarr;</span><span class="lang-zh">供应商？切换到产品检查 &rarr;</span><span class="lang-de">Lieferant? Zum Produkt-Check wechseln &rarr;</span><span class="lang-vi">Nh&agrave; cung cấp? Chuyển sang Kiểm tra sản phẩm &rarr;</span></a>
+                <h3><span class="lang-en">Quick overview: requirements table</span><span class="lang-zh">快速概览：要求一览表</span><span class="lang-de">Schnell&uuml;bersicht: Anforderungstabelle</span><span class="lang-vi">Tổng quan nhanh: bảng y&ecirc;u cầu</span></h3>
             </div>
             <p class="v2-ex-hint"><span class="lang-en">Pick one category for the overview table, or several to compare them side by side.</span><span class="lang-zh">选择一个类别查看概览表，或选择多个类别进行并排比较。</span><span class="lang-de">W&auml;hlen Sie eine Kategorie f&uuml;r die &Uuml;bersicht, oder mehrere f&uuml;r den direkten Vergleich.</span><span class="lang-vi">Chọn một danh mục để xem bảng tổng quan, hoặc nhiều danh mục để so s&aacute;nh song song.</span></p>
             <div class="v2-ex-cats" id="v2ExCats">${catChips}</div>
@@ -115,10 +139,9 @@
                 <button type="button" class="btn-express" id="v2ExRun"><span class="lang-en">Show overview</span><span class="lang-zh">显示概览</span><span class="lang-de">&Uuml;bersicht anzeigen</span><span class="lang-vi">Xem tổng quan</span></button>
             </div>
             <div id="v2ExResult"></div>`;
-        // Directly after the section header, above the guided wizard — a
-        // merchandiser arriving from the hub lands on their tool without
-        // any scrolling.
-        anchor.insertBefore(el, anchor.children[1] || null);
+        // Directly after the view toggle, above the detailed wizard — the
+        // quick table shows without any scrolling.
+        toggle.insertAdjacentElement('afterend', el);
         applyLang(el);
         el.querySelectorAll('.v2-ex-cat').forEach(chip => chip.addEventListener('click', () => {
             chip.classList.toggle('on');
@@ -127,23 +150,6 @@
             document.getElementById('v2ExCat').value = first ? first.dataset.value : '';
         }));
         document.getElementById('v2ExRun').addEventListener('click', runExpress);
-        // mode switch: express (sourcing office) <-> guided wizard (supplier)
-        el.querySelector('#v2ToWizard').addEventListener('click', (ev) => {
-            ev.preventDefault();
-            applyPersona('supplier', false);
-            document.querySelector('.compass-wizard')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
-        const sw = document.createElement('p');
-        sw.className = 'v2-mode-switch';
-        sw.id = 'v2ToExpress';
-        sw.innerHTML = '<a href="#compass"><span class="lang-en">Sourcing office? Switch to the Regulation Finder &rarr;</span><span class="lang-zh">采购办公室？切换到法规查找器 &rarr;</span><span class="lang-de">Einkaufsb&uuml;ro? Zum Vorschriften-Finder wechseln &rarr;</span><span class="lang-vi">Văn ph&ograve;ng thu mua? Chuyển sang Công cụ tìm quy định &rarr;</span></a>';
-        el.insertAdjacentElement('afterend', sw);
-        applyLang(sw);
-        sw.querySelector('a').addEventListener('click', (ev) => {
-            ev.preventDefault();
-            applyPersona('merchandiser', false);
-            document.getElementById('v2Express')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
     }
 
     function statusBadgeColor(status) {
@@ -840,8 +846,7 @@
 
             const tools = `<div class="v2-regdetail-block"><h2>${t4('Check your exposure', '检查您的适用情况', 'Prüfen Sie Ihre Betroffenheit', 'Kiểm tra mức độ liên quan')}</h2>
                 <div class="v2-hub-tools v2-rd-tools">
-                    <a class="v2-tool-card" href="v2-compass.html?persona=merchandiser"><h3>${t4('Regulation Finder', '法规查找器', 'Vorschriften-Finder', 'Công cụ tìm quy định')}</h3><p>${t4('Full requirements table by category, market and role.', '按类别、市场和角色的完整要求概览表。', 'Volle Anforderungstabelle nach Kategorie, Markt und Rolle.', 'Bảng yêu cầu đầy đủ theo danh mục, thị trường và vai trò.')}</p></a>
-                    <a class="v2-tool-card" href="v2-compass.html?persona=supplier"><h3>${t4('Product Check', '产品检查', 'Produkt-Check', 'Kiểm tra sản phẩm')}</h3><p>${t4('Three questions to the requirements that apply to you.', '三个问题找到适用于您的要求。', 'Drei Fragen zu Ihren Anforderungen.', 'Ba câu hỏi đến các yêu cầu áp dụng cho bạn.')}</p></a>
+                    <a class="v2-tool-card" href="v2-compass.html"><h3>${t4('Regulation Finder', '法规查找器', 'Vorschriften-Finder', 'Công cụ tìm quy định')}</h3><p>${t4('Quick overview table or detailed 3-question check for your products, with CSV export.', '针对您产品的快速概览表或详细三问检查，可导出CSV。', 'Schnellübersicht oder Detail-Check in 3 Fragen, mit CSV-Export.', 'Bảng tổng quan nhanh hoặc kiểm tra chi tiết 3 câu hỏi, kèm xuất CSV.')}</p></a>
                     ${id === 'cbam' ? `<a class="v2-tool-card" href="v2-cbam.html"><h3>${t4('CBAM Quick Check', 'CBAM快速检查', 'CBAM-Schnellcheck', 'Kiểm tra nhanh CBAM')}</h3><p>${t4('A first indication of the carbon border cost with official EU values.', '使用欧盟官方数值初步了解碳边境成本。', 'Erste Einordnung der Kosten mit offiziellen EU-Werten.', 'Chỉ dấu ban đầu về chi phí theo giá trị chính thức của EU.')}</p></a>` : ''}
                 </div></div>`;
 
@@ -1063,7 +1068,10 @@
     initMatchmaking();
     initPartners();
     jumpToHash(0);
-    const urlPersona = new URLSearchParams(window.location.search).get('persona');
+    const urlQuery = new URLSearchParams(window.location.search);
+    const urlMode = urlQuery.get('mode');
+    const urlPersona = urlQuery.get('persona')
+        || (urlMode === 'quick' ? 'merchandiser' : urlMode === 'detailed' ? 'supplier' : null);
     if (urlPersona && PAGE !== 'hub') {
         // No scroll on arrival — the page opens at the top where the express
         // panel already sits; scrolling would only tuck it under the fixed
@@ -1072,5 +1080,8 @@
     } else {
         const saved = localStorage.getItem('gcc-persona');
         if (saved && PAGE !== 'hub') applyPersona(saved, false);
+        // Merged tool default (owner 2026-09-19): first-time visitors land on
+        // the quick overview; the toggle switches to the detailed check
+        else if (PAGE === 'compass') applyPersona('merchandiser', false);
     }
 })();
