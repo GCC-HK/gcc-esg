@@ -249,9 +249,15 @@ const PAGES = {
     // Functional: hub member/non-member band (replaced persona doors, owner 2026-09-10)
     {
         const { doc } = boot('v2.html');
-        check('hub: persona doors replaced by open-platform band', !doc.querySelector('.v2-persona-card[data-persona]') && !!doc.querySelector('#personas .v2-persona-card[href="v2-about.html"]'));
-        check('hub: join card links to Chamber membership', !!doc.querySelector('.v2-persona-card[href="https://hongkong.ahk.de/en/chamber"]'));
-        check('hub: no sign-in anywhere on the landing band', !doc.querySelector('#personas a[href*="account"]') && !doc.querySelector('.v2-signin-btn'));
+        // Owner 2026-09-19: personas band dropped from the hub; matchmaking
+        // band is the prominent landing element instead
+        check('hub: personas band hidden', doc.getElementById('v2PageStyle').textContent.includes('#personas'));
+        check('hub: matchmaking band prominent with category chips',
+            !!doc.querySelector('#v2hub .v2-hub-match') && doc.querySelectorAll('#hubMatchCats a.v2-partner-cat').length === 18);
+        check('hub: matchmaking band links Find Support + Our Partners',
+            !!doc.querySelector('.v2-hub-match-ctas a[href="v2-matchmaking.html"]') && !!doc.querySelector('.v2-hub-match-ctas a[href="v2-partners.html"]'));
+        check('hub: hero CTA to find a partner', !!doc.querySelector('.hero-ctas a[href="v2-matchmaking.html"]'));
+        check('hub: no sign-in anywhere on the landing page', !doc.querySelector('#v2hub a[href*="account"]') && !doc.querySelector('.v2-signin-btn'));
         check('hub: deadlines mini exists, news mini removed', !!doc.getElementById('v2MiniDeadlines') && !doc.getElementById('v2MiniNews'));
     }
 
@@ -373,9 +379,14 @@ const PAGES = {
         check('cbam page: referral band to member CBAM support',
             !!doc.querySelector('#cbamReferral a[href="v2-matchmaking.html?category=cbam"]'));
         const nav = doc.getElementById('navLinks');
-        check('nav: About dropdown holds Our Team and Our Partners',
-            !!nav.querySelector('li.nav-dropdown a[href="v2-about.html"]') && !!nav.querySelector('.nav-dropdown-menu a[href="v2-partners.html"]'));
-        check('nav: Tools dropdown links Find Support', !!nav.querySelector('.nav-dropdown-menu a[href="v2-matchmaking.html"]'));
+        // Owner 2026-09-19: Matchmaking is a top-level main menu (Find Support
+        // + Our Partners), not tucked into Tools or About
+        const mmTop = Array.from(nav.children).find(li => li.querySelector(':scope > a[href="v2-matchmaking.html"]'));
+        check('nav: Matchmaking is a top-level menu', !!mmTop && mmTop.classList.contains('nav-dropdown'));
+        check('nav: Matchmaking menu holds Find Support + Our Partners',
+            !!mmTop.querySelector('.nav-dropdown-menu a[href="v2-matchmaking.html"]') && !!mmTop.querySelector('.nav-dropdown-menu a[href="v2-partners.html"]'));
+        check('nav: Our Team back to a plain top-level link',
+            !!nav.querySelector(':scope > li:not(.nav-dropdown) > a[href="v2-about.html"]'));
         check('nav: every entry carries four languages', ['v2-partners.html', 'v2-matchmaking.html'].every(href => {
             const a = nav.querySelector(`a[href="${href}"]`);
             return ['lang-en', 'lang-zh', 'lang-de', 'lang-vi'].every(c => a.querySelector('.' + c));
@@ -425,7 +436,7 @@ const PAGES = {
         check('learn page: referral band to Find Support', learn.includes('id="actions"') && learn.includes('v2-matchmaking.html'));
         check('certifications page: referral band to testing category', certs.includes('v2-matchmaking.html?category=testing'));
         check('guides page: referral band to Find Support', guides.includes('v2-matchmaking.html'));
-        check('hub: Find Support mini present', hub.includes('v2-hub-mini-support'));
+        check('hub: matchmaking band markup present', hub.includes('v2-hub-match'));
     }
 
     console.log('---');

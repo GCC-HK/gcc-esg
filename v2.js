@@ -1031,15 +1031,24 @@
         }
     }
 
-    function initPartners() {
-        const cats = document.getElementById('partnersCategories');
-        const dir = document.getElementById('partnersDirectory');
-        if (!cats || !dir || !MATCH.categories.length) return;
-        cats.innerHTML = MATCH.categories.map(c => {
+    function categoryChips() {
+        return MATCH.categories.map(c => {
             const n = MATCH.providers.filter(p => p.categories.includes(c.id)).length;
             return `<a class="v2-partner-cat" href="v2-matchmaking.html?category=${esc(c.id)}">${span4m(c)}<span class="v2-partner-cat-n">${n}</span></a>`;
         }).join('');
-        dir.innerHTML = MATCH.providers.map(matchCard).join('');
+    }
+
+    function initPartners() {
+        if (!MATCH.categories.length) return;
+        const cats = document.getElementById('partnersCategories');
+        const dir = document.getElementById('partnersDirectory');
+        if (cats && dir) {
+            cats.innerHTML = categoryChips();
+            dir.innerHTML = MATCH.providers.map(matchCard).join('');
+        }
+        // Hub matchmaking band: same category chips, prominent on arrival
+        const hubCats = document.getElementById('hubMatchCats');
+        if (hubCats) hubCats.innerHTML = categoryChips();
     }
 
     // ===== Init =====
