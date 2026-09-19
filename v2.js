@@ -354,7 +354,14 @@
         cards.insertAdjacentElement('beforebegin', wrap);
         const next = document.createElement('div');
         next.className = 'v2-wizard-next';
-        next.innerHTML = NEXT_STEPS[persona];
+        next.innerHTML = NEXT_STEPS[persona] + `
+        <div class="v2-referral-band">
+            <div class="v2-referral-text">
+                <strong><span class="lang-en">Need professional support with these requirements?</span><span class="lang-zh">需要针对这些要求的专业支持？</span><span class="lang-de">Professionelle Unterst&uuml;tzung bei diesen Anforderungen n&ouml;tig?</span><span class="lang-vi">Cần hỗ trợ chuy&ecirc;n nghiệp cho c&aacute;c y&ecirc;u cầu n&agrave;y?</span></strong>
+                <span><span class="lang-en">Chamber member companies provide audits, testing, certification, carbon accounting and legal advice. The Chamber makes the introduction.</span><span class="lang-zh">商会会员企业提供审核、检测、认证、碳核算和法律咨询。商会负责引荐。</span><span class="lang-de">Kammermitglieder bieten Audits, Pr&uuml;fung, Zertifizierung, CO&#8322;-Bilanzierung und Rechtsberatung. Die Kammer stellt den Kontakt her.</span><span class="lang-vi">C&aacute;c c&ocirc;ng ty th&agrave;nh vi&ecirc;n cung cấp kiểm to&aacute;n, thử nghiệm, chứng nhận, kiểm k&ecirc; carbon v&agrave; tư vấn ph&aacute;p l&yacute;. Ph&ograve;ng Thương mại sẽ giới thiệu.</span></span>
+            </div>
+            <a class="btn btn-primary btn-sm" href="v2-matchmaking.html"><span class="lang-en">Find Support &rarr;</span><span class="lang-zh">寻找支持 &rarr;</span><span class="lang-de">Unterst&uuml;tzung finden &rarr;</span><span class="lang-vi">T&igrave;m hỗ trợ &rarr;</span></a>
+        </div>`;
         cards.insertAdjacentElement('afterend', next);
         applyLang(wrap);
         document.getElementById('v2CsvBtn').addEventListener('click', exportCsv);
@@ -835,7 +842,7 @@
                 <div class="v2-hub-tools v2-rd-tools">
                     <a class="v2-tool-card" href="v2-compass.html?persona=merchandiser"><h3>${t4('Regulation Finder', '法规查找器', 'Vorschriften-Finder', 'Công cụ tìm quy định')}</h3><p>${t4('Full requirements table by category, market and role.', '按类别、市场和角色的完整要求概览表。', 'Volle Anforderungstabelle nach Kategorie, Markt und Rolle.', 'Bảng yêu cầu đầy đủ theo danh mục, thị trường và vai trò.')}</p></a>
                     <a class="v2-tool-card" href="v2-compass.html?persona=supplier"><h3>${t4('Product Check', '产品检查', 'Produkt-Check', 'Kiểm tra sản phẩm')}</h3><p>${t4('Three questions to the requirements that apply to you.', '三个问题找到适用于您的要求。', 'Drei Fragen zu Ihren Anforderungen.', 'Ba câu hỏi đến các yêu cầu áp dụng cho bạn.')}</p></a>
-                    ${id === 'cbam' ? `<a class="v2-tool-card" href="v2-cbam.html"><h3>${t4('CBAM Calculator', 'CBAM计算器', 'CBAM-Rechner', 'Máy tính CBAM')}</h3><p>${t4('Estimate the carbon border cost with official EU values.', '使用欧盟官方数值估算碳边境成本。', 'Kosten mit offiziellen EU-Werten schätzen.', 'Ước tính chi phí với giá trị chính thức của EU.')}</p></a>` : ''}
+                    ${id === 'cbam' ? `<a class="v2-tool-card" href="v2-cbam.html"><h3>${t4('CBAM Quick Check', 'CBAM快速检查', 'CBAM-Schnellcheck', 'Kiểm tra nhanh CBAM')}</h3><p>${t4('A first indication of the carbon border cost with official EU values.', '使用欧盟官方数值初步了解碳边境成本。', 'Erste Einordnung der Kosten mit offiziellen EU-Werten.', 'Chỉ dấu ban đầu về chi phí theo giá trị chính thức của EU.')}</p></a>` : ''}
                 </div></div>`;
 
             const srcItems = [...(det && det.sources ? det.sources : [])];
@@ -871,6 +878,170 @@
         }, true);
     });
 
+    // ===== Find Support (matchmaking) + Our Partners directory =====
+    // Data: window.V2MATCH, generated from the member mapping workbook with
+    // public-safe fields only (scripts/build-matchmaking-data.py). Positioning:
+    // the Chamber connects and introduces; member companies deliver the
+    // professional services. Listings are alphabetical, never ranked.
+    const MATCH = window.V2MATCH || { categories: [], providers: [] };
+
+    function esc(s) {
+        return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function span4m(cat) {
+        return `<span class="lang-en">${esc(cat.en)}</span><span class="lang-zh">${esc(cat.zh)}</span><span class="lang-de">${esc(cat.de)}</span><span class="lang-vi">${esc(cat.vi)}</span>`;
+    }
+
+    const catById = (id) => MATCH.categories.find(c => c.id === id);
+
+    function introMailto(p) {
+        const catsEn = p.categories.map(id => catById(id)?.en).filter(Boolean).join(', ');
+        const subject = `Introduction request via ESG Sourcing Hub: ${p.name}`;
+        const body = `Hello GCC ESG Committee,\n\nWe found ${p.name} on the ESG Sourcing Hub (topic: ${catsEn}) and would appreciate an introduction.\n\nOur company:\nContact person:\nWhat we need:\n`;
+        return `mailto:info@hongkong.ahk.de?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    }
+
+    function matchCard(p) {
+        const tags = p.categories.map(id => {
+            const c = catById(id);
+            return c ? `<span class="v2-match-tag">${span4m(c)}</span>` : '';
+        }).join('');
+        return `
+        <div class="v2-match-card">
+            <h4>${esc(p.name)}</h4>
+            <div class="v2-match-tags">${tags}</div>
+            <p class="v2-match-offering">${esc(p.offering)}</p>
+            <div class="v2-match-actions">
+                <a class="v2-match-web" href="${esc(p.website)}" target="_blank" rel="noopener"><span class="lang-en">Visit website</span><span class="lang-zh">访问网站</span><span class="lang-de">Website besuchen</span><span class="lang-vi">Xem trang web</span></a>
+                <a class="v2-match-intro" href="${introMailto(p)}"><span class="lang-en">Request an introduction</span><span class="lang-zh">请求引荐</span><span class="lang-de">Vorstellung anfragen</span><span class="lang-vi">Yêu cầu giới thiệu</span></a>
+            </div>
+        </div>`;
+    }
+
+    const MATCH_EMPTY = `
+        <div class="v2-match-empty">
+            <p><span class="lang-en">No listed member company for this topic yet. The Committee can still point you to the right organisation, write to us and we help.</span><span class="lang-zh">该主题暂无列出的会员企业。委员会仍可为您指向合适的机构，欢迎来信，我们来帮忙。</span><span class="lang-de">F&uuml;r dieses Thema ist noch kein Mitgliedsunternehmen gelistet. Der Ausschuss vermittelt trotzdem gern, schreiben Sie uns.</span><span class="lang-vi">Chưa có công ty thành viên cho chủ đề này. Ủy ban vẫn có thể chỉ dẫn cho bạn, hãy viết thư cho chúng tôi.</span></p>
+            <p style="margin-top:10px"><a class="btn btn-outline btn-sm" href="mailto:info@hongkong.ahk.de?subject=Support request via ESG Sourcing Hub"><span class="lang-en">Contact the Committee &rarr;</span><span class="lang-zh">联系委员会 &rarr;</span><span class="lang-de">Ausschuss kontaktieren &rarr;</span><span class="lang-vi">Li&ecirc;n hệ Ủy ban &rarr;</span></a></p>
+        </div>`;
+
+    function renderMatches(ids, opts) {
+        const results = document.getElementById('matchResults');
+        if (!results) return;
+        const status = document.getElementById('matchStatus');
+        const provs = MATCH.providers.filter(p => p.categories.some(id => ids.includes(id)));
+        const catNames = ids.map(id => catById(id)).filter(Boolean)
+            .map(c => `<span class="v2-match-tag">${span4m(c)}</span>`).join(' ');
+        let head = '';
+        if (opts && opts.source === 'ai') {
+            head = `<div class="v2-match-results-head"><span class="lang-en">Suggested topics for your request:</span><span class="lang-zh">根据您的描述建议的主题：</span><span class="lang-de">Vorgeschlagene Themen f&uuml;r Ihre Anfrage:</span><span class="lang-vi">Chủ đề gợi &yacute; cho y&ecirc;u cầu của bạn:</span> ${catNames}</div>`;
+        } else if (opts && opts.source === 'keywords') {
+            head = `<div class="v2-match-results-head"><span class="lang-en">Closest topics by keyword:</span><span class="lang-zh">按关键词最接近的主题：</span><span class="lang-de">N&auml;chstliegende Themen nach Stichworten:</span><span class="lang-vi">Chủ đề gần nhất theo từ kh&oacute;a:</span> ${catNames}</div>`;
+        } else if (ids.length) {
+            head = `<div class="v2-match-results-head">${catNames}</div>`;
+        }
+        results.innerHTML = head + (provs.length
+            ? `<div class="v2-match-grid">${provs.map(matchCard).join('')}</div>`
+            : MATCH_EMPTY);
+        if (status && opts && opts.note) {
+            status.innerHTML = `<div class="v2-match-ai-note">${opts.note}</div>`;
+        } else if (status) {
+            status.innerHTML = '';
+        }
+    }
+
+    // Local fallback when the AI matching API is unavailable: score categories
+    // by token overlap with labels, examples and provider keywords.
+    function keywordFallback(text) {
+        const tokens = text.toLowerCase().split(/[^a-z0-9À-ɏ一-鿿]+/).filter(t => t.length > 2);
+        if (!tokens.length) return [];
+        const scores = MATCH.categories.map(cat => {
+            let hay = (cat.en + ' ' + cat.example).toLowerCase();
+            MATCH.providers.forEach(p => {
+                if (p.categories.includes(cat.id)) hay += ' ' + p.keywords.join(' ').toLowerCase();
+            });
+            const score = tokens.reduce((n, t) => n + (hay.includes(t) ? 1 : 0), 0);
+            return { id: cat.id, score };
+        }).filter(s => s.score > 0).sort((a, b) => b.score - a.score);
+        return scores.slice(0, 3).map(s => s.id);
+    }
+
+    const MATCH_NOTE_FALLBACK = `<span class="lang-en">AI matching is not available right now, showing keyword matches instead. You can also pick a topic from the list above.</span><span class="lang-zh">AI匹配暂不可用，已改为显示关键词匹配结果。您也可以在上方列表中选择主题。</span><span class="lang-de">KI-Matching ist gerade nicht verf&uuml;gbar, stattdessen Stichwort-Treffer. Sie k&ouml;nnen auch oben ein Thema w&auml;hlen.</span><span class="lang-vi">Gh&eacute;p bằng AI hiện chưa khả dụng, đang hiển thị kết quả theo từ kh&oacute;a. Bạn cũng c&oacute; thể chọn chủ đề ở tr&ecirc;n.</span>`;
+
+    async function matchFreeText() {
+        const ta = document.getElementById('matchText');
+        const status = document.getElementById('matchStatus');
+        const text = (ta?.value || '').trim().slice(0, 600);
+        if (text.length < 8) {
+            if (status) status.innerHTML = `<div class="v2-match-ai-note"><span class="lang-en">Please describe your need in a few words first.</span><span class="lang-zh">请先用几句话描述您的需求。</span><span class="lang-de">Bitte beschreiben Sie Ihren Bedarf zuerst in ein paar Worten.</span><span class="lang-vi">Vui l&ograve;ng m&ocirc; tả nhu cầu bằng v&agrave;i từ trước.</span></div>`;
+            return;
+        }
+        if (status) status.innerHTML = `<div class="v2-match-ai-note"><span class="lang-en">Matching your request&hellip;</span><span class="lang-zh">正在匹配您的请求&hellip;</span><span class="lang-de">Anfrage wird zugeordnet&hellip;</span><span class="lang-vi">Đang gh&eacute;p y&ecirc;u cầu của bạn&hellip;</span></div>`;
+        try {
+            const res = await fetch('/api/match', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text })
+            });
+            if (res.ok) {
+                const data = await res.json();
+                const ids = (Array.isArray(data.categories) ? data.categories : []).filter(id => catById(id));
+                if (ids.length) { renderMatches(ids, { source: 'ai' }); return; }
+            }
+        } catch (e) { /* offline or blocked — fall through to keywords */ }
+        const ids = keywordFallback(text);
+        renderMatches(ids, { source: ids.length ? 'keywords' : null, note: MATCH_NOTE_FALLBACK });
+    }
+
+    function initMatchmaking() {
+        const sel = document.getElementById('matchCategory');
+        if (!sel || !MATCH.categories.length) return;
+        const lang = localStorage.getItem('gcc-lang') || 'en';
+        const ph = document.createElement('option');
+        ph.value = '';
+        ph.dataset.en = 'Select a topic...'; ph.dataset.zh = '请选择主题...'; ph.dataset.de = 'Thema wählen...'; ph.dataset.vi = 'Chọn chủ đề...';
+        ph.textContent = ph.dataset[lang] || ph.dataset.en;
+        sel.appendChild(ph);
+        MATCH.categories.forEach(c => {
+            const opt = document.createElement('option');
+            opt.value = c.id;
+            opt.dataset.en = c.en; opt.dataset.zh = c.zh; opt.dataset.de = c.de; opt.dataset.vi = c.vi;
+            opt.textContent = opt.dataset[lang] || c.en;
+            sel.appendChild(opt);
+        });
+        sel.addEventListener('change', () => {
+            if (sel.value) renderMatches([sel.value], {});
+        });
+        // Example request as textarea placeholder, in the visitor's language
+        const ta = document.getElementById('matchText');
+        const setPh = () => {
+            if (!ta) return;
+            const l = localStorage.getItem('gcc-lang') || 'en';
+            const ex = { en: MATCH.categories[1]?.example || '', zh: '例如：我们需要产品碳足迹支持和减排计划。', de: 'z. B.: Wir brauchen Unterstützung beim Produkt-CO₂-Fußabdruck und einen Reduktionsplan.', vi: 'Ví dụ: Chúng tôi cần hỗ trợ dấu chân carbon sản phẩm và kế hoạch giảm phát thải.' };
+            ta.placeholder = ex[l] || ex.en;
+        };
+        setPh();
+        document.getElementById('langSelect')?.addEventListener('change', setPh);
+        document.getElementById('matchFind')?.addEventListener('click', matchFreeText);
+        // Deep link: v2-matchmaking.html?category=<id> preselects and renders
+        const urlCat = new URLSearchParams(window.location.search).get('category');
+        if (urlCat && catById(urlCat) && PAGE === 'matchmaking') {
+            sel.value = urlCat;
+            renderMatches([urlCat], {});
+        }
+    }
+
+    function initPartners() {
+        const cats = document.getElementById('partnersCategories');
+        const dir = document.getElementById('partnersDirectory');
+        if (!cats || !dir || !MATCH.categories.length) return;
+        cats.innerHTML = MATCH.categories.map(c => {
+            const n = MATCH.providers.filter(p => p.categories.includes(c.id)).length;
+            return `<a class="v2-partner-cat" href="v2-matchmaking.html?category=${esc(c.id)}">${span4m(c)}<span class="v2-partner-cat-n">${n}</span></a>`;
+        }).join('');
+        dir.innerHTML = MATCH.providers.map(matchCard).join('');
+    }
+
     // ===== Init =====
     renderRegDetail();
     buildExpress();
@@ -880,6 +1051,8 @@
     v2Overrides(0);
     markPersona();
     certFilter();
+    initMatchmaking();
+    initPartners();
     jumpToHash(0);
     const urlPersona = new URLSearchParams(window.location.search).get('persona');
     if (urlPersona && PAGE !== 'hub') {
