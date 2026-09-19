@@ -77,7 +77,9 @@ const PAGES = {
         check(`${file}: Vietnamese hidden from language selector`, !doc.querySelector('#langSelect option[value="vi"]'));
         // owner decisions 2026-09-09: Regulations mega menu, checks under Tools (member-tagged), Knowledge group
         check(`${file}: Regulations mega menu with key regulations`, !!doc.querySelector('.nav-mega a[href="v2-regulation.html?id=cbam"]') && !!doc.querySelector('.nav-mega a[href="v2-regulation.html?id=ppwr"]') && !!doc.querySelector('.nav-mega a[href="v2-regulation.html?id=ukcbam"]'));
-        check(`${file}: nav Tools dropdown = Quick/Guided/CBAM, no coming soon`, !!doc.querySelector('.nav-dropdown-menu a[href="v2-compass.html?persona=merchandiser"]') && !!doc.querySelector('.nav-dropdown-menu a[href="v2-compass.html?persona=supplier"]') && !!doc.querySelector('.nav-dropdown-menu a[href="v2-cbam.html"]') && !Array.from(doc.querySelectorAll('.nav-dropdown-menu a')).some(a => a.textContent.includes('Coming soon')));
+        // Merged tool (owner 2026-09-19): one Regulation Finder entry, no
+        // separate Product Check
+        check(`${file}: nav Tools dropdown = Finder/CBAM, no coming soon`, !!doc.querySelector('.nav-dropdown-menu a[href="v2-compass.html"]') && !doc.querySelector('.nav-dropdown-menu a[href="v2-compass.html?persona=supplier"]') && !!doc.querySelector('.nav-dropdown-menu a[href="v2-cbam.html"]') && !Array.from(doc.querySelectorAll('.nav-dropdown-menu a')).some(a => a.textContent.includes('Coming soon')));
         check(`${file}: nav has Deadlines + Knowledge holds Glossary/FAQ/certifications/guides`, !!doc.querySelector('.nav-links a[href="v2-deadlines.html"]') && !!doc.querySelector('.nav-dropdown-menu a[href="v2-glossary.html"]') && !!doc.querySelector('.nav-dropdown-menu a[href="v2-faq.html"]') && !!doc.querySelector('.nav-dropdown-menu a[href="v2-certifications.html"]') && !!doc.querySelector('.nav-dropdown-menu a[href="v2-guides.html"]'));
         check(`${file}: Guides/Glossary no longer top-level nav items`, !doc.querySelector('#navLinks > li > a[href="v2-guides.html"]') && !doc.querySelector('#navLinks > li > a[href="v2-glossary.html"]'));
         check(`${file}: US market removed from wizard`, !doc.querySelector('#wizardMarkets input[value="us"]'));
@@ -99,7 +101,7 @@ const PAGES = {
         check('regulation page: obligation sections rendered', root.querySelectorAll('.v2-regdetail-block').length >= 4);
         check('regulation page: role split from detail file', root.querySelectorAll('.v2-rd-role').length === 2);
         check('regulation page: action checklist rendered', root.querySelectorAll('.v2-rd-actions li').length >= 3);
-        check('regulation page: tool cards incl. CBAM calculator', root.querySelectorAll('.v2-rd-tools .v2-tool-card').length === 3);
+        check('regulation page: tool cards = merged Finder + CBAM quick check', root.querySelectorAll('.v2-rd-tools .v2-tool-card').length === 2);
         check('regulation page: sources listed', root.querySelectorAll('.v2-rd-sources li').length >= 2);
         const bad = boot('v2-regulation.html', '?id=doesnotexist');
         await new Promise(r => setTimeout(r, 30));
@@ -174,7 +176,7 @@ const PAGES = {
         check('compass page: results render', doc.getElementById('atlasCards').innerHTML.includes('reg-result'));
         check('compass page: export bar present', !!doc.querySelector('.v2-export-bar'));
         check('compass page: express panel built', !!doc.getElementById('v2Express'));
-        check('compass page: express sits above the wizard', (() => { const c = doc.querySelector('#compass .container'); return Array.from(c.children).findIndex(el => el.id === 'v2Express') === 1; })());
+        check('compass page: toggle then express above the wizard', (() => { const c = doc.querySelector('#compass .container'); const kids = Array.from(c.children); return kids.findIndex(el => el.id === 'v2ModeToggle') === 1 && kids.findIndex(el => el.id === 'v2Express') === 2; })());
         check('compass page: urgency groups color-tagged', doc.querySelectorAll('#atlasCards .v2-g-act, #atlasCards .v2-g-prep, #atlasCards .v2-g-watch').length > 0);
         check('compass page: group count chips', doc.querySelectorAll('#atlasCards .v2-g-count').length > 0);
         check('compass page: results disclaimer present', !!doc.querySelector('.v2-wizard-addon .v2-disclaimer'));
@@ -391,6 +393,33 @@ const PAGES = {
             const a = nav.querySelector(`a[href="${href}"]`);
             return ['lang-en', 'lang-zh', 'lang-de', 'lang-vi'].every(c => a.querySelector('.' + c));
         }));
+    }
+
+    // Merged Regulation Finder: explicit view toggle replaces the two-tool split
+    {
+        const { doc, window } = boot('v2-compass.html');
+        await new Promise(r => setTimeout(r, 10));
+        const btns = doc.querySelectorAll('#v2ModeToggle .v2-mode-btn');
+        check('finder: view toggle with quick + detailed', btns.length === 2 &&
+            btns[0].textContent.includes('Quick overview') && btns[1].textContent.includes('Detailed check'));
+        check('finder: quick overview is the default view',
+            doc.getElementById('v2Express').style.display !== 'none' &&
+            doc.querySelector('.compass-wizard').style.display === 'none' &&
+            btns[0].classList.contains('on') && btns[0].getAttribute('aria-pressed') === 'true');
+        btns[1].click();
+        check('finder: toggle switches to the detailed check',
+            doc.getElementById('v2Express').style.display === 'none' &&
+            doc.querySelector('.compass-wizard').style.display !== 'none' &&
+            btns[1].classList.contains('on'));
+        check('finder: old cross-switch links gone', !doc.getElementById('v2ToWizard') && !doc.getElementById('v2ToExpress'));
+        // legacy deep links still work
+        const { doc: d2 } = boot('v2-compass.html', '?persona=supplier');
+        await new Promise(r => setTimeout(r, 10));
+        check('finder: legacy ?persona=supplier opens the detailed check', d2.querySelector('.compass-wizard').style.display !== 'none');
+        const { doc: d3 } = boot('v2-compass.html', '?mode=detailed');
+        await new Promise(r => setTimeout(r, 10));
+        check('finder: ?mode=detailed opens the detailed check', d3.querySelector('.compass-wizard').style.display !== 'none');
+        check('finder: no Product Check tool name left in the master', !fs.readFileSync(path.join(ROOT, 'v2.html'), 'utf8').match(/v2-tool-card[^>]*persona=supplier/));
     }
 
     // Hub Assistant chat widget: present on every page, accessible, safe fallback
