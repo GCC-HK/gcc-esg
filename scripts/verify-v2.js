@@ -11,6 +11,8 @@ const { JSDOM } = require('jsdom');
 const js = fs.readFileSync(path.join(ROOT, 'script.js'), 'utf8');
 const v2js = fs.readFileSync(path.join(ROOT, 'v2.js'), 'utf8');
 const cbamData = fs.readFileSync(path.join(ROOT, 'v2-cbam-data.js'), 'utf8');
+const matchData = fs.readFileSync(path.join(ROOT, 'v2-matchmaking-data.js'), 'utf8');
+const chatJs = fs.readFileSync(path.join(ROOT, 'v2-chat.js'), 'utf8');
 const cbamJs = fs.readFileSync(path.join(ROOT, 'v2-cbam.js'), 'utf8');
 const regDetails = fs.readFileSync(path.join(ROOT, 'v2-reg-details.js'), 'utf8');
 
@@ -30,7 +32,7 @@ function boot(file, query, tier) {
     window.URL.revokeObjectURL = () => {};
     const errors = [];
     window.addEventListener('error', e => errors.push(e.message));
-    try { window.eval(cbamData + '\n;\n' + regDetails + '\n;\n' + js + '\n;\n' + v2js + '\n;\n' + cbamJs); } catch (e) { errors.push(e.message); }
+    try { window.eval(cbamData + '\n;\n' + matchData + '\n;\n' + regDetails + '\n;\n' + js + '\n;\n' + v2js + '\n;\n' + cbamJs + '\n;\n' + chatJs); } catch (e) { errors.push(e.message); }
     return { doc: window.document, window, errors };
 }
 
@@ -41,6 +43,8 @@ const PAGES = {
     'v2-deadlines.html':{ page: 'deadlines',shown: ['radar'],              hidden: ['hero', 'compass', 'cbam'] },
     'v2-compass.html':  { page: 'compass',  shown: ['compass'],            hidden: ['hero', 'cbam', 'benefits', 'radar'] },
     'v2-cbam.html':     { page: 'cbam',     shown: ['cbam'],               hidden: ['hero', 'compass', 'briefing'] },
+    'v2-matchmaking.html': { page: 'matchmaking', shown: ['matchmaking'],  hidden: ['hero', 'compass', 'cbam', 'partners'] },
+    'v2-partners.html': { page: 'partners', shown: ['partners'],           hidden: ['hero', 'compass', 'cbam', 'matchmaking', 'about'] },
     'v2-regulation.html': { page: 'regulation', shown: ['regdetail'],      hidden: ['hero', 'compass', 'cbam', 'radar'] },
     'v2-briefing.html': { page: 'briefing', shown: ['briefing'],           hidden: ['hero', 'cbam', 'library'] },
     'v2-guides.html':   { page: 'guides',   shown: ['library'],            hidden: ['hero', 'briefing'] },
@@ -174,6 +178,7 @@ const PAGES = {
         check('compass page: urgency groups color-tagged', doc.querySelectorAll('#atlasCards .v2-g-act, #atlasCards .v2-g-prep, #atlasCards .v2-g-watch').length > 0);
         check('compass page: group count chips', doc.querySelectorAll('#atlasCards .v2-g-count').length > 0);
         check('compass page: results disclaimer present', !!doc.querySelector('.v2-wizard-addon .v2-disclaimer'));
+        check('compass page: referral band to Find Support after results', !!doc.querySelector('.v2-wizard-next .v2-referral-band a[href="v2-matchmaking.html"]'));
         let csvBlob = null;
         // capture CSV
         doc.defaultView.URL.createObjectURL = (b) => { csvBlob = b; return 'blob:fake'; };
@@ -292,6 +297,135 @@ const PAGES = {
         check('hub ticker links rewritten cross-page', anchors.every(a => a.getAttribute('href').startsWith('v2-briefing.html#briefing-')));
         const uniq = new Set(anchors.map(a => a.getAttribute('href')));
         check('hub ticker has 3 unique targets', uniq.size === 3);
+    }
+
+    // ===== Matchmaking (Find Support) + Our Partners + CBAM Quick Check =====
+    // Privacy: the generated public dataset must never carry internal workbook
+    // columns (strategy sheet, ratings, review notes, contacts)
+    {
+        const src = matchData;
+        const forbidden = ['Confidence', 'Adopter', 'Review Note', 'Partner Potential', 'Strategic Partner',
+            'Governance', 'Rationale', 'First Ask', 'Priority', 'Member Status', 'Business Profile'];
+        check('matchmaking data: no internal workbook fields leak', forbidden.every(f => !src.includes(f)));
+        const taxonomy = JSON.parse(fs.readFileSync(path.join(ROOT, 'api', 'match-taxonomy.json'), 'utf8'));
+        check('match taxonomy: 18 categories, public fields only', taxonomy.length === 18 &&
+            taxonomy.every(c => JSON.stringify(Object.keys(c).sort()) === JSON.stringify(['example', 'id', 'label'])));
+        check('matchmaking data: providers present with website + categories',
+            /providers:\s*\[/.test(src) && src.includes('https://'));
+    }
+
+    // Functional: category dropdown → provider cards with introduction CTA
+    {
+        const { doc, window, errors } = boot('v2-matchmaking.html');
+        check('matchmaking page: no script errors', errors.length === 0);
+        const sel = doc.getElementById('matchCategory');
+        check('matchmaking page: category select populated (18 + placeholder)', sel && sel.options.length === 19);
+        sel.value = 'cbam';
+        sel.dispatchEvent(new window.Event('change'));
+        await new Promise(r => setTimeout(r, 10));
+        const cards = doc.querySelectorAll('#matchResults .v2-match-card');
+        check('matchmaking page: CBAM category lists providers', cards.length >= 2);
+        check('matchmaking page: TÜV listed for CBAM', doc.getElementById('matchResults').innerHTML.includes('TÜV Rheinland'));
+        check('matchmaking page: introduction goes via the Chamber inbox',
+            !!doc.querySelector('#matchResults a.v2-match-intro[href^="mailto:info@hongkong.ahk.de"]'));
+        check('matchmaking page: provider websites open safely',
+            Array.from(doc.querySelectorAll('#matchResults a.v2-match-web')).every(a => a.getAttribute('rel') === 'noopener' && a.getAttribute('target') === '_blank'));
+        const names = Array.from(cards).map(c => c.querySelector('h4').textContent.toLowerCase());
+        check('matchmaking page: providers listed alphabetically (neutrality)',
+            names.every((n, i) => i === 0 || names[i - 1] <= n));
+        check('matchmaking page: neutrality disclaimer present',
+            doc.querySelector('.v2-match-note').textContent.includes('not a consultancy'));
+    }
+
+    // Deep link ?category= preselects; free text falls back to keyword matching offline
+    {
+        const { doc, window } = boot('v2-matchmaking.html', '?category=testing');
+        await new Promise(r => setTimeout(r, 10));
+        check('matchmaking page: ?category=testing preselects', doc.getElementById('matchCategory').value === 'testing');
+        check('matchmaking page: ?category=testing renders results', doc.querySelectorAll('#matchResults .v2-match-card').length > 0);
+        doc.getElementById('matchText').value = 'We export steel to the EU and need CBAM calculation and reporting support';
+        doc.getElementById('matchFind').click();
+        await new Promise(r => setTimeout(r, 30));
+        check('matchmaking page: offline free text uses keyword fallback', doc.querySelectorAll('#matchResults .v2-match-card').length > 0);
+        check('matchmaking page: fallback notice shown', !!doc.querySelector('#matchStatus .v2-match-ai-note'));
+    }
+
+    // Our Partners: ecosystem cards, category chips, alphabetical directory
+    {
+        const { doc, errors } = boot('v2-partners.html');
+        check('partners page: no script errors', errors.length === 0);
+        check('partners page: ecosystem explains Chamber vs members', doc.querySelectorAll('#partners .v2-eco-card').length === 3);
+        check('partners page: 18 category chips link to Find Support',
+            doc.querySelectorAll('#partnersCategories a.v2-partner-cat[href^="v2-matchmaking.html?category="]').length === 18);
+        const dir = doc.querySelectorAll('#partnersDirectory .v2-match-card');
+        check('partners page: full provider directory rendered', dir.length >= 25);
+        check('partners page: directory is not an endorsement (copy)', doc.querySelector('.v2-partner-dir-head').textContent.includes('not an endorsement'));
+        check('partners page: become-a-member journey present', !!doc.querySelector('#partners a[href="https://hongkong.ahk.de/en/chamber"]'));
+    }
+
+    // About navigation + CBAM Quick Check conversion (non-competitive positioning)
+    {
+        const { doc } = boot('v2-cbam.html');
+        check('cbam page: title says Quick Check', doc.title.includes('CBAM Quick Check'));
+        check('cbam page: no "CBAM Calculator" wording left', !fs.readFileSync(path.join(ROOT, 'v2.html'), 'utf8').includes('CBAM Calculator'));
+        check('cbam page: scope note marks it educational, not a filing tool',
+            doc.querySelector('#cbam .cbam-scope-note .lang-en').textContent.includes('not a CBAM declaration'));
+        check('cbam page: referral band to member CBAM support',
+            !!doc.querySelector('#cbamReferral a[href="v2-matchmaking.html?category=cbam"]'));
+        const nav = doc.getElementById('navLinks');
+        check('nav: About dropdown holds Our Team and Our Partners',
+            !!nav.querySelector('li.nav-dropdown a[href="v2-about.html"]') && !!nav.querySelector('.nav-dropdown-menu a[href="v2-partners.html"]'));
+        check('nav: Tools dropdown links Find Support', !!nav.querySelector('.nav-dropdown-menu a[href="v2-matchmaking.html"]'));
+        check('nav: every entry carries four languages', ['v2-partners.html', 'v2-matchmaking.html'].every(href => {
+            const a = nav.querySelector(`a[href="${href}"]`);
+            return ['lang-en', 'lang-zh', 'lang-de', 'lang-vi'].every(c => a.querySelector('.' + c));
+        }));
+    }
+
+    // Hub Assistant chat widget: present on every page, accessible, safe fallback
+    {
+        const { doc, window } = boot('index.html');
+        const cbtn = doc.getElementById('gccChatBtn');
+        const cpanel = doc.getElementById('gccChatPanel');
+        check('chat: button + panel injected on the hub', !!cbtn && !!cpanel && cpanel.hidden);
+        check('chat: button is accessible (dialog semantics)',
+            cbtn.getAttribute('aria-haspopup') === 'dialog' && cbtn.getAttribute('aria-expanded') === 'false' && !!cbtn.getAttribute('aria-label'));
+        cbtn.click();
+        check('chat: opens with greeting + suggestions', !cpanel.hidden && cbtn.getAttribute('aria-expanded') === 'true' &&
+            !!doc.querySelector('#gccChatLog .gcc-chat-assistant') && doc.querySelectorAll('#gccChatSugg .gcc-chat-chip').length === 3);
+        check('chat: four-language chrome', ['lang-en', 'lang-zh', 'lang-de', 'lang-vi'].every(c => cpanel.querySelector('.gcc-chat-head .' + c)));
+        check('chat: disclaimer in header', cpanel.querySelector('.gcc-chat-sub .lang-en').textContent.includes('not legal advice'));
+        // offline send → committee fallback with Find Support link
+        doc.getElementById('gccChatInput').value = 'Who can help me with CBAM reporting?';
+        doc.getElementById('gccChatForm').dispatchEvent(new window.Event('submit'));
+        await new Promise(r => setTimeout(r, 30));
+        const msgs = doc.querySelectorAll('#gccChatLog .gcc-chat-msg');
+        const last = msgs[msgs.length - 1];
+        check('chat: offline fallback points to Find Support + Committee email',
+            !!last.querySelector('a[href="v2-matchmaking.html"]') && !!last.querySelector('a[href^="mailto:info@hongkong.ahk.de"]'));
+        // Escape closes and returns focus to the launcher
+        doc.dispatchEvent(new window.KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+        check('chat: Escape closes the panel', cpanel.hidden && cbtn.getAttribute('aria-expanded') === 'false');
+        // widget ships on subpages too
+        const { doc: doc2 } = boot('v2-regulation.html', '?id=cbam');
+        check('chat: widget present on subpages', !!doc2.getElementById('gccChatBtn'));
+        // markdown link whitelist: only known targets become links
+        const chatProviders = JSON.parse(fs.readFileSync(path.join(ROOT, 'api', 'chat-providers.json'), 'utf8'));
+        check('chat: provider grounding file is public fields only',
+            chatProviders.length >= 25 && chatProviders.every(p => JSON.stringify(Object.keys(p).sort()) === JSON.stringify(['categories', 'name', 'offering', 'website'])));
+        check('chat: master page loads the widget script', fs.readFileSync(path.join(ROOT, 'v2.html'), 'utf8').includes('v2-chat.js'));
+    }
+
+    // Referral journeys on educational pages
+    {
+        const learn = fs.readFileSync(path.join(ROOT, 'v2-learn.html'), 'utf8');
+        const certs = fs.readFileSync(path.join(ROOT, 'v2-certifications.html'), 'utf8');
+        const guides = fs.readFileSync(path.join(ROOT, 'v2-guides.html'), 'utf8');
+        const hub = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+        check('learn page: referral band to Find Support', learn.includes('id="actions"') && learn.includes('v2-matchmaking.html'));
+        check('certifications page: referral band to testing category', certs.includes('v2-matchmaking.html?category=testing'));
+        check('guides page: referral band to Find Support', guides.includes('v2-matchmaking.html'));
+        check('hub: Find Support mini present', hub.includes('v2-hub-mini-support'));
     }
 
     console.log('---');

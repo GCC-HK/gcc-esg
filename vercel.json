@@ -13,6 +13,12 @@
   "functions": {
     "api/article-page.js": {
       "includeFiles": "article.html"
+    },
+    "api/match.js": {
+      "includeFiles": "api/match-taxonomy.json"
+    },
+    "api/chat.js": {
+      "includeFiles": "api/*.json"
     }
   },
   "headers": [

@@ -9,7 +9,7 @@ const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
 const SECTIONS = ['hero', 'personas', 'v2hub', 'tools', 'start', 'compass', 'regdetail', 'radar', 'briefing',
-    'library', 'cbam', 'guidance', 'benefits', 'risks-incentives', 'china-esg',
+    'library', 'cbam', 'matchmaking', 'partners', 'guidance', 'benefits', 'risks-incentives', 'china-esg',
     'actions', 'voluntary', 'about', 'faq', 'glossary', 'trust'];
 
 // V2 replaced V1 as the live site (committee decision, Sep 2026): the hub is
@@ -21,7 +21,9 @@ const PAGES = {
     deadlines: { file: 'v2-deadlines.html', title: 'Deadlines | ESG Sourcing Hub', show: ['radar'] },
     compass: { file: 'v2-compass.html', title: 'Regulations | ESG Sourcing Compass | ESG Sourcing Hub', show: ['compass'] },
     regulation: { file: 'v2-regulation.html', title: 'Regulation | ESG Sourcing Hub', show: ['regdetail'] },
-    cbam: { file: 'v2-cbam.html', title: 'CBAM Cost Calculator | ESG Sourcing Hub', show: ['cbam'] },
+    cbam: { file: 'v2-cbam.html', title: 'CBAM Quick Check | ESG Sourcing Hub', show: ['cbam'] },
+    matchmaking: { file: 'v2-matchmaking.html', title: 'Find Support | Chamber Network | ESG Sourcing Hub', show: ['matchmaking'] },
+    partners: { file: 'v2-partners.html', title: 'Our Partners | ESG Sourcing Hub', show: ['partners'] },
     briefing: { file: 'v2-briefing.html', title: 'News | The ESG Sourcing Briefing | ESG Sourcing Hub', show: ['briefing'] },
     guides: { file: 'v2-guides.html', title: 'Member Resource Library | ESG Sourcing Hub', show: ['library'] },
     learn: { file: 'v2-learn.html', title: 'Learn | Understand and Plan | ESG Sourcing Hub', show: ['guidance', 'benefits', 'risks-incentives', 'actions'] },

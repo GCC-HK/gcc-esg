@@ -1,0 +1,92 @@
+[
+  {
+    "id": "esg-strategy",
+    "label": "ESG strategy and roadmap",
+    "example": "We need an ESG roadmap and governance structure for our Asian sourcing operation."
+  },
+  {
+    "id": "carbon",
+    "label": "Carbon accounting and decarbonisation",
+    "example": "We need Scope 1–3 or product carbon-footprint support and a reduction plan."
+  },
+  {
+    "id": "cbam",
+    "label": "CBAM calculation and reporting",
+    "example": "We export CBAM-covered products to the EU and need calculation and reporting support."
+  },
+  {
+    "id": "dpp",
+    "label": "Digital Product Passport and product traceability",
+    "example": "We need to prepare product data and identifiers for an EU Digital Product Passport."
+  },
+  {
+    "id": "reporting",
+    "label": "ESG reporting and assurance",
+    "example": "We need ESG/CSRD reporting, controls or independent assurance."
+  },
+  {
+    "id": "due-diligence",
+    "label": "Supply-chain due diligence",
+    "example": "We need supplier risk mapping, audits or CSDDD/LkSG implementation support."
+  },
+  {
+    "id": "social",
+    "label": "Human rights and social compliance",
+    "example": "We need social audits, human-rights due diligence or grievance-process support."
+  },
+  {
+    "id": "testing",
+    "label": "Testing, inspection and certification",
+    "example": "We need independent testing, inspection, certification or verification."
+  },
+  {
+    "id": "product-packaging",
+    "label": "Sustainable product and packaging compliance",
+    "example": "We need help with ecodesign, packaging, chemicals, repairability or product claims."
+  },
+  {
+    "id": "circular",
+    "label": "Circular economy, waste and recycling",
+    "example": "We need recycling, waste reduction or circular product/packaging solutions."
+  },
+  {
+    "id": "energy",
+    "label": "Renewable energy and energy efficiency",
+    "example": "We need renewable energy, energy-efficiency or smart-building solutions."
+  },
+  {
+    "id": "logistics",
+    "label": "Sustainable logistics and transport",
+    "example": "We need logistics emissions data or lower-carbon transport options."
+  },
+  {
+    "id": "finance",
+    "label": "Green finance and sustainable investment",
+    "example": "We need green loans, transition finance or sustainability-linked funding."
+  },
+  {
+    "id": "software",
+    "label": "ESG data, software and analytics",
+    "example": "We need software for ESG data, supplier data, traceability or workflow management."
+  },
+  {
+    "id": "training",
+    "label": "Training and capability building",
+    "example": "We need ESG training for management, staff or suppliers."
+  },
+  {
+    "id": "legal",
+    "label": "Legal and regulatory advice",
+    "example": "We need advice on EU, German or Hong Kong ESG obligations and green claims."
+  },
+  {
+    "id": "materials",
+    "label": "Sustainable materials and product design",
+    "example": "We need lower-impact materials, LCA, circular design or sustainable packaging."
+  },
+  {
+    "id": "community",
+    "label": "Community impact and employee engagement",
+    "example": "We need employee engagement, donations or credible community-impact programmes."
+  }
+]

@@ -1,0 +1,302 @@
+[
+  {
+    "name": "ABO Energy KGaA",
+    "website": "https://www.aboenergy.com/",
+    "categories": [
+      "carbon",
+      "energy"
+    ],
+    "offering": "Develops renewable-energy projects and can contribute practical expertise on clean-energy procurement and decarbonisation."
+  },
+  {
+    "name": "ALBA Asia Plastics Recycling Limited",
+    "website": "https://weee.com.hk/",
+    "categories": [
+      "circular"
+    ],
+    "offering": "Provides regulated e-waste collection and recycling services in Hong Kong."
+  },
+  {
+    "name": "amfori",
+    "website": "https://www.amfori.org",
+    "categories": [
+      "esg-strategy",
+      "social",
+      "due-diligence",
+      "training"
+    ],
+    "offering": "Business association supporting social, environmental and governance performance in global supply chains through due-diligence frameworks, tools and capability building."
+  },
+  {
+    "name": "BSI Pacific Limited",
+    "website": "https://www.bsigroup.com/en-HK/",
+    "categories": [
+      "carbon",
+      "reporting",
+      "finance",
+      "testing",
+      "training"
+    ],
+    "offering": "Provides standards, training, certification and independent verification for carbon, environmental management and sustainable finance."
+  },
+  {
+    "name": "CMS Hong Kong LLP",
+    "website": "https://www.cms-hs.com/",
+    "categories": [
+      "esg-strategy",
+      "finance",
+      "social",
+      "legal",
+      "due-diligence"
+    ],
+    "offering": "Advises on ESG law, climate strategy, due diligence, sustainable supply chains, green claims, human rights and sustainable finance."
+  },
+  {
+    "name": "Consulting Service International Ltd.",
+    "website": "https://www.applied-csr.com/",
+    "categories": [
+      "dpp",
+      "software",
+      "esg-strategy",
+      "social",
+      "due-diligence"
+    ],
+    "offering": "Connects regulation, supplier data and product information with digital workflows for operational CSR and supply-chain control."
+  },
+  {
+    "name": "Deloitte",
+    "website": "https://bdh.tax.deloitte.com.hk/",
+    "categories": [
+      "carbon",
+      "reporting",
+      "esg-strategy",
+      "finance",
+      "legal"
+    ],
+    "offering": "Professional-services firm with ESG strategy, reporting, climate, risk, assurance and transformation capabilities; local scope should be confirmed before referral."
+  },
+  {
+    "name": "Ecovision Asia / Hong Kong Cleanup",
+    "website": "https://hkcleanup.org",
+    "categories": [
+      "circular",
+      "community"
+    ],
+    "offering": "Organises environmental programmes and community clean-ups and supports waste-reduction engagement."
+  },
+  {
+    "name": "Forvis Mazars CPA Limited",
+    "website": "https://www.forvismazars.com/hk/en",
+    "categories": [
+      "reporting",
+      "esg-strategy",
+      "finance",
+      "legal"
+    ],
+    "offering": "Provides sustainability reporting and assurance, ESG compliance, impact measurement and transformation advisory."
+  },
+  {
+    "name": "Friends of the Earth (HK) Charity Ltd.",
+    "website": "https://www.foe.org.hk/",
+    "categories": [
+      "circular",
+      "community",
+      "training"
+    ],
+    "offering": "Environmental NGO offering education, advocacy and corporate/community engagement on environmental protection and sustainable living."
+  },
+  {
+    "name": "Hohenstein Laboratories (HK) Ltd.",
+    "website": "https://www.hohenstein.com/en/about-hohenstein/locations/detail/HK",
+    "categories": [
+      "social",
+      "due-diligence",
+      "materials",
+      "product-packaging",
+      "testing"
+    ],
+    "offering": "Provides textile sustainability testing, OEKO-TEX services, supply-chain due-diligence support and certification."
+  },
+  {
+    "name": "Impala Services Ltd.",
+    "website": "https://www.impala-tech.com/",
+    "categories": [
+      "dpp",
+      "software",
+      "product-packaging"
+    ],
+    "offering": "Supports multilingual product communication, technical documentation and digital compliance content relevant to DPP and sustainable-product information workflows."
+  },
+  {
+    "name": "Intertec Asia Ltd.",
+    "website": "https://www.intertek.com.hk/",
+    "categories": [
+      "carbon",
+      "reporting",
+      "logistics",
+      "product-packaging",
+      "testing"
+    ],
+    "offering": "Provides sustainability assurance, testing, inspection, certification, carbon and energy-efficiency services across industries."
+  },
+  {
+    "name": "Knight Frank",
+    "website": "https://www.knightfrank.com/services",
+    "categories": [
+      "carbon",
+      "esg-strategy",
+      "energy"
+    ],
+    "offering": "Provides sustainability consultancy for buildings, property portfolios and occupier strategies."
+  },
+  {
+    "name": "KPMG",
+    "website": "https://kpmg.com",
+    "categories": [
+      "carbon",
+      "reporting",
+      "esg-strategy",
+      "finance",
+      "legal"
+    ],
+    "offering": "Provides ESG governance, reporting, assurance, climate-risk and sustainability advisory services."
+  },
+  {
+    "name": "Pergamon Labs",
+    "website": "https://www.pergamon-labs.com/",
+    "categories": [
+      "dpp",
+      "software",
+      "reporting",
+      "product-packaging"
+    ],
+    "offering": "Provides AI-powered structured documentation and disclosure workflows relevant to EU compliance, packaging, manuals and Digital Product Passports."
+  },
+  {
+    "name": "ProductIP (HK) Ltd.",
+    "website": "https://www.productip.com",
+    "categories": [
+      "dpp",
+      "software",
+      "product-packaging",
+      "testing"
+    ],
+    "offering": "SaaS platform for EU and UK non-food product compliance, technical files and Digital Product Passport information workflows."
+  },
+  {
+    "name": "Roedl Ltd.",
+    "website": "https://www.roedl.com/",
+    "categories": [
+      "reporting",
+      "esg-strategy",
+      "legal",
+      "due-diligence"
+    ],
+    "offering": "Provides legal, tax, audit and advisory support for ESG governance, CSRD reporting, due diligence and sustainable transformation."
+  },
+  {
+    "name": "Siemens Ltd.",
+    "website": "https://www.siemens.com/en-us/",
+    "categories": [
+      "carbon",
+      "software",
+      "energy"
+    ],
+    "offering": "Provides energy-efficiency, smart-building, industrial digitalisation and decarbonisation technologies."
+  },
+  {
+    "name": "Socially Responsible Donations Limited",
+    "website": "https://www.soresponsible.org/",
+    "categories": [
+      "community"
+    ],
+    "offering": "Provides a platform for charitable giving, impact tracking and employee/community engagement."
+  },
+  {
+    "name": "STI Asia Pacific Ltd.",
+    "website": "https://www.sti-group.com/hu/",
+    "categories": [
+      "circular",
+      "materials",
+      "product-packaging"
+    ],
+    "offering": "Develops sustainable packaging and point-of-sale solutions for brands."
+  },
+  {
+    "name": "The Green Earth",
+    "website": "https://greenearth.org.hk/en-GB",
+    "categories": [
+      "circular",
+      "community",
+      "training"
+    ],
+    "offering": "Environmental charity providing education, policy research, corporate engagement and programmes on resource conservation and zero waste."
+  },
+  {
+    "name": "Topo Solutions",
+    "website": "https://topo.cc/",
+    "categories": [
+      "dpp",
+      "software",
+      "social",
+      "due-diligence"
+    ],
+    "offering": "Cloud platform for supply-chain visibility, sustainability, compliance, supplier data, traceability and EUDR workflows."
+  },
+  {
+    "name": "TÜV Rheinland Hong Kong Ltd.",
+    "website": "https://www.tuv.com/greater-china/en/",
+    "categories": [
+      "cbam",
+      "carbon",
+      "reporting",
+      "due-diligence",
+      "materials",
+      "product-packaging",
+      "testing",
+      "training"
+    ],
+    "offering": "Provides carbon accounting and verification, CBAM support, CSRD assurance, product life-cycle assessment, supply-chain audits, testing and certification."
+  },
+  {
+    "name": "TÜV SÜD Hong Kong Ltd.",
+    "website": "https://www.tuvsud.com/en/services/product-certification/global-market-access/hong-kong",
+    "categories": [
+      "cbam",
+      "carbon",
+      "reporting",
+      "product-packaging",
+      "testing"
+    ],
+    "offering": "Provides sustainability testing, carbon-footprint calculation, verification, certification and global market-access support."
+  },
+  {
+    "name": "VDE Global Services HK Ltd.",
+    "website": "https://www.vde.com/hongkong-en",
+    "categories": [
+      "circular",
+      "materials",
+      "product-packaging",
+      "testing"
+    ],
+    "offering": "Provides sustainability testing for electrical products, including recyclability, repairability, energy efficiency, ecodesign, RoHS and life-cycle assessment."
+  },
+  {
+    "name": "Viessmann China Ltd.",
+    "website": "https://viessmann.com/de.html",
+    "categories": [
+      "carbon",
+      "energy"
+    ],
+    "offering": "Provides climate and energy solutions focused on avoiding, reducing and storing carbon emissions."
+  },
+  {
+    "name": "Woodland Group (HK) Ltd.",
+    "website": "https://www.woodlandgroup.com/",
+    "categories": [
+      "carbon",
+      "logistics"
+    ],
+    "offering": "Provides global logistics and supply-chain services with a stated sustainability service offering."
+  }
+]
