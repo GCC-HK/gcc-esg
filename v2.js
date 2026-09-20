@@ -973,15 +973,23 @@
 
     const MATCH_NOTE_FALLBACK = `<span class="lang-en">AI matching is not available right now, showing keyword matches instead. You can also pick a topic from the list above.</span><span class="lang-zh">AI匹配暂不可用，已改为显示关键词匹配结果。您也可以在上方列表中选择主题。</span><span class="lang-de">KI-Matching ist gerade nicht verf&uuml;gbar, stattdessen Stichwort-Treffer. Sie k&ouml;nnen auch oben ein Thema w&auml;hlen.</span><span class="lang-vi">Gh&eacute;p bằng AI hiện chưa khả dụng, đang hiển thị kết quả theo từ kh&oacute;a. Bạn cũng c&oacute; thể chọn chủ đề ở tr&ecirc;n.</span>`;
 
-    async function matchFreeText() {
-        const ta = document.getElementById('matchText');
+    // "Show solutions": the one explicit action (owner decision 2026-09-19).
+    // Works with a picked topic, a free-text description, or both — the
+    // picked topic always shows, text adds AI/keyword-matched topics on top.
+    async function showSolutions() {
+        const picked = document.getElementById('matchCategory')?.value || '';
         const status = document.getElementById('matchStatus');
-        const text = (ta?.value || '').trim().slice(0, 600);
+        const text = (document.getElementById('matchText')?.value || '').trim().slice(0, 600);
+        if (!picked && text.length < 8) {
+            if (status) status.innerHTML = `<div class="v2-match-ai-note"><span class="lang-en">Please pick a topic or describe your need in a few words first.</span><span class="lang-zh">请先选择主题，或用几句话描述您的需求。</span><span class="lang-de">Bitte w&auml;hlen Sie zuerst ein Thema oder beschreiben Sie Ihren Bedarf in ein paar Worten.</span><span class="lang-vi">Vui l&ograve;ng chọn chủ đề hoặc m&ocirc; tả nhu cầu bằng v&agrave;i từ trước.</span></div>`;
+            return;
+        }
         if (text.length < 8) {
-            if (status) status.innerHTML = `<div class="v2-match-ai-note"><span class="lang-en">Please describe your need in a few words first.</span><span class="lang-zh">请先用几句话描述您的需求。</span><span class="lang-de">Bitte beschreiben Sie Ihren Bedarf zuerst in ein paar Worten.</span><span class="lang-vi">Vui l&ograve;ng m&ocirc; tả nhu cầu bằng v&agrave;i từ trước.</span></div>`;
+            renderMatches([picked], {});
             return;
         }
         if (status) status.innerHTML = `<div class="v2-match-ai-note"><span class="lang-en">Matching your request&hellip;</span><span class="lang-zh">正在匹配您的请求&hellip;</span><span class="lang-de">Anfrage wird zugeordnet&hellip;</span><span class="lang-vi">Đang gh&eacute;p y&ecirc;u cầu của bạn&hellip;</span></div>`;
+        const withPicked = (ids) => picked ? [picked, ...ids.filter(id => id !== picked)] : ids;
         try {
             const res = await fetch('/api/match', {
                 method: 'POST',
@@ -991,11 +999,11 @@
             if (res.ok) {
                 const data = await res.json();
                 const ids = (Array.isArray(data.categories) ? data.categories : []).filter(id => catById(id));
-                if (ids.length) { renderMatches(ids, { source: 'ai' }); return; }
+                if (ids.length || picked) { renderMatches(withPicked(ids), { source: 'ai' }); return; }
             }
         } catch (e) { /* offline or blocked — fall through to keywords */ }
         const ids = keywordFallback(text);
-        renderMatches(ids, { source: ids.length ? 'keywords' : null, note: MATCH_NOTE_FALLBACK });
+        renderMatches(withPicked(ids), { source: ids.length ? 'keywords' : null, note: MATCH_NOTE_FALLBACK });
     }
 
     function initMatchmaking() {
@@ -1014,9 +1022,8 @@
             opt.textContent = opt.dataset[lang] || c.en;
             sel.appendChild(opt);
         });
-        sel.addEventListener('change', () => {
-            if (sel.value) renderMatches([sel.value], {});
-        });
+        // No auto-render on selection (owner decision): results appear only
+        // via the "Show solutions" button, whether topic, text or both.
         // Example request as textarea placeholder, in the visitor's language
         const ta = document.getElementById('matchText');
         const setPh = () => {
@@ -1027,7 +1034,7 @@
         };
         setPh();
         document.getElementById('langSelect')?.addEventListener('change', setPh);
-        document.getElementById('matchFind')?.addEventListener('click', matchFreeText);
+        document.getElementById('matchFind')?.addEventListener('click', showSolutions);
         // Deep link: v2-matchmaking.html?category=<id> preselects and renders
         const urlCat = new URLSearchParams(window.location.search).get('category');
         if (urlCat && catById(urlCat) && PAGE === 'matchmaking') {

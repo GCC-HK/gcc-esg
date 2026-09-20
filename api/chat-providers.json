@@ -123,7 +123,8 @@
     "categories": [
       "dpp",
       "software",
-      "product-packaging"
+      "product-packaging",
+      "documentation"
     ],
     "offering": "Supports multilingual product communication, technical documentation and digital compliance content relevant to DPP and sustainable-product information workflows."
   },
@@ -168,7 +169,8 @@
       "dpp",
       "software",
       "reporting",
-      "product-packaging"
+      "product-packaging",
+      "documentation"
     ],
     "offering": "Provides AI-powered structured documentation and disclosure workflows relevant to EU compliance, packaging, manuals and Digital Product Passports."
   },
