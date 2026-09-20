@@ -49,6 +49,9 @@ CATEGORIES = OrderedDict([
     ("Digital Product Passport and product traceability", {
         "id": "dpp",
         "zh": "数字产品护照与产品追溯", "de": "Digitaler Produktpass und Produktrückverfolgbarkeit", "vi": "Hộ chiếu sản phẩm số và truy xuất nguồn gốc"}),
+    ("Technical documentation and product information", {
+        "id": "documentation",
+        "zh": "技术文档与产品信息", "de": "Technische Dokumentation und Produktinformationen", "vi": "Tài liệu kỹ thuật và thông tin sản phẩm"}),
     ("ESG reporting and assurance", {
         "id": "reporting",
         "zh": "ESG报告与鉴证", "de": "ESG-Berichterstattung und Prüfung", "vi": "Báo cáo và đảm bảo ESG"}),

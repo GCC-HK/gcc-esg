@@ -255,7 +255,7 @@ const PAGES = {
         // band is the prominent landing element instead
         check('hub: personas band hidden', doc.getElementById('v2PageStyle').textContent.includes('#personas'));
         check('hub: matchmaking band prominent with category chips',
-            !!doc.querySelector('#v2hub .v2-hub-match') && doc.querySelectorAll('#hubMatchCats a.v2-partner-cat').length === 18);
+            !!doc.querySelector('#v2hub .v2-hub-match') && doc.querySelectorAll('#hubMatchCats a.v2-partner-cat').length === 19);
         check('hub: matchmaking band links Find Support + Our Partners',
             !!doc.querySelector('.v2-hub-match-ctas a[href="v2-matchmaking.html"]') && !!doc.querySelector('.v2-hub-match-ctas a[href="v2-partners.html"]'));
         check('hub: hero CTA to find a partner', !!doc.querySelector('.hero-ctas a[href="v2-matchmaking.html"]'));
@@ -316,7 +316,7 @@ const PAGES = {
             'Governance', 'Rationale', 'First Ask', 'Priority', 'Member Status', 'Business Profile'];
         check('matchmaking data: no internal workbook fields leak', forbidden.every(f => !src.includes(f)));
         const taxonomy = JSON.parse(fs.readFileSync(path.join(ROOT, 'api', 'match-taxonomy.json'), 'utf8'));
-        check('match taxonomy: 18 categories, public fields only', taxonomy.length === 18 &&
+        check('match taxonomy: 19 categories, public fields only', taxonomy.length === 19 &&
             taxonomy.every(c => JSON.stringify(Object.keys(c).sort()) === JSON.stringify(['example', 'id', 'label'])));
         check('matchmaking data: providers present with website + categories',
             /providers:\s*\[/.test(src) && src.includes('https://'));
@@ -327,9 +327,14 @@ const PAGES = {
         const { doc, window, errors } = boot('v2-matchmaking.html');
         check('matchmaking page: no script errors', errors.length === 0);
         const sel = doc.getElementById('matchCategory');
-        check('matchmaking page: category select populated (18 + placeholder)', sel && sel.options.length === 19);
+        check('matchmaking page: category select populated (19 + placeholder)', sel && sel.options.length === 20);
+        // Owner 2026-09-19: no auto-render on selection, results only via the
+        // Show solutions button (topic, text or both)
         sel.value = 'cbam';
         sel.dispatchEvent(new window.Event('change'));
+        await new Promise(r => setTimeout(r, 10));
+        check('matchmaking page: selecting alone renders nothing', !doc.querySelector('#matchResults .v2-match-card'));
+        doc.getElementById('matchFind').click();
         await new Promise(r => setTimeout(r, 10));
         const cards = doc.querySelectorAll('#matchResults .v2-match-card');
         check('matchmaking page: CBAM category lists providers', cards.length >= 2);
@@ -356,6 +361,31 @@ const PAGES = {
         await new Promise(r => setTimeout(r, 30));
         check('matchmaking page: offline free text uses keyword fallback', doc.querySelectorAll('#matchResults .v2-match-card').length > 0);
         check('matchmaking page: fallback notice shown', !!doc.querySelector('#matchStatus .v2-match-ai-note'));
+        // Combined topic + text: the picked topic always leads the results
+        doc.getElementById('matchCategory').value = 'documentation';
+        doc.getElementById('matchFind').click();
+        await new Promise(r => setTimeout(r, 30));
+        const firstTag = doc.querySelector('#matchResults .v2-match-results-head .v2-match-tag .lang-en');
+        check('matchmaking page: picked topic leads combined results', firstTag && firstTag.textContent.includes('Technical documentation'));
+    }
+
+    // New category (owner 2026-09-19): Technical documentation with Impala + Pergamon
+    {
+        const { doc, window } = boot('v2-matchmaking.html');
+        await new Promise(r => setTimeout(r, 10));
+        doc.getElementById('matchCategory').value = 'documentation';
+        doc.getElementById('matchFind').click();
+        await new Promise(r => setTimeout(r, 10));
+        const names = Array.from(doc.querySelectorAll('#matchResults .v2-match-card h4')).map(h => h.textContent);
+        check('documentation category lists Impala Services + Pergamon Labs',
+            names.some(n => n.includes('Impala Services')) && names.some(n => n.includes('Pergamon Labs')));
+        check('show solutions button labelled', doc.getElementById('matchFind').textContent.includes('Show solutions'));
+        // neither topic nor text → prompt, no results
+        const { doc: d2 } = boot('v2-matchmaking.html');
+        await new Promise(r => setTimeout(r, 10));
+        d2.getElementById('matchFind').click();
+        await new Promise(r => setTimeout(r, 10));
+        check('empty submit prompts instead of rendering', !d2.querySelector('#matchResults .v2-match-card') && !!d2.querySelector('#matchStatus .v2-match-ai-note'));
     }
 
     // Our Partners: ecosystem cards, category chips, alphabetical directory
@@ -364,7 +394,7 @@ const PAGES = {
         check('partners page: no script errors', errors.length === 0);
         check('partners page: ecosystem explains Chamber vs members', doc.querySelectorAll('#partners .v2-eco-card').length === 3);
         check('partners page: 18 category chips link to Find Support',
-            doc.querySelectorAll('#partnersCategories a.v2-partner-cat[href^="v2-matchmaking.html?category="]').length === 18);
+            doc.querySelectorAll('#partnersCategories a.v2-partner-cat[href^="v2-matchmaking.html?category="]').length === 19);
         const dir = doc.querySelectorAll('#partnersDirectory .v2-match-card');
         check('partners page: full provider directory rendered', dir.length >= 25);
         check('partners page: directory is not an endorsement (copy)', doc.querySelector('.v2-partner-dir-head').textContent.includes('not an endorsement'));

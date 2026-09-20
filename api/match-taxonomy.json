@@ -20,6 +20,11 @@
     "example": "We need to prepare product data and identifiers for an EU Digital Product Passport."
   },
   {
+    "id": "documentation",
+    "label": "Technical documentation and product information",
+    "example": "We need help preparing technical files, manuals or product information for EU requirements."
+  },
+  {
     "id": "reporting",
     "label": "ESG reporting and assurance",
     "example": "We need ESG/CSRD reporting, controls or independent assurance."
