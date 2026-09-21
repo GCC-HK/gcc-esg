@@ -9,14 +9,6 @@
     "offering": "Develops renewable-energy projects and can contribute practical expertise on clean-energy procurement and decarbonisation."
   },
   {
-    "name": "ALBA Asia Plastics Recycling Limited",
-    "website": "https://weee.com.hk/",
-    "categories": [
-      "circular"
-    ],
-    "offering": "Provides regulated e-waste collection and recycling services in Hong Kong."
-  },
-  {
     "name": "amfori",
     "website": "https://www.amfori.org",
     "categories": [
@@ -26,6 +18,16 @@
       "training"
     ],
     "offering": "Business association supporting social, environmental and governance performance in global supply chains through due-diligence frameworks, tools and capability building."
+  },
+  {
+    "name": "BluKonzept Consulting",
+    "website": "https://www.blukonzept.co.uk/services1/our-services",
+    "categories": [
+      "circular",
+      "esg-strategy",
+      "energy"
+    ],
+    "offering": "Advises on sustainability strategy, resource and waste management, circular practices, energy-efficient infrastructure and renewable-energy adoption."
   },
   {
     "name": "BSI Pacific Limited",
@@ -64,6 +66,14 @@
     "offering": "Connects regulation, supplier data and product information with digital workflows for operational CSR and supply-chain control."
   },
   {
+    "name": "Deartree Circular Furniture (HK) Limited",
+    "website": "https://hk.deartree.com",
+    "categories": [
+      "circular"
+    ],
+    "offering": "Provides office-furniture sales, leasing, recycling and refurbishment services with a circular-economy focus for enterprises across Asia."
+  },
+  {
     "name": "Deloitte",
     "website": "https://bdh.tax.deloitte.com.hk/",
     "categories": [
@@ -85,6 +95,18 @@
     "offering": "Organises environmental programmes and community clean-ups and supports waste-reduction engagement."
   },
   {
+    "name": "Ernst & Young",
+    "website": "https://www.ey.com/en_cn/people/ee-sin-tan",
+    "categories": [
+      "software",
+      "reporting",
+      "esg-strategy",
+      "finance",
+      "training"
+    ],
+    "offering": "Provides ESG strategy and governance, performance and impact analysis, climate stress testing and scenario modelling, ESG risk and due diligence, reporting and third-party assurance, training, green-finance advisory and PRI application support; local scope should be confirmed before referral."
+  },
+  {
     "name": "Forvis Mazars CPA Limited",
     "website": "https://www.forvismazars.com/hk/en",
     "categories": [
@@ -104,6 +126,35 @@
       "training"
     ],
     "offering": "Environmental NGO offering education, advocacy and corporate/community engagement on environmental protection and sustainable living."
+  },
+  {
+    "name": "GS1 Hong Kong",
+    "website": "https://www.gs1hk.org/esg-sustainability-gs1",
+    "categories": [
+      "carbon",
+      "dpp",
+      "software",
+      "reporting"
+    ],
+    "offering": "Offers an ESG supply-chain SaaS platform for Scope 3 measurement, monitoring, reporting, supplier engagement and data validation, plus Digital Product Passport support, ESG product data models, recycling initiatives and Quality Food Scheme ESG recognition."
+  },
+  {
+    "name": "Hafen Hamburg Marketing e.V.",
+    "website": "https://www.hafen-hamburg.de/en/port-of-hamburg-marketing/about-us/",
+    "categories": [
+      "logistics",
+      "training"
+    ],
+    "offering": "Supports members with funding projects and applications, project and communications management, sustainable transport concepts and access to green-logistics project expertise."
+  },
+  {
+    "name": "HDS International Group",
+    "website": "https://hds-international.group/en/logistikberatung",
+    "categories": [
+      "carbon",
+      "logistics"
+    ],
+    "offering": "Provides logistics consulting as a certified Lean and Green Tool Coach, including measurement of logistics-related CO₂ emissions, logistics-structure optimisation and documentation for recognition under the Lean and Green Initiative."
   },
   {
     "name": "Hohenstein Laboratories (HK) Ltd.",
@@ -129,18 +180,6 @@
     "offering": "Supports multilingual product communication, technical documentation and digital compliance content relevant to DPP and sustainable-product information workflows."
   },
   {
-    "name": "Intertec Asia Ltd.",
-    "website": "https://www.intertek.com.hk/",
-    "categories": [
-      "carbon",
-      "reporting",
-      "logistics",
-      "product-packaging",
-      "testing"
-    ],
-    "offering": "Provides sustainability assurance, testing, inspection, certification, carbon and energy-efficiency services across industries."
-  },
-  {
     "name": "Knight Frank",
     "website": "https://www.knightfrank.com/services",
     "categories": [
@@ -161,6 +200,16 @@
       "legal"
     ],
     "offering": "Provides ESG governance, reporting, assurance, climate-risk and sustainability advisory services."
+  },
+  {
+    "name": "Lim-Loges & Masters",
+    "website": "https://limlogesmasters.com/sustainability-solutions/",
+    "categories": [
+      "community",
+      "esg-strategy",
+      "training"
+    ],
+    "offering": "Offers customised sustainability and ESG people solutions through workshops and full-service programmes, including sustainability roadmaps, sustainable culture, GHG scopes and diversity, equity, inclusion and retention."
   },
   {
     "name": "Pergamon Labs",
@@ -249,8 +298,8 @@
     "name": "TÜV Rheinland Hong Kong Ltd.",
     "website": "https://www.tuv.com/greater-china/en/",
     "categories": [
-      "cbam",
       "carbon",
+      "cbam",
       "reporting",
       "due-diligence",
       "materials",
@@ -264,8 +313,8 @@
     "name": "TÜV SÜD Hong Kong Ltd.",
     "website": "https://www.tuvsud.com/en/services/product-certification/global-market-access/hong-kong",
     "categories": [
-      "cbam",
       "carbon",
+      "cbam",
       "reporting",
       "product-packaging",
       "testing"

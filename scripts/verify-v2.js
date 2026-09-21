@@ -333,17 +333,23 @@ const PAGES = {
         sel.value = 'cbam';
         sel.dispatchEvent(new window.Event('change'));
         await new Promise(r => setTimeout(r, 10));
-        check('matchmaking page: selecting alone renders nothing', !doc.querySelector('#matchResults .v2-match-card'));
+        check('matchmaking page: selecting alone renders nothing', !doc.querySelector('#matchResults .v2-match-row'));
         doc.getElementById('matchFind').click();
         await new Promise(r => setTimeout(r, 10));
-        const cards = doc.querySelectorAll('#matchResults .v2-match-card');
+        const cards = doc.querySelectorAll('#matchResults .v2-match-row');
         check('matchmaking page: CBAM category lists providers', cards.length >= 2);
+        // Owner request 2026-09-21: results render as a table with company,
+        // topics, offering, website and contact columns
+        check('matchmaking page: results are a 5-column table',
+            doc.querySelectorAll('#matchResults .v2-match-table thead th').length === 5);
+        check('matchmaking page: topic column shows only the matched topics',
+            Array.from(cards).every(r => Array.from(r.querySelectorAll('.v2-match-tag .lang-en')).every(t => t.textContent.includes('CBAM'))));
         check('matchmaking page: TÜV listed for CBAM', doc.getElementById('matchResults').innerHTML.includes('TÜV Rheinland'));
         check('matchmaking page: introduction goes via the Chamber inbox',
             !!doc.querySelector('#matchResults a.v2-match-intro[href^="mailto:info@hongkong.ahk.de"]'));
         check('matchmaking page: provider websites open safely',
             Array.from(doc.querySelectorAll('#matchResults a.v2-match-web')).every(a => a.getAttribute('rel') === 'noopener' && a.getAttribute('target') === '_blank'));
-        const names = Array.from(cards).map(c => c.querySelector('h4').textContent.toLowerCase());
+        const names = Array.from(cards).map(c => c.querySelector('.v2-match-td-name').textContent.toLowerCase());
         check('matchmaking page: providers listed alphabetically (neutrality)',
             names.every((n, i) => i === 0 || names[i - 1] <= n));
         check('matchmaking page: neutrality disclaimer present',
@@ -355,11 +361,11 @@ const PAGES = {
         const { doc, window } = boot('v2-matchmaking.html', '?category=testing');
         await new Promise(r => setTimeout(r, 10));
         check('matchmaking page: ?category=testing preselects', doc.getElementById('matchCategory').value === 'testing');
-        check('matchmaking page: ?category=testing renders results', doc.querySelectorAll('#matchResults .v2-match-card').length > 0);
+        check('matchmaking page: ?category=testing renders results', doc.querySelectorAll('#matchResults .v2-match-row').length > 0);
         doc.getElementById('matchText').value = 'We export steel to the EU and need CBAM calculation and reporting support';
         doc.getElementById('matchFind').click();
         await new Promise(r => setTimeout(r, 30));
-        check('matchmaking page: offline free text uses keyword fallback', doc.querySelectorAll('#matchResults .v2-match-card').length > 0);
+        check('matchmaking page: offline free text uses keyword fallback', doc.querySelectorAll('#matchResults .v2-match-row').length > 0);
         check('matchmaking page: fallback notice shown', !!doc.querySelector('#matchStatus .v2-match-ai-note'));
         // Combined topic + text: the picked topic always leads the results
         doc.getElementById('matchCategory').value = 'documentation';
@@ -376,7 +382,7 @@ const PAGES = {
         doc.getElementById('matchCategory').value = 'documentation';
         doc.getElementById('matchFind').click();
         await new Promise(r => setTimeout(r, 10));
-        const names = Array.from(doc.querySelectorAll('#matchResults .v2-match-card h4')).map(h => h.textContent);
+        const names = Array.from(doc.querySelectorAll('#matchResults .v2-match-row .v2-match-td-name')).map(h => h.textContent);
         check('documentation category lists Impala Services + Pergamon Labs',
             names.some(n => n.includes('Impala Services')) && names.some(n => n.includes('Pergamon Labs')));
         check('show solutions button labelled', doc.getElementById('matchFind').textContent.includes('Show solutions'));
@@ -385,7 +391,7 @@ const PAGES = {
         await new Promise(r => setTimeout(r, 10));
         d2.getElementById('matchFind').click();
         await new Promise(r => setTimeout(r, 10));
-        check('empty submit prompts instead of rendering', !d2.querySelector('#matchResults .v2-match-card') && !!d2.querySelector('#matchStatus .v2-match-ai-note'));
+        check('empty submit prompts instead of rendering', !d2.querySelector('#matchResults .v2-match-row') && !!d2.querySelector('#matchStatus .v2-match-ai-note'));
     }
 
     // Our Partners: ecosystem cards, category chips, alphabetical directory

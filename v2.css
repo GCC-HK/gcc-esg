@@ -504,6 +504,33 @@ body[data-v2page="regulation"] #regdetail { padding: 40px 0 80px; }
 #matchStatus .v2-match-ai-note { background: #eef5f0; border: 1px solid #cfe0d5; border-radius: 8px; padding: 10px 14px; }
 
 .v2-match-results-head { margin: 14px 0 10px; font-size: 15px; color: #24312a; }
+/* Find Support results: table layout (company / topics / offering / website /
+   contact). Collapses to stacked cards below 760px. */
+.v2-match-tablewrap { background: #fff; border: 1px solid #dde6e0; border-radius: 12px; overflow: hidden; }
+.v2-match-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.v2-match-table thead th { text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: .04em;
+    color: #55655c; background: #f4f8f5; padding: 12px 14px; border-bottom: 1px solid #dde6e0; }
+.v2-match-table tbody th, .v2-match-table tbody td { padding: 14px; border-bottom: 1px solid #e8efea; vertical-align: top; text-align: left; }
+.v2-match-table tbody tr:last-child th, .v2-match-table tbody tr:last-child td { border-bottom: none; }
+.v2-match-td-name { font-size: 15px; font-weight: 700; color: #1a5c38; min-width: 140px; }
+.v2-match-td-tags { min-width: 130px; }
+.v2-match-td-offering { line-height: 1.5; color: #3d4a43; min-width: 220px; }
+.v2-match-table a.v2-match-web, .v2-match-table a.v2-match-intro { display: inline-flex; align-items: center;
+    min-height: 40px; padding: 6px 12px; border-radius: 8px; font-size: 13px; font-weight: 600;
+    text-decoration: none; white-space: nowrap; }
+.v2-match-table a.v2-match-web { border: 1px solid #cdd6d0; color: #24312a; background: #fff; }
+.v2-match-table a.v2-match-web:hover { border-color: var(--primary, #1a5c38); }
+.v2-match-table a.v2-match-intro { background: var(--primary, #1a5c38); color: #fff; }
+.v2-match-table a.v2-match-intro:hover { background: #14492c; }
+@media (max-width: 760px) {
+    .v2-match-tablewrap { border: none; background: none; overflow: visible; }
+    .v2-match-table, .v2-match-table tbody, .v2-match-table tbody tr,
+    .v2-match-table tbody th, .v2-match-table tbody td { display: block; width: 100%; padding: 0; border: none; }
+    .v2-match-table thead { display: none; }
+    .v2-match-table tbody tr { background: #fff; border: 1px solid #dde6e0; border-radius: 12px; padding: 16px; margin-bottom: 14px; }
+    .v2-match-table tbody th, .v2-match-table tbody td { margin-bottom: 8px; }
+    .v2-match-td-web, .v2-match-td-intro { display: inline-block !important; width: auto !important; margin-right: 10px; }
+}
 .v2-match-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 @media (max-width: 1000px) { .v2-match-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 620px) { .v2-match-grid { grid-template-columns: 1fr; } }
