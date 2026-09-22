@@ -146,6 +146,16 @@ Owner decision after the passcode friction ("remove the login for members, the p
 
 Suites green: verify-v2 now 504 assertions (matchmaking function + privacy, partners directory, About nav, Quick Check conversion, referral presence), verify-site 58. Playwright-verified on the dev server incl. ?category deep link and offline keyword fallback. Note: jsdom for the suites now needs a recent version (Blob.arrayBuffer), `npm i jsdom@latest`.
 
+## Phase 22 — Member-mapping refresh, results table (21 Sep 2026)
+
+**Workbook refresh (owner-updated `input/GCC-Members-ESG-Mapping.xlsx`):** regenerated the public dataset. Added 7 providers: BluKonzept Consulting, Deartree Circular Furniture (HK), Ernst & Young, GS1 Hong Kong, Hafen Hamburg Marketing e.V., HDS International Group, Lim-Loges & Masters. Removed 2: ALBA Asia Plastics Recycling, Intertec Asia Ltd. Now 33 providers, 120 category entries, 19 categories. Four "Yes" rows stay excluded on Low confidence (Sieber, Storopack, Waldmann Lighting, Westernacher — same as before the refresh).
+
+**Lesson: replacing the workbook wipes earlier seeded additions.** The refresh had dropped the seeded "Technical documentation and product information" taxonomy row and its Impala/Pergamon provider rows; re-running the idempotent `scripts/seeds/add-documentation-category.py` restored them. After any workbook replacement, re-run the seeds in `scripts/seeds/` before regenerating.
+
+**Offering copy polish (`scripts/seeds/polish-offerings-sep21.py`):** the 7 new rows carried internal research-note language in the public Offering column ("No specific … service is verified", "Evidence is group-level … requiring confirmation"). Rewritten in the workbook into the established public style — facts kept, verification commentary removed, nothing invented; Ernst & Young keeps a scope caveat mirroring the Deloitte precedent.
+
+**Find Support results as a table (owner request):** search results now render as a 5-column table — Company, Topics (only the categories matching the current search), What they offer, Website, Contact (request-an-introduction mailto) — collapsing to stacked cards below 760px. The Our Partners directory keeps the card layout with all categories. verify-v2 updated to the table markup plus two new assertions (5 columns, matched-topics-only tags): 506 assertions green, verify-site 58 green, Playwright-checked desktop + mobile.
+
 ## Standing operational notes
 
 - **Sanity editor token was shared via chat during setup and again on 11 Aug 2026 — rotate it now** (sanity.io/manage → API → Tokens) and use env vars only.

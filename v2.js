@@ -924,6 +924,41 @@
         </div>`;
     }
 
+    // Search results as a scannable table (owner request 2026-09-21):
+    // company, matched topics, offering, website, introduction. The topic
+    // column shows only the categories that match the current search; the
+    // Our Partners directory keeps the card layout with all categories.
+    function matchRow(p, activeIds) {
+        const shown = activeIds && activeIds.length ? p.categories.filter(id => activeIds.includes(id)) : p.categories;
+        const tags = shown.map(id => {
+            const c = catById(id);
+            return c ? `<span class="v2-match-tag">${span4m(c)}</span>` : '';
+        }).join('');
+        return `
+        <tr class="v2-match-row">
+            <th scope="row" class="v2-match-td-name">${esc(p.name)}</th>
+            <td class="v2-match-td-tags"><div class="v2-match-tags">${tags}</div></td>
+            <td class="v2-match-td-offering">${esc(p.offering)}</td>
+            <td class="v2-match-td-web"><a class="v2-match-web" href="${esc(p.website)}" target="_blank" rel="noopener"><span class="lang-en">Visit website</span><span class="lang-zh">访问网站</span><span class="lang-de">Website besuchen</span><span class="lang-vi">Xem trang web</span></a></td>
+            <td class="v2-match-td-intro"><a class="v2-match-intro" href="${introMailto(p)}"><span class="lang-en">Request an introduction</span><span class="lang-zh">请求引荐</span><span class="lang-de">Vorstellung anfragen</span><span class="lang-vi">Yêu cầu giới thiệu</span></a></td>
+        </tr>`;
+    }
+
+    function matchTable(provs, activeIds) {
+        const th = (en, zh, de, vi) => `<th scope="col"><span class="lang-en">${en}</span><span class="lang-zh">${zh}</span><span class="lang-de">${de}</span><span class="lang-vi">${vi}</span></th>`;
+        return `
+        <div class="v2-match-tablewrap"><table class="v2-match-table">
+            <thead><tr>
+                ${th('Company', '公司', 'Unternehmen', 'Công ty')}
+                ${th('Topics', '主题', 'Themen', 'Chủ đề')}
+                ${th('What they offer', '服务内容', 'Leistungen', 'Dịch vụ')}
+                ${th('Website', '网站', 'Website', 'Trang web')}
+                ${th('Contact', '联系', 'Kontakt', 'Liên hệ')}
+            </tr></thead>
+            <tbody>${provs.map(p => matchRow(p, activeIds)).join('')}</tbody>
+        </table></div>`;
+    }
+
     const MATCH_EMPTY = `
         <div class="v2-match-empty">
             <p><span class="lang-en">No listed member company for this topic yet. The Committee can still point you to the right organisation, write to us and we help.</span><span class="lang-zh">该主题暂无列出的会员企业。委员会仍可为您指向合适的机构，欢迎来信，我们来帮忙。</span><span class="lang-de">F&uuml;r dieses Thema ist noch kein Mitgliedsunternehmen gelistet. Der Ausschuss vermittelt trotzdem gern, schreiben Sie uns.</span><span class="lang-vi">Chưa có công ty thành viên cho chủ đề này. Ủy ban vẫn có thể chỉ dẫn cho bạn, hãy viết thư cho chúng tôi.</span></p>
@@ -946,7 +981,7 @@
             head = `<div class="v2-match-results-head">${catNames}</div>`;
         }
         results.innerHTML = head + (provs.length
-            ? `<div class="v2-match-grid">${provs.map(matchCard).join('')}</div>`
+            ? matchTable(provs, ids)
             : MATCH_EMPTY);
         if (status && opts && opts.note) {
             status.innerHTML = `<div class="v2-match-ai-note">${opts.note}</div>`;
